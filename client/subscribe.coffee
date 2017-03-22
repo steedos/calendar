@@ -1,0 +1,1 @@
+Meteor.subscribe "calendar_events"
