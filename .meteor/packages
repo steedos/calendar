@@ -28,3 +28,6 @@ fortawesome:fontawesome
 
 aldeed:collection2
 aldeed:simple-schema
+
+kadira:flow-router
+kadira:blaze-layout

@@ -1,16 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.js'
-
-import 'admin-lte/dist/css/AdminLTE.css'
-import 'admin-lte/dist/css/skins/skin-blue.css'
-import 'admin-lte/dist/js/app.js'
-import 'admin-lte/plugins/slimScroll/jquery.slimscroll.min.js'
-
-import 'fullcalendar/dist/fullcalendar.css'
-import 'fullcalendar/dist/fullcalendar.js'
-
-import 'fullcalendar/dist/locale-all.js'
-import 'fullcalendar/dist/gcal.js'
 
 import moment from 'moment'
 
@@ -21,9 +8,9 @@ eventsDep = new Tracker.Dependency;
 
 Calendar.reloadEvents = () ->
 	eventsDep.depend();
-	$(".calendar-container").fullCalendar("removeEvents");
-	$(".calendar-container").fullCalendar("addEventSource", Calendar.getEventsData());
-	$(".calendar-container").fullCalendar("refetchEvents");
+	$("#calendar").fullCalendar("removeEvents");
+	$("#calendar").fullCalendar("addEventSource", Calendar.getEventsData());
+	$("#calendar").fullCalendar("refetchEvents");
 
 
 
@@ -42,18 +29,34 @@ Calendar.getEventsData = ()->
 
 
 
-Meteor.startup ->
+Calendar.generateCalendar = ()->
 
-	$('.calendar-container').fullCalendar
-		height: "parent" 
-		header: 
-			left: '',
-			center: 'prev title next',
-			right: 'month,agendaWeek,agendaDay,listMonth'
-		navLinks: true
-		editable: true
-		eventLimit: true
-		events: Calendar.getEventsData()
+	if !$('#calendar').children().length
 
-	Calendar.eventsReloadHandle = Tracker.autorun ()->
+		$('#calendar').fullCalendar
+			height: ()->
+				return $('#calendar').height()
+			handleWindowResize: true
+			header: 
+				left: 'month,agendaWeek,agendaDay,listMonth',
+				center: 'prev title next',
+				right: ''
+			selectable: true,
+			selectHelper: true,
+			navLinks: true
+			editable: true
+			eventLimit: true
+			events: Calendar.getEventsData()
+
+		Events.find().observeChanges 
+			added: (id, event) ->
+				eventsDep.changed();
+			changed: () ->
+				eventsDep.changed();
+			removed: () ->
+				eventsDep.changed();
+
+		Calendar.eventsReloadHandle = Tracker.autorun ()->
+			Calendar.reloadEvents();
+	else
 		Calendar.reloadEvents();
