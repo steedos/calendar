@@ -31,3 +31,5 @@ aldeed:simple-schema
 
 kadira:flow-router
 kadira:blaze-layout
+
+meteorhacks:subs-manager

@@ -5,6 +5,9 @@ import moment from 'moment'
 
 
 eventsDep = new Tracker.Dependency;
+eventsSub = new SubsManager();
+eventsRange = null
+eventsLoading = false
 
 Calendar.reloadEvents = () ->
 	eventsDep.depend()
@@ -12,15 +15,20 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
+	
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
-	Meteor.subscribe "calendar_events", params,
-		onReady: ()->
+
+	eventsLoading = true
+	eventsSub.subscribe "calendar_events", params
+
+	Tracker.autorun (c)->
+		if eventsSub.ready()
 			events = Events.find().fetch();
 			callback(events);
-
+			c.stop()
 
 Calendar.generateCalendar = ()->
 
@@ -59,7 +67,7 @@ Calendar.generateCalendar = ()->
 
 		Events.find().observe
 			added: (id, fields) ->
-				# do nothing
+				eventsDep.changed();
 			changed: () ->
 				eventsDep.changed();
 			removed: () ->
