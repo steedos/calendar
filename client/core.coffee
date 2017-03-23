@@ -64,6 +64,7 @@ Calendar.generateCalendar = ()->
 					start: start.toDate()
 					end: end.toDate()
 					title: "New Event"
+					allDay: false
 
 		Events.find().observe
 			added: (id, fields) ->
