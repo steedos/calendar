@@ -5,7 +5,8 @@ Events.attachSchema(new SimpleSchema({
     type: Date
   },
   end: {
-    type: Date
+    type: Date,
+    optional: true
   },
   allDay: {
     type: Boolean,
@@ -20,7 +21,8 @@ Events.attachSchema(new SimpleSchema({
     optional: true
   },
   ownerId: {
-    type: String
+    type: String,
+    optional: true
   }
 }));
 

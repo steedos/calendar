@@ -7,26 +7,19 @@ import moment from 'moment'
 eventsDep = new Tracker.Dependency;
 
 Calendar.reloadEvents = () ->
-	eventsDep.depend();
-	$("#calendar").fullCalendar("removeEvents");
-	$("#calendar").fullCalendar("addEventSource", Calendar.getEventsData());
-	$("#calendar").fullCalendar("refetchEvents");
+	eventsDep.depend()
+	$("#calendar").fullCalendar("refetchEvents")
 
 
-
-
-Calendar.getEventsData = ()->
- 
-	events = Events.find().fetch();
-	events = events.map (event) ->
-		event.start = moment.utc(event.start);
-		if event.end
-			event.end = moment.utc(event.end);
-		return event;
-
-	return events;
-
-
+Calendar.getEventsData = ( start, end, timezone, callback )->
+	params = 
+		start: start.toDate()
+		end: end.toDate()
+		timezone: timezone
+	Meteor.subscribe "calendar_events", params,
+		onReady: ()->
+			events = Events.find().fetch();
+			callback(events);
 
 
 Calendar.generateCalendar = ()->
@@ -46,17 +39,33 @@ Calendar.generateCalendar = ()->
 			navLinks: true
 			editable: true
 			eventLimit: true
-			events: Calendar.getEventsData()
+			events: Calendar.getEventsData
+			eventDataTransform: (event) ->
+				copy = 
+					_id: event._id._str
+					allDay: event.allDay
+					url: event.url
+					title: event.title
+				if event.start
+					copy.start = moment.utc(event.start)
+				if event.end
+					copy.end = moment.utc(event.end)
+				return copy;
+			select: ( start, end, jsEvent, view, resource )->
+				Events.insert
+					start: start.toDate()
+					end: end.toDate()
+					title: "New Event"
 
-		Events.find().observeChanges 
-			added: (id, event) ->
-				eventsDep.changed();
+		Events.find().observe
+			added: (id, fields) ->
+				# do nothing
 			changed: () ->
 				eventsDep.changed();
 			removed: () ->
 				eventsDep.changed();
 
-		Calendar.eventsReloadHandle = Tracker.autorun ()->
+		Tracker.autorun ()->
 			Calendar.reloadEvents();
 	else
 		Calendar.reloadEvents();
