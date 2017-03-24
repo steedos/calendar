@@ -1,4 +1,13 @@
 <template name="calendarContainer">
 	<div id="calendar">
 	</div>
+
+	{{#afModal class="btn btn-primary event-add" collection="Events" operation="insert"}}
+	  Add a new event
+	{{/afModal}}
+
+	{{#afModal class="btn btn-primary event-edit" collection="Events" operation="update"}}
+	  Edit event
+	{{/afModal}}
 </template>
+
