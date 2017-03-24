@@ -24,7 +24,7 @@
 			float: left;
     		margin: 0;
 			background-color: transparent;
-			.appName {
+			.navbar-title {
 				font-size: 20px;
 			}
 			.navbar-nav {
@@ -33,11 +33,11 @@
 				li {
     				float: left;
 					a {
-						padding-left: 5px;
-						padding-right: 5px;
+						padding-left: 10px;
+						padding-right: 10px;
 						padding-top: 15px;
     					padding-bottom: 15px;
-						&:hover{
+						&:hover, &:active{
 							color: yellow;
 							background: transparent;
 						}
@@ -127,6 +127,12 @@
 	    bottom: 0;
 	}
 
+	@media (min-width: 768px){
+		.sidebar-toggle {
+			display: none;
+		}
+	}
+
 	@media (max-width: 767px){
 		.main-header .logo {
 		    width: 50px;
@@ -135,6 +141,16 @@
 		.main-header .navbar {
 		    width: initial;
 		    float: none;
+		    .navbar-title {
+		    	display: none;
+		    }
 		}
+	}
+
+}
+
+@media (min-width: 768px){
+	.steedos.sidebar-mini.sidebar-collapse .main-header .navbar {
+	    margin-left: 0px;
 	}
 }
