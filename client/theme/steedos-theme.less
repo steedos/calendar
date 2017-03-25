@@ -10,7 +10,12 @@
 
 		.logo {
 			width: 50px;
+			background-color: #0078D7;
+    		transition: background-color .467s cubic-bezier(.1,.9,.2,1) 34ms;
 			box-shadow: rgba(0, 0, 0, 0.3) 0 1px 9px, rgba(255, 255, 255, 0.2) 0 -1px 0 inset;
+			&:hover, &:active, &:focus {
+				background-color: #104A7D;
+			}
 			.logo-mini {
 				display: block;
 				.ion {
@@ -37,7 +42,7 @@
 						padding-right: 10px;
 						padding-top: 15px;
     					padding-bottom: 15px;
-						&:hover, &:active{
+						&:hover, &:active, &:focus{
 							color: yellow;
 							background: transparent;
 						}
