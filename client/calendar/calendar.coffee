@@ -1,3 +1,9 @@
+import 'fullcalendar/dist/fullcalendar.css'
+import 'fullcalendar/dist/fullcalendar.js'
+
+import 'fullcalendar/dist/locale-all.js'
+import 'fullcalendar/dist/gcal.js'
+
 import moment from 'moment'
 import Calendar from '../core'
 
