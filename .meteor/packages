@@ -23,6 +23,8 @@ less
 reload
 session
 
+accounts-ui 
+accounts-password
 
 fortawesome:fontawesome
 
@@ -37,3 +39,6 @@ kadira:flow-router
 kadira:blaze-layout
 
 meteorhacks:subs-manager
+
+steedos:adminlte
+steedos:theme@0.0.1
