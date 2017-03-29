@@ -5,4 +5,4 @@ Meteor.publish "calendars", (params)->
 
 # Meteor.publish "calendars", (params)->
 	
-# 	return Calendars.remove("_id",params._id);
+# return Calendars.remove("_id",params._id);

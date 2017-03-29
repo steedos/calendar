@@ -20,14 +20,31 @@ Calendars.attachSchema new SimpleSchema
 
 if (Meteor.isServer) 
 	Calendars.allow 
-		insert: (userId, event) ->
+		insert: (userId, doc) ->
+			if userId==""
+				return false
 			return true
 
-		update: (userId, event) ->
+		update: (userId, doc) ->
+			if userId!=doc.ownerId
+				return false
 			return true
 
-		remove: (userId, event) ->
+		remove: (userId, doc) ->
+			if userId!=doc.ownerId
+				return false
 			return true
 
 
-#删除后的操作
+#添加字段之前，强制给Calendar的OwnerId赋值
+Calendars.before.insert (userId,doc)->
+	console.log('userid:'+Meteor.userId());
+	doc.ownerId=Meteor.userId();
+
+#删除后的操作，同时删除关联的event事件  after delete
+Calendars.after.remove (doc)->
+	console.log("对象 "+doc);
+	Events.remove("_id":"jj4WTfWRmBe68CXuB");
+
+
+	

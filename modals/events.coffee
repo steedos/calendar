@@ -34,11 +34,11 @@ Events.attachSchema new SimpleSchema
 
 if (Meteor.isServer) 
 	Events.allow 
-		insert: (userId, event) ->
+		insert: (userId, doc) ->
 			return true
 
-		update: (userId, event) ->
+		update: (userId, doc) ->
 			return true
 
-		remove: (userId, event) ->
+		remove: (userId, doc) ->
 			return true
