@@ -14,8 +14,10 @@
             <span>{{title}}</span>
               <span class="pull-right-container">
               <div class="operate-box">
+              {{#if isCalendarOwner}}
                 <i class="fa fa-edit calendar-edit"></i>&nbsp;&nbsp;
                 <i class="fa fa-trash-o calendar-delete"></i>
+              {{/if}}
               </div>
               </span>
           </a>
@@ -25,7 +27,8 @@
 
       <div class="sidebar-bottom">
         <a href="#" class="calendar-add">
-          <i class="fa fa-plus"><span>&nbsp;&nbsp;{{_ "calendar_add_calendar"}}</span></i>
+          <i class="fa fa-plus"><span>&nbsp;&nbsp;
+          {{_ "calendar_add_calendar"}}</span></i>
         </a>
       </div>
     </section>

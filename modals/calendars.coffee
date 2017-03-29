@@ -42,9 +42,8 @@ Calendars.before.insert (userId,doc)->
 	doc.ownerId=Meteor.userId();
 
 #删除后的操作，同时删除关联的event事件  after delete
-Calendars.after.remove (doc)->
-	console.log("对象 "+doc);
-	Events.remove("_id":"jj4WTfWRmBe68CXuB");
+Calendars.after.remove (userId, doc)->
+	Events.remove({"calendar":doc._id});
 
 
 	

@@ -1,8 +1,6 @@
-
 Meteor.publish "calendars", (params)->
 	
-	return Calendars.find();
+	unless this.userId
+		return this.ready();
 
-# Meteor.publish "calendars", (params)->
-	
-# return Calendars.remove("_id",params._id);
+	return Calendars.find({$or:[{"ownerId":this.userId},{"members":this.userId}]});

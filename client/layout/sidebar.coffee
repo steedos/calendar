@@ -11,12 +11,17 @@ Template.calendarSidebar.helpers
 		userId= Meteor.userId();
 		# console.log(userId);
 		return Calendars.find($or:[{"ownerId":userId},{"members":userId}])
+	isCalendarOwner: ()->
+		return this.ownerId == Meteor.userId()
 
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
 	calendarsSub.subscribe "calendars"
 
 Template.calendarSidebar.events 
+	
+	'hover a.calendar-add':(event)->
+		console.log('enter');
 
 	'click a.calendar-add': (event)->
 		$('.btn.calendar-add').click();
