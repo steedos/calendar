@@ -1,11 +1,12 @@
 <template name="calendarLayout">
 
-{{> steedosHeader}}
-{{> calendarSidebar}}
+<div class="wrapper">
+	{{> steedosHeader}}
+	{{> calendarSidebar}}
 
-
-<div class="content-wrapper">
-{{> Template.dynamic template=main}}
+	<div class="content-wrapper">
+	{{> Template.dynamic template=main}}
+	</div>
 </div>
 
 {{> autoformModals}}
