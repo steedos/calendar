@@ -3,10 +3,8 @@
 Calendars.attachSchema new SimpleSchema 
 	title:  
 		type: String
-
 	color:  
 		type: String
-
 	members:  
 		type: [String],
 		optional: true
@@ -30,3 +28,6 @@ if (Meteor.isServer)
 
 		remove: (userId, event) ->
 			return true
+
+
+#删除后的操作

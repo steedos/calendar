@@ -4,25 +4,44 @@
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <!-- <li class="header"></li> -->
+        {{#each calendars}}
         <li>
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Calendar 1</span>
-            <span class="pull-right-container">
-            </span>
+            <i class="fa fa-calendar"></i>
+            <span>{{title}}</span>
+              <span class="pull-right-container">
+              <div class="operate-box">
+                <i class="fa fa-edit calendar-edit"></i>&nbsp;&nbsp;
+                <i class="fa fa-trash-o calendar-delete"></i>
+              </div>
+              </span>
           </a>
         </li>
-        <li>
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Calendar 2</span>
-            <span class="pull-right-container">
-            </span>
-          </a>
-        </li>
+        {{/each}}
       </ul>
+
+      <div class="sidebar-bottom">
+        <a href="#" class="calendar-add">
+          <i class="fa fa-plus"><span>&nbsp;&nbsp;添加</span></i>
+        </a>
+      </div>
     </section>
+
   </aside>
+  {{#afModal class="btn btn-primary calendar-add hidden" collection="Calendars" operation="insert"}}
+    添加日历
+  {{/afModal}}
+
+  {{#afModal class="btn btn-primary calendar-edit hidden" collection="Calendars" operation="update"}}
+    编辑日历
+  {{/afModal}}
+
+<!--   {{#afModal class="btn btn-primary calendar-delete hidden" collection="Calendars" operation="delete"}}
+    删除日历
+  {{/afModal}} -->
 
 </template>
