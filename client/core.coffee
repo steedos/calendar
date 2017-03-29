@@ -12,6 +12,4 @@ Tracker.autorun ()->
 	else
 		TAPi18n.setLanguage("en")		
 
-	Steedos.API.setAppTitle(t("calendar_app_title"));
-
 
