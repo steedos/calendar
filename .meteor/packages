@@ -27,6 +27,7 @@ accounts-ui
 accounts-password
 
 fortawesome:fontawesome
+tap:i18n
 
 aldeed:collection2
 aldeed:simple-schema
@@ -37,9 +38,8 @@ yogiben:autoform-modals
 
 kadira:flow-router
 kadira:blaze-layout
-
 meteorhacks:subs-manager
 
-steedos:base@0.0.3
-steedos:theme@0.0.6
-steedos:accounts
+steedos:base@0.0.5
+steedos:theme@0.0.7
+steedos:accounts@0.0.2 

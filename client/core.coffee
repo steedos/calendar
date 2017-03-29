@@ -5,3 +5,11 @@ import 'sweetalert/dist/sweetalert.css'
 Meteor.startup ->
 	Steedos.API.setAppTitle("Steedos Calendar");
 	$("body").css("background-image", "url('/packages/steedos_theme/client/background/birds.jpg')");
+
+Tracker.autorun ()->
+	if Session.get("steedos-locale") == "zh-cn"
+		TAPi18n.setLanguage("zh-CN")
+	else
+		TAPi18n.setLanguage("en")		
+
+
