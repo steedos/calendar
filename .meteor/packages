@@ -36,6 +36,7 @@ aldeed:autoform-bs-datetimepicker
 tsega:bootstrap3-datetimepicker@=3.1.3_3
 yogiben:autoform-modals
 hausor:autoform-bs-minicolors
+vazco:universe-autoform-select
 
 kadira:flow-router
 kadira:blaze-layout

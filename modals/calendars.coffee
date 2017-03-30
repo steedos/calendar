@@ -5,9 +5,11 @@ Calendars.attachSchema new SimpleSchema
 		type: String
 	members:  
 		type: [String],
-		optional: true
 		autoform: 
-			omit: true
+			type: "universe-select"
+			afFieldInput:
+				multiple: true
+				optionsMethod: "selectGetUsers"
 	visibility:
 		type: String
 		allowedValues: ["private", "space","public"]
