@@ -22,10 +22,14 @@ Calendar.reloadEvents = () ->
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
 	
+	# console.log($("#sidebar-menu").children())
+
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
+		# 日历ID
+		calendar:["jd2LivBKLNHDE5tk5","725Yv8SWBjZXXzH9s"]
 
 	eventsLoading = true
 	eventsSub.subscribe "calendar_events", params

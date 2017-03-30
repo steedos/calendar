@@ -10,7 +10,7 @@ Template.calendarSidebar.helpers
 	calendars: ()->
 		userId= Meteor.userId();
 		# console.log(userId);
-		return Calendars.find($or:[{"ownerId":userId},{"members":userId}])
+		return Calendars.find()
 	isCalendarOwner: ()->
 		return this.ownerId == Meteor.userId()
 
@@ -19,15 +19,11 @@ Template.calendarSidebar.onRendered ->
 	calendarsSub.subscribe "calendars"
 
 Template.calendarSidebar.events 
-	
-	'hover a.calendar-add':(event)->
-		console.log('enter');
-
 	'click a.calendar-add': (event)->
 		$('.btn.calendar-add').click();
 
 	'click i.calendar-edit': (event)->
-		console.log(Meteor.userId()+"   "+this.ownerId);
+		# console.log(Meteor.userId()+"   "+this.ownerId);
 		if Meteor.userId()!=this.ownerId
 			swal("无权限","该账号无权限操作此日历","warning");
 			return;
@@ -56,7 +52,7 @@ Template.calendarSidebar.events
 			# this._id取值无法删除，删除失败,this未定义
 			Calendars.remove {_id:calendar_id}, (error)->
 				if error
-					swal("删除失败","该账号无权限删除此日历","error");
+					swal("删除失败",error.message,"error");
 				else
 					swal("删除成功","日历已被删除！","success");
 		);

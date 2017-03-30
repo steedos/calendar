@@ -45,7 +45,7 @@ if (Meteor.isServer)
 
 #添加字段之前，强制给Calendar的OwnerId赋值
 Calendars.before.insert (userId,doc)->
-	console.log('userid:'+Meteor.userId());
+	# console.log('userid:'+Meteor.userId());
 	doc.ownerId=Meteor.userId();
 
 #删除后的操作，同时删除关联的event事件  after delete
