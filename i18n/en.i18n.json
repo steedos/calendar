@@ -1,6 +1,7 @@
 {
-	"sidebar_add_calendar": "Add Calendar",
+	"calendar_add_calendar": "Add a new Calendar",
 	"calendar_app_title": "Steedos Calendar",
-	"modal_add_calendar": "Add Calendar",
-	"modal_edit_calendar": "Edit Calendar"
+	"calendar_edit_calendar": "Edit Calendar",
+	"calendar_add_event":"Add a new event",
+	"calendar_edit_event":"Edit event"
 }

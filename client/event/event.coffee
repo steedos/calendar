@@ -21,15 +21,21 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
-	
-	# console.log($("#sidebar-menu").children())
+	calendars = []
+	objs = Calendars.find({})
+	objs.forEach (obj) ->
+		# console.log(obj)
+		calendars.push
+		calendar:obj._id
+    # console.log(calendars)
 
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
-		# 日历ID
-		calendar:["jd2LivBKLNHDE5tk5","725Yv8SWBjZXXzH9s"]
+		# 筛选日历ID
+		calendar:["bnoauDHTeWYAmujZG"]
+		# calendar:calendars
 
 	eventsLoading = true
 	eventsSub.subscribe "calendar_events", params
