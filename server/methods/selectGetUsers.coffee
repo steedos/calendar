@@ -3,10 +3,18 @@ Meteor.methods
 		this.unblock();
 		searchText = options.searchText;
 		values = options.values;
-		console.log(options)
 		users = []
 		if (searchText)
-			users = Meteor.users.find({username: {$regex: searchText}}, {limit: 5}).fetch();
+			users = Meteor.users.find(
+				{
+					$or: [
+						username: {$regex: searchText}
+						"profile.name": {$regex: searchText}
+						"emails.address": {$regex: searchText}
+					]
+				}, 
+				{limit: 5}
+			).fetch()
 		else if (values.length) 
 			users = Meteor.users.find({_id: {$in: values}}).fetch();	
 		users = Meteor.users.find({}, {limit: 5}).fetch();
