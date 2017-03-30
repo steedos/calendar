@@ -1,6 +1,13 @@
 @Events = new Mongo.Collection('calendar_events');
 
 Events.attachSchema new SimpleSchema 
+	title:  
+		type: String
+
+	description:  
+		type: String,
+		optional: true
+
 	start:  
 		type: Date
 		autoform: 
@@ -17,13 +24,18 @@ Events.attachSchema new SimpleSchema
 		defaultValue: true,
 		optional: true
 
-	title:  
-		type: String
-
-	description:  
+	calendar:
 		type: String,
-		optional: true
-
+		autoform:
+			type: "select"
+			options: ()->
+				options = []
+				objs = Calendars.find({})
+				objs.forEach (obj) ->
+					options.push
+						label: t(obj.title),
+						value: obj._id
+				return options 
 	ownerId:  
 		type: String,
 		optional: true

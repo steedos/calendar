@@ -3,14 +3,19 @@
 Calendars.attachSchema new SimpleSchema 
 	title:  
 		type: String
-	color:  
-		type: String
 	members:  
 		type: [String],
 		optional: true
 		autoform: 
 			omit: true
-
+	visibility:
+		type: String
+		allowedValues: ["private", "space","public"]
+		defaultValue: "private"
+	color:  
+		type: String
+		autoform:
+			type: "bootstrap-minicolors"
 	ownerId:  
 		type: String,
 		optional: true
