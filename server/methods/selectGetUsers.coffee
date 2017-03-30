@@ -8,21 +8,22 @@ Meteor.methods
 			users = Meteor.users.find(
 				{
 					$or: [
-						username: {$regex: searchText}
-						"profile.name": {$regex: searchText}
-						"emails.address": {$regex: searchText}
+						{"username": {$regex: searchText}},
+						{"name": {$regex: searchText}},
+						{"emails.address": {$regex: searchText}}
 					]
 				}, 
-				{limit: 5}
+				{limit: 10}
 			).fetch()
 		else if (values.length) 
 			users = Meteor.users.find({_id: {$in: values}}).fetch();	
-		users = Meteor.users.find({}, {limit: 5}).fetch();
-		
+		else
+			return []
+
 		results = []
 		_.each users, (user)->
-			if user.profile?.name
-				label = user.profile.name
+			if user.name
+				label = user.name
 			else if user.username
 				label = user.username
 			else
