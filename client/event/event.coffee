@@ -24,18 +24,13 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	calendars = []
 	objs = Calendars.find({})
 	objs.forEach (obj) ->
-		# console.log(obj)
-		calendars.push
-		calendar:obj._id
-    # console.log(calendars)
+		calendars.push(obj._id)
 
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
-		# 筛选日历ID
-		calendar:["bnoauDHTeWYAmujZG"]
-		# calendar:calendars
+		calendar:calendars
 
 	eventsLoading = true
 	eventsSub.subscribe "calendar_events", params

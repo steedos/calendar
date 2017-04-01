@@ -4,9 +4,13 @@ Events.attachSchema new SimpleSchema
 	title:  
 		type: String
 
-	description:  
-		type: String,
-		optional: true
+	members:  
+		type: [String],
+		autoform: 
+			type: "universe-select"
+			afFieldInput:
+				multiple: true
+				optionsMethod: "inviteGetUsers"
 
 	start:  
 		type: Date
@@ -35,7 +39,12 @@ Events.attachSchema new SimpleSchema
 					options.push
 						label: t(obj.title),
 						value: obj._id
-				return options 
+				return options
+	description:  
+		type: String,
+		optional: true
+
+
 	ownerId:  
 		type: String,
 		optional: true
@@ -54,3 +63,4 @@ if (Meteor.isServer)
 
 		remove: (userId, doc) ->
 			return true
+

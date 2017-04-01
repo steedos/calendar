@@ -3,5 +3,6 @@
 	"calendar_app_title": "Steedos Calendar",
 	"calendar_edit_calendar": "Edit Calendar",
 	"calendar_add_event":"Add a new event",
-	"calendar_edit_event":"Edit event"
+	"calendar_edit_event":"Edit event",
+	"calendar_info_calendar": "Calendar Infomation"
 }

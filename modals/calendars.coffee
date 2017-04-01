@@ -3,6 +3,7 @@
 Calendars.attachSchema new SimpleSchema 
 	title:  
 		type: String
+
 	members:  
 		type: [String],
 		autoform: 
@@ -10,18 +11,21 @@ Calendars.attachSchema new SimpleSchema
 			afFieldInput:
 				multiple: true
 				optionsMethod: "selectGetUsers"
+
 	visibility:
 		type: String
-		allowedValues: ["private", "space","public"]
+		allowedValues: ["private"]
 		defaultValue: "private"
+	
 	color:  
 		type: String
 		autoform:
 			type: "bootstrap-minicolors"
+
 	ownerId:  
 		type: String,
 		optional: true
-		autoform: 
+		autoform:
 			omit: true
 
 
@@ -42,15 +46,16 @@ if (Meteor.isServer)
 				return false
 			return true
 
+	#添加字段之前，强制给Calendar的OwnerId赋值
+	Calendars.before.insert (userId,doc)->
+		# console.log('userid:'+Meteor.userId());
+		doc.ownerId=Meteor.userId();
 
-#添加字段之前，强制给Calendar的OwnerId赋值
-Calendars.before.insert (userId,doc)->
-	# console.log('userid:'+Meteor.userId());
-	doc.ownerId=Meteor.userId();
-
-#删除后的操作，同时删除关联的event事件  after delete
-Calendars.after.remove (userId, doc)->
-	Events.remove({"calendar":doc._id});
+	#删除后的操作，同时删除关联的event事件  after delete
+	Calendars.before.remove (userId, doc)->
+		console.log (doc._id + '  111')
+		# 移除关联的events
+		Events.remove({"calendar":doc._id})
 
 
 	
