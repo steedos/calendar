@@ -42,7 +42,9 @@ Events.attachSchema new SimpleSchema
 				return options
 	description:  
 		type: String,
-		optional: true
+		optional: true,
+		autoform:
+			rows:2
 
 
 	ownerId:  

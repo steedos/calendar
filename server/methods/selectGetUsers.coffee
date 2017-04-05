@@ -41,7 +41,6 @@ Meteor.methods
 
 # 从calendar的members中选择成员（未实现）
 	inviteGetUsers: (options) ->
-		console.log ("options");
 		searchText = options.searchText;
 		values = options.values;
 		users = []

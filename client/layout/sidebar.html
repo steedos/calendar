@@ -10,7 +10,7 @@
         {{#each calendars}}
         <li>
           <a href="#">
-            <i class="fa fa-calendar"></i>
+            <i class="fa fa-calendar" style="color:{{color}}"></i>
             <span>{{title}}</span>
               <span class="pull-right-container">
               <div class="operate-box">
@@ -44,7 +44,7 @@
     {{_ "calendar_edit_calendar"}}
   {{/afModal}}
 
-  {{#afModal class="btn btn-primary calendar-show hidden" collection="Calendars" operation="update"}}
+  {{#afModal class="btn btn-primary calendar-show hidden" collection="Calendars"}}
     {{_ "calendar_info_calendar"}}
   {{/afModal}}
 
