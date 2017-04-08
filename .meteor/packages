@@ -41,7 +41,13 @@ vazco:universe-autoform-select
 kadira:flow-router
 kadira:blaze-layout
 meteorhacks:subs-manager
+dburles:collection-helpers
 
-steedos:base@0.0.5
-steedos:theme@0.0.7
+twbs:bootstrap
+steedos:adminlte
+steedos:base@0.0.6
+steedos:theme@0.0.10
 steedos:accounts@0.0.2 
+
+
+matb33:collection-hooks
