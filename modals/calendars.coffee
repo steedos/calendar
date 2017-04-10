@@ -1,6 +1,6 @@
 @Calendars = new Mongo.Collection('calendars');
 
-Calendars.attachSchema new SimpleSchema 
+Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String
 
@@ -28,6 +28,10 @@ Calendars.attachSchema new SimpleSchema
 		autoform:
 			omit: true
 
+Calendars.attachSchema Calendars._simpleSchema
+
+if Meteor.isClient
+	Calendars._simpleSchema.i18n("calendars");
 
 if (Meteor.isServer) 
 	Calendars.allow 
