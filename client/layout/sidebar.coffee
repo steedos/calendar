@@ -1,7 +1,6 @@
 import Calendar from '../core'
 
 calendarsDep = new Tracker.Dependency;
-calendarsSub = new SubsManager();
 calendarsRange = null
 calendarsLoading = false
 
@@ -16,7 +15,6 @@ Template.calendarSidebar.helpers
 
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
-	calendarsSub.subscribe "calendars"
 
 Template.calendarSidebar.events 
 	'click a.calendar-add': (event)->
@@ -33,7 +31,7 @@ Template.calendarSidebar.events
 	'click i.calendar-show': (event)->
 		Session.set("cmDoc", this);
 		$('.btn.calendar-show').click();
-
+		
 
 	'click i.calendar-delete': (event)->
 		if Meteor.userId()!=this.ownerId

@@ -49,10 +49,21 @@ if (Meteor.isServer)
 			if userId!=doc.ownerId
 				return false
 			return true
-
+		# 共用方法
+	AddOwnerId:(doc)->
+			console.log ("addenter")
+			isExit=false
+			doc.members.forEach (member) ->
+				if member==Meteor.userId()
+					isExit=true
+					return
+			if isExit==false
+				doc.members.push(Meteor.userId())
+			return
 	Calendars.before.update (userId, doc)->
 		# 移除关联的events
 		Events.remove({"calendar":doc._id})
+		# //Calendars.AddOwnerId(doc)
 		isExit=false
 		doc.members.forEach (member) ->
 			if member==Meteor.userId()
@@ -60,10 +71,10 @@ if (Meteor.isServer)
 				return
 		if isExit==false
 			doc.members.push(Meteor.userId())
-
 	#添加字段之前，强制给Calendar的OwnerId赋值,且
 	Calendars.before.insert (userId,doc)->
 		doc.ownerId=Meteor.userId()
+		# Calendars.AddOwnerId(doc)
 		isExit=false
 		doc.members.forEach (member) ->
 			if member==Meteor.userId()
@@ -71,12 +82,9 @@ if (Meteor.isServer)
 				return
 		if isExit==false
 			doc.members.push(Meteor.userId())
-			# console.log(doc.members)
-
-	# 成员添加OwnerId（判断：在没有选中的时候才添加）
-	# Calendars.after.insert (userId,doc)->
 
 	#删除后的操作，同时删除关联的event事件  after delete
 	Calendars.before.remove (userId, doc)->
 		# 移除关联的events
 		Events.remove({"calendar":doc._id})
+

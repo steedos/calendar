@@ -7,6 +7,8 @@ import 'fullcalendar/dist/gcal.js'
 import moment from 'moment'
 import Calendar from '../core'
 
+@moment = moment
+
 Template.calendarContainer.onRendered ->
 	Calendar.generateCalendar();
 
@@ -42,9 +44,7 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 			c.stop()
 
 Calendar.generateCalendar = ()->
-
 	if !$('#calendar').children().length
-
 		$('#calendar').fullCalendar
 			height: ()->
 				return $('#calendar').height()
@@ -59,6 +59,9 @@ Calendar.generateCalendar = ()->
 			editable: true
 			eventLimit: true
 			events: Calendar.getEventsData
+			timezone: "local"
+			# timezone:'America/Chicago'
+			locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->
 				copy = 
 					id: event._id
@@ -66,21 +69,25 @@ Calendar.generateCalendar = ()->
 					url: event.url
 					title: event.title
 				if event.start
-					copy.start = moment.utc(event.start)
+					# copy.start = moment.utc(event.start)
+					copy.start = event.start
 				if event.end
-					copy.end = moment.utc(event.end)
+					copy.end = event.end
 				return copy;
 			select: ( start, end, jsEvent, view, resource )->
+				console.log ('start'+new Date(start)+'   end'+end)
 				Session.set 'cmDoc', 
 				 	start: start.toDate()
 				 	end: end.toDate()
-				$('.btn.event-add').click();
+				$('.btn.event-add').click(); 
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne
 					_id: calEvent.id
 				if event
 					Session.set 'cmDoc', event
 					$('.btn.event-edit').click();
+					console.log ('start'+event.start+'   end'+event.end)
+
 
 		Events.find().observe
 			added: (id, fields) ->
@@ -92,5 +99,6 @@ Calendar.generateCalendar = ()->
 
 		Tracker.autorun ()->
 			Calendar.reloadEvents();
+
 	else
 		Calendar.reloadEvents();

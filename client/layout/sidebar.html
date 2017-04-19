@@ -10,6 +10,7 @@
         {{#each calendars}}
         <li>
           <a href="#">
+            <!-- <input type="checkbox" name="{{_id}}" value="checkbox" checked="checked"> -->
             <i class="fa fa-calendar" style="color:{{color}}"></i>
             <span>{{title}}</span>
               <span class="pull-right-container">
@@ -44,7 +45,7 @@
     {{_ "calendar_edit_calendar"}}
   {{/afModal}}
 
-  {{#afModal class="btn btn-primary calendar-show hidden" collection="Calendars"}}
+  {{#afModal class="btn btn-primary calendar-show hidden" collection="Calendars" operation="disabled"}}
     {{_ "calendar_info_calendar"}}
   {{/afModal}}
 

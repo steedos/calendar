@@ -12,6 +12,12 @@ Events.attachSchema new SimpleSchema
 				multiple: true
 				optionsMethod: "inviteGetUsers"
 
+	# strstart:
+	# 	type:String
+
+	# strend:
+	# 	type:String
+
 	start:  
 		type: Date
 		autoform: 
@@ -39,7 +45,11 @@ Events.attachSchema new SimpleSchema
 					options.push
 						label: t(obj.title),
 						value: obj._id
+				# options[1].select='select'
 				return options
+				
+
+
 	description:  
 		type: String,
 		optional: true,
