@@ -1,4 +1,6 @@
 @Events = new Mongo.Collection('calendar_objects');
+uuid = require('uuid');
+icalendar = require('icalendar');
 
 Events.attachSchema new SimpleSchema 
 	title:  
@@ -101,7 +103,7 @@ Events.attachSchema new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
-			
+
 	calendardata:
 		type: String,
 		optional: true
@@ -122,19 +124,15 @@ if (Meteor.isServer)
 
 
 	Events.before.update (userId, doc, fieldNames, modifier, options)->
-		modifier.$set = modifier.$set || {};
-		modifier.$unset = modifier.$unset || {};
-		
-		if modifier.$set.members and modifier.$set.members.indexOf(userId) < 0
-			modifier.$set.members.push(userId)
 
-	#添加字段之前，强制给Calendar的OwnerId赋值,且
-	Events.before.insert (userId,doc)->
-		doc.ownerId=Meteor.userId()
-		if doc.members.indexOf(userId) < 0
-			 doc.members.push(userId)
-		
-		doc.components = ["VEVENT", "VTODO"]
+
+	Events.before.insert (userId, doc)->
+		doc.componenttype = "VEVENT"
+		doc._id = uuid();
+		vevent = new icalendar.VEvent(doc._id);
+		vevent.setSummary(doc.title);
+		vevent.setDate(doc.start, doc.end);
+		doc.calendardata = vevent.toString();
 
 	#删除后的操作，同时删除关联的event事件  after delete
 	Events.before.remove (userId, doc)->
