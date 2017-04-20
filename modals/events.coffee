@@ -1,4 +1,4 @@
-@Events = new Mongo.Collection('calendar_events');
+@Events = new Mongo.Collection('calendar_objects');
 
 Events.attachSchema new SimpleSchema 
 	title:  
@@ -11,12 +11,6 @@ Events.attachSchema new SimpleSchema
 			afFieldInput:
 				multiple: true
 				optionsMethod: "inviteGetUsers"
-
-	# strstart:
-	# 	type:String
-
-	# strend:
-	# 	type:String
 
 	start:  
 		type: Date
@@ -34,7 +28,7 @@ Events.attachSchema new SimpleSchema
 		defaultValue: true,
 		optional: true
 
-	calendar:
+	calendarid:
 		type: String,
 		autoform:
 			type: "select"
@@ -48,14 +42,11 @@ Events.attachSchema new SimpleSchema
 				# options[1].select='select'
 				return options
 				
-
-
 	description:  
 		type: String,
 		optional: true,
 		autoform:
 			rows:2
-
 
 	ownerId:  
 		type: String,
@@ -63,6 +54,59 @@ Events.attachSchema new SimpleSchema
 		autoform: 
 			omit: true
 
+	componenttype:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+
+	etag:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+
+	firstoccurence:
+		type: Number,
+		optional: true
+		autoform: 
+			omit: true
+
+	lastmodified:
+		type: Number,
+		optional: true
+		autoform: 
+			omit: true
+
+	lastoccurence:
+		type: Number,
+		optional: true
+		autoform: 
+			omit: true
+
+	size:
+		type: Number,
+		optional: true
+		autoform: 
+			omit: true
+
+	uid:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+
+	uri:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+			
+	calendardata:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
 
 
 if (Meteor.isServer) 
@@ -75,4 +119,23 @@ if (Meteor.isServer)
 
 		remove: (userId, doc) ->
 			return true
+
+
+	Events.before.update (userId, doc, fieldNames, modifier, options)->
+		modifier.$set = modifier.$set || {};
+		modifier.$unset = modifier.$unset || {};
+		
+		if modifier.$set.members and modifier.$set.members.indexOf(userId) < 0
+			modifier.$set.members.push(userId)
+
+	#添加字段之前，强制给Calendar的OwnerId赋值,且
+	Events.before.insert (userId,doc)->
+		doc.ownerId=Meteor.userId()
+		if doc.members.indexOf(userId) < 0
+			 doc.members.push(userId)
+		
+		doc.components = ["VEVENT", "VTODO"]
+
+	#删除后的操作，同时删除关联的event事件  after delete
+	Events.before.remove (userId, doc)->
 
