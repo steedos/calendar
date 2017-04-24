@@ -145,11 +145,11 @@ if (Meteor.isServer)
 			member = doc.members[i]
 			vevent.addProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
 		if doc.allDay==true
-			vevent.addProperty("DTSTART;VALUE=DATE",new Date(doc.start).Format("yyyymmdd"));#TZID得改
-			vevent.addProperty("DTEND;VALUE=DATE",doc.end.getDate());
+			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
+			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
 		else
-			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",doc.start);#TZID得改
-			vevent.addProperty("DTEND;TZID=Asia/Shanghai",doc.end);
+			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDThhmmss"));#TZID得改
+			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDThhmmss"));
 		vevent.addProperty("SEQUENCE",3);#得改
 		#doc.calendarid = doc.obj._id;
 		myDate = new Date();
