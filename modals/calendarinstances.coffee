@@ -1,12 +1,6 @@
 @calendarinstances = new Mongo.Collection('calendar_instances');
 icalendar = require('icalendar');
-
 calendarinstances.attachSchema new SimpleSchema 
-	_id:  
-		type: String
-		optional: true
-		autoform: 
-			omit: true
 
 	principaluri:  
 		type: String
@@ -21,7 +15,7 @@ calendarinstances.attachSchema new SimpleSchema
 			omit: true
 	
 	transparent:  
-		type: Number
+		type: Boolean
 		optional: true
 		autoform: 
 			omit: true
@@ -70,25 +64,26 @@ calendarinstances.attachSchema new SimpleSchema
 			omit: true
 
 	calendarcolor:
-		type: Number,
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+
+	share_herf:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+
+	share_displayname:
+		type: String,
 		optional: true
 		autoform: 
 			omit: true
 
 if (Meteor.isServer) 
 	calendarinstances.allow 
-		calendarinstances.insert: (userId, doc) ->
-			principaluri:"principals/" + userId,
-			uri:doc.ownerId,
-			transparent:1,
-			access:1,
-			share_invitestatus:2,
-			calendarid:doc_id,
-			displayname:doc.title,
-			description:"null",
-			timezone:"Asia/Shanghai",
-			calendarorder:'',
-			calendarcolor:doc.color
+		insert: (userId, doc) ->
 			return true
 
 		update: (userId, doc) ->
@@ -97,4 +92,5 @@ if (Meteor.isServer)
 		remove: (userId, doc) ->
 			return true
 
+    
 		

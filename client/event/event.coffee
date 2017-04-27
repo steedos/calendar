@@ -33,18 +33,21 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 		end: end.toDate()
 		timezone: timezone
 		calendar:calendars
-
+	console.log JSON.stringify(params)
 	eventsLoading = true
-	eventsSub.subscribe "calendar_events", params
+	eventsSub.subscribe "calendar_objects", params
 
 	Tracker.autorun (c)->
 		if eventsSub.ready()
-			events = Events.find().fetch();
-			callback(events);
+			events = Events.find().fetch()
+			console.log events
+			callback(events)
 			c.stop()
 
 Calendar.generateCalendar = ()->
+	# console.log $('#calendar').children().length
 	if !$('#calendar').children().length
+		# console.log event
 		$('#calendar').fullCalendar
 			height: ()->
 				return $('#calendar').height()
@@ -59,20 +62,20 @@ Calendar.generateCalendar = ()->
 			editable: true
 			eventLimit: true
 			events: Calendar.getEventsData
-			timezone: "local"
-			# timezone:'America/Chicago'
-			locale: Session.get("steedos-locale")
+			# timezone: "local"
+			# locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->
+				console.log event
 				copy = 
 					id: event._id
 					allDay: event.allDay
-					url: event.url
 					title: event.title
+					url:event.url
 				if event.start
-					# copy.start = moment.utc(event.start)
-					copy.start = event.start
+					copy.start = moment.utc(event.start)
+					# copy.start =  '2017-04-26'
 				if event.end
-					copy.end = event.end
+					copy.start = moment.utc(event.end)
 				return copy;
 			select: ( start, end, jsEvent, view, resource )->
 				console.log ('start'+new Date(start)+'   end'+end)

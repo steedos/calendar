@@ -1,6 +1,7 @@
 @Events = new Mongo.Collection('calendar_objects');
 uuid = require('uuid');
 MD5 = require('MD5');
+jstz = require('jstz');
 icalendar = require('icalendar');
 
 Events.attachSchema new SimpleSchema 
@@ -58,7 +59,7 @@ Events.attachSchema new SimpleSchema
 			omit: true
 
 	componenttype:
-		type: String,
+		type: [String],
 		optional: true
 		autoform: 
 			omit: true
@@ -111,7 +112,7 @@ Events.attachSchema new SimpleSchema
 		autoform: 
 			omit: true
 
-
+timezone = jstz.determine();
 if (Meteor.isServer) 
 	Events.allow 
 		insert: (userId, doc) ->
@@ -122,14 +123,9 @@ if (Meteor.isServer)
 
 		remove: (userId, doc) ->
 			return true
-
-
-	Events.before.update (userId, doc, fieldNames, modifier, options)->
-
-
 	Events.before.insert (userId, doc)->
 		console.log doc
-		doc.componenttype = "VEVENT"
+		doc.componenttype = ["VEVENT","VTODO"]
 		doc._id = uuid()
 		doc.uri = doc._id + ".ics"
 		vevent = new icalendar.VEvent(doc._id);
@@ -163,11 +159,20 @@ if (Meteor.isServer)
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length
 		doc.uid = doc._id
-	#删除后的操作，同时删除关联的event事件  after delete
-	Events.before.remove (userId, doc)->
-
+	Events.after.insert (userId, doc)->
+		Calendar.addChange(doc.calendarid,doc._id,1);
 
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
 		console.log "doc:#{doc}"
 		modifier.$set = modifier.$set || {};
 
+	Events.after.update (userId, doc, fieldNames, modifier, options) ->
+		Calendar.addChange(doc.calendarid,doc._id,2);
+	
+	#删除后的操作，同时删除关联的event事件  after delete
+	Events.before.remove (userId, doc)->
+	Events.after.remove (userId, doc)->
+		Calendar.addChange(doc.calendarid,doc._id,3);
+
+
+	

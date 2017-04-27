@@ -1,9 +1,9 @@
-Meteor.publish "calendar_events", (params)->
+Meteor.publish "calendar_objects", (params)->
 	selector =
 		$or: [
 			end: {$gt: params.start},
 			start: {$lt: params.end},
-			calendar:{$in: params.calendar}
+			calendarid:{$in: params.calendar}
 		]
 
-	return Events.find(selector);
+	return Events.find()
