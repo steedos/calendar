@@ -33,7 +33,7 @@ Calendars._simpleSchema = new SimpleSchema
 		optional: true
 		autoform:
 			omit: true
-	# 
+
 	components:
 		type: [String],
 		optional: true
@@ -78,10 +78,9 @@ if (Meteor.isServer)
 		else
 			transp = true;
 		steedosId = Meteor.users.findOne({_id:userId}).steedos_id
-		console.log "steedosId:#{steedosId}==============="
 		calendarinstances.insert
 				principaluri:"principals/" + steedosId,
-				uri:doc.ownerId,
+				uri:doc.title + doc._id,
 				transparent:transp,
 				access:1,
 				share_invitestatus:2,
@@ -97,7 +96,7 @@ if (Meteor.isServer)
 			if member != userId
 					calendarinstances.insert
 						principaluri:"principals/" + steedosId,
-						uri:doc.ownerId,
+						uri:doc.title + doc._id,
 						transparent:transp,
 						access:3,
 						share_invitestatus:4,
@@ -109,7 +108,7 @@ if (Meteor.isServer)
 						calendarcolor: doc.color,
 						share_herf:"mailto:" + steedosId,
 						share_displayname: steedosId
-					Calendar.addChange(doc._id,null,2);
+					#Calendar.addChange(doc._id,null,2);
 	#删除后的操作，同时删除关联的event事件  after delete
 	Calendars.before.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};

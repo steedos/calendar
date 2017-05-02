@@ -4,7 +4,6 @@ Meteor.startup ->
 	
 @Calendar = 
 	addChange : (calendarId, objectUri, operation)->
-		oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken?1;
 		calendarchanges.insert
 			uri:objectUri,
 			syntoken: oldsynctoken,
