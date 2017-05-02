@@ -33,14 +33,14 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 		end: end.toDate()
 		timezone: timezone
 		calendar:calendars
-	console.log JSON.stringify(params)
+	# console.log JSON.stringify(params)
 	eventsLoading = true
 	eventsSub.subscribe "calendar_objects", params
 
 	Tracker.autorun (c)->
 		if eventsSub.ready()
 			events = Events.find().fetch()
-			console.log events
+			# console.log events
 			callback(events)
 			c.stop()
 
@@ -65,7 +65,7 @@ Calendar.generateCalendar = ()->
 			# timezone: "local"
 			# locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->
-				console.log event
+				# console.log event
 				copy = 
 					id: event._id
 					allDay: event.allDay

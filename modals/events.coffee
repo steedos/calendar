@@ -3,7 +3,7 @@ uuid = require('uuid');
 MD5 = require('MD5');
 jstz = require('jstz');
 icalendar = require('icalendar');
-
+sync=1
 Events.attachSchema new SimpleSchema 
 	title:  
 		type: String
@@ -59,7 +59,7 @@ Events.attachSchema new SimpleSchema
 			omit: true
 
 	componenttype:
-		type: [String],
+		type: String,
 		optional: true
 		autoform: 
 			omit: true
@@ -125,18 +125,18 @@ if (Meteor.isServer)
 			return true
 	Events.before.insert (userId, doc)->
 		console.log doc
-		doc.componenttype = ["VEVENT","VTODO"]
-		doc._id = uuid()
+		doc.componenttype = "VEVENT"
+		#doc._id = uuid()
 		doc.uri = doc._id + ".ics"
 		vevent = new icalendar.VEvent(doc._id);
-		vevent.addProperty("DESCRIPTION",doc.description);
+		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
 		#crated 创建的时间，暂时这样写，得改
 		vevent.addProperty("CREATED",new Date());
 		vevent.addProperty("LAST-MODIFIED",new Date());
 		vevent.setSummary(doc.title);
 		vevent.addProperty("ORGANIZER",Meteor.users.findOne({_id:userId}).steedos_id);
-		vevent.addProperty("LOCATION","Shanghai")
+		vevent.setLocation("Shanghai");
 		for member,i in doc.members 
 			member = doc.members[i]
 			vevent.addProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
@@ -147,32 +147,54 @@ if (Meteor.isServer)
 			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDThhmmss"));#TZID得改
 			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDThhmmss"));
 		vevent.addProperty("SEQUENCE",3);#得改
-		#doc.calendarid = doc.obj._id;
+		#doc.calendarid = doc._id;
 		myDate = new Date();
 		doc.lastmodified = parseInt(myDate.getTime());
 		myDate = new Date(doc.start)
 		doc.firstoccurence = parseInt(myDate.getTime());
 		myDate = new Date (doc.end)
 		doc.lastoccurence = parseInt(myDate.getTime());
-
 		doc.calendardata = vevent.toString();
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length
 		doc.uid = doc._id
+	
 	Events.after.insert (userId, doc)->
-		Calendar.addChange(doc.calendarid,doc._id,1);
+		if sync==1
+			Calendar.addChange(doc.calendarid,doc._id,1);
 
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
-		console.log "doc:#{doc}"
 		modifier.$set = modifier.$set || {};
-
+		
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
+		title = doc.title
+		members = doc.members
+		start = doc.start
+		end =doc.end
+		allDay = doc.allDay
+		calendarid = doc.calendarid
+		description = doc.description
+		ownerId = doc.ownerId
+		_id = doc._id
+		sync=0
+		Events.remove({"_id":_id})
+		Events.insert
+			_id:_id,
+			title:title,
+			members:members,
+			start:start,
+			end: end,
+			allDay:allDay,
+			calendarid:calendarid,
+			description:description
 		Calendar.addChange(doc.calendarid,doc._id,2);
 	
 	#删除后的操作，同时删除关联的event事件  after delete
 	Events.before.remove (userId, doc)->
 	Events.after.remove (userId, doc)->
-		Calendar.addChange(doc.calendarid,doc._id,3);
+		if sync==1	
+			Calendar.addChange(doc.calendarid,doc._id,3);
+
 
 
 	

@@ -70,6 +70,7 @@ if (Meteor.isServer)
 			 doc.members.push(userId)		
 		doc.components = ["VEVENT","VTODO"]
 		doc.synctoken = 1
+	
 	Calendars.after.insert (userId, doc) ->
 		#console.log JSON.stringify(doc)
 		if doc.visibility == 'private'
@@ -90,9 +91,8 @@ if (Meteor.isServer)
 				timezone:timezone.name(),
 				calendarorder:3,
 				calendarcolor: doc.color
-		Calendar.addChange(doc._id,null,1);
+		#Calendar.addChange(doc._id,null,1);
 		for member,i in doc.members 
-			member = doc.members[i]
 			steedosId = Meteor.users.findOne({_id:member})?.steedos_id
 			if member != userId
 					calendarinstances.insert
@@ -150,7 +150,7 @@ if (Meteor.isServer)
 	Calendars.after.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
 		calendarinstances.update({calendarid:doc._id},{$set:{displayname:doc.title,calendarcolor:doc.color}});
-
+		#Calendar.addChange(doc._id,null,2);死循环
 	Calendars.before.remove (userId, doc)->
 		# 移除关联的events
 	Calendars.after.remove (userId, doc)->
