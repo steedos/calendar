@@ -70,6 +70,7 @@ if (Meteor.isServer)
 			 doc.members.push(userId)		
 		doc.components = ["VEVENT","VTODO"]
 		doc.synctoken = 1
+		return
 	
 	Calendars.after.insert (userId, doc) ->
 		#console.log JSON.stringify(doc)
@@ -109,6 +110,8 @@ if (Meteor.isServer)
 						share_herf:"mailto:" + steedosId,
 						share_displayname: steedosId
 					#Calendar.addChange(doc._id,null,2);
+		return
+		
 	#删除后的操作，同时删除关联的event事件  after delete
 	Calendars.before.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
@@ -144,18 +147,24 @@ if (Meteor.isServer)
 					calendarcolor: doc.color,
 					share_herf:"mailto:" + steedosId,
 					share_displayname: steedosId
+		return
 		
 			
 	Calendars.after.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
 		calendarinstances.update({calendarid:doc._id},{$set:{displayname:doc.title,calendarcolor:doc.color}});
 		#Calendar.addChange(doc._id,null,2);死循环
+		return
+
 	Calendars.before.remove (userId, doc)->
 		# 移除关联的events
+		return
+
 	Calendars.after.remove (userId, doc)->
 		calendarinstances.remove({"calendarid" : doc._id});
 		Events.remove({"calendarid":doc._id});
 		calendarchanges.remove({"calendarid":doc._id});
+		return
 
 
 

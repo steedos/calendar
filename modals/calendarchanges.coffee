@@ -1,5 +1,5 @@
 @calendarchanges = new Mongo.Collection('calendar_changes');
-icalendar = require('icalendar');
+
 calendarchanges.attachSchema new SimpleSchema 
 
 	uri:  
@@ -24,13 +24,15 @@ calendarchanges.attachSchema new SimpleSchema
 		optional : true
 		autoform:
 			omit:true
-	if (Meteor.isServer) 
-		calendarchanges.allow 
-			insert: (userId, doc) ->
-				return true
 
-			update: (userId, doc) ->
-				return true
+			
+if (Meteor.isServer) 
+	calendarchanges.allow 
+		insert: (userId, doc) ->
+			return true
 
-			remove: (userId, doc) ->
-				return true
+		update: (userId, doc) ->
+			return true
+
+		remove: (userId, doc) ->
+			return true

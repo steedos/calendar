@@ -1,7 +1,6 @@
 @Events = new Mongo.Collection('calendar_objects');
 uuid = require('uuid');
 MD5 = require('MD5');
-jstz = require('jstz');
 icalendar = require('icalendar');
 Events.attachSchema new SimpleSchema 
 	title:  
@@ -57,6 +56,24 @@ Events.attachSchema new SimpleSchema
 		autoform: 
 			omit: true
 
+	alarms:
+		type: [String],
+		optional: true
+		autoform: 
+			type: "select-multiple"
+			options: [
+				{label: "事件发生时", value: "-PT0S"},
+				{label: "5 分钟前", value: "-PT5M"},
+				{label: "10 分钟前", value: "-PT10M"},
+				{label: "15 分钟前", value: "-PT15M"},
+				{label: "30 分钟前", value: "-PT30M"},
+				{label: "1 小时前", value: "-PT1H"},
+				{label: "2 小时前", value: "-PT2H"},
+				{label: "1 天前", value: "-P1D"},
+				{label: "2 天前", value: "-P2D"}
+			]
+
+
 	componenttype:
 		type: String,
 		optional: true
@@ -111,7 +128,7 @@ Events.attachSchema new SimpleSchema
 		autoform: 
 			omit: true
 
-timezone = jstz.determine();
+
 if (Meteor.isServer) 
 	Events.allow 
 		insert: (userId, doc) ->
@@ -122,6 +139,7 @@ if (Meteor.isServer)
 
 		remove: (userId, doc) ->
 			return true
+
 	Events.before.insert (userId, doc)->
 		console.log doc
 		doc.componenttype = "VEVENT"
@@ -160,12 +178,15 @@ if (Meteor.isServer)
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length
 		doc.uid = doc._id
+		return
 	
 	Events.after.insert (userId, doc)->
-			Calendar.addChange(doc.calendarid,doc._id,1);
+		Calendar.addChange(doc.calendarid,doc._id,1);
+		return
 
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
+		return
 		
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
 		myDate = new Date();
@@ -174,49 +195,42 @@ if (Meteor.isServer)
 		firstoccurence = parseInt(myDate.getTime());
 		myDate = new Date (doc.end);
 		lastoccurence = parseInt(myDate.getTime());
-		oldcalendardata = Events.findOne({_id:doc._id}).calendardata;
-		console.log oldcalendardata;
-		ical = icalendar.parse_calendar(oldcalendardata);
-		console.log ical
-		vevent = ical.events();
-		vevent[0].setProperty("LAST-MODIFIED",new Date());
-		vevent[0].setDescription(doc.description);	
-		vevent[0].setSummary(doc.title);
+		# oldcalendardata = Events.findOne({_id:doc._id}).calendardata;
+		# console.log oldcalendardata;
+		# ical = icalendar.parse_calendar(oldcalendardata);
+		ical = new icalendar.iCalendar();
+		vevent = new icalendar.VEvent(doc._id);
+		ical.addComponent(vevent);
+		vevent.setProperty("LAST-MODIFIED",new Date());
+		vevent.setDescription(doc.description);	
+		vevent.setSummary(doc.title);
 		for member,i in doc.members 
 			member = doc.members[i]
-			vevent[0].setProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
+			vevent.setProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
 		if doc.allDay==true
-			vevent[0].setProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
-			vevent[0].setProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
+			vevent.setProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
+			vevent.setProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
 		else
-			vevent[0].setProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDThhmmss"));#TZID得改
-			vevent[0].setProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDThhmmss"));
-		newcalendardata = vevent[0].toString();
+			vevent.setProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDThhmmss"));#TZID得改
+			vevent.setProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDThhmmss"));
+		newcalendardata = ical.toString();
 		size = newcalendardata.length
-		Events.direct.update({_id:_id},{$set:{
-			_id:doc._id,
-			title:doc.title,
-			members:members,
-			start:doc.start,
-			end: doc.end,
-			allDay:doc.allDay,
-			calendarid:doc.calendarid,
-			description:doc.description,
+		Events.direct.update {_id:doc._id}, $set:
 			lastmodified: lastmodified,
 			firstoccurence:firstoccurence,
 			lastoccurence: lastoccurence,
 			etag: MD5(newcalendardata),
-			size: size
-			}})	
+			size: size,
+			calendardata: newcalendardata
 
 		Calendar.addChange(doc.calendarid,doc._id,2);
+		return
 	
 	
 	#删除后的操作，同时删除关联的event事件  after delete
 	Events.before.remove (userId, doc)->
+		return
+
 	Events.after.remove (userId, doc)->
 		Calendar.addChange(doc.calendarid,doc._id,3);
-
-
-
-	
+		return
