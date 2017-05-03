@@ -174,7 +174,7 @@ if (Meteor.isServer)
 		doc.firstoccurence = parseInt(myDate.getTime());
 		myDate = new Date (doc.end)
 		doc.lastoccurence = parseInt(myDate.getTime());
-		doc.calendardata = vevent.toString();
+		doc.calendardata = ical.toString();
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length
 		doc.uid = doc._id
