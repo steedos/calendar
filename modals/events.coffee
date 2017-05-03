@@ -127,7 +127,10 @@ if (Meteor.isServer)
 		doc.componenttype = "VEVENT"
 		doc._id = uuid()
 		doc.uri = doc._id + ".ics"
+		ical = new icalendar.iCalendar();
 		vevent = new icalendar.VEvent(doc._id);
+		#Vtimezone = new iCalendar.VTimezone()；
+		ical.addComponent(vevent);
 		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
 		#crated 创建的时间，暂时这样写，得改
