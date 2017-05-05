@@ -72,8 +72,6 @@ Events.attachSchema new SimpleSchema
 				{label: "1 天前", value: "-P1D"},
 				{label: "2 天前", value: "-P2D"}
 			]
-
-
 	componenttype:
 		type: String,
 		optional: true
@@ -147,8 +145,12 @@ if (Meteor.isServer)
 		doc.uri = doc._id + ".ics"
 		ical = new icalendar.iCalendar();
 		vevent = new icalendar.VEvent(doc._id);
+		#valarm = new vevent.VAlarm();
 		#Vtimezone = new iCalendar.VTimezone()；
 		ical.addComponent(vevent);
+		alarm = vevent.addComponent('VALARM');
+		alarm.addProperty('ACTION', 'DISPLAY');
+		alarm.addProperty('TRIGGER;VALUE = DURATION', '-PT10M');
 		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
 		#crated 创建的时间，暂时这样写，得改
