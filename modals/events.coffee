@@ -139,7 +139,6 @@ if (Meteor.isServer)
 			return true
 
 	Events.before.insert (userId, doc)->
-		console.log doc
 		doc.componenttype = "VEVENT"
 		doc._id = uuid()
 		doc.uri = doc._id + ".ics"
@@ -150,7 +149,7 @@ if (Meteor.isServer)
 		ical.addComponent(vevent);
 		alarm = vevent.addComponent('VALARM');
 		alarm.addProperty('ACTION', 'DISPLAY');
-		alarm.addProperty('TRIGGER;VALUE = DURATION', '-PT10M');
+		alarm.addProperty('TRIGGER;VALUE = DURATION', doc.alarms);
 		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
 		#crated 创建的时间，暂时这样写，得改
@@ -178,12 +177,13 @@ if (Meteor.isServer)
 		doc.lastoccurence = parseInt(myDate.getTime());
 		doc.calendardata = ical.toString();
 		doc.etag = MD5(doc.calendardata);
-		doc.size = doc.calendardata.length
+		doc.size = doc.calendardata.length;
 		doc.uid = doc._id
 		return
 	
 	Events.after.insert (userId, doc)->
-		Calendar.addChange(doc.calendarid,doc._id,1);
+		starttoken = Calendars.findOne({_id:doc.calendarid}).synctoken;
+		Calendar.addChange(doc.calendarid,starttoken,10,doc.uri,1);
 		return
 
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -225,7 +225,8 @@ if (Meteor.isServer)
 			size: size,
 			calendardata: newcalendardata
 
-		Calendar.addChange(doc.calendarid,doc._id,2);
+		starttoken = Calendars.findOne({_id:doc.calendarid}).synctoken;
+		Calendar.addChange(doc.calendarid,starttoken,10,doc.uri,2)
 		return
 	
 	
@@ -234,5 +235,6 @@ if (Meteor.isServer)
 		return
 
 	Events.after.remove (userId, doc)->
-		Calendar.addChange(doc.calendarid,doc._id,3);
+		starttoken = Calendars.findOne({_id:doc.calendarid}).synctoken;
+		Calendar.addChange(doc.calendarid,starttoken,1,doc.uri,3)
 		return

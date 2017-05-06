@@ -1,5 +1,5 @@
 @Calendars = new Mongo.Collection('calendars');
-jstz = require('jstz');
+#jstz = require('jstz');
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String
@@ -61,7 +61,7 @@ if (Meteor.isServer)
 			if userId!=doc.ownerId
 				return false
 			return true
-	timezone = jstz.determine();
+	#timezone = jstz.determine();
 	
 	#添加字段之前，强制给Calendar的OwnerId赋值,且
 	Calendars.before.insert (userId,doc)->
@@ -73,43 +73,15 @@ if (Meteor.isServer)
 		return
 	
 	Calendars.after.insert (userId, doc) ->
-		#console.log JSON.stringify(doc)
-		if doc.visibility == 'private'
-			transp = false;
-		else
-			transp = true;
-		steedosId = Meteor.users.findOne({_id:userId}).steedos_id
-		calendarinstances.insert
-				principaluri:"principals/" + steedosId,
-				uri:doc.title + doc._id,
-				transparent:transp,
-				access:2,
-				share_invitestatus:2,
-				calendarid: doc._id,
-				displayname:doc.title,
-				description:"null",
-				timezone:timezone.name(),
-				calendarorder:3,
-				calendarcolor: doc.color
-		#Calendar.addChange(doc._id,null,1);
+		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		Calendar.addInstance(userId,doc,steedosId,"","");
 		for member,i in doc.members 
-			steedosId = Meteor.users.findOne({_id:member})?.steedos_id
 			if member != userId
-					calendarinstances.insert
-						principaluri:"principals/" + steedosId,
-						uri:doc.title + doc._id,
-						transparent:transp,
-						access:2,
-						share_invitestatus:4,
-						calendarid: doc._id,
-						displayname:doc.title,
-						description:"null",
-						timezone:timezone.name(),
-						calendarorder:3,
-						calendarcolor: doc.color,
-						share_herf:"mailto:" + steedosId,
-						share_displayname: steedosId
-					#Calendar.addChange(doc._id,null,2);
+				steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
+				herf="mailto:" + steedosId;
+				displayname=steedosId;
+				Calendar.addInstance(userId,doc,steedosId,herf,displayname);
+		Calendar.addChange(doc._id,1,doc.members.length-1 ,null,2);
 		return
 		
 	#删除后的操作，同时删除关联的event事件  after delete
@@ -124,46 +96,32 @@ if (Meteor.isServer)
 		for member, i in subMembers
 			steedosId = Meteor.users.findOne({_id:member})?.steedos_id
 			calendarinstances.remove({"share_displayname":steedosId},{"calendarid":doc._id});
-
-		if doc.visibility == 'private'
-			transp = false;
-		else
-			transp = true;
 		for member ,i in addMembers
 			member = addMembers[i]
 			if member != doc.ownerId
 				steedosId = Meteor.users.findOne({_id:member})?.steedos_id
-				calendarinstances.insert
-					principaluri:"principals/" + steedosId,
-					uri:doc.ownerId,
-					transparent:transp,
-					access:3,
-					share_invitestatus:4,
-					calendarid: doc._id,
-					displayname:doc.title,
-					description:"null",
-					timezone:timezone.name(),
-					calendarorder:3,
-					calendarcolor: doc.color,
-					share_herf:"mailto:" + steedosId,
-					share_displayname: steedosId
+				herf="mailto:" + steedosId;
+				displayname=steedosId;
+				Calendar.addInstance(userId,doc,steedosId,herf,displayname);
 		return
 		
 			
 	Calendars.after.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
 		calendarinstances.update({calendarid:doc._id},{$set:{displayname:doc.title,calendarcolor:doc.color}});
-		#Calendar.addChange(doc._id,null,2);死循环
+		starttoken = Calendars.findOne({_id:doc._id}).synctoken;
+		Calendar.addChange(doc._id,starttoken,1, null,2);
 		return
 
 	Calendars.before.remove (userId, doc)->
 		# 移除关联的events
+		Events.remove({"calendarid":doc._id});
+		calendarchanges.remove({"calendarid":doc._id});
+		calendarinstances.remove({"calendarid" : doc._id});	
 		return
 
 	Calendars.after.remove (userId, doc)->
-		calendarinstances.remove({"calendarid" : doc._id});
-		Events.remove({"calendarid":doc._id});
-		calendarchanges.remove({"calendarid":doc._id});
+		
 		return
 
 

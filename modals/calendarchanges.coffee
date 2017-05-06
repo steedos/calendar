@@ -1,5 +1,5 @@
 @calendarchanges = new Mongo.Collection('calendar_changes');
-
+MD5 = require('MD5');
 calendarchanges.attachSchema new SimpleSchema 
 
 	uri:  
@@ -36,3 +36,5 @@ if (Meteor.isServer)
 
 		remove: (userId, doc) ->
 			return true
+calendarchanges.before.insert (userId, doc)->
+	doc._id = MD5(doc._id);
