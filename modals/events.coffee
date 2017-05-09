@@ -157,7 +157,7 @@ if (Meteor.isServer)
 	
 	Events.after.insert (userId, doc)->
 		starttoken = Calendars.findOne({_id:doc.calendarid}).synctoken;
-		Calendar.addChange(doc.calendarid,starttoken,10,doc.uri,1);
+		Calendar.addChange(doc.calendarid,doc.uri,1);
 		return
 
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -184,7 +184,7 @@ if (Meteor.isServer)
 			calendardata: newcalendardata
 
 		starttoken = Calendars.findOne({_id:doc.calendarid}).synctoken;
-		Calendar.addChange(doc.calendarid,starttoken,10,doc.uri,2)
+		Calendar.addChange(doc.calendarid,doc.uri,2)
 		return
 	
 	
@@ -194,5 +194,5 @@ if (Meteor.isServer)
 
 	Events.after.remove (userId, doc)->
 		starttoken = Calendars.findOne({_id:doc.calendarid}).synctoken;
-		Calendar.addChange(doc.calendarid,starttoken,1,doc.uri,3)
+		Calendar.addChange(doc.calendarid,doc.uri,3)
 		return

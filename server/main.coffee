@@ -3,18 +3,17 @@ icalendar = require('icalendar');
 Meteor.startup ->
 	
 @Calendar = 
-	addChange : (calendarId,startToken,tokenCount, objectUri, operation)->
-		#oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
-		i = 1
-		while i <= tokenCount
-			calendarchanges.insert
-					uri:objectUri,
-					synctoken: startToken+i,
-					calendarid: calendarId,
-					operation: operation
-			i++		
-		Calendars.direct.update({_id:calendarId},{$set:{synctoken:startToken+tokenCount}});
-	
+	#更新日历，新建事件，更新事件，删除事件会触发此函数。operation:1新建，2更新，3删除
+	addChange : (calendarId, objectUri, operation)->
+		oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
+		calendarchanges.direct.insert
+			uri:objectUri,
+			synctoken: oldsynctoken,
+			calendarid: calendarId,
+			operation: operation
+		Calendars.direct.update({_id:calendarId},{$set:{synctoken:oldsynctoken+1}});
+	#被分享的成员比创建者多share_herf,share_displayname. 
+	#access对应 1 = owner, 2 = readonly, 3 = readwrite
 	addInstance : (userId,doc,calendarid,steedosId,access,herf,displayname)->
 		if doc.visibility == 'private'
 			transp = false;
@@ -33,7 +32,8 @@ Meteor.startup ->
 			calendarcolor: doc.color,
 			share_herf:herf,
 			share_displayname: displayname
-	addEvent :(userId, doc,created)->
+	#新建或跟更新事件，事件对应的calendardata
+	addEvent :(userId, doc)->
 		ical = new icalendar.iCalendar();
 		vevent = new icalendar.VEvent(doc._id);
 		vtimezone=ical.addComponent('VTIMEZONE');
@@ -43,18 +43,20 @@ Meteor.startup ->
 		standard.addProperty("TZOFFSETFROM","0800");
 		standard.addProperty("TZOFFSETTO","0800");
 		standard.addProperty("TZNAME","CST");
+		daylight = vtimezone.addComponent("DAYLIGHT");
+		daylight.addProperty("TZOFFSETFROM","0800");
+		daylight.addProperty("TZNAME","GMT+8");
+		daylight.addProperty("TZOFFSETTO","0900");
 		if doc.alarms !=undefined
 			alarm = vevent.addComponent('VALARM');
 			alarm.addProperty("ACTION", 'DISPLAY');
 			alarm.addProperty("TRIGGER;VALUE = DURATION", doc.alarms);
 		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
-		vevent.addProperty("CREATED",created);
+		vevent.addProperty("CREATED",new Date());
 		vevent.addProperty("LAST-MODIFIED",new Date());
-		#vevent.addProperty("DTSTAMP",new Date());
 		vevent.setSummary(doc.title);
 		vevent.addProperty("ORGANIZER;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto",Meteor.users.findOne({_id:userId}).steedos_id);
-		#vevent.addProperty("UID",doc._id);
 		vevent.setLocation("Shanghai");
 		for member,i in doc.members 
 			member = doc.members[i]
