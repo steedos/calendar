@@ -92,5 +92,8 @@ if (Meteor.isServer)
 		remove: (userId, doc) ->
 			return true
 
+	calendarinstances.before.insert (userId,doc)->
+		doc.uri= doc._id+".ics"
+
     
 		

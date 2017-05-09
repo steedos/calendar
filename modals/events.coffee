@@ -2,6 +2,7 @@
 uuid = require('uuid');
 MD5 = require('MD5');
 icalendar = require('icalendar');
+created = new Date();
 Events.attachSchema new SimpleSchema 
 	title:  
 		type: String
@@ -140,45 +141,18 @@ if (Meteor.isServer)
 
 	Events.before.insert (userId, doc)->
 		doc.componenttype = "VEVENT"
-		doc._id = uuid()
+		doc._id = uuid();
 		doc.uri = doc._id + ".ics"
-		ical = new icalendar.iCalendar();
-		vevent = new icalendar.VEvent(doc._id);
-		#valarm = new vevent.VAlarm();
-		#Vtimezone = new iCalendar.VTimezone()；
-		ical.addComponent(vevent);
-		alarm = vevent.addComponent('VALARM');
-		alarm.addProperty('ACTION', 'DISPLAY');
-		alarm.addProperty('TRIGGER;VALUE = DURATION', doc.alarms);
-		vevent.setDescription(doc.description);
-		vevent.addProperty("TRANSP","OPAQUE");#得改
-		#crated 创建的时间，暂时这样写，得改
-		vevent.addProperty("CREATED",new Date());
-		vevent.addProperty("LAST-MODIFIED",new Date());
-		vevent.setSummary(doc.title);
-		vevent.addProperty("ORGANIZER",Meteor.users.findOne({_id:userId}).steedos_id);
-		vevent.setLocation("Shanghai");
-		for member,i in doc.members 
-			member = doc.members[i]
-			vevent.addProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
-		if doc.allDay==true
-			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
-			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
-		else
-			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDThhmmss"));#TZID得改
-			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDThhmmss"));
-		vevent.addProperty("SEQUENCE",3);#得改
-		#doc.calendarid = doc._id;
 		myDate = new Date();
 		doc.lastmodified = parseInt(myDate.getTime());
 		myDate = new Date(doc.start)
 		doc.firstoccurence = parseInt(myDate.getTime());
 		myDate = new Date (doc.end)
 		doc.lastoccurence = parseInt(myDate.getTime());
-		doc.calendardata = ical.toString();
+		doc.calendardata = Calendar.addEvent(userId,doc,created);
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length;
-		doc.uid = doc._id
+		doc.uid = doc._id	
 		return
 	
 	Events.after.insert (userId, doc)->
@@ -193,30 +167,14 @@ if (Meteor.isServer)
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
 		myDate = new Date();
 		lastmodified = parseInt(myDate.getTime());
-		myDate = new Date(doc.start);
+		myDate = new Date(doc.start)
 		firstoccurence = parseInt(myDate.getTime());
-		myDate = new Date (doc.end);
+		myDate = new Date (doc.end)
 		lastoccurence = parseInt(myDate.getTime());
-		# oldcalendardata = Events.findOne({_id:doc._id}).calendardata;
-		# console.log oldcalendardata;
-		# ical = icalendar.parse_calendar(oldcalendardata);
-		ical = new icalendar.iCalendar();
-		vevent = new icalendar.VEvent(doc._id);
-		ical.addComponent(vevent);
-		vevent.setProperty("LAST-MODIFIED",new Date());
-		vevent.setDescription(doc.description);	
-		vevent.setSummary(doc.title);
-		for member,i in doc.members 
-			member = doc.members[i]
-			vevent.setProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
-		if doc.allDay==true
-			vevent.setProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
-			vevent.setProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
-		else
-			vevent.setProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDThhmmss"));#TZID得改
-			vevent.setProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDThhmmss"));
-		newcalendardata = ical.toString();
-		size = newcalendardata.length
+		newcalendardata =Calendar.addEvent(userId,doc,created);
+		etag = MD5(newcalendardata);
+		size = newcalendardata.length;
+		uid = doc._id;
 		Events.direct.update {_id:doc._id}, $set:
 			lastmodified: lastmodified,
 			firstoccurence:firstoccurence,

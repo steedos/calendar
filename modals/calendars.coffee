@@ -74,13 +74,13 @@ if (Meteor.isServer)
 	
 	Calendars.after.insert (userId, doc) ->
 		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
-		Calendar.addInstance(userId,doc,steedosId,"","");
+		Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
 		for member,i in doc.members 
 			if member != userId
 				steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
 				herf="mailto:" + steedosId;
 				displayname=steedosId;
-				Calendar.addInstance(userId,doc,steedosId,herf,displayname);
+				Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);
 		Calendar.addChange(doc._id,1,doc.members.length-1 ,null,2);
 		return
 		
@@ -102,13 +102,13 @@ if (Meteor.isServer)
 				steedosId = Meteor.users.findOne({_id:member})?.steedos_id
 				herf="mailto:" + steedosId;
 				displayname=steedosId;
-				Calendar.addInstance(userId,doc,steedosId,herf,displayname);
+				Calendar.addInstance(userId,modifier.$set,doc._id,steedosId,2,herf,displayname);
 		return
 		
 			
 	Calendars.after.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
-		calendarinstances.update({calendarid:doc._id},{$set:{displayname:doc.title,calendarcolor:doc.color}});
+		calendarinstances.update({calendarid:doc._id},{$set:{displayname:doc.title,calendarcolor:doc.color}},{multi:true});
 		starttoken = Calendars.findOne({_id:doc._id}).synctoken;
 		Calendar.addChange(doc._id,starttoken,1, null,2);
 		return
