@@ -61,7 +61,9 @@ Events.attachSchema new SimpleSchema
 		type: [String],
 		optional: true
 		autoform: 
-			type: "select-multiple"
+			type: "universe-select"
+			afFieldInput:
+				multiple: true
 			options: [
 				{label: "事件发生时", value: "-PT0S"},
 				{label: "5 分钟前", value: "-PT5M"},
