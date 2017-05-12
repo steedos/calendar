@@ -1,9 +1,9 @@
 Meteor.publish "calendar_objects", (params)->
 	selector =
-		$or: [
-			end: {$gt: params.start},
+		calendarid:{$in: params.calendar},
+		start:{ $exists: true },
+		$or:[
 			start: {$lt: params.end},
-			calendarid:{$in: params.calendar}
+			end: {$gt: params.start}
 		]
-
-	return Events.find()
+	return Events.find(selector)
