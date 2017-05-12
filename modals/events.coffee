@@ -61,9 +61,7 @@ Events.attachSchema new SimpleSchema
 		type: [String],
 		optional: true
 		autoform: 
-			type: "universe-select"
-			afFieldInput:
-				multiple: true
+			type: "select-multiple"
 			options: [
 				{label: "事件发生时", value: "-PT0S"},
 				{label: "5 分钟前", value: "-PT5M"},
@@ -140,21 +138,22 @@ if (Meteor.isServer)
 
 		remove: (userId, doc) ->
 			return true
-
+	#创建事件之前，为其添加一些属性
 	Events.before.insert (userId, doc)->
 		doc.componenttype = "VEVENT"
 		doc._id = uuid();
+		doc.uid = doc._id	
 		doc.uri = doc._id + ".ics"
 		myDate = new Date();
-		doc.lastmodified = parseInt(myDate.getTime());
+		doc.lastmodified = parseInt(myDate.getTime()/1000);
 		myDate = new Date(doc.start)
-		doc.firstoccurence = parseInt(myDate.getTime());
+		doc.firstoccurence = parseInt(myDate.getTime()/1000);
 		myDate = new Date (doc.end)
-		doc.lastoccurence = parseInt(myDate.getTime());
-		doc.calendardata = Calendar.addEvent(userId,doc,created);
+		doc.lastoccurence = parseInt(myDate.getTime()/1000);
+		doc.calendardata = Calendar.addEvent(userId,doc);
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length;
-		doc.uid = doc._id	
+		
 		return
 	
 	Events.after.insert (userId, doc)->
@@ -165,15 +164,15 @@ if (Meteor.isServer)
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 		return
-		
+		 
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
 		myDate = new Date();
-		lastmodified = parseInt(myDate.getTime());
+		lastmodified = parseInt(myDate.getTime()/1000);
 		myDate = new Date(doc.start)
-		firstoccurence = parseInt(myDate.getTime());
+		firstoccurence = parseInt(myDate.getTime()/1000);
 		myDate = new Date (doc.end)
-		lastoccurence = parseInt(myDate.getTime());
-		newcalendardata =Calendar.addEvent(userId,doc,created);
+		lastoccurence = parseInt(myDate.getTime()/1000);
+		newcalendardata =Calendar.addEvent(userId,doc);
 		etag = MD5(newcalendardata);
 		size = newcalendardata.length;
 		uid = doc._id;

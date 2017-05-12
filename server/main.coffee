@@ -23,11 +23,11 @@ Meteor.startup ->
 			principaluri:"principals/" + steedosId,
 			transparent:transp,
 			access:access,
-			share_invitestatus:4,
+			share_invitestatus:2,
 			calendarid: calendarid,
 			displayname:doc.title,
 			description:"null",
-			timezone:"Shanghai",
+			uri:calendarid,
 			calendarorder:3,
 			calendarcolor: doc.color,
 			share_herf:herf,
@@ -43,32 +43,36 @@ Meteor.startup ->
 		standard.addProperty("TZOFFSETFROM","0800");
 		standard.addProperty("TZOFFSETTO","0800");
 		standard.addProperty("TZNAME","CST");
-		daylight = vtimezone.addComponent("DAYLIGHT");
-		daylight.addProperty("TZOFFSETFROM","0800");
-		daylight.addProperty("TZNAME","GMT+8");
-		daylight.addProperty("TZOFFSETTO","0900");
+		date=new Date(2017/5/1);
+		standard.addProperty("DTSTART",date);
+		# daylight = vtimezone.addComponent("DAYLIGHT");
+		# daylight.addProperty("TZOFFSETFROM","0800");
+		# daylight.addProperty("TZNAME","GMT+8");
+		# daylight.addProperty("TZOFFSETTO","0900");
 		if doc.alarms !=undefined
 			alarm = vevent.addComponent('VALARM');
 			alarm.addProperty("ACTION", 'DISPLAY');
-			alarm.addProperty("TRIGGER;VALUE = DURATION", doc.alarms);
+			alarm.addProperty("TRIGGER;VALUE=DURATION", doc.alarms);
+			alarm.addProperty("DESCRIPTION","Default Mozilla Description"); 
 		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
 		vevent.addProperty("CREATED",new Date());
 		vevent.addProperty("LAST-MODIFIED",new Date());
 		vevent.setSummary(doc.title);
 		vevent.addProperty("ORGANIZER;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto",Meteor.users.findOne({_id:userId}).steedos_id);
-		vevent.setLocation("Shanghai");
+		vevent.setLocation("Shanghai");   
 		for member,i in doc.members 
 			member = doc.members[i]
 			if member!= userId
 				vevent.addProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
+		#vevent.setDate(doc.start,doc.end);
 		if doc.allDay==true
-			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
-			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
+			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start+8*3600)).format("YYYYMMDD"));
+			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end+8*3600)).format("YYYYMMDD"));
 		else
-			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDThhmmss"));#TZID得改
-			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDThhmmss"));
-		vevent.addProperty("SEQUENCE",3);#得改
+			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start+8*3600)).format("YYYYMMDDThhmmss"));#TZID得改
+			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end+8*3600)).format("YYYYMMDDThhmmss"));
+		vevent.addProperty("SEQUENCE",0);#得改
 		calendardata = ical.toString();
 		return calendardata
 		
