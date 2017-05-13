@@ -1,4 +1,5 @@
 @Calendars = new Mongo.Collection('calendars');
+@moment_timezone = require('moment-timezone');
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String
@@ -39,6 +40,15 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			omit: true
 
+	zones:
+		type: [String],
+		autoform: 
+			type: "hidden"
+			defaultValue: ->
+				zone=moment_timezone.tz.zone(moment_timezone.tz.guess())
+				return [zone.name,zone.offsets[0],zone.offsets[1],zone.abbrs[0]]
+	
+
 Calendars.attachSchema Calendars._simpleSchema
 
 if Meteor.isClient
@@ -71,6 +81,7 @@ if (Meteor.isServer)
 	#对于一个日历members有几个，就有几个instance
 	Calendars.after.insert (userId, doc) ->
 		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		console.log doc.zonesaad
 		Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
 		for member,i in doc.members 
 			if member != userId

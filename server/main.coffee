@@ -19,6 +19,14 @@ Meteor.startup ->
 			transp = false;
 		else
 			transp = true;
+		ical = new icalendar.iCalendar();
+		vtimezone=ical.addComponent('VTIMEZONE');
+		vtimezone.addProperty("TZID",doc.zones[0]);
+		standard = vtimezone.addComponent("STANDARD");
+		standard.addProperty("TZOFFSETFROM","0"+(-doc.zones[1])/60+"00");
+		standard.addProperty("TZOFFSETTO","0"+(-doc.zones[2])/60+"00");
+		standard.addProperty("TZNAME",doc.zones[3]);
+		timezone = ical.toString();
 		calendarinstances.insert
 			principaluri:"principals/" + steedosId,
 			transparent:transp,
@@ -30,6 +38,7 @@ Meteor.startup ->
 			uri:calendarid,
 			calendarorder:3,
 			calendarcolor: doc.color,
+			timezone :timezone,
 			share_herf:herf,
 			share_displayname: displayname
 	#新建或跟更新事件，事件对应的calendardata

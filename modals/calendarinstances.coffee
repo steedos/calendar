@@ -93,20 +93,7 @@ if (Meteor.isServer)
 			return true
 
 	calendarinstances.before.insert (userId,doc)->
-		ical = new icalendar.iCalendar();
-		vevent = new icalendar.VEvent(doc._id);
-		vtimezone=ical.addComponent('VTIMEZONE');
-		vtimezone.addProperty("TZID","Asia/Shanghai");
-		standard = vtimezone.addComponent("STANDARD");
-		standard.addProperty("TZOFFSETFROM","0800");
-		standard.addProperty("TZOFFSETTO","0800");
-		standard.addProperty("TZNAME","CST");
-		daylight = vtimezone.addComponent("DAYLIGHT");
-		daylight.addProperty("TZOFFSETFROM","0800");
-		daylight.addProperty("TZNAME","GMT+8");
-		daylight.addProperty("TZOFFSETTO","0900");
-		timezone = ical.toString();
-		doc.timezone = timezone;
+		
 
     
 		
