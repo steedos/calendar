@@ -6,7 +6,7 @@ Meteor.methods
 				title:name+"的日历",
 				members:[this.userId],
 				visibility:"private",
-				color:"#c74444",
+				color:CALENDARCOLORS[parseInt(10000*Math.random())%24],
 				ownerId:this.userId,
 				timezone:timezone,
 				components:["VEVENT","VTODO"],
