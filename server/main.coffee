@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 icalendar = require('icalendar');
+@moment_timezone = require('moment-timezone');
 Meteor.startup ->
 	
 @Calendar = 
@@ -19,13 +20,14 @@ Meteor.startup ->
 			transp = false;
 		else
 			transp = true;
+		zones=moment_timezone.tz.zone(doc.timezone);
 		ical = new icalendar.iCalendar();
 		vtimezone=ical.addComponent('VTIMEZONE');
-		vtimezone.addProperty("TZID",doc.zones[0]);
+		vtimezone.addProperty("TZID",doc.timezone);
 		standard = vtimezone.addComponent("STANDARD");
-		standard.addProperty("TZOFFSETFROM","0"+(-doc.zones[1])/60+"00");
-		standard.addProperty("TZOFFSETTO","0"+(-doc.zones[2])/60+"00");
-		standard.addProperty("TZNAME",doc.zones[3]);
+		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[0])/60+"00");
+		standard.addProperty("TZOFFSETTO","0"+(-zones.offsets[1])/60+"00");
+		standard.addProperty("TZNAME",zones.abbrs[0]);
 		timezone = ical.toString();
 		calendarinstances.insert
 			principaluri:"principals/" + steedosId,

@@ -1,5 +1,6 @@
 import 'sweetalert/dist/sweetalert-dev.js'
 import 'sweetalert/dist/sweetalert.css'
+@moment_timezone = require('moment-timezone');
 @Calendar = {}
 
 Meteor.startup ->
@@ -12,4 +13,6 @@ Tracker.autorun ()->
 	else
 		TAPi18n.setLanguage("en")		
 
-
+Tracker.autorun ()->
+	if Meteor.userId()
+		Meteor.call('calendarInit',moment_timezone.tz.guess())
