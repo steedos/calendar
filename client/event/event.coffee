@@ -65,12 +65,12 @@ Calendar.generateCalendar = ()->
 			# timezone: "local"
 			# locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->
-				# console.log event
-				copy = 
+				copy =
 					id: event._id
 					allDay: event.allDay
 					title: event.title
 					url:event.url
+					color:event.color
 				if event.start
 					copy.start = moment.utc(event.start)
 					# copy.start =  '2017-04-26'
