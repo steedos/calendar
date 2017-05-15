@@ -19,12 +19,19 @@ Events.attachSchema new SimpleSchema
 		type: Date
 		autoform: 
 			type: "bootstrap-datetimepicker"
+			dateTimePickerOptions:
+				format: "YYYY-MM-DD HH:mm"
+				sideBySide:true
 
 	end:  
 		type: Date,
 		optional: true
 		autoform: 
 			type: "bootstrap-datetimepicker"
+			dateTimePickerOptions:
+				format: "YYYY-MM-DD HH:mm"
+				sideBySide:true
+
 
 	allDay: 
 		type: Boolean,
