@@ -1,8 +1,4 @@
 import 'moment/min/moment.min.js'
-import 'jquery/dist/jquery.min.js'
-import 'fullcalendar/dist/fullcalendar.js'
-import 'fullcalendar/dist/locale-all.js'
-
 Tracker.autorun ()->
 	console.log ('locale1:'+Session.get("steedos-locale"))
 	if Session.get("steedos-locale") == "zh-cn"
