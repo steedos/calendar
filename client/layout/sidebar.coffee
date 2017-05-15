@@ -17,7 +17,7 @@ Template.calendarSidebar.onRendered ->
 	# 读取并刷新
 
 Template.calendarSidebar.events 
-	'click a.calendar-add': (event)->
+	'click .sidebar .btn-calendar-add': (event)->
 		$('.btn.calendar-add').click();
 
 	'click i.calendar-edit': (event)->
