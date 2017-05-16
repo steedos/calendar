@@ -1,9 +1,8 @@
 @Events = new Mongo.Collection('calendar_objects');
+uuid = require('uuid');
 MD5 = require('MD5');
+icalendar = require('icalendar');
 created = new Date();
-if Meteor.isServer
-	uuid = require('uuid');
-	icalendar = require('icalendar');
 Events.attachSchema new SimpleSchema 
 	title:  
 		type: String
@@ -20,12 +19,19 @@ Events.attachSchema new SimpleSchema
 		type: Date
 		autoform: 
 			type: "bootstrap-datetimepicker"
+			dateTimePickerOptions:
+				format: "YYYY-MM-DD HH:mm"
+				sideBySide:true
 
 	end:  
 		type: Date,
 		optional: true
 		autoform: 
 			type: "bootstrap-datetimepicker"
+			dateTimePickerOptions:
+				format: "YYYY-MM-DD HH:mm"
+				sideBySide:true
+
 
 	allDay: 
 		type: Boolean,
@@ -122,6 +128,12 @@ Events.attachSchema new SimpleSchema
 		autoform: 
 			omit: true
 
+	eventcolor:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
+
 	calendardata:
 		type: String,
 		optional: true
@@ -129,7 +141,7 @@ Events.attachSchema new SimpleSchema
 			omit: true
 
 
-if Meteor.isServer
+if (Meteor.isServer) 
 	Events.allow 
 		insert: (userId, doc) ->
 			return true
@@ -154,7 +166,8 @@ if Meteor.isServer
 		doc.calendardata = Calendar.addEvent(userId,doc);
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length;
-		
+		color = Calendars.findOne({_id:doc.calendarid}).color;
+		doc.color =color;
 		return
 	
 	Events.after.insert (userId, doc)->
