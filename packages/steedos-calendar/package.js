@@ -15,6 +15,8 @@ Npm.depends({
 Package.onUse(function(api) {
 	api.versionsFrom('1.0');
 
+
+
     api.use('ecmascript@0.6.3');
     
     api.use('reactive-var@1.0.11');
@@ -39,7 +41,7 @@ Package.onUse(function(api) {
     api.use('matb33:collection-hooks@0.8.1');
     api.use('kadira:blaze-layout@2.3.0');
     api.use('kadira:flow-router@2.10.1');
-
+    api.use('smoral:sweetalert@1.1.1');
     api.use('aldeed:autoform-bs-datetimepicker@1.0.7');
 
     api.use('meteorhacks:ssr@2.2.0');
