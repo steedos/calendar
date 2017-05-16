@@ -18,11 +18,12 @@ Events.attachSchema new SimpleSchema
 	start:  
 		type: Date
 		autoform: 
-			type: "bootstrap-datetimepicker"
-			dateTimePickerOptions:
-				format: "YYYY-MM-DD HH:mm"
-				sideBySide:true
-
+			afFieldInput:
+				type: "bootstrap-datetimepicker"
+				dateTimePickerOptions:
+					format: "YYYY-MM-DD HH:mm"
+					sideBySide:true
+					
 	end:  
 		type: Date,
 		optional: true

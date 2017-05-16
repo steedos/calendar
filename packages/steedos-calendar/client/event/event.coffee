@@ -62,8 +62,9 @@ Calendar.generateCalendar = ()->
 			editable: true
 			eventLimit: true
 			events: Calendar.getEventsData
-			# timezone: "local"
-			# locale: Session.get("steedos-locale")
+			timeFormat: 'H(:mm)'
+			# timezone: 'local'
+			locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->
 				copy =
 					id: event._id
@@ -72,10 +73,10 @@ Calendar.generateCalendar = ()->
 					url:event.url
 					color:event.color
 				if event.start
-					copy.start = moment.utc(event.start)
+					copy.start = moment(event.start)
 					# copy.start =  '2017-04-26'
 				if event.end
-					copy.start = moment.utc(event.end)
+					copy.end = moment(event.end)
 				return copy;
 			select: ( start, end, jsEvent, view, resource )->
 				console.log ('start'+new Date(start)+'   end'+end)

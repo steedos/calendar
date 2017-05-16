@@ -1,5 +1,9 @@
 @Calendars = new Mongo.Collection('calendars');
 @moment_timezone = require('moment-timezone');
+@CALENDARCOLORS = new Array("#ac725e","#d06b64","#f83a22","#fa573c","#ff7537","#ffad46",
+					"#42d692","#16a765","#7bd148","#b3dc6c","#fbe983","#fad165",
+					"#92e1c0","#9fele7","#9fc6e7","#9fc6e7","#4986e7","#9a9cff","#b99aff",
+					"#c2c2c2","#cabdbf","#f691b2","#cca6ac","#cd74e6","#a47ae2");
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String
@@ -19,10 +23,12 @@ Calendars._simpleSchema = new SimpleSchema
 	
 	color:  
 		type: String
+		defaultValue: ->
+				return	CALENDARCOLORS[parseInt(10000*Math.random())%24]
 		autoform:
 			type: "bootstrap-minicolors"
-
-	ownerId:  
+			
+	ownerId: 
 		type: String,
 		optional: true
 		autoform:
@@ -118,6 +124,8 @@ if (Meteor.isServer)
 		return
 	# 移除关联的events,instances,changes
 	Calendars.before.remove (userId, doc)->
+		console.log doc
+		#Calendars.find("ownerId"：doc.ownerId)
 		Events.remove({"calendarid":doc._id});
 		calendarchanges.remove({"calendarid":doc._id});
 		calendarinstances.remove({"calendarid" : doc._id});	
