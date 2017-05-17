@@ -48,7 +48,7 @@ momentjs:moment
 steedos:adminlte@2.3.12_2
 steedos:base@0.0.9
 steedos:theme@0.0.10
-
+steedos:accounts@0.0.2 
 
 matb33:collection-hooks
 
@@ -56,5 +56,3 @@ steedos:calendar
 steedos:calendar-i18n
 
 smoral:sweetalert@1.1.1
-
-# steedos:lib@0.0.2
