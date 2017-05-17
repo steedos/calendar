@@ -12,6 +12,8 @@ Template.calendarSidebar.helpers
 		return objs
 	isCalendarOwner: ()->
 		return this.ownerId == Meteor.userId()
+	isdefaultCalendar :()->
+		return this.Isdefaultcalendar
 
 
 Template.calendarSidebar.onRendered ->

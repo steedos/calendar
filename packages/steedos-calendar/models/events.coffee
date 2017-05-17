@@ -18,11 +18,12 @@ Events.attachSchema new SimpleSchema
 	start:  
 		type: Date
 		autoform: 
-			type: "bootstrap-datetimepicker"
-			dateTimePickerOptions:
-				format: "YYYY-MM-DD HH:mm"
-				sideBySide:true
-
+			afFieldInput:
+				type: "bootstrap-datetimepicker"
+				dateTimePickerOptions:
+					format: "YYYY-MM-DD HH:mm"
+					sideBySide:true
+					
 	end:  
 		type: Date,
 		optional: true
@@ -157,6 +158,8 @@ if (Meteor.isServer)
 		doc._id = uuid();
 		doc.uid = doc._id	
 		doc.uri = doc._id + ".ics"
+		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		doc.ownerId=steedosId;
 		myDate = new Date();
 		doc.lastmodified = parseInt(myDate.getTime()/1000);
 		myDate = new Date(doc.start)
@@ -167,6 +170,8 @@ if (Meteor.isServer)
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length;
 		color = Calendars.findOne({_id:doc.calendarid}).color;
+		if doc.start > doc.end
+			throw new Meteor.Error(400, "开始时间不能大于结束时间");
 		doc.color =color;
 		return
 	
@@ -177,6 +182,7 @@ if (Meteor.isServer)
 
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
+		if doc.start > doc.end
 		return
 		 
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->

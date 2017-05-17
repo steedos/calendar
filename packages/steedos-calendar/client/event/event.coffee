@@ -9,7 +9,7 @@ import Calendar from '../core'
 
 @moment = moment
 @calendarIdArr = []
-@i=0
+
 Template.calendarContainer.onRendered ->
 	Calendar.generateCalendar();
 
@@ -57,8 +57,9 @@ Calendar.generateCalendar = ()->
 			editable: true
 			eventLimit: true
 			events: Calendar.getEventsData
-			# timezone: "local"
-			# locale: Session.get("steedos-locale")
+			timeFormat: 'H(:mm)'
+			# timezone: 'local'
+			locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->
 				copy =
 					id: event._id
@@ -69,7 +70,7 @@ Calendar.generateCalendar = ()->
 				if event.start
 					copy.start = moment.utc(event.start)
 				if event.end
-					copy.start = moment.utc(event.end)
+					copy.end = moment(event.end)
 				return copy;
 			select: ( start, end, jsEvent, view, resource )->
 				# console.log ('start'+new Date(start)+'   end'+end)

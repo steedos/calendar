@@ -47,13 +47,15 @@ Meteor.startup ->
 	addEvent :(userId, doc)->
 		ical = new icalendar.iCalendar();
 		vevent = new icalendar.VEvent(doc._id);
+		timezone=Calendars.findOne({_id:doc.calendarid}).timezone;
+		zones=moment_timezone.tz.zone(timezone);
 		vtimezone=ical.addComponent('VTIMEZONE');
 		ical.addComponent(vevent);
-		vtimezone.addProperty("TZID","Asia/Shanghai");
+		vtimezone.addProperty("TZID",zones.name);
 		standard = vtimezone.addComponent("STANDARD");
-		standard.addProperty("TZOFFSETFROM","0800");
-		standard.addProperty("TZOFFSETTO","0800");
-		standard.addProperty("TZNAME","CST");
+		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[0])/60+"00");
+		standard.addProperty("TZOFFSETTO","0"+(-zones.offsets[1])/60+"00");
+		standard.addProperty("TZNAME",zones.abbrs[0]);
 		date=new Date(2017/5/1);
 		standard.addProperty("DTSTART",date);
 		# daylight = vtimezone.addComponent("DAYLIGHT");
@@ -78,11 +80,11 @@ Meteor.startup ->
 				vevent.addProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
 		#vevent.setDate(doc.start,doc.end);
 		if doc.allDay==true
-			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start+8*3600)).format("YYYYMMDD"));
-			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end+8*3600)).format("YYYYMMDD"));
+			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
+			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
 		else
-			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start+8*3600)).format("YYYYMMDDThhmmss"));#TZID得改
-			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end+8*3600)).format("YYYYMMDDThhmmss"));
+			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDTHHmmss"));#TZID得改
+			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDTHHmmss"));
 		vevent.addProperty("SEQUENCE",0);#得改
 		calendardata = ical.toString();
 		return calendardata

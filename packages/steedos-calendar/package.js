@@ -30,6 +30,7 @@ Package.onUse(function(api) {
     api.use('tracker');
     api.use('session');
     api.use('blaze');
+    api.use('steedos:toastr');
     api.use('templating');
     api.use('flemay:less-autoprefixer@1.2.0');
     api.use('simple:json-routes@2.1.0');
