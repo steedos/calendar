@@ -52,7 +52,12 @@ Calendars._simpleSchema = new SimpleSchema
 			type: "hidden"
 			defaultValue: ->
 				return moment_timezone.tz.guess()
-				#return [zone.name,zone.offsets[0],zone.offsets[1],zone.abbrs[0]]
+	Isdefaultcalendar:
+		type:Boolean,
+		defaultValue:false
+		autoform:
+			type:"hidden"
+
 	
 
 Calendars.attachSchema Calendars._simpleSchema

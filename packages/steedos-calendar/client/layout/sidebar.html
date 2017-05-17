@@ -12,8 +12,12 @@
               <span class="pull-right-container">
               <div class="operate-box">
               {{#if isCalendarOwner}}
-                <i class="fa fa-edit calendar-edit"></i>&nbsp;&nbsp;
-                <i class="fa fa-trash-o calendar-delete"></i>
+                  {{#if isdefaultCalendar}}
+                        <i class="fa fa-edit calendar-edit"></i>&nbsp;&nbsp;
+                  {{else}}
+                        <i class="fa fa-edit calendar-edit"></i>&nbsp;&nbsp;    
+                        <i class="fa fa-trash-o calendar-delete"></i>
+                  {{/if}}
               {{else}}
                 <i class="fa fa-info-circle calendar-show"></i>
               {{/if}}

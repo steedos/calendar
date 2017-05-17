@@ -12,6 +12,8 @@ Template.calendarSidebar.helpers
 		return Calendars.find()
 	isCalendarOwner: ()->
 		return this.ownerId == Meteor.userId()
+	isdefaultCalendar :()->
+		return this.Isdefaultcalendar
 
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
