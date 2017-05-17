@@ -1,5 +1,4 @@
 @moment_timezone = require('moment-timezone');
-@Calendar = {}
 
 # Steedos.API.setAppTitle("Steedos Calendar");
 
@@ -15,3 +14,4 @@ Tracker.autorun ()->
 Tracker.autorun ()->
 	if Meteor.userId()
 		Meteor.call('calendarInit',moment_timezone.tz.guess())
+

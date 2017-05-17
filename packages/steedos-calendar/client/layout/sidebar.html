@@ -6,9 +6,13 @@
         {{#each calendars}}
         <li>
           <a href="#">
-            <i class="icon fa fa-check"></i>
-            <i class="fa fa-calendar" style="color:{{color}}"></i>
-            <span>{{title}}</span>
+            <div class="pull-left-title">
+                <div class="check">
+                  <i class="icon fa"></i>
+                </div>
+                <i class="fa fa-calendar" style="color:{{color}}"></i>
+                <span>{{title}}</span>
+            </div>
               <span class="pull-right-container">
               <div class="operate-box">
               {{#if isCalendarOwner}}
@@ -26,8 +30,10 @@
 
       <div class="sidebar-bottom">
         <a href="#" class="calendar-add">
-          <i class="fa fa-plus"><span>&nbsp;&nbsp;
-          {{_ "calendar_add_calendar"}}</span></i>
+          <i class="fa fa-plus">
+            &nbsp;&nbsp;
+            <span>{{_ "calendar_add_calendar"}}</span>
+          </i>
         </a>
       </div>
     </section>
