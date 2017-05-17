@@ -35,7 +35,7 @@ Template.calendarSidebar.events
 
 
 
-	'click i.calendar-add': (event)->
+	'click a.calendar-add': (event)->
 		$('.btn.calendar-add').click();
 
 	'click i.calendar-edit': (event)->

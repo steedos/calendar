@@ -70,7 +70,7 @@ Calendar.generateCalendar = ()->
 				if event.start
 					copy.start = moment.utc(event.start)
 				if event.end
-					copy.end = moment(event.end)
+					copy.end = moment.utc(event.end)
 				return copy;
 			select: ( start, end, jsEvent, view, resource )->
 				# console.log ('start'+new Date(start)+'   end'+end)

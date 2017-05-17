@@ -183,7 +183,7 @@ if (Meteor.isServer)
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 		if doc.start > doc.end
-		return
+			return
 		 
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
 		myDate = new Date();
