@@ -1,7 +1,6 @@
 @Events = new Mongo.Collection('calendar_objects');
-uuid = require('uuid');
-MD5 = require('MD5');
 icalendar = require('icalendar');
+uuid = require('uuid');
 created = new Date();
 Events.attachSchema new SimpleSchema 
 	title:  
@@ -188,21 +187,8 @@ if (Meteor.isServer)
 		doc._id = uuid();
 		doc.uid = doc._id	
 		doc.uri = doc._id + ".ics"
-		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
-		doc.ownerId=steedosId;
-		myDate = new Date();
-		doc.lastmodified = parseInt(myDate.getTime()/1000);
-		myDate = new Date(doc.start)
-		doc.firstoccurence = parseInt(myDate.getTime()/1000);
-		myDate = new Date (doc.end)
-		doc.lastoccurence = parseInt(myDate.getTime()/1000);
-		doc.calendardata = Calendar.addEvent(userId,doc);
-		doc.etag = MD5(doc.calendardata);
-		doc.size = doc.calendardata.length;
-		color = Calendars.findOne({_id:doc.calendarid}).color;
-		if doc.start > doc.end
-			throw new Meteor.Error(400, "开始时间不能大于结束时间");
-		doc.color =color;
+		doc.ownerId=userId;
+		Calendar.addCalendarObjects(userId,doc);
 		return
 	
 	Events.after.insert (userId, doc)->

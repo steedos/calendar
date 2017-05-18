@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 icalendar = require('icalendar');
+MD5 = require('MD5');
 @moment_timezone = require('moment-timezone');
 Meteor.startup ->
 	
@@ -44,20 +45,25 @@ Meteor.startup ->
 			share_herf:herf,
 			share_displayname: displayname
 	
-	addAttendees :(userId, doc)->
+	addAttendees :(userId,doc)->
 		attendees=[]
 		for member,i in doc.members
 			steedosId=Meteor.users.findOne({_id:member}).steedos_id
-			doc.attendees=["REQ-PARTICIPANT","INDIVIDUAL","NEEDS-ACTION",steedosId,steedosId]
+			attendee = {
+				role:"REQ-PARTICIPANT",
+				cutype:"INDIVIDUAL",
+				partstat:"NEEDS-ACTION",
+				cn:steedosId,
+				mailto:steedosId
+			}
 			if member == doc.ownerId
-				doc.attendees[2]="ACCEPTED"
-			attendees.push	
-				role:doc.attendees[0],
-				cutype:doc.attendees[1],
-				partstat:doc.attendees[2],
-				cn:doc.attendees[3],
-				mailto:doc.attendees[4]
+				attendee.partstat="ACCEPTED"
+			attendees.push attendee
+
+		doc.attendees=attendees
 		return attendees	
+	# updateAttendees:(oldAttendees.newAttendees)->
+
 	#新建或跟更新事件，事件对应的calendardata
 	addEvent :(userId, doc)->
 		ical = new icalendar.iCalendar();
@@ -86,10 +92,9 @@ Meteor.startup ->
 		vevent.addProperty("ORGANIZER;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto",Meteor.users.findOne({_id:userId}).steedos_id);
 		vevent.setLocation("Shanghai"); 
 		attendees=Calendar.addAttendees(userId,doc);
-		for attendee,i in attendees
-			attendee=attendees[i]
+		attendees.forEach (attendee)->
 			attendee_string="ATTENDEES;"+"CUTYPE="+attendee.cutype+";ROLE="+attendee.role+";CN="+attendee.cn+";PARTSTAT="+attendee.partstat+";mailto"
-			vevent.addProperty(attendee_string, attendee.mailto);
+			vevent.addProperty(attendee_string, attendee.mailto)
 		if doc.allDay==true
 			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
 			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
@@ -100,5 +105,18 @@ Meteor.startup ->
 		calendardata = ical.toString();
 		return calendardata
 	
-	
+	addCalendarObjects:(userId, doc)->
+		myDate = new Date();
+		doc.lastmodified = parseInt(myDate.getTime()/1000);
+		myDate = new Date(doc.start)
+		doc.firstoccurence = parseInt(myDate.getTime()/1000);
+		myDate = new Date (doc.end)
+		doc.lastoccurence = parseInt(myDate.getTime()/1000);
+		doc.calendardata = Calendar.addEvent(userId,doc);
+		doc.etag = MD5(doc.calendardata);
+		doc.size = doc.calendardata.length;
+		color = Calendars.findOne({_id:doc.calendarid}).color;
+		if doc.start > doc.end
+			throw new Meteor.Error(400, "开始时间不能大于结束时间");
+		doc.color =color;
 
