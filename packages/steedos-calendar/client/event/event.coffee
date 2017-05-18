@@ -8,12 +8,13 @@ import moment from 'moment'
 import Calendar from '../core'
 
 @moment = moment
+@calendarIdArr = []
 
 Template.calendarContainer.onRendered ->
 	Calendar.generateCalendar();
 
-eventsDep = new Tracker.Dependency;
-eventsSub = new SubsManager();
+eventsDep = new Tracker.Dependency
+eventsSub = new SubsManager()
 eventsRange = null
 eventsLoading = false
 
@@ -22,32 +23,26 @@ Calendar.reloadEvents = () ->
 	$("#calendar").fullCalendar("refetchEvents")
 
 
-Calendar.getEventsData = ( start, end, timezone, callback )->
-	calendars = []
-	objs = Calendars.find({})
-	objs.forEach (obj) ->
-		calendars.push(obj._id)
 
+Calendar.getEventsData = ( start, end, timezone, callback )->
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
-		calendar:calendars
-	# console.log JSON.stringify(params)
+		calendar:calendarIdArr
+
 	eventsLoading = true
 	eventsSub.subscribe "calendar_objects", params
 
 	Tracker.autorun (c)->
 		if eventsSub.ready()
 			events = Events.find().fetch()
-			# console.log events
 			callback(events)
 			c.stop()
 
 Calendar.generateCalendar = ()->
-	# console.log $('#calendar').children().length
 	if !$('#calendar').children().length
-		# console.log event
+
 		$('#calendar').fullCalendar
 			height: ()->
 				return $('#calendar').height()
@@ -73,16 +68,15 @@ Calendar.generateCalendar = ()->
 					url:event.url
 					color:event.color
 				if event.start
-					copy.start = moment(event.start)
-					# copy.start =  '2017-04-26'
+					copy.start = moment.utc(event.start)
 				if event.end
-					copy.end = moment(event.end)
+					copy.end = moment.utc(event.end)
 				return copy;
 			select: ( start, end, jsEvent, view, resource )->
-				console.log ('start'+new Date(start)+'   end'+end)
+				# console.log ('start'+new Date(start)+'   end'+end)
 				Session.set 'cmDoc', 
-				 	start: start.toDate()
-				 	end: end.toDate()
+					start: start.toDate()
+					end: end.toDate()
 				$('.btn.event-add').click(); 
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne

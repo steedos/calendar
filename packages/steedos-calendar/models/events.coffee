@@ -212,7 +212,6 @@ if (Meteor.isServer)
 		modifier.$set = modifier.$set || {};
 		if doc.start > doc.end
 			throw new Meteor.Error(400, "开始时间不能大于结束时间");
-		return
 		 
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
 		myDate = new Date();

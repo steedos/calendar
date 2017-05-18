@@ -5,25 +5,40 @@ calendarsRange = null
 calendarsLoading = false
 
 
-Template.calendarSidebar.helpers 
+Template.calendarSidebar.helpers
 	calendars: ()->
-		userId= Meteor.userId();
-		# console.log(userId);
-		return Calendars.find()
+		userId= Meteor.userId()
+		objs = Calendars.find()
+		return objs
 	isCalendarOwner: ()->
 		return this.ownerId == Meteor.userId()
 	isdefaultCalendar :()->
 		return this.Isdefaultcalendar
 
+
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
+# Template.calendarSidebar.on ->
 
-Template.calendarSidebar.events 
+
+Template.calendarSidebar.events
+	'click div.pull-left-title':(event)->
+		checkBox = $(event.currentTarget.firstElementChild.childNodes[1])
+		checkBox.toggleClass("fa-check")
+		if checkBox.hasClass("fa-check")
+			calendarIdArr.push this._id
+		else
+			console.log calendarIdArr
+			index = calendarIdArr.indexOf this._id
+			delete calendarIdArr[index]
+		$("#calendar").fullCalendar("refetchEvents")
+
+
+
 	'click a.calendar-add': (event)->
 		$('.btn.calendar-add').click();
 
 	'click i.calendar-edit': (event)->
-		# console.log(Meteor.userId()+"   "+this.ownerId);
 		if Meteor.userId()!=this.ownerId
 			swal("无权限","该账号无权限操作此日历","warning");
 			return;
@@ -56,7 +71,6 @@ Template.calendarSidebar.events
 		()->
 			# this._id取值无法删除，删除失败,this未定义
 			Calendars.remove {_id:calendar_id}, (error)->
-				console.log(error);
 				if error
 					swal("删除失败",error.message,"error");
 				else
