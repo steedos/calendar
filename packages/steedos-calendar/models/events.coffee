@@ -53,6 +53,14 @@ Events.attachSchema new SimpleSchema
 				# options[1].select='select'
 				return options
 				
+	# resources:
+	# 	type: [String],
+	# 	autoform:
+	# 		type: "universe-select"
+	# 		afFieldInput:
+	# 			multiple: true
+	# 			optionsMethod: "selectGetUsers"
+	
 	description:  
 		type: String,
 		optional: true,
@@ -140,7 +148,27 @@ Events.attachSchema new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
+    
+	attendees: 
+		type:[Object],
+		optional:true
+	
+	"attendees.$.role":
+		type:String
 
+	"attendees.$.cutype": 
+		type:String
+
+	"attendees.$.partstat": 
+		type:String
+
+	"attendees.$.cn": 
+		type:String
+
+	"attendees.$.mailto": 
+		type:String
+	
+	
 
 if (Meteor.isServer) 
 	Events.allow 
@@ -158,8 +186,8 @@ if (Meteor.isServer)
 		doc._id = uuid();
 		doc.uid = doc._id	
 		doc.uri = doc._id + ".ics"
-		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
-		doc.ownerId=steedosId;
+		#steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		#doc.ownerId=steedosId;
 		myDate = new Date();
 		doc.lastmodified = parseInt(myDate.getTime()/1000);
 		myDate = new Date(doc.start)
@@ -183,6 +211,7 @@ if (Meteor.isServer)
 	Events.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 		if doc.start > doc.end
+			throw new Meteor.Error(400, "开始时间不能大于结束时间");
 		return
 		 
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
