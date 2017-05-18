@@ -44,18 +44,18 @@ Meteor.startup ->
 			share_herf:herf,
 			share_displayname: displayname
 	
-	members_Attendee :(userId, doc)->
+	addAttendees :(userId, doc)->
 		attendees=[]
 		for member,i in doc.members
 			steedosId=Meteor.users.findOne({_id:member}).steedos_id
 			doc.attendees=["REQ-PARTICIPANT","INDIVIDUAL","NEEDS-ACTION",steedosId,steedosId]
-			if member!= userId
+			if member == doc.ownerId
 				doc.attendees[2]="ACCEPTED"
-			attendees.push  
-				CUTYPE:doc.attendees[1],
-				ROLE:doc.attendees[0],
-				CN:doc.attendees[3],
-				PARTSTAT:doc.attendees[2],
+			attendees.push	
+				role:doc.attendees[0],
+				cutype:doc.attendees[1],
+				partstat:doc.attendees[2],
+				cn:doc.attendees[3],
 				mailto:doc.attendees[4]
 		return attendees	
 	#新建或跟更新事件，事件对应的calendardata
@@ -85,11 +85,11 @@ Meteor.startup ->
 		vevent.setSummary(doc.title);
 		vevent.addProperty("ORGANIZER;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto",Meteor.users.findOne({_id:userId}).steedos_id);
 		vevent.setLocation("Shanghai"); 
-		attendees=Calendar.members_Attendee(userId,doc);
+		attendees=Calendar.addAttendees(userId,doc);
 		for attendee,i in attendees
 			attendee=attendees[i]
-			attendee_string="ATTENDEES;"+"CUTYPE="+attendee[1]+";ROLE="+attendee[0]+";CN="+attendee[3]+";PARTSTAT="+attendee[2]+";mailto:"
-			vevent.addProperty(attendee_string, attendee[4]);
+			attendee_string="ATTENDEES;"+"CUTYPE="+attendee.cutype+";ROLE="+attendee.role+";CN="+attendee.cn+";PARTSTAT="+attendee.partstat+";mailto"
+			vevent.addProperty(attendee_string, attendee.mailto);
 		if doc.allDay==true
 			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
 			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));

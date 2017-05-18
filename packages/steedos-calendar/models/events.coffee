@@ -188,8 +188,8 @@ if (Meteor.isServer)
 		doc._id = uuid();
 		doc.uid = doc._id	
 		doc.uri = doc._id + ".ics"
-		#steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
-		#doc.ownerId=steedosId;
+		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		doc.ownerId=steedosId;
 		myDate = new Date();
 		doc.lastmodified = parseInt(myDate.getTime()/1000);
 		myDate = new Date(doc.start)
