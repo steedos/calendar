@@ -43,6 +43,21 @@ Meteor.startup ->
 			timezone :timezone,
 			share_herf:herf,
 			share_displayname: displayname
+	
+	members_Attendee :(userId, doc)->
+		attendees=[]
+		for member,i in doc.members
+			steedosId=Meteor.users.findOne({_id:member}).steedos_id
+			doc.attendees=["REQ-PARTICIPANT","INDIVIDUAL","NEEDS-ACTION",steedosId,steedosId]
+			if member!= userId
+				doc.attendees[2]="ACCEPTED"
+			attendees.push  
+				CUTYPE:doc.attendees[1],
+				ROLE:doc.attendees[0],
+				CN:doc.attendees[3],
+				PARTSTAT:doc.attendees[2],
+				mailto:doc.attendees[4]
+		return attendees	
 	#新建或跟更新事件，事件对应的calendardata
 	addEvent :(userId, doc)->
 		ical = new icalendar.iCalendar();
@@ -58,10 +73,6 @@ Meteor.startup ->
 		standard.addProperty("TZNAME",zones.abbrs[0]);
 		date=new Date(2017/5/1);
 		standard.addProperty("DTSTART",date);
-		# daylight = vtimezone.addComponent("DAYLIGHT");
-		# daylight.addProperty("TZOFFSETFROM","0800");
-		# daylight.addProperty("TZNAME","GMT+8");
-		# daylight.addProperty("TZOFFSETTO","0900");
 		if doc.alarms !=undefined
 			alarm = vevent.addComponent('VALARM');
 			alarm.addProperty("ACTION", 'DISPLAY');
@@ -73,12 +84,12 @@ Meteor.startup ->
 		vevent.addProperty("LAST-MODIFIED",new Date());
 		vevent.setSummary(doc.title);
 		vevent.addProperty("ORGANIZER;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto",Meteor.users.findOne({_id:userId}).steedos_id);
-		vevent.setLocation("Shanghai");   
-		for member,i in doc.members 
-			member = doc.members[i]
-			if member!= userId
-				vevent.addProperty("ATTENDEE;RSVP=TRUE;PARTSTAT=NEEDS-ACTION;ROLE=REQ-PARTICIPANT;SCHEDULE-STATUS=3.7", Meteor.users.findOne({_id:member}).steedos_id);
-		#vevent.setDate(doc.start,doc.end);
+		vevent.setLocation("Shanghai"); 
+		attendees=Calendar.members_Attendee(userId,doc);
+		for attendee,i in attendees
+			attendee=attendees[i]
+			attendee_string="ATTENDEES;"+"CUTYPE="+attendee[1]+";ROLE="+attendee[0]+";CN="+attendee[3]+";PARTSTAT="+attendee[2]+";mailto:"
+			vevent.addProperty(attendee_string, attendee[4]);
 		if doc.allDay==true
 			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
 			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
@@ -88,4 +99,6 @@ Meteor.startup ->
 		vevent.addProperty("SEQUENCE",0);#得改
 		calendardata = ical.toString();
 		return calendardata
-		
+	
+	
+
