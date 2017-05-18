@@ -152,7 +152,8 @@ Events.attachSchema new SimpleSchema
 	attendees: 
 		type:[Object],
 		optional:true
-	
+		autoform: 
+			omit: true
 	"attendees.$.role":
 		type:String
 
