@@ -3,14 +3,18 @@ checkUserSigned = (context, redirect) ->
 		FlowRouter.go '/steedos/sign-in?redirect=' + context.path;
 
 
-calendarSpaceRoutes = FlowRouter.group
+calendarRoutes = FlowRouter.group
 	triggersEnter: [ checkUserSigned ],
 	prefix: '/calendar',
 	name: 'calendar'
 
-calendarSpaceRoutes.route '/',
+calendarRoutes.route '/',
 	action: (params, queryParams)->
 		BlazeLayout.render 'calendarLayout',
 			main: "calendarContainer"
-	
+
+calendarRoutes.route '/event/:_id',
+	action: (params, queryParams)->
+		BlazeLayout.render 'calendarLayout',
+			main: "eventDetail"
 

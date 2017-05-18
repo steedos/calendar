@@ -8,7 +8,6 @@ import moment from 'moment'
 import Calendar from '../core'
 
 @moment = moment
-@calendarIdArr = []
 
 Template.calendarContainer.onRendered ->
 	Calendar.generateCalendar();
@@ -25,11 +24,17 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
+	calendarIds = []
+	objs = Calendars.find()
+	objs.forEach (obj) ->
+		if obj.isChecked
+			calendarIds.push(obj._id)
+
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
-		calendar:calendarIdArr
+		calendar:calendarIds
 
 	eventsLoading = true
 	eventsSub.subscribe "calendar_objects", params
@@ -83,8 +88,9 @@ Calendar.generateCalendar = ()->
 					_id: calEvent.id
 				if event
 					Session.set 'cmDoc', event
-					$('.btn.event-edit').click();
-					console.log ('start'+event.start+'   end'+event.end)
+					Modal.show('event_detail_modal')
+					# $('.btn.event-edit').click();
+					# console.log ('start'+event.start+'   end'+event.end)
 
 
 		Events.find().observe

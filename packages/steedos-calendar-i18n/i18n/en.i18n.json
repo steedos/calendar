@@ -6,6 +6,8 @@
 	"calendar_edit_event":"Edit event",
 	"calendar_info_calendar": "Calendar Infomation",
 	"calendar_remove_event": "remove event",
+	"calendar_info_event": "Event Infomation",
+	"calendar_members_event": "Event Menbers",
 	"schemas": {
 	    "calendars": {
 	      "title": {

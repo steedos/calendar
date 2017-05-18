@@ -9,6 +9,7 @@ Meteor.methods
 				color:CALENDARCOLORS[parseInt(10000*Math.random())%24],
 				ownerId:this.userId,
 				timezone:timezone,
-				Isdefaultcalendar:true,
+				isDefault:true,
 				components:["VEVENT","VTODO"],
-				synctoken:1
+				synctoken:1,
+				isChecked:true
