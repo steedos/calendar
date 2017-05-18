@@ -59,9 +59,21 @@ Package.onUse(function(api) {
     api.use('tap:i18n@1.7.0');
     api.use('steedos:calendar-i18n@0.0.1');
 
+    api.use('peppelg:bootstrap-3-modal@1.0.4');
+
+
+    
+
     api.addFiles('client/event/event.html', 'client');
     api.addFiles('client/event/event.coffee', 'client');
     api.addFiles('client/event/event.less', 'client');
+
+    api.addFiles('client/event/event_detail.html', 'client');
+    api.addFiles('client/event/event_detail.coffee', 'client');
+    api.addFiles('client/event/event_detail.less', 'client');
+
+
+
 
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');

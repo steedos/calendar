@@ -4,5 +4,7 @@
 	"calendar_edit_calendar": "编辑日历",
 	"calendar_add_event":"添加事件",
 	"calendar_edit_event":"编辑事件",
-	"calendar_info_calendar": "日历信息"
+	"calendar_info_calendar": "日历信息",
+	"calendar_info_event": "事件信息",
+	"calendar_members_event": "参与者"
 }

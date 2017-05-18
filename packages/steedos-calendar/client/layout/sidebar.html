@@ -8,7 +8,8 @@
           <a href="#">
             <div class="pull-left-title">
                 <div class="check">
-                  <i class="icon fa"></i>
+                  <i class="icon fa fa-check"></i>
+                  <!-- <i class="icon fa {{#if isChecked}}fa-check{{/if}}"></i> -->
                 </div>
                 <i class="fa fa-calendar" style="color:{{color}}"></i>
                 <span>{{title}}</span>
@@ -16,7 +17,7 @@
               <span class="pull-right-container">
               <div class="operate-box">
               {{#if isCalendarOwner}}
-                  {{#if isdefaultCalendar}}
+                  {{#if isDefault}}
                         <i class="fa fa-edit calendar-edit"></i>&nbsp;&nbsp;
                   {{else}}
                         <i class="fa fa-edit calendar-edit"></i>&nbsp;&nbsp;    
