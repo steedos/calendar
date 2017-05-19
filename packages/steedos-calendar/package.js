@@ -61,6 +61,7 @@ Package.onUse(function(api) {
 
     api.use('peppelg:bootstrap-3-modal@1.0.4');
 
+    api.use('meteor-universe-selectize@0.1.22');
 
     
 
@@ -91,7 +92,7 @@ Package.onUse(function(api) {
     api.addFiles('models/calendars.coffee');
     api.addFiles('models/events.coffee');
 
-    api.addFiles('lib/attendees.coffee');
+    // api.addFiles('lib/attendees.coffee');
 
     api.addFiles('server/methods/calendarInit.coffee','server');
     api.addFiles('server/methods/selectGetUsers.coffee','server');
