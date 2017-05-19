@@ -27,8 +27,7 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	calendarIds = []
 	objs = Calendars.find()
 	objs.forEach (obj) ->
-		if obj.isChecked
-			calendarIds.push(obj._id)
+		calendarIds.push(obj._id)
 
 	params = 
 		start: start.toDate()
