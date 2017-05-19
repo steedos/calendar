@@ -7,6 +7,19 @@
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String
+    
+  #   space:
+  #   	type:[String]
+  #   	type: [String],
+		# autoform: 
+		# 	type: "universe-select"
+		# 	afFieldInput:
+		# 		multiple: true
+		# 		optionsMethod: "selectGetUsers"
+	
+	# space_permission:
+	# 	type:String
+
 
 	members:  
 		type: [String],
@@ -16,6 +29,9 @@ Calendars._simpleSchema = new SimpleSchema
 				multiple: true
 				optionsMethod: "selectGetUsers"
 
+	# members_permission:
+	# 	type:String
+	
 	visibility:
 		type: String
 		allowedValues: ["private"]
@@ -126,9 +142,10 @@ if (Meteor.isServer)
 				displayname=steedosId;
 				Calendar.addInstance(userId,modifier.$set,doc._id,steedosId,2,herf,displayname);
 		return
-					
+			
 	Calendars.after.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
+		Events.update({calendarid:doc._id},{$set:{eventcolor:doc.color}},{multi:true})
 		calendarinstances.update({calendarid:doc._id},{$set:{displayname:doc.title,calendarcolor:doc.color}},{multi:true});
 		starttoken = Calendars.findOne({_id:doc._id}).synctoken;
 		Calendar.addChange(doc._id, null,2);
