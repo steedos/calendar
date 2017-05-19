@@ -2,3 +2,59 @@ div.eventForm {
     margin-left: 1%;
     margin-right: 1%;
 }
+
+div.invite-box.false{
+	display:none;
+}
+
+div.invite-info-box.true{
+	display:none;
+}
+
+.event-members li{
+	a span i.delete-members{
+		display:none;
+	}
+}
+
+.event-members li.true:hover{
+	a span i.attendees{
+		display:none;
+	}
+	a span i.delete-members{
+		display: inline;
+	}
+}
+
+/*待确认 fa-question*/
+.event-members li{
+	a span i.NEEDS-ACTION:before{
+		content: "\f128";
+	}
+}
+
+/*接受：fa-check*/
+.event-members li{
+	a span i.ACCEPTED:before{
+		content: "\f00c";
+	}
+}
+
+/*拒绝：*/
+.event-members li{
+	a span i.DECLINED:before{
+		/*fa-close：
+		content: "\f00d";*/
+		content: "\f05e";
+	}
+}
+
+
+
+
+
+
+
+    
+
+
