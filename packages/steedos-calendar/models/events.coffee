@@ -188,7 +188,8 @@ if (Meteor.isServer)
 		doc.uid = doc._id	
 		doc.uri = doc._id + ".ics"
 		doc.ownerId=userId;
-		Calendar.addCalendarObjects(userId,doc);
+		Calendar.addCalendarObjects(userId,doc,1);
+		Calendar.shareEvent(doc);
 		return
 	
 	Events.after.insert (userId, doc)->
@@ -202,30 +203,31 @@ if (Meteor.isServer)
 			throw new Meteor.Error(400, "开始时间不能大于结束时间");
 		 
 	Events.after.update (userId, doc, fieldNames, modifier, options) ->
-		myDate = new Date();
-		lastmodified = parseInt(myDate.getTime()/1000);
-		myDate = new Date(doc.start)
-		firstoccurence = parseInt(myDate.getTime()/1000);
-		myDate = new Date (doc.end)
-		lastoccurence = parseInt(myDate.getTime()/1000);
-		newcalendardata =Calendar.addEvent(userId,doc);
-		etag = MD5(newcalendardata);
-		size = newcalendardata.length;
-		uid = doc._id;
+		# myDate = new Date();
+		# lastmodified = parseInt(myDate.getTime()/1000);
+		# myDate = new Date(doc.start)
+		# firstoccurence = parseInt(myDate.getTime()/1000);
+		# myDate = new Date (doc.end)
+		# lastoccurence = parseInt(myDate.getTime()/1000);
+		# newcalendardata =Calendar.addEvent(userId,doc);
+		# etag = MD5(newcalendardata);
+		# size = newcalendardata.length;
+		# uid = doc._id;
+		Calendar.addCalendarObjects(userId,doc,2);
 		Events.direct.update {_id:doc._id}, $set:
-			lastmodified: lastmodified,
-			firstoccurence:firstoccurence,
-			lastoccurence: lastoccurence,
-			etag: MD5(newcalendardata),
-			size: size,
-			calendardata: newcalendardata
+			lastmodified: doc.lastmodified,
+			firstoccurence:doc.firstoccurence,
+			lastoccurence: doc.lastoccurence,
+			etag: doc.etag,
+			size: doc.size,
+			calendardata: doc.calendardata
 
 		starttoken = Calendars.findOne({_id:doc.calendarid}).synctoken;
 		Calendar.addChange(doc.calendarid,doc.uri,2)
 		return
 	
 	
-	#删除后的操作，同时删除关联的event事件  after delete
+	#删除后的操作，同时删除关联的event事件  after delet
 	Events.before.remove (userId, doc)->
 		return
 
