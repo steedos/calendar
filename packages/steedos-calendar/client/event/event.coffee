@@ -27,8 +27,8 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	calendarIds = []
 	objs = Calendars.find()
 	objs.forEach (obj) ->
-		if obj.isChecked
-			calendarIds.push(obj._id)
+		calendarIds.push(obj._id)
+	console.log calendarIds
 
 	params = 
 		start: start.toDate()
@@ -71,11 +71,11 @@ Calendar.generateCalendar = ()->
 					allDay: event.allDay
 					title: event.title
 					url:event.url
-					color:event.color
+					color:event.eventcolor
 				if event.start
-					copy.start = moment.utc(event.start)
+					copy.start = moment(event.start)
 				if event.end
-					copy.end = moment.utc(event.end)
+					copy.end = moment(event.end)
 				return copy;
 			select: ( start, end, jsEvent, view, resource )->
 				# console.log ('start'+new Date(start)+'   end'+end)
