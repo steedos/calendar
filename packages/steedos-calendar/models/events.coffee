@@ -168,7 +168,14 @@ Events.attachSchema new SimpleSchema
 
 	"attendees.$.mailto": 
 		type:String
+	"attendees.$.id": 
+		type:String
 	
+	parentId:
+		type:String
+		optional: true
+		autoform: 
+			omit: true
 	
 
 if (Meteor.isServer) 
