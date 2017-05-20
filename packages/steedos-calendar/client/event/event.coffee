@@ -45,7 +45,7 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 			c.stop()
 
 Calendar.generateCalendar = ()->
-	if !$('#calendar').children().length
+	if !$('#calendar').children()?.length
 
 		$('#calendar').fullCalendar
 			height: ()->
@@ -61,7 +61,7 @@ Calendar.generateCalendar = ()->
 			editable: true
 			eventLimit: true
 			events: Calendar.getEventsData
-			timeFormat: 'H(:mm)'
+			timeFormat: 'H:mm'
 			# timezone: 'local'
 			locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->

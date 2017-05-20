@@ -14,6 +14,15 @@ Template.event_detail_modal.helpers
 		return obj
 
 Template.event_detail_modal.events
+	'click button.accepted': (event)->
+		
+
+	'click button.needs-action': (event)->
+
+
+	'click button.declined': (event)->
+		
+
 	'click i.delete-members': (event)->
 		console.log event
 		console.log this

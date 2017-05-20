@@ -6,18 +6,51 @@
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
         				<span aria-hidden="true">&times;</span>
         			</button>
-        			<h4 class="modal-title" id="myModalLabel">{{_ "calendar_edit_event"}}</h4>
+        			<h4 class="modal-title" id="myModalLabel">{{_ "calendar_info_event"}}</h4>
         		</div>
         		<div class="modal-body">
         			<div class="col-sm-8">
-						<div class="box">
+						<div class="box box-solid">
 				            <div class="eventForm">
-								{{> quickForm collection="Events" doc=eventObj id="eventsForm" type=eventObj.formOpt omitFields="members"}}
+								{{> quickForm collection="Events" doc=eventObj id="eventsForm" type=eventObj.formOpt omitFields="members"  template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
 				    		</div>
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="box invite-box {{eventObj.isOwner}}">
+						<div class="box box-solid {{eventObj.isOwner}} invite-info-box">
+	        				<div class="box-header with-border">
+				              <h3 class="box-title">事件反馈</h3>
+
+				              <div class="box-tools">
+				                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+				                	<!-- <i class="fa fa-minus"></i> -->
+				                </button>
+				              </div>
+				            </div>
+				            <div class="box-body no-padding">
+				            	<div class="feadback">
+				            		<span class="pull-left text-muted">
+										<h4>是否参加？</h4>
+									</span>
+									<!-- <span class="pull-right text-light-blue">
+										<label class="control-label accepted">接受</label>
+										<label class="control-label needs-action">不确定</label>
+										<label class="control-label declined">拒绝</label>
+									</span> -->
+									<button type="button" class="btn btn-block btn-default accepted">
+									接受</button>
+									<button type="button" class="btn btn-block btn-default needs-action">
+									不确定</button>
+									<button type="button" class="btn btn-block btn-default declined">
+									拒绝</button>
+
+				            	</div>
+				            </div>
+	        			</div>
+
+
+
+						<div class="box box-solid invite-box {{eventObj.isOwner}}">
 				            <div class="box-header with-border">
 				              <h3 class="box-title">{{_ "calendar_add_members_event"}}</h3>
 				              <div class="box-tools">
@@ -26,17 +59,16 @@
 				              </div>
 				            </div>
 				            <div class="box-body no-padding">
-				                <input type="universe-select" class="form-control invite" placeholder='{{_ "calendar_please_input"}}{{_ "calendar_add_members_event"}}' >
+				                <!-- <input type="universe-select" class="form-control invite" placeholder='{{_ "calendar_please_input"}}{{_ "calendar_add_members_event"}}' > -->
 
-<!-- {{>  name="test1" options=selectGetUsers multiple=true create=true}} -->
-
+	{{> universeSelectize name="test1" optionsMethod="selectGetUsers" multiple=false }}
 
 
 				            </div>
 				            <!-- /.box-body -->
 				          </div>
 
-						<div class="box">
+						<div class="box box-solid">
 				            <div class="box-header with-border">
 				              <h3 class="box-title">{{_ "calendar_members_event"}}</h3>
 
@@ -64,29 +96,6 @@
 				            </div>
 				            <!-- /.box-body -->
 				          </div>
-					      <div class="box {{eventObj.isOwner}} invite-info-box">
-	        				<div class="box-header with-border">
-				              <h3 class="box-title">事件反馈</h3>
-
-				              <div class="box-tools">
-				                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-				                	<!-- <i class="fa fa-minus"></i> -->
-				                </button>
-				              </div>
-				            </div>
-				            <div class="box-body no-padding">
-				              	<span class="pull-left text-muted">
-									是否参加？
-								</span>
-								<span class="pull-right text-light-blue">
-									<label class="control-label accepted">接受</label>
-									<label class="control-label needs-action">不确定</label>
-									<label class="control-label declined">拒绝</label>
-								</span>
-				            </div>
-	        			</div>
-
-
 					</div>
         		</div>
         		<div class="modal-footer">
