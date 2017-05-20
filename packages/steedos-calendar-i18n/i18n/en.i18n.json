@@ -18,9 +18,6 @@
 	"calendar_delete_success":"Delete Success",
 	"calendar_delete_failed":"Delete Failed",
 	"calendar_delete_succsee_info":"This Calendar has bean Deleted!",
-
-
-
 	"schemas": {
 	    "calendars": {
 	      "title": {
