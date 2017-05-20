@@ -17,7 +17,7 @@ Template.event_detail_modal.events
 	'click button.accepted': (event)->
 		
 
-	'click button.needs-action': (event)->
+	'click button.tentative': (event)->
 
 
 	'click button.declined': (event)->
