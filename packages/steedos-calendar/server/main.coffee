@@ -21,7 +21,9 @@ Meteor.startup ->
 			transp = false;
 		else
 			transp = true;
+		#console.log doc.timezone
 		zones=moment_timezone.tz.zone(doc.timezone);
+		#console.log zones
 		ical = new icalendar.iCalendar();
 		vtimezone=ical.addComponent('VTIMEZONE');
 		vtimezone.addProperty("TZID",doc.timezone);
@@ -76,6 +78,10 @@ Meteor.startup ->
 		newmembers=_.difference doc.members,calendarmembers;
 		newmembers.forEach (member)->
 			calendar=Calendars.findOne({ownerId:member},{isDefault:true}, {fields:{_id: 1,color:1}})
+			console.log "calendar==="
+			if calendar==undefined
+				Meteor.call('calendarInit',member,Defaulttimezone);
+				calendar=Calendars.findOne({ownerId:member},{isDefault:true}, {fields:{_id: 1,color:1}})
 			Events.direct.insert
 				title:doc.title
 				members:doc.members

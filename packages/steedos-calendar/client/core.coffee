@@ -13,5 +13,5 @@ Tracker.autorun ()->
 
 Tracker.autorun ()->
 	if Meteor.userId()
-		Meteor.call('calendarInit',moment_timezone.tz.guess())
+		Meteor.call('calendarInit',Meteor.userId(),moment_timezone.tz.guess())
 
