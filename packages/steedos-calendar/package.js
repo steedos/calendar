@@ -94,6 +94,7 @@ Package.onUse(function(api) {
     api.addFiles('lib/attendees.coffee');
 
     api.addFiles('server/methods/calendarInit.coffee','server');
+    api.addFiles('server/methods/calendarinsert.coffee','server');
     api.addFiles('server/methods/selectGetUsers.coffee','server');
 
     api.addFiles('server/publications/calendars.coffee','server');

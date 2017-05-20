@@ -1,5 +1,6 @@
 @Calendars = new Mongo.Collection('calendars');
 @moment_timezone = require('moment-timezone');
+@Defaulttimezone = 'Asia/Shanghai';
 @CALENDARCOLORS = new Array("#ac725e","#d06b64","#f83a22","#fa573c","#ff7537","#ffad46",
 					"#42d692","#16a765","#7bd148","#b3dc6c","#fbe983","#fad165",
 					"#92e1c0","#9fele7","#9fc6e7","#9fc6e7","#4986e7","#9a9cff","#b99aff",
@@ -46,18 +47,21 @@ Calendars._simpleSchema = new SimpleSchema
 			
 	ownerId: 
 		type: String,
+		defaultValue:this.userId
 		optional: true
 		autoform:
 			omit: true
 
 	synctoken:
 		type: Number,
+		defaultValue:1
 		optional: true
 		autoform:
 			omit: true
 
 	components:
 		type: [String],
+		defaultValue:["VEVENT","VTODO"]
 		optional: true
 		autoform:
 			omit: true
@@ -103,24 +107,26 @@ if (Meteor.isServer)
 			if userId!=doc.ownerId
 				return false
 			return true
-	#添加字段之前，强制给Calendar的OwnerId赋值,且
+	#添加字段之前，强制给Calendar的Ownerid赋值,且
 	Calendars.before.insert (userId,doc)->
-		doc.ownerId=Meteor.userId()
-		if doc.members.indexOf(userId) < 0
-			 doc.members.push(userId)		
-		doc.components = ["VEVENT","VTODO"]
-		doc.synctoken = 1
+		# doc.ownerId=Meteor.userId()
+		# if doc.members.indexOf(userId) < 0
+		# 	 doc.members.push(userId)		
+		# doc.components = ["VEVENT","VTODO"]
+		# doc.synctoken = 1
+		# Meteor.call('calendarinsert',userId,doc);
+
 		return
 	#对于一个日历members有几个，就有几个instance
 	Calendars.after.insert (userId, doc) ->
-		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
-		Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
-		for member,i in doc.members 
-			if member != userId
-				steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
-				herf="mailto:" + steedosId;
-				displayname=steedosId;
-				Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);
+		# steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		# Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
+		# for member,i in doc.members 
+		# 	if member != userId
+		# 		steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
+		# 		herf="mailto:" + steedosId;
+		# 		displayname=steedosId;
+		# 		Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);	
 		return		
 	#更新日历之前，更新instance
 	Calendars.before.update (userId, doc, fieldNames, modifier, options)->
@@ -152,8 +158,6 @@ if (Meteor.isServer)
 		return
 	# 移除关联的events,instances,changes
 	Calendars.before.remove (userId, doc)->
-		console.log doc
-		#Calendars.find("ownerId"：doc.ownerId)
 		Events.remove({"calendarid":doc._id});
 		calendarchanges.remove({"calendarid":doc._id});
 		calendarinstances.remove({"calendarid" : doc._id});	

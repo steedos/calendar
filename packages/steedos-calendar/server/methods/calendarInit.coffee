@@ -1,15 +1,19 @@
 Meteor.methods
-	calendarInit: (timezone) ->
-		if Calendars.find({$or:[{"ownerId":this.userId},{"members":this.userId}]}).count()==0
-			name=Meteor.users.findOne({_id:this.userId}).name
-			Calendars.insert
+	calendarInit: (userId,timezone) ->
+		if Calendars.find({"ownerId":userId},{"isDefault":true}).count()==0
+			name=Meteor.users.findOne({_id:userId}).name
+			doc =
 				title:name+"的日历",
-				members:[this.userId],
+				members:[userId],
 				visibility:"private",
 				color:CALENDARCOLORS[parseInt(10000*Math.random())%24],
-				ownerId:this.userId,
+				ownerId:userId,
 				timezone:timezone,
 				isDefault:true,
 				components:["VEVENT","VTODO"],
 				synctoken:1,
 				isChecked:true
+			Meteor.call('calendarinsert',doc);
+			#doc=Calendars.find({"ownerId":userId},{"isDefault":true})
+			 #steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+			#Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
