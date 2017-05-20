@@ -28,7 +28,6 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	objs = Calendars.find()
 	objs.forEach (obj) ->
 		calendarIds.push(obj._id)
-	console.log calendarIds
 
 	params = 
 		start: start.toDate()

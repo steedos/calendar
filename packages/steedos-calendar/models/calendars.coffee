@@ -78,12 +78,6 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			type:"hidden"
 
-	isChecked:
-		type:Boolean,
-		defaultValue:true
-		autoform:
-			type:"hidden"
-
 	
 
 Calendars.attachSchema Calendars._simpleSchema

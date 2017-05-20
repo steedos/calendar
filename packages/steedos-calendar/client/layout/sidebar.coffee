@@ -12,9 +12,8 @@ Template.calendarSidebar.helpers
 		return objs
 	isCalendarOwner: ()->
 		return this.ownerId == Meteor.userId()
-	isdefaultCalendar :()->
-		return this.Isdefaultcalendar
-
+	isDefault :()->
+		return this.isDefault
 
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
@@ -25,22 +24,17 @@ Template.calendarSidebar.events
 	'click div.pull-left-title':(event)->
 		checkBox = $(event.currentTarget.firstElementChild.childNodes[1])
 		checkBox.toggleClass("fa-check")
-		if checkBox.hasClass("fa-check")
-			calendarIdArr.push this._id
-		else
-			console.log calendarIdArr
-			index = calendarIdArr.indexOf this._id
-			delete calendarIdArr[index]
+		# Calendars.update(this._id, {
+		# 	$set: {isChecked: checkBox.hasClass("fa-check") }
+		# })
 		$("#calendar").fullCalendar("refetchEvents")
-
-
 
 	'click a.calendar-add': (event)->
 		$('.btn.calendar-add').click();
 
 	'click i.calendar-edit': (event)->
 		if Meteor.userId()!=this.ownerId
-			swal("无权限","该账号无权限操作此日历","warning");
+			swal(t("calendar_no_permission_calendar"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
 		Session.set("cmDoc", this);
 		$('.btn.calendar-edit').click();
@@ -52,18 +46,18 @@ Template.calendarSidebar.events
 
 	'click i.calendar-delete': (event)->
 		if Meteor.userId()!=this.ownerId
-			swal("无权限","该账号无权限操作此日历","warning");
+			swal(t("calendar_no_permission_calendar"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
 		console.log(this);
 		calendar_id=this._id;
 		swal({
-		  title: "删除日历",
+		  title: t("calendar_delete_confirm_calendar"),
 		  text: "你确定删除此日历吗？与此日历相关联的事件也都将被删除。",
 		  type: "warning",
 		  showCancelButton: true,
-		  cancelButtonText:"取消",
+		  cancelButtonText:t("calendar_calend"),
 		  confirmButtonColor: "#DD6B55",
-		  confirmButtonText: "确定",
+		  confirmButtonText: t("calendar_ok"),
 		  closeOnConfirm: false,
 		  html: false
 		},
@@ -72,7 +66,7 @@ Template.calendarSidebar.events
 			# this._id取值无法删除，删除失败,this未定义
 			Calendars.remove {_id:calendar_id}, (error)->
 				if error
-					swal("删除失败",error.message,"error");
+					swal(t("calendar_delete_failed"),error.message,"error");
 				else
-					swal("删除成功","日历已被删除！","success");
+					swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success");
 		);
