@@ -1,102 +1,142 @@
 <template name="event_detail_modal">
 	<div class="modal fade bs-example-modal-lg" id="event_detail_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel2">
 		<div class="modal-dialog modal-lg" role="document">
-      		<div class="modal-content ins-modal">
-        		<div class="modal-header">
-        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        				<span aria-hidden="true">&times;</span>
-        			</button>
-        			<h4 class="modal-title" id="myModalLabel">{{_ "calendar_info_event"}}</h4>
-        		</div>
-        		<div class="modal-body">
-        			<div class="col-sm-8">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">{{_ "calendar_info_event"}}</h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="col-sm-8">
 						<div class="box box-solid">
-				            <div class="eventForm">
-								{{> quickForm collection="Events" doc=eventObj id="eventsForm" type=eventObj.formOpt omitFields="members"  template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
-				    		</div>
+							<div class="feadback">
+								<table role="form" aria-label="回复表单">
+									<tbody>
+										<tr>
+											<td valign="top" class="col-sm-3">是否参加？</td>
+											<td valign="top" class="col-sm-3" role="menu">
+												<span class="text-light-blue">
+													<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" {{accendeeState "ACCEPTED"}}>接受<br>
+													<input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" {{accendeeState "TENTATIVE"}}>不确定<br>
+													<input type="radio" name="optionsRadios" id="optionsRadios3" value="option1" {{accendeeState "DECLINED"}}>拒绝
+												</span>
+											</td>
+											<td class="col-sm-5">
+												<textarea rows="3" placeholder="备注信息"></textarea>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- <span class="pull-left text-muted">
+									参加？
+								</span>
+								<span class="pull-right text-light-blue">
+									<label class="control-label accepted {{eventObj.curstat}}">
+									接受</label>
+									<label class="control-label tentative {{eventObj.curstat}}">
+									不确定</label>
+									<label class="control-label declined {{eventObj.curstat}}">
+									拒绝</label>
+								</span> -->
+							</div>
+						</div>
+						<div class="box box-solid">
+							<div class="eventForm">
+								{{#autoForm id="eventsForm" collection="Events" doc=eventObj type=eventObj.formOpt omitFields="members"  }}
+									{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
+								<div class="col-md-12 event-edit">
+									<div class="form-group">
+										<div class="pull-left">
+											<button type="submit" class="btn btn-primary save_events">
+										保存</button>
+										</div>
+										<div class="pull-right">
+											<button type="button" class="btn btn-danger btn-remove delete_events">删除</button>
+										</div>
+									</div>
+								</div>
+								{{/autoForm}}
+							</div>
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="box box-solid {{eventObj.isOwner}} invite-info-box">
-	        				<div class="box-header with-border">
-				              <h3 class="box-title">事件反馈</h3>
-
-				              <div class="box-tools">
-				                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-				                	<!-- <i class="fa fa-minus"></i> -->
-				                </button>
-				              </div>
-				            </div>
-				            <div class="box-body no-padding">
-				            	<div class="feadback">
-				            		<span class="pull-left text-muted">
-										<h4>是否参加？</h4>
-									</span>
-									<button type="button" class="btn btn-block btn-default accepted">
-									接受</button>
-									<button type="button" class="btn btn-block btn-default tentative">
-									不确定</button>
-									<button type="button" class="btn btn-block btn-default declined">
-									拒绝</button>
-
-				            	</div>
-				            </div>
-	        			</div>
-
-
-
 						<div class="box box-solid invite-box {{eventObj.isOwner}}">
-				            <div class="box-header with-border">
-				              <h3 class="box-title">{{_ "calendar_add_members_event"}}</h3>
-				              <div class="box-tools">
-				                <button type="button" class="btn btn-box-tool" data-widget="collapse"><!-- <i class="fa fa-minus"></i> -->
-				                </button>
-				              </div>
-				            </div>
-				            <div class="box-body no-padding">
-				                <!-- <input type="universe-select" class="form-control invite" placeholder='{{_ "calendar_please_input"}}{{_ "calendar_add_members_event"}}' > -->
+							<div class="box-header with-border">
+							  <h3 class="box-title">{{_ "calendar_add_members_event"}}</h3>
+							</div>
+							<div class="box-body no-padding">
+							<span class="pull-left">
+								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=false create=true disabled=false}}
+							</span>
+							<span class="pull-right">
+								<label class="control-label text-light-blue addmembers-lbl">
+									添加</label>
+							</span>
 
-	{{> universeSelectize name="test1" optionsMethod="selectGetUsers" multiple=false }}
 
-
-				            </div>
-				            <!-- /.box-body -->
-				          </div>
-
+							</div>
+						  </div>
 						<div class="box box-solid">
-				            <div class="box-header with-border">
-				              <h3 class="box-title">{{_ "calendar_members_event"}}</h3>
+							<div class="box-header with-border">
+							  <h3 class="box-title">{{_ "calendar_members_event"}}</h3>
+							</div>
+							<div class="box-body no-padding">
+							<div class="feadback-result">
+								<table>
+									<tr>
+										<td>
+											<span>
+												<i class="fa fa-fw fa-check"></i>接受{{eventObj.acceptednum}}人
+											</span>
+										</td>
+										<td>
+											<span>
+												<i class="fa fa-fw fa-question"></i>不确定{{eventObj.tentativenum}}人
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span>
+												<i class="fa fa-fw fa-ban"></i>
+												拒绝{{eventObj.declinednum}}人
+											</span>
+										</td>
+										<td>
+											<span>
+												<i class="fa fa-fw"></i>待回复{{eventObj.actionnum}}人
+											</span>
+										</td>
+									</tr>
+								</table>
+							</div>
 
-				              <div class="box-tools">
-				                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-				                	<!-- <i class="fa fa-minus"></i> -->
-				                </button>
-				              </div>
-				            </div>
-				            <div class="box-body no-padding">
-				              <ul class="nav nav-pills nav-stacked event-members">
-				              	{{#each eventObj.attendees}}
-				                	<li class="{{eventObj.isOwner}}">
-				                		<a href="#">
-				                			<i class="fa fa-user"></i>
-				                			{{cn}}
-				                			<span class="pull-right">
-				                				<i class="fa {{partstat}} attendees"></i>
-				                				<i class="fa fa-trash delete-members"></i>
-				                			</span>
-				                		</a>
-				                	</li>
-				                {{/each}}
-				              </ul>
-				            </div>
-				            <!-- /.box-body -->
-				          </div>
+							<div class="members-list">
+								 <ul class="nav nav-pills nav-stacked event-members">
+								{{#each eventObj.attendees}}
+									<li class="{{eventObj.isOwner}}">
+										<a href="#">
+											<i class="fa fa-user"></i>
+											{{cn}}
+											<span class="pull-right">
+												<i class="fa {{partstat}} attendees"></i>
+												<i class="fa fa-trash delete-members"></i>
+											</span>
+										</a>
+									</li>
+								{{/each}}
+							  </ul>
+							</div>
+							</div>
+						  </div>
 					</div>
-        		</div>
-        		<div class="modal-footer">
-					
-        		</div>
-        	</div>
-        </div>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
 	</div>
 </template>

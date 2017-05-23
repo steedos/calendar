@@ -55,7 +55,7 @@ Template.calendarSidebar.events
 		  text: "你确定删除此日历吗？与此日历相关联的事件也都将被删除。",
 		  type: "warning",
 		  showCancelButton: true,
-		  cancelButtonText:t("calendar_calend"),
+		  cancelButtonText:t("calendar_cancel"),
 		  confirmButtonColor: "#DD6B55",
 		  confirmButtonText: t("calendar_ok"),
 		  closeOnConfirm: false,
