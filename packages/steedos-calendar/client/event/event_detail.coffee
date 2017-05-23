@@ -1,4 +1,3 @@
-
 Template.event_detail_modal.onRendered ->
 
 
@@ -11,7 +10,7 @@ Template.event_detail_modal.helpers
 			if attendee.id == Meteor.userId()
 				if attendee?.partstat==state
 					result = "checked"
-				if state=="TENTATIVE"&&attendee?.partstat=="NEED-ACTION"
+				if state=="TENTATIVE"&&attendee?.partstat=="NEEDS-ACTION"
 					result = "checked"
 		return result
 
@@ -34,18 +33,18 @@ Template.event_detail_modal.helpers
 					when "ACCEPTED" then obj.accepted==true
 					when "TENTATIVE" then obj.tentative==true
 					when "DECLINED" then obj.declined==true
-					when "NEED-ACTION" then obj.action==true
+					when "NEEDS-ACTION" then obj.action==true
 			switch attendee.partstat
 				when "ACCEPTED" then obj.acceptednum++
 				when "TENTATIVE" then obj.tentativenum++
 				when "DECLINED" then obj.declinednum++
-				when "NEED-ACTION" then obj.actionnum++
+				when "NEEDS-ACTION" then obj.actionnum++
 		return obj
 
 Template.event_detail_modal.events
 	'click button.save_events': (event)->
 		$('body').addClass "loading"
-		console.log 111111
+		
 		$('body').removeClass "loading"
 
 
