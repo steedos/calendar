@@ -62,7 +62,7 @@ Calendar.generateCalendar = ()->
 			eventLimit: true
 			events: Calendar.getEventsData
 			timeFormat: 'H:mm'
-			# timezone: 'local'
+			# timezone: Defaulttimezone
 			locale: Session.get("steedos-locale")
 			eventDataTransform: (event) ->
 				copy =
@@ -76,8 +76,7 @@ Calendar.generateCalendar = ()->
 				if event.end
 					copy.end = moment(event.end)
 				return copy;
-			select: ( start, end, jsEvent, view, resource )->
-				# console.log ('start'+new Date(start)+'   end'+end)
+			select: (start, end, jsEvent, view, resource)->
 				Session.set 'cmDoc', 
 					start: start.toDate()
 					end: end.toDate()
@@ -88,8 +87,27 @@ Calendar.generateCalendar = ()->
 				if event
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
-					# $('.btn.event-edit').click();
-					# console.log ('start'+event.start+'   end'+event.end)
+			eventDrop: (event, delta, revertFunc)->
+				console.log moment(event.start._d)
+				Events.update({'_id':event._id},{
+					$set:{
+						# 开始时间和结束时间加了8小时
+						'start':moment(event.start._d).toDate(),
+						'end':moment(event.end._d).toDate()
+					}
+				})
+
+			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
+				console.log event
+
+				Events.update({'_id':event._id},{
+					$set:{
+						# 开始时间和结束时间加了8小时
+						'start':event.start._d,
+						'end':event.end._d
+					}
+				})
+
 
 
 		Events.find().observe
