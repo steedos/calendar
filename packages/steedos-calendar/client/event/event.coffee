@@ -55,15 +55,26 @@ Calendar.generateCalendar = ()->
 				left: 'month,agendaWeek,agendaDay,listWeek',
 				center: 'prev title next',
 				right: ''
-			selectable: true,
-			selectHelper: true,
+			selectable: true
+			selectHelper: true
+			# weekends:false
 			navLinks: true
 			editable: true
 			eventLimit: true
+			weekNumbers:true
+			defaultView:'agendaWeek'
 			events: Calendar.getEventsData
 			timeFormat: 'H:mm'
 			timezone: 'local'
-			locale: Session.get("steedos-locale")
+			locale: Session.get('steedos-locale')
+			noEventsMessage:t("no_events_message")
+			buttonText:
+				listWeek:t("calendar_list_week")
+			# businessHours:
+			# 	dow: [1,2,3,4,5],
+			# 	start:'08:00',
+			# 	end:'18:00'
+
 			eventDataTransform: (event) ->
 				copy =
 					id: event._id
