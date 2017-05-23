@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 icalendar = require('icalendar');
 MD5 = require('MD5');
+uuid = require('uuid');
 @moment_timezone = require('moment-timezone');
 Meteor.startup ->
 	
@@ -64,7 +65,8 @@ Meteor.startup ->
 				cutype:"INDIVIDUAL",
 				partstat:partstat,
 				cn:steedosId,
-				mailto:steedosId
+				mailto:steedosId,
+				id:member
 			}
 			if member == userId
 				attendee.partstat="ACCEPTED"  #得该
@@ -103,6 +105,7 @@ Meteor.startup ->
 				etag:doc.etag
 				size:doc.size
 				eventcolor:calendar.color
+				parentId:doc._id
 
 	#新建或跟更新事件，事件对应的calendardata
 	addEvent :(userId, doc,operation)->
@@ -159,4 +162,5 @@ Meteor.startup ->
 		if doc.start > doc.end
 			throw new Meteor.Error(400, "开始时间不能大于结束时间");
 		doc.eventcolor =color;
+		doc.parentId=doc._id;
 		return doc
