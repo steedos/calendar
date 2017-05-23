@@ -1,60 +1,60 @@
 {
-	"calendar_calend":"取消",
-	"calendar_ok":"确定",
-	"calendar_add_calendar": "新建日历",
-	"calendar_app_title": "Steedos 日历",
-	"calendar_edit_calendar": "编辑日历",
-	"calendar_add_event":"添加事件",
-	"calendar_edit_event":"编辑事件",
-	"calendar_info_calendar": "日历信息",
-	"calendar_remove_event": "删除事件",
-	"calendar_info_event": "事件信息",
-	"calendar_members_event": "参与者",
-	"calendar_add_members_event":"邀请对象",
-	"calendar_please_input":"请输入",
-	"calendar_no_permission_calendar":"无权限",
-	"calnedar_no_permission_delete_calendar":"该账号无权限删除日历",
-	"calendar_delete_confirm_calendar":"确定删除?",
-	"calendar_delete_success":"删除成功",
-	"calendar_delete_failed":"删除失败",
-	"calendar_delete_succsee_info":"该日历已被删除！",
-	"schemas": {
-	    "calendars": {
-	      "title": {
-	        "label": "标题",
-	        "placeholder": "请输入标题"
-	      },
-	      "members": {
-	        "label": "成员",
-	        "placeholder": "请选择成员"
-	      },
-	      "color": {
-	        "label": "color"
-	      }
-	    },
-		"events": {
-	      "title": {
-	        "label": "title",
-	        "placeholder": "Please Input event"
-	      },
-	      "members": {
-	        "label": "Members"
-	      },
-	      "allDay": {
-	        "label": "AllDay"
-	      },
-	      "description": {
-	        "label": "Description"
-	      },
-	      "start": {
-	        "label": "Start"
-	      },
-	      "end": {
-	        "label": "End"
-	      },
-	      "calendar": {
-	        "label": "Calendar"
-	      }	           
-	    }	    	    
-	}
+  "calendar_cancel": "取消",
+  "calendar_ok": "确定",
+  "calendar_add_calendar": "新建日历",
+  "calendar_app_title": "Steedos 日历",
+  "calendar_edit_calendar": "编辑日历",
+  "calendar_add_event": "添加事件",
+  "calendar_edit_event": "编辑事件",
+  "calendar_info_calendar": "日历信息",
+  "calendar_remove_event": "删除事件",
+  "calendar_info_event": "事件信息",
+  "calendar_members_event": "参与者",
+  "calendar_add_members_event": "邀请对象",
+  "calendar_please_input": "请输入...",
+  "calendar_no_permission_calendar": "无权限",
+  "calnedar_no_permission_delete_calendar": "该账号无权限删除日历",
+  "calendar_delete_confirm_calendar": "确定删除?",
+  "calendar_delete_success": "删除成功",
+  "calendar_delete_failed": "删除失败",
+  "calendar_delete_succsee_info": "该日历已被删除！",
+  "schemas": {
+    "calendars": {
+      "title": {
+        "label": "标题",
+        "placeholder": "请输入标题"
+      },
+      "members": {
+        "label": "成员",
+        "placeholder": "请选择成员"
+      },
+      "color": {
+        "label": "color"
+      }
+    },
+    "events": {
+      "title": {
+        "label": "title",
+        "placeholder": "Please Input event"
+      },
+      "members": {
+        "label": "Members"
+      },
+      "allDay": {
+        "label": "AllDay"
+      },
+      "description": {
+        "label": "Description"
+      },
+      "start": {
+        "label": "Start"
+      },
+      "end": {
+        "label": "End"
+      },
+      "calendar": {
+        "label": "Calendar"
+      }
+    }
+  }
 }
