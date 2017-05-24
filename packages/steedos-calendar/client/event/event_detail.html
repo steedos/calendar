@@ -19,9 +19,9 @@
 											<td valign="top" class="col-sm-3">是否参加？</td>
 											<td valign="top" class="col-sm-3" role="menu">
 												<span class="text-light-blue">
-													<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" {{accendeeState "ACCEPTED"}}>接受<br>
-													<input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" {{accendeeState "TENTATIVE"}}>不确定<br>
-													<input type="radio" name="optionsRadios" id="optionsRadios3" value="option1" {{accendeeState "DECLINED"}}>拒绝
+													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>接受<br>
+													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>不确定<br>
+													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>拒绝
 												</span>
 											</td>
 											<td class="col-sm-5">
@@ -126,6 +126,9 @@
 												<i class="fa fa-trash delete-members"></i>
 											</span>
 										</a>
+										<div class="descrip-comments">
+											{{description}}
+										</div>
 									</li>
 								{{/each}}
 							  </ul>
