@@ -52,18 +52,29 @@ Calendar.generateCalendar = ()->
 				return $('#calendar').height()
 			handleWindowResize: true
 			header: 
-				left: 'month,agendaWeek,agendaDay,listMonth',
+				left: 'month,agendaWeek,agendaDay,listWeek',
 				center: 'prev title next',
 				right: ''
-			selectable: true,
-			selectHelper: true,
+			selectable: true
+			selectHelper: true
+			# weekends:false
 			navLinks: true
 			editable: true
 			eventLimit: true
+			weekNumbers:true
+			defaultView:'agendaWeek'
 			events: Calendar.getEventsData
 			timeFormat: 'H:mm'
-			# timezone: 'local'
-			locale: Session.get("steedos-locale")
+			timezone: 'local'
+			locale: Session.get('steedos-locale')
+			noEventsMessage:t("no_events_message")
+			buttonText:
+				listWeek:t("calendar_list_week")
+			# businessHours:
+			# 	dow: [1,2,3,4,5],
+			# 	start:'08:00',
+			# 	end:'18:00'
+
 			eventDataTransform: (event) ->
 				copy =
 					id: event._id
@@ -76,11 +87,17 @@ Calendar.generateCalendar = ()->
 				if event.end
 					copy.end = moment(event.end)
 				return copy;
-			select: ( start, end, jsEvent, view, resource )->
-				# console.log ('start'+new Date(start)+'   end'+end)
+			select: (start, end, jsEvent, view, resource)->
+				objs = Calendars.find()
+				calendarid = ""
+				objs.forEach (obj) ->
+					if obj.isDefault
+						console.log obj._id
+						calendarid = obj._id
 				Session.set 'cmDoc', 
 					start: start.toDate()
 					end: end.toDate()
+					calendarid:calendarid
 				$('.btn.event-add').click(); 
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne
@@ -88,8 +105,22 @@ Calendar.generateCalendar = ()->
 				if event
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
-					# $('.btn.event-edit').click();
-					# console.log ('start'+event.start+'   end'+event.end)
+			eventDrop: (event, delta, revertFunc)->
+				Events.update({'_id':event._id},{
+					$set:{
+						'start':moment(event.start._d).toDate(),
+						'end':moment(event.end._d).toDate()
+					}
+				})
+
+			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
+				Events.update({'_id':event._id},{
+					$set:{
+						'start':moment(event.start._d).toDate(),
+						'end':moment(event.end._d).toDate()
+					}
+				})
+
 
 
 		Events.find().observe

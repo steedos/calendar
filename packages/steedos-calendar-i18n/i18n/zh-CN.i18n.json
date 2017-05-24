@@ -18,6 +18,8 @@
   "calendar_delete_success": "删除成功",
   "calendar_delete_failed": "删除失败",
   "calendar_delete_succsee_info": "该日历已被删除！",
+  "no_events_message": "暂无本周安排!",
+  "calendar_list_week":"本周安排",
   "schemas": {
     "calendars": {
       "title": {
