@@ -42,60 +42,50 @@ Template.event_detail_modal.helpers
 		return obj
 
 Template.event_detail_modal.events
+	'click button.delete_events': (event)->
+		obj = Session.get('cmDoc')
+		Meteor.call('removeEvents',obj)
 	'click button.save_events': (event)->
 		$('body').addClass "loading"
-		
+		obj = Session.get('cmDoc')
+		val=$('input:radio[name="optionsRadios"]:checked').val()
+		description = $('textarea.description').val()
+		obj.attendees.forEach (attendee)->
+			if attendee.id == Meteor.userId()
+				attendee.partstat=val
+				attendee.description=description
+		Session.set 'cmDoc',obj
+		obj = Session.get('cmDoc')
+		Meteor.call('updateAttendees',obj,2);
 		$('body').removeClass "loading"
-
-
+	'click input:radio[name="optionsRadios"]': (event)->
+		description = $('textarea.description').val()
+		obj = Session.get('cmDoc')
+		val=$('input:radio[name="optionsRadios"]:checked').val()
+		obj.attendees.forEach (attendee)->
+			if attendee.id == Meteor.userId()
+				attendee.partstat=val
+				attendee.description=description
+		Session.set 'cmDoc',obj
+			
+	
 	'click label.addmembers-lbl': (event)->
-		console.log $("div.universe-selectize div.selectize-input div.item").attr("data-value")
-
-
-
-	'click label.accepted': (event)->
-		console.log Meteor.userId()
-
-	'click label.tentative': (event)->
-		console.log Meteor.userId()
-
-	'click label.declined': (event)->
-		swal({
-			title: "拒绝会议", 
-			text: "请输入拒绝原因：", 
-			type: "input",
-			showCancelButton: true,
-			cancelButtonText:t("calendar_cancel"),
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: t("calendar_ok"),
-			closeOnConfirm: false
-		},
-		(inputValue)->
-			if inputValue==false
-				return false;
-			if inputValue==""
-				swal.showInputError "请输入拒绝原因"
-				return false
-			console.log inputValue
-			console.log Meteor.userId()
+		#console.log $("div.universe-selectize div.selectize-input div.item").attr("data-value")
+		obj = Session.get('cmDoc')
+		attendeeid=$("div.universe-selectize div.selectize-input div.item").attr("data-value")
+		Meteor.call(
+			'attendeesInit',obj,attendeeid,
+			(error,result) ->
+				if !error
+					Session.set 'cmDoc',result
 		)
+
 	'click i.delete-members': (event)->
-		console.log this.id
-		swal({
-			title: t("calendar_delete_confirm_calendar"),
-			text: "确定删除此会议？",
-			type: "warning",
-			showCancelButton: true,
-			cancelButtonText:t("calendar_cancel"),
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: t("calendar_ok"),
-			closeOnConfirm: false,
-			html: false
-		},
-		()->
-			Calendars.remove {_id:calendar_id}, (error)->
-				if error
-					swal(t("calendar_delete_failed"),error.message,"error")
-				else
-					swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success")
-		)
+		obj = Session.get('cmDoc')
+		attendeeid = this.id
+		tempAtt = []
+		obj.attendees.forEach (attendee)->
+		 	if attendee.id!=attendeeid
+		 		tempAtt.push attendee
+		obj.attendees = tempAtt
+		Session.set 'cmDoc',obj
