@@ -96,8 +96,9 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/calendarInit.coffee','server');
     api.addFiles('server/methods/calendarinsert.coffee','server');
     api.addFiles('server/methods/selectGetUsers.coffee','server');
-    api.addFiles('server/methods/eventupdateattendees.coffee','server');
-
+    api.addFiles('server/methods/updateAttendees.coffee','server');
+    api.addFiles('server/methods/removeEvents.coffee','server');
+    api.addFiles('server/methods/attendeesInit.coffee','server');
     api.addFiles('server/publications/calendars.coffee','server');
     api.addFiles('server/publications/events.coffee','server');
     

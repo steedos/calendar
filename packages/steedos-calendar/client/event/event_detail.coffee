@@ -80,15 +80,20 @@ Template.event_detail_modal.events
 			
 	
 	'click label.addmembers-lbl': (event)->
-		#console.log $("div.universe-selectize div.selectize-input div.item").attr("data-value")
+		addmembers = []
+		addmembers = $("span.span-addmembers div.selectize-control div.selectize-input div.item").map(
+			(i,n)->
+				return $(n).attr("data-value")
+			).toArray()
+		# addmembers=['H8rWkusBeMs87DQwY','554985f5527eca12f40010df']
+		console.log addmembers
 		obj = Session.get('cmDoc')
-		attendeeid=$("div.universe-selectize div.selectize-input div.item").attr("data-value")
-		Meteor.call(
-			'attendeesInit',obj,attendeeid,
-			(error,result) ->
-				if !error
-					Session.set 'cmDoc',result
-		)
+			#attendeeid=$("div.universe-selectize div.selectize-input div.item").attr("data-value")
+		Meteor.call('attendeesInit',obj,addmembers,
+				(error,result) ->
+					if !error
+						Session.set 'cmDoc',result
+			)
 
 	'click i.delete-members': (event)->
 		obj = Session.get('cmDoc')
