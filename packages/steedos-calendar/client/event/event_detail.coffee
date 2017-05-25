@@ -29,6 +29,7 @@ Template.event_detail_modal.helpers
 			obj.formOpt = "disabled"
 		obj.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
+				obj.reason = attendee?.description
 				switch attendee.partstat
 					when "ACCEPTED" then obj.accepted==true
 					when "TENTATIVE" then obj.tentative==true
