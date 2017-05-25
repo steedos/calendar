@@ -67,9 +67,11 @@ Calendar.generateCalendar = ()->
 			timeFormat: 'H:mm'
 			timezone: 'local'
 			locale: Session.get('steedos-locale')
-			noEventsMessage:t("no_events_message")
+			# noEventsMessage:t("no_events_message")
+			noEventsMessage:"本周暂无会议安排"
 			buttonText:
-				listWeek:t("calendar_list_week")
+				listWeek:"本周会议"
+				# listWeek:t("calendar_list_week")
 			# businessHours:
 			# 	dow: [1,2,3,4,5],
 			# 	start:'08:00',
