@@ -29,7 +29,7 @@ Template.calendarSidebar.events
 		# })
 		$("#calendar").fullCalendar("refetchEvents")
 
-	'click a.calendar-add': (event)->
+	'click .main-sidebar .calendar-add': (event)->
 		$('.btn.calendar-add').click();
 
 	'click i.calendar-edit': (event)->
