@@ -9,8 +9,8 @@
   "calendar_info_calendar": "Calendar Infomation",
   "calendar_remove_event": "remove event",
   "calendar_info_event": "Event Infomation",
-  "calendar_members_event": "Event Menbers",
-  "calendar_add_members_event": "Invite Menbers",
+  "calendar_members_event": "Event Members",
+  "calendar_add_members_event": "Invite Members",
   "calendar_please_input": "Please Input",
   "calendar_no_permission_calendar": "No Permission",
   "calnedar_no_permission_delete_calendar": "This Account has No Permission to Delete",
@@ -19,5 +19,28 @@
   "calendar_delete_failed": "Delete Failed",
   "calendar_delete_succsee_info": "This Calendar has bean Deleted!",
   "no_events_message": "暂无本周安排",
-  "calendar_list_week":"本周安排"
+  "calendar_list_week":"本周安排",
+  "calendars_title":"Title",
+  "calendars_members": "Members",
+  "calendars_visibility": "Visibility",
+  "calendars_color": "Color",
+  "Title": "Title",
+  "Members": "Members",
+  "AllDay" :"Allday"
+  //"Description": "Description"
+        
+  //       "start": {
+  //         "label": "Start"
+  //       },
+  //       "end": {
+  //         "label": "End"
+  //       },
+  //       "calendarid": {
+  //         "label": "Calendar"
+  //       },
+  //       "alarms": {
+  //         "label": "Alarms"
+  //       }             
+  //     }           
+  // }
 }
