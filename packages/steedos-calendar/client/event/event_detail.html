@@ -7,28 +7,32 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-					<!-- {{_ "calendar_info_event"}} -->
-					会议详情
+					{{_ "calendar_info_event"}}
 					</h4>
 				</div>
 				<div class="modal-body">
 
 					<div class="col-sm-8">
 						<div class="box box-solid">
-							<div class="feadback">
-								<table role="form" aria-label="回复表单">
+							<div class="feadback well">
+								<table role="form" aria-label='{{_ "calendar_event_feadback"}}'>
 									<tbody>
 										<tr>
-											<td valign="top" class="col-sm-3 control-label">是否参加？</td>
+											<td valign="top" class="col-sm-3 control-label">{{_ "calendar_event_answer"}}</td>
 											<td valign="top" class="col-sm-2" role="menu">
 												<span class="text-light-blue">
-													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>接受<br>
-													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>不确定<br>
-													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>拒绝
+													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
+													{{_ "calendar_event_accepted"}}
+													<br>
+													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>
+													{{_ "calendar_event_tentative"}}
+													<br>
+													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>
+													{{_ "calendar_event_declined"}}
 												</span>
 											</td>
-											<td class="col-sm-5">
-												<textarea rows="3" placeholder="备注信息" class="description">{{eventObj.reason}}</textarea>
+											<td class="col-sm-7">
+												<textarea rows="3" placeholder='{{_ "calendar_event_note"}}' class="description">{{eventObj.reason}}</textarea>
 											</td>
 										</tr>
 									</tbody>
@@ -43,10 +47,11 @@
 									<div class="form-group">
 										<div class="pull-left">
 											<button type="submit" class="btn btn-primary save_events">
-										保存</button>
+											{{_ "calendar_save"}}</button>
 										</div>
 										<div class="pull-right">
-											<button type="button" class="btn btn-danger btn-remove delete_events">删除</button>
+											<button type="button" class="btn btn-danger btn-remove delete_events">
+											{{_ "calendar_delete"}}</button>
 										</div>
 									</div>
 								</div>
@@ -58,8 +63,7 @@
 						<div class="box box-solid">
 							<div class="box-header with-border">
 							  <h3 class="box-title">
-							  <!-- {{_ "calendar_members_event"}} -->
-							  成员列表
+							  {{_ "calendar_member_list"}}
 							  </h3>
 							</div>
 							<div class="box-body no-padding">
@@ -68,12 +72,18 @@
 									<tr>
 										<td>
 											<span>
-												<i class="fa fa-fw fa-check"></i>接受{{eventObj.acceptednum}}人
+												<i class="fa fa-fw fa-check"></i>
+												{{_ "calendar_event_accepted"}}
+												{{eventObj.acceptednum}}
+												{{_ "calendar_event_people"}}
 											</span>
 										</td>
 										<td>
 											<span>
-												<i class="fa fa-fw fa-question"></i>不确定{{eventObj.tentativenum}}人
+												<i class="fa fa-fw fa-question"></i>
+												{{_ "calendar_event_tentative"}}
+												{{eventObj.tentativenum}}
+												{{_ "calendar_event_people"}}
 											</span>
 										</td>
 									</tr>
@@ -81,12 +91,17 @@
 										<td>
 											<span>
 												<i class="fa fa-fw fa-ban"></i>
-												拒绝{{eventObj.declinednum}}人
+												{{_ "calendar_event_declined"}}
+												{{eventObj.declinednum}}
+												{{_ "calendar_event_people"}}
 											</span>
 										</td>
 										<td>
 											<span>
-												<i class="fa fa-fw"></i>待回复{{eventObj.actionnum}}人
+												<i class="fa fa-fw"></i>
+												{{_ "calendar_event_action"}}
+												{{eventObj.actionnum}}
+												{{_ "calendar_event_people"}}
 											</span>
 										</td>
 									</tr>
@@ -123,11 +138,12 @@
 							</div> -->
 							<div class="box-body no-padding">
 							<span class="pull-left span-addmembers">
-								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=true disabled=false}}
+								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=true disabled=true}}
 							</span>
 							<span class="pull-right">
 								<label class="control-label text-light-blue addmembers-lbl">
-									添加</label>
+									{{_ "calendar_add"}}
+								</label>
 							</span>
 
 

@@ -51,8 +51,8 @@ Template.calendarSidebar.events
 		console.log(this);
 		calendar_id=this._id;
 		swal({
-		  title: t("calendar_delete_confirm_calendar"),
-		  text: "你确定删除此日历吗？与此日历相关联的事件也都将被删除。",
+		  title: t("calendar_delete_calendar"),
+		  text: t("calendar_delete_confirm_calendar"),
 		  type: "warning",
 		  showCancelButton: true,
 		  cancelButtonText:t("calendar_cancel"),
