@@ -44,7 +44,13 @@ Template.event_detail_modal.helpers
 Template.event_detail_modal.events
 	'click button.delete_events': (event)->
 		obj = Session.get('cmDoc')
-		Meteor.call('removeEvents',obj)
+		Meteor.call('removeEvents',obj,
+			(error,result) ->
+				if !error
+					$('div.modal-header button.close').trigger("click")
+		)
+		
+
 	'click button.save_events': (event)->
 		$('body').addClass "loading"
 		obj = Session.get('cmDoc')
@@ -56,8 +62,11 @@ Template.event_detail_modal.events
 				attendee.description=description
 		Session.set 'cmDoc',obj
 		obj = Session.get('cmDoc')
-		Meteor.call('updateAttendees',obj,2);
-		$('body').removeClass "loading"
+		Meteor.call('updateAttendees',obj,2,
+			(error,result) ->
+				if !error
+					$('div.modal-header button.close').trigger("click")
+			);
 	'click input:radio[name="optionsRadios"]': (event)->
 		description = $('textarea.description').val()
 		obj = Session.get('cmDoc')
