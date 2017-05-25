@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'steedos:calendar',
-	version: '0.0.2',
+	version: '0.0.2_1',
 	summary: 'Steedos calendar system',
 	git: ''
 });
@@ -57,7 +57,7 @@ Package.onUse(function(api) {
 
     api.use('rzymek:fullcalendar@3.4.0');
     api.use('tap:i18n@1.7.0');
-    api.use('steedos:calendar-i18n@0.0.2');
+    api.use('steedos:calendar-i18n@0.0.2_1');
 
     api.use('peppelg:bootstrap-3-modal@1.0.4');
 
