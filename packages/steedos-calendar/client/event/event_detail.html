@@ -16,31 +16,20 @@
 								<table role="form" aria-label="回复表单">
 									<tbody>
 										<tr>
-											<td valign="top" class="col-sm-3">是否参加？</td>
-											<td valign="top" class="col-sm-3" role="menu">
+											<td valign="top" class="col-sm-2">是否参加？</td>
+											<td valign="top" class="col-sm-2" role="menu">
 												<span class="text-light-blue">
 													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>接受<br>
 													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>不确定<br>
 													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>拒绝
 												</span>
 											</td>
-											<td class="col-sm-5">
+											<td class="col-sm-8">
 												<textarea rows="3" placeholder="备注信息" class="description">{{eventObj.reason}}</textarea>
 											</td>
 										</tr>
 									</tbody>
 								</table>
-								<!-- <span class="pull-left text-muted">
-									参加？
-								</span>
-								<span class="pull-right text-light-blue">
-									<label class="control-label accepted {{eventObj.curstat}}">
-									接受</label>
-									<label class="control-label tentative {{eventObj.curstat}}">
-									不确定</label>
-									<label class="control-label declined {{eventObj.curstat}}">
-									拒绝</label>
-								</span> -->
 							</div>
 						</div>
 						<div class="box box-solid">
@@ -63,22 +52,6 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div class="box box-solid invite-box {{eventObj.isOwner}}">
-							<div class="box-header with-border">
-							  <h3 class="box-title">{{_ "calendar_add_members_event"}}</h3>
-							</div>
-							<div class="box-body no-padding">
-							<span class="pull-left">
-								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=false create=true disabled=false}}
-							</span>
-							<span class="pull-right">
-								<label class="control-label text-light-blue addmembers-lbl">
-									添加</label>
-							</span>
-
-
-							</div>
-						  </div>
 						<div class="box box-solid">
 							<div class="box-header with-border">
 							  <h3 class="box-title">{{_ "calendar_members_event"}}</h3>
@@ -133,6 +106,22 @@
 								{{/each}}
 							  </ul>
 							</div>
+							</div>
+						  </div>
+						  <div class="box box-solid invite-box {{eventObj.isOwner}}">
+							<div class="box-header with-border">
+							  <h3 class="box-title">{{_ "calendar_add_members_event"}}</h3>
+							</div>
+							<div class="box-body no-padding">
+							<span class="pull-left">
+								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=false create=true disabled=false}}
+							</span>
+							<span class="pull-right">
+								<label class="control-label text-light-blue addmembers-lbl">
+									添加</label>
+							</span>
+
+
 							</div>
 						  </div>
 					</div>
