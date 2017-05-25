@@ -19,7 +19,7 @@
 								<table role="form" aria-label="回复表单">
 									<tbody>
 										<tr>
-											<td valign="top" class="col-sm-2">是否参加？</td>
+											<td valign="top" class="col-sm-3 control-label">是否参加？</td>
 											<td valign="top" class="col-sm-2" role="menu">
 												<span class="text-light-blue">
 													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>接受<br>
@@ -27,7 +27,7 @@
 													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>拒绝
 												</span>
 											</td>
-											<td class="col-sm-8">
+											<td class="col-sm-5">
 												<textarea rows="3" placeholder="备注信息" class="description">{{eventObj.reason}}</textarea>
 											</td>
 										</tr>
@@ -115,15 +115,15 @@
 							</div>
 						  </div>
 						  <div class="box box-solid invite-box {{eventObj.isOwner}}">
-							<div class="box-header with-border">
+							<!-- <div class="box-header with-border">
 							  <h3 class="box-title">
-							  <!-- {{_ "calendar_add_members_event"}} -->
+							  {{_ "calendar_add_members_event"}}
 							  邀请成员
 							  </h3>
-							</div>
+							</div> -->
 							<div class="box-body no-padding">
-							<span class="pull-left">
-								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=false create=true disabled=false}}
+							<span class="pull-left span-addmembers">
+								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=true disabled=false}}
 							</span>
 							<span class="pull-right">
 								<label class="control-label text-light-blue addmembers-lbl">
