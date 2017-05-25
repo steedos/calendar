@@ -11,6 +11,7 @@ Meteor.methods
 		oldattendeesid=_.pluck(attendees,'id');
 		subattendeesid=_.difference oldattendeesid,newattendeesid;
 		addattendeesid=_.difference newattendeesid,oldattendeesid;
+		updateattendeesid=_.difference newattendeesid,addattendeesid
 		#被去掉的attendees的对应event需要删除
 		subattendeesid.forEach (attendeeid)->
 			calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
@@ -66,6 +67,7 @@ Meteor.methods
 			size: doc.size,
 			calendardata: doc.calendardata
 		},{ multi: true }
-		events=Events.find({parentId:doc.parentId}).fetch()
-		events.forEach (event)->
-			Calendar.addChange(event.calendarid,event.uri,2);
+		updateattendeesid.forEach (attendeeid)->
+			calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id			
+			event=Events.find({parentId:obj.parentId,calendarid:calendarid},{fields:{uri:1}}).fetch()			
+			Calendar.addChange(calendarid,event[0].uri,2)
