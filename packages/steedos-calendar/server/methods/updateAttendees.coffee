@@ -68,6 +68,6 @@ Meteor.methods
 			calendardata: doc.calendardata
 		},{ multi: true }
 		updateattendeesid.forEach (attendeeid)->
-			calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
-			event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
+			calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id			
+			event=Events.find({parentId:obj.parentId,calendarid:calendarid},{fields:{uri:1}}).fetch()			
 			Calendar.addChange(calendarid,event[0].uri,2)

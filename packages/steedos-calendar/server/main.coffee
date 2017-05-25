@@ -64,10 +64,11 @@ Meteor.startup ->
 		date=new Date(2017/5/1);
 		standard.addProperty("DTSTART",date);
 		if doc.alarms !=undefined
-			alarm = vevent.addComponent('VALARM');
-			alarm.addProperty("ACTION", 'DISPLAY');
-			alarm.addProperty("TRIGGER;VALUE=DURATION", doc.alarms);
-			alarm.addProperty("DESCRIPTION","Default Mozilla Description"); 
+			doc.alarms.forEach (alarm)->
+				Alarm = vevent.addComponent('VALARM');
+				Alarm.addProperty("ACTION", 'DISPLAY');
+				Alarm.addProperty("TRIGGER;VALUE=DURATION", alarm);
+				Alarm.addProperty("DESCRIPTION","Default Mozilla Description"); 
 		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
 		vevent.addProperty("CREATED",new Date());
