@@ -2,7 +2,8 @@ Package.describe({
 	name: 'steedos:calendar-i18n',
 	version: '0.0.2_1',
 	summary: 'Steedos calendar system',
-	git: ''
+	git: '',
+	documentation: null
 });
 
 Package.onUse(function(api) {
