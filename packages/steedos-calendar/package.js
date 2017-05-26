@@ -1,6 +1,6 @@
 Package.describe({
     name: 'steedos:calendar',
-    version: '0.0.2_1',
+    version: '0.0.2_2',
     summary: 'Steedos calendar system',
     git: ''
 });
@@ -61,7 +61,7 @@ Package.onUse(function(api) {
     api.use('steedos:calendar-i18n');
 
     api.use('steedos:autoform-modals');
-    api.use('vazco:universe-autoform-select');
+    api.use('steedos:universe-autoform-select');
 
     api.addFiles('client/event/event.html', 'client');
     api.addFiles('client/event/event.coffee', 'client');

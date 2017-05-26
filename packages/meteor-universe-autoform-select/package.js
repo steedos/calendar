@@ -1,7 +1,7 @@
 'use strict';
 
 Package.describe({
-    name: 'vazco:universe-autoform-select',
+    name: 'steedos:universe-autoform-select',
     summary: 'Custom "afUniverseSelect" input type for AutoForm, with the appearance as selectize',
     version: '0.3.10',
     git: 'https://github.com/vazco/meteor-universe-autoform-select.git'
