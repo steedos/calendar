@@ -61,7 +61,7 @@ Package.onUse(function(api) {
 
     api.use('peppelg:bootstrap-3-modal@1.0.4');
 
-    api.use('vazco:universe-selectize@0.1.22');
+    api.use('vazco:universe-autoform-select@0.3.10');
     api.use('steedos:autoform-modals@0.3.9_3');
 
     api.addFiles('client/event/event.html', 'client');
