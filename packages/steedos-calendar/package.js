@@ -40,7 +40,7 @@ Package.onUse(function(api) {
   
     api.use('kadira:blaze-layout@2.3.0');
     api.use('kadira:flow-router@2.10.1');
-
+    api.use('hausor:autoform-bs-minicolors@1.0.0');
     api.use('aldeed:autoform-bs-datetimepicker');
 
     api.use('meteorhacks:ssr@2.2.0');
