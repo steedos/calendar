@@ -17,7 +17,7 @@ Package.onUse(function (api) {
     }
 
     api.use(['ecmascript', 'templating', 'underscore'], 'client');
-    api.use('aldeed:autoform@5.8.1');
+    api.use('aldeed:autoform@5.8.0');
     api.use('vazco:universe-selectize@0.1.17', 'client');
 
     api.addFiles([
