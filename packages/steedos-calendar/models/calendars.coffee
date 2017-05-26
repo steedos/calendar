@@ -35,8 +35,8 @@ Calendars._simpleSchema = new SimpleSchema
 	
 	visibility:
 		type: String
-		allowedValues: ["private"]
-		defaultValue: "private"
+		allowedValues: ["私有的"]
+		defaultValue: "私有的"
 	
 	color:  
 		type: String
