@@ -53,6 +53,10 @@ Package.onUse(function(api) {
     api.use('momentjs:moment@2.14.1', 'client');
    
 
+    api.use('es5-shim@4.6.15');
+    api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
+
+
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base@0.0.14');
     api.use('steedos:theme@0.0.11');
