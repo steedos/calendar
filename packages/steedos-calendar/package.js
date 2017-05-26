@@ -15,7 +15,7 @@ Npm.depends({
 Package.onUse(function(api) {
     api.versionsFrom('1.0');
 
-    api.use('ecmascript0.6.3');
+    api.use('ecmascript@0.6.3');
 
     api.use('reactive-var@1.0.10');
     api.use('reactive-dict@1.1.8');
