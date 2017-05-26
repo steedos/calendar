@@ -74,6 +74,7 @@ Calendars._simpleSchema = new SimpleSchema
 				return moment_timezone.tz.guess()
 	isDefault:
 		type:Boolean,
+		optional: true,
 		defaultValue:false
 		autoform:
 			type:"hidden"
