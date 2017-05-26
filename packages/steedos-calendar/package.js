@@ -15,20 +15,20 @@ Npm.depends({
 Package.onUse(function(api) {
     api.versionsFrom('1.0');
 
-    api.use('ecmascript');
+    api.use('ecmascript0.6.3');
 
-    api.use('reactive-var');
-    api.use('reactive-dict');
-    api.use('coffeescript');
-    api.use('random');
-    api.use('ddp');
-    api.use('check');
-    api.use('ddp-rate-limiter');
-    api.use('underscore');
-    api.use('tracker');
-    api.use('session');
-    api.use('blaze');
-    api.use('templating');
+    api.use('reactive-var@1.0.10');
+    api.use('reactive-dict@1.1.8');
+    api.use('coffeescript@1.11.1_4');
+    api.use('random@1.0.10');
+    api.use('ddp@1.2.5');
+    api.use('check@1.2.3');
+    api.use('ddp-rate-limiter@1.0.5');
+    api.use('underscore@1.0.10');
+    api.use('tracker@1.1.0');
+    api.use('session@1.1.6');
+    api.use('blaze@2.1.9');
+    api.use('templating@1.2.15');
     api.use('flemay:less-autoprefixer@1.2.0');
     api.use('simple:json-routes@2.1.0');
     api.use('nimble:restivus@0.8.7');
