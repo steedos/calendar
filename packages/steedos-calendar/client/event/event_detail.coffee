@@ -68,6 +68,7 @@ Template.event_detail_modal.events
 			(error,result) ->
 				if !error
 					$('div.modal-header button.close').trigger("click")
+					$('body').removeClass "loading"
 			);
 	'click input:radio[name="optionsRadios"]': (event)->
 		description = $('textarea.description').val()
