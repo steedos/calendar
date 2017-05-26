@@ -30,7 +30,7 @@
   "calendars_color":  "颜色",
   "Title": "标题",
   "Members": "成员",   
-  "allDay":  "全天",
+  "allDay":"全天",
   "calendar_event_feadback":"回复表单",
   "calendar_event_answer":"是否参加？",
   "calendar_event_accepted":"接受",
