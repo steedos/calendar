@@ -18,3 +18,6 @@ calendarRoutes.route '/event/:_id',
 		BlazeLayout.render 'calendarLayout',
 			main: "eventDetail"
 
+FlowRouter.route '/',
+	action: (params, queryParams)->
+		FlowRouter.go "/calendar"

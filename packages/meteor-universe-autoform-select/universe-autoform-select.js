@@ -21,8 +21,6 @@ AutoForm.addInputType('universe-select', {
         if (AutoForm && typeof AutoForm.getCurrentDataForForm === 'function') {
             context.atts.autosave = AutoForm.getCurrentDataForForm().autosave || false;
             context.atts.placeholder = AutoForm.getCurrentDataForForm().placeholder || context.atts.uniPlaceholder || null;
-            debugger;
-
             if(_.has(context.atts, "disabled")){
                 context.atts.uniDisabled = true
             }
