@@ -141,7 +141,7 @@ if (Meteor.isServer)
 				steedosId = Meteor.users.findOne({_id:member})?.steedos_id
 				herf="mailto:" + steedosId;
 				displayname=steedosId;
-				Calendar.addInstance(userId,modifier.$set,doc._id,steedosId,2,herf,displayname);
+				Calendar.addInstance(member,modifier.$set,doc._id,steedosId,2,herf,displayname);
 		return
 			
 	Calendars.after.update (userId, doc, fieldNames, modifier, options)->

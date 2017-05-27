@@ -24,23 +24,23 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
+	instancesSub = new SubsManager()
+	instancesSub.subscribe "calendarinstances",Meteor.userId()
+	objs = calendarinstances.find().fetch()
 	calendarIds = []
-	objs = Calendars.find()
 	objs.forEach (obj) ->
-		calendarIds.push(obj._id)
-
+		calendarIds.push(obj.calendarid)
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
 		calendar:calendarIds
-
-	eventsLoading = true
+	#eventsLoading = true
 	eventsSub.subscribe "calendar_objects", params
 
 	Tracker.autorun (c)->
 		if eventsSub.ready()
-			events = Events.find().fetch()
+			events = Events.find(calendarid:{$in: params.calendar}).fetch()
 			callback(events)
 			c.stop()
 

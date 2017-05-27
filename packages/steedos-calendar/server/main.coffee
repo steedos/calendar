@@ -17,7 +17,7 @@ Meteor.startup ->
 		Calendars.direct.update({_id:calendarId},{$set:{synctoken:oldsynctoken+1}});
 	#被分享的成员比创建者多share_herf,share_displayname. 
 	#access对应 1 = owner, 2 = readonly, 3 = readwrite
-	addInstance : (userId,doc,calendarid,steedosId,access,herf,displayname)->
+	addInstance : (memberid,doc,calendarid,steedosId,access,herf,displayname)->
 		if doc.visibility == 'private'
 			transp = false;
 		else
@@ -45,6 +45,8 @@ Meteor.startup ->
 			calendarorder:3,
 			calendarcolor: doc.color,
 			timezone :timezone,
+			checked:true,
+			principalid:memberid,
 			share_herf:herf,
 			share_displayname: displayname	
 
