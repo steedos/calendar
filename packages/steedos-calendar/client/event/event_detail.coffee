@@ -92,6 +92,7 @@ Template.event_detail_modal.events
 				(error,result) ->
 					if !error
 						Session.set 'cmDoc',result
+						$("span.span-addmembers div.has-items").children().remove(".item")
 			)
 
 	'click i.delete-members': (event)->
