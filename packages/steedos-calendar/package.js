@@ -1,6 +1,6 @@
 Package.describe({
     name: 'steedos:calendar',
-    version: '0.0.2_3',
+    version: '0.0.2_5',
     summary: 'Steedos calendar system',
     git: ''
 });
@@ -42,6 +42,7 @@ Package.onUse(function(api) {
     api.use('kadira:flow-router@2.10.1');
 
     api.use('aldeed:autoform-bs-datetimepicker@1.0.6');
+    api.use('hausor:autoform-bs-minicolors@1.0.0');
 
     api.use('meteorhacks:ssr@2.2.0');
     api.use('tap:i18n@1.7.0');
@@ -52,13 +53,17 @@ Package.onUse(function(api) {
     api.use('momentjs:moment@2.14.1', 'client');
    
 
+    api.use('es5-shim@4.6.15');
+    api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
+
+
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base@0.0.14');
     api.use('steedos:theme@0.0.11');
     api.use('simple:json-routes@2.1.0');
 
     api.use('rzymek:fullcalendar@3.4.0');
-    api.use('steedos:calendar-i18n@0.0.2_3');
+    api.use('steedos:calendar-i18n@0.0.2_4');
 
     api.use('steedos:autoform-modals@0.3.9_4');
     api.use('steedos:universe-autoform-select@0.3.10');

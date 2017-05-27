@@ -32,7 +32,7 @@
     },
     "uuid": {
       "version": "3.0.1",
-      "resolved": "https://registry.npm.taobao.org/uuid/download/uuid-3.0.1.tgz",
+      "resolved": "https://registry.npmjs.org/uuid/-/uuid-3.0.1.tgz",
       "from": "uuid@3.0.1"
     }
   }
