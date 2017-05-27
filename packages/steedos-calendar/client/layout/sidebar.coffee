@@ -14,6 +14,11 @@ Template.calendarSidebar.helpers
 		return this.ownerId == Meteor.userId()
 	isDefault :()->
 		return this.isDefault
+	isChecked :()->
+		if calendarinstances.find({calendarid:this._id}).count()!=0
+			return true
+		else
+			return false
 
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
@@ -24,10 +29,10 @@ Template.calendarSidebar.events
 	'click div.pull-left-title':(event)->
 		checkBox = $(event.currentTarget.firstElementChild.childNodes[1])
 		checkBox.toggleClass("fa-check")
-		# Calendars.update(this._id, {
-		# 	$set: {isChecked: checkBox.hasClass("fa-check") }
+		Meteor.call('updateinstances',this._id,Meteor.userId(),checkBox.hasClass("fa-check"))
 		# })
-		$("#calendar").fullCalendar("refetchEvents")
+		Calendar.reloadEvents()
+		# $("#calendar").fullCalendar("refetchEvents")
 
 	'click .main-sidebar .calendar-add': (event)->
 		$('.btn.calendar-add').click();
