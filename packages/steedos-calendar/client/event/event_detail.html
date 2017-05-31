@@ -21,14 +21,19 @@
 											<td valign="top" class="col-sm-3 control-label">{{_ "calendar_event_answer"}}</td>
 											<td valign="top" class="col-sm-2 td-feadback" role="menu">
 												<span class="text-light-blue">
-													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
-													{{_ "calendar_event_accepted"}}
-													<br>
-													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>
-													{{_ "calendar_event_tentative"}}
-													<br>
-													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>
-													{{_ "calendar_event_declined"}}
+													<div>
+														<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
+														{{_ "calendar_event_accepted"}}
+													</div>
+													<div>
+														<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>
+														{{_ "calendar_event_tentative"}}
+													</div>
+													<div>
+														<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>
+														{{_ "calendar_event_declined"}}
+													</div>
+													
 												</span>
 											</td>
 											<td class="col-sm-7">
@@ -62,9 +67,9 @@
 					<div class="col-md-4">
 						<div class="box box-solid">
 							<div class="box-header with-border">
-							  <h3 class="box-title">
+							  <span class="members-list-title">
 							  {{_ "calendar_member_list"}}
-							  </h3>
+							  </span>
 							</div>
 							<div class="box-body no-padding">
 							<div class="feadback-result">
