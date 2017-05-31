@@ -26,8 +26,8 @@ Template.calendarSidebar.onRendered ->
 
 
 Template.calendarSidebar.events
-	'click div.pull-left-title':(event)->
-		checkBox = $(event.currentTarget.firstElementChild.childNodes[1])
+	'click div.check':(event)->
+		checkBox = $(event.currentTarget.childNodes[1])
 		checkBox.toggleClass("fa-check")
 		Meteor.call('updateinstances',this._id,Meteor.userId(),checkBox.hasClass("fa-check"))
 		# })
