@@ -43,5 +43,6 @@
   "calendar_event_action":"待反馈",
   "calendar_event_note":"备注信息",
   "calendar_member_list":"成员列表",
-  "calendar_event_people":"人"
+  "calendar_event_people":"人",
+  "calendar_resource_list":"资源列表"
 }

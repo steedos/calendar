@@ -43,5 +43,6 @@
   "calendar_event_action":"NEEDS-ACTION",
   "calendar_event_note":"Notes",
   "calendar_member_list":"Member List",
-  "calendar_event_people":"Person"
+  "calendar_event_people":"Person",
+  "calendar_resource_list":"Resource List"
 }

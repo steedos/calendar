@@ -9,18 +9,18 @@ Calendars._simpleSchema = new SimpleSchema
 	title:  
 		type: String,
 		label:t("calendar_title")
-    
+	
   #   space:
-  #   	type:[String]
-  #   	type: [String],
+  #     type:[String]
+  #     type: [String],
 		# autoform: 
-		# 	type: "universe-select"
-		# 	afFieldInput:
-		# 		multiple: true
-		# 		optionsMethod: "selectGetUsers"
+		#   type: "universe-select"
+		#   afFieldInput:
+		#       multiple: true
+		#       optionsMethod: "selectGetUsers"
 	
 	# space_permission:
-	# 	type:String
+	#   type:String
 
 
 	members:  
@@ -43,7 +43,7 @@ Calendars._simpleSchema = new SimpleSchema
 		type: String,
 		label:t("calendar_color")
 		defaultValue: ->
-				return	CALENDARCOLORS[parseInt(10000*Math.random())%24]
+				return  CALENDARCOLORS[parseInt(10000*Math.random())%24]
 		autoform:
 			type: "bootstrap-minicolors"
 			
@@ -95,6 +95,8 @@ Calendars._simpleSchema = new SimpleSchema
 			afFieldInput:
 				multiple: true
 				optionsMethod: "selectGetSpaces"
+				
+
 
 
 Calendars.attachSchema Calendars._simpleSchema
@@ -122,7 +124,7 @@ if (Meteor.isServer)
 	Calendars.before.insert (userId,doc)->
 		# doc.ownerId=Meteor.userId()
 		# if doc.members.indexOf(userId) < 0
-		# 	 doc.members.push(userId)		
+		#    doc.members.push(userId)       
 		# doc.components = ["VEVENT","VTODO"]
 		# doc.synctoken = 1
 		# Meteor.call('calendarinsert',userId,doc);
@@ -133,12 +135,12 @@ if (Meteor.isServer)
 		# steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
 		# Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
 		# for member,i in doc.members 
-		# 	if member != userId
-		# 		steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
-		# 		herf="mailto:" + steedosId;
-		# 		displayname=steedosId;
-		# 		Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);	
-		return		
+		#   if member != userId
+		#       steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
+		#       herf="mailto:" + steedosId;
+		#       displayname=steedosId;
+		#       Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);  
+		return      
 	#更新日历之前，更新instance
 	Calendars.before.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
@@ -171,7 +173,7 @@ if (Meteor.isServer)
 	Calendars.before.remove (userId, doc)->
 		Events.remove({"calendarid":doc._id});
 		calendarchanges.remove({"calendarid":doc._id});
-		calendarinstances.remove({"calendarid" : doc._id});	
+		calendarinstances.remove({"calendarid" : doc._id}); 
 		return
 
 	Calendars.after.remove (userId, doc)->
