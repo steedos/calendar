@@ -39,7 +39,7 @@ Template.calendarSidebar.events
 
 	'click i.calendar-edit': (event)->
 		if Meteor.userId()!=this.ownerId
-			swal(t("calendar_no_permission_calendar"),t("calnedar_no_permission_delete_calendar"),"warning");
+			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
 		Session.set("cmDoc", this);
 		$('.btn.calendar-edit').click();
@@ -51,7 +51,7 @@ Template.calendarSidebar.events
 
 	'click i.calendar-delete': (event)->
 		if Meteor.userId()!=this.ownerId
-			swal(t("calendar_no_permission_calendar"),t("calnedar_no_permission_delete_calendar"),"warning");
+			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
 		console.log(this);
 		calendar_id=this._id;
