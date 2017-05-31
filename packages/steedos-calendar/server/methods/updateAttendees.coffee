@@ -1,4 +1,3 @@
-uuid = require('uuid');
 Meteor.methods
 	updateAttendees :(obj,operation)->
 		if operation==1
@@ -26,7 +25,7 @@ Meteor.methods
 				Meteor.call('calendarInit',attendeeid,Defaulttimezone);
 				calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})			
 			if  doc.calendarid!=calendar._id
-				_id = uuid()
+				_id = Calendar.uuid()
 				Events.direct.insert
 					_id:_id;
 					title:doc.title

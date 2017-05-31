@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 icalendar = require('icalendar');
 MD5 = require('MD5');
-uuid = require('uuid');
 @moment_timezone = require('moment-timezone');
 Meteor.startup ->
 	
@@ -29,6 +28,10 @@ Meteor.startup ->
 		vtimezone=ical.addComponent('VTIMEZONE');
 		vtimezone.addProperty("TZID",doc.timezone);
 		standard = vtimezone.addComponent("STANDARD");
+		daylight = vtimezone.addComponent("DAYLIGHT");
+		daylight.addProperty("TZOFFSETFROM","0800");
+		daylight.addProperty("TZNAME","GMT+8");
+		daylight.addProperty("TZOFFSETTO","0900");
 		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[0])/60+"00");
 		standard.addProperty("TZOFFSETTO","0"+(-zones.offsets[1])/60+"00");
 		standard.addProperty("TZNAME",zones.abbrs[0]);
@@ -109,3 +112,40 @@ Meteor.startup ->
 		if operation==1
 			doc.parentId=doc._id;
 		return doc
+	
+	bytesToUuid:(buf, offset)->
+		byteToHex = [];
+		j=0;
+		while j<256 
+			byteToHex[j] = (j + 0x100).toString(16).substr(1);
+			++j
+		i = offset || 0;
+		bth = byteToHex;
+		return 	bth[buf[i++]] + bth[buf[i++]] +
+				bth[buf[i++]] + bth[buf[i++]] + '-' +
+				bth[buf[i++]] + bth[buf[i++]] + '-' +
+				bth[buf[i++]] + bth[buf[i++]] + '-' +
+				bth[buf[i++]] + bth[buf[i++]] + '-' +
+				bth[buf[i++]] + bth[buf[i++]] +
+				bth[buf[i++]] + bth[buf[i++]] +
+				bth[buf[i++]] + bth[buf[i++]]
+
+	rng:()->
+		rb = require('crypto').randomBytes;
+		return rb(16);
+
+	uuid:(options, buf, offset)->
+		i = buf && offset || 0;
+		if typeof options == 'string'
+  			buf = if options == 'binary' then new Array(16) else null
+  			options = null
+		options = options || {};
+		rnds = options.random || Calendar.rng();
+		rnds[6] = (rnds[6] & 0x0f) | 0x40;
+		rnds[8] = (rnds[8] & 0x3f) | 0x80;
+		if (buf)
+			ii=0;
+			while ii<16
+				buf[i + ii] = rnds[ii]
+				++ii
+		return buf || Calendar.bytesToUuid(rnds);
