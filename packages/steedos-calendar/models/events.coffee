@@ -1,6 +1,5 @@
 @Events = new Mongo.Collection('calendar_objects');
 icalendar = require('icalendar');
-uuid = require('uuid');
 created = new Date();
 Events.attachSchema new SimpleSchema 
 	title:  
@@ -201,7 +200,7 @@ if (Meteor.isServer)
 	#创建事件之前，为其添加一些属性
 	Events.before.insert (userId, doc)->
 		doc.componenttype = "VEVENT"
-		doc._id = uuid();
+		doc._id = Calendar.uuid();
 		doc.uid = doc._id	
 		doc.uri = doc._id + ".ics"
 		doc.ownerId=userId;

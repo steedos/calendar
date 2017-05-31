@@ -9,7 +9,6 @@ Npm.depends({
     'icalendar':'0.7.1',
     'MD5':'1.3.0',
     'moment-timezone':'0.5.13',
-    'uuid':'3.0.1'
 });
 
 Package.onUse(function(api) {
