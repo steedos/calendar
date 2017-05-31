@@ -44,6 +44,13 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 			callback(events)
 			c.stop()
 
+Calendar.hasPermission = ( event )->
+	obj = Events.findOne({'_id':event._id})
+	if (obj.ownerId==Meteor.userId()&&obj.parentId==obj._id)
+		return true
+	else
+		return false
+
 Calendar.generateCalendar = ()->
 	if !$('#calendar').children()?.length
 
@@ -92,7 +99,7 @@ Calendar.generateCalendar = ()->
 				calendarid = ""
 				objs.forEach (obj) ->
 					if obj.isDefault
-						console.log obj._id
+						# console.log obj._id
 						calendarid = obj._id
 				Session.set 'cmDoc', 
 					start: start.toDate()
@@ -106,6 +113,11 @@ Calendar.generateCalendar = ()->
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
 			eventDrop: (event, delta, revertFunc)->
+				hasPermission = Calendar.hasPermission(event)
+				if !hasPermission
+					swal(t("calendar_no_permission"),t("calnedar_no_permission_modify_event"),"warning");
+					Calendar.reloadEvents()
+					return
 				Events.update({'_id':event._id},{
 					$set:{
 						'start':moment(event.start._d).toDate(),
@@ -114,6 +126,11 @@ Calendar.generateCalendar = ()->
 				})
 
 			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
+				hasPermission = Calendar.hasPermission(event)
+				if !hasPermission
+					swal(t("calendar_no_permission"),t("calnedar_no_permission_modify_event"),"warning");
+					Calendar.reloadEvents()
+					return
 				Events.update({'_id':event._id},{
 					$set:{
 						'start':moment(event.start._d).toDate(),
@@ -136,3 +153,6 @@ Calendar.generateCalendar = ()->
 
 	else
 		Calendar.reloadEvents();
+
+
+Template.calendarContainer.events
