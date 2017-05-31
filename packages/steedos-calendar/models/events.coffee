@@ -1,14 +1,15 @@
 @Events = new Mongo.Collection('calendar_objects');
 icalendar = require('icalendar');
 created = new Date();
+# locale = Session.get 'steedos-locale'
 Events.attachSchema new SimpleSchema 
 	title:  
 		type: String,
-		label:"会议标题"
+		label:t("calendar_title")
 
 	members:  
 		type: [String],
-		label:"会议成员",
+		label:t("calendar_members"),
 		autoform: 
 			type: "universe-select"
 			afFieldInput:
@@ -17,34 +18,50 @@ Events.attachSchema new SimpleSchema
 
 	start:  
 		type: Date,
-		label:"开始时间",
+		label:t("calendar_event_start"),
 		autoform: 
 			afFieldInput:
 				type: "bootstrap-datetimepicker"
 				dateTimePickerOptions:
-					format: "YYYY-MM-DD HH:mm"
+					language:'zh-cn'
+					format:"YYYY-MM-DD HH:mm"
+					# format: ()->
+					# 	obj = Session.get 'cmDoc'
+					# 	console.log obj
+					# 	if obj?.allDay
+					# 		return "YYYY-MM-DD"
+					# 	else
+					# 		return "YYYY-MM-DD HH:mm"
 					sideBySide:true
 					
 	end:  
 		type: Date,
-		label:"结束时间",
+		label:t("calendar_event_end"),
 		optional: true,
 		autoform: 
 			type: "bootstrap-datetimepicker"
 			dateTimePickerOptions:
-				format: "YYYY-MM-DD HH:mm"
+				language:'zh-cn'
+				format:"YYYY-MM-DD HH:mm"
+				# format:()->
+				# 	obj = Session.get 'cmDoc'
+				# 	console.log obj
+				# 	if obj?.allDay
+				# 		return "YYYY-MM-DD"
+				# 	else
+				# 		return "YYYY-MM-DD HH:mm"
 				sideBySide:true
 
 
 	allDay: 
 		type: Boolean,
-		label:"全天",
+		label:t("calendar_event_allDay"),
 		defaultValue: true,
 		optional: true
 
 	calendarid:
 		type: String,
-		label:"所属日历",
+		label:t("calendar_event_calendar"),
 		autoform:
 			type: "select"
 			options: ()->
@@ -67,7 +84,7 @@ Events.attachSchema new SimpleSchema
 	
 	description:  
 		type: String,
-		label:"描述",
+		label:t("calendar_event_description"),
 		optional: true,
 		autoform:
 			rows:2
@@ -80,7 +97,7 @@ Events.attachSchema new SimpleSchema
 
 	alarms:
 		type: [String],
-		label:"提醒",
+		label:t("calendar_event_alarms"),
 		optional: true
 		autoform: 
 			type: "universe-select"

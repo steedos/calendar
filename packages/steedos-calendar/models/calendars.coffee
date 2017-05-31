@@ -7,7 +7,8 @@
 					"#c2c2c2","#cabdbf","#f691b2","#cca6ac","#cd74e6","#a47ae2");
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
-		type: String
+		type: String,
+		label:t("calendar_title")
     
   #   space:
   #   	type:[String]
@@ -24,22 +25,23 @@ Calendars._simpleSchema = new SimpleSchema
 
 	members:  
 		type: [String],
+		label:t("calendar_members")
+		defaultValue:[""]
 		autoform: 
 			type: "universe-select"
 			afFieldInput:
 				multiple: true
 				optionsMethod: "selectGetUsers"
-
-	# members_permission:
-	# 	type:String
 	
 	visibility:
-		type: String
+		type: String,
+		label:t("calendar_visibility")
 		allowedValues: ["private"],
 		defaultValue: "private"
 	
 	color:  
-		type: String
+		type: String,
+		label:t("calendar_color")
 		defaultValue: ->
 				return	CALENDARCOLORS[parseInt(10000*Math.random())%24]
 		autoform:
@@ -79,7 +81,21 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			type:"hidden"
 
-	
+	isResource:
+		type: Boolean,
+		label:"是否资源",
+		defaultValue: false,
+		optional: true
+
+	spaceId:
+		type: [String],
+		label:"所属工作区"
+		autoform: 
+			type: "universe-select"
+			afFieldInput:
+				multiple: true
+				optionsMethod: "selectGetSpaces"
+
 
 Calendars.attachSchema Calendars._simpleSchema
 
