@@ -3,7 +3,7 @@ Meteor.methods
 		if Calendars.find({"ownerId":userId},{"isDefault":true}).count()==0
 			name=Meteor.users.findOne({_id:userId}).name
 			doc =
-				title:name+"的日历",
+				title:name,
 				members:[userId],
 				visibility:"private",
 				color:CALENDARCOLORS[parseInt(10000*Math.random())%24],
