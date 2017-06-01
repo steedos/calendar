@@ -13,3 +13,6 @@ if [ -d "$BUNDLE_PATH" ]; then
 
 	cd $BUNDLE_PATH
 	pm2 restart calendar.0
+else
+	echo "!!!=> Failed to create bundle path: $BUNDLE_PATH"
+fi
