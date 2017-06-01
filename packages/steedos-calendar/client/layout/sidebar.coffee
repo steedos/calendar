@@ -10,6 +10,9 @@ Template.calendarSidebar.helpers
 		userId= Meteor.userId()
 		objs = Calendars.find()
 		return objs
+	subscribe: ()->
+		objs = calendarsubscriptions.find()
+		return objs
 	isCalendarOwner: ()->
 		return this.ownerId == Meteor.userId()
 	isDefault :()->
@@ -33,8 +36,13 @@ Template.calendarSidebar.events
 			(i,n)->
 				return $(n).attr("data-value")
 			).toArray()
+		addmembers.forEach (addmember)->
+			Meteor.call('initscription',addmember)
+			#othercalendarsSub = new SubsManager()
+			#othercalendarsSub.subscribe "othercalendars",addmember
+			#objs = Calendars.find().fetch()
 
-		console.log addmembers
+
 		$("span.span-resources div.has-items").children().remove(".item")
 		
 	'click div.check':(event)->
