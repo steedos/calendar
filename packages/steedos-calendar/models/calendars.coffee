@@ -8,40 +8,32 @@
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String,
-		label:t("calendar_title")
-	
-  #   space:
-  #     type:[String]
-  #     type: [String],
-		# autoform: 
-		#   type: "universe-select"
-		#   afFieldInput:
-		#       multiple: true
-		#       optionsMethod: "selectGetUsers"
-	
-	# space_permission:
-	#   type:String
-
+		# label:t("calendar_title")
+		label:"标题"
 
 	members:  
 		type: [String],
-		label:t("calendar_members")
+		# label:t("calendar_members")
+		label:"成员"
 		defaultValue:[""]
 		autoform: 
 			type: "universe-select"
 			afFieldInput:
+				defaultValue:[]
 				multiple: true
 				optionsMethod: "selectGetUsers"
 	
 	visibility:
 		type: String,
-		label:t("calendar_visibility")
+		# label:t("calendar_visibility")
+		label:"可见性"
 		allowedValues: ["private"],
 		defaultValue: "private"
 	
 	color:  
 		type: String,
-		label:t("calendar_color")
+		# label:t("calendar_color")
+		label:"颜色"
 		defaultValue: ->
 				return  CALENDARCOLORS[parseInt(10000*Math.random())%24]
 		autoform:
@@ -80,24 +72,6 @@ Calendars._simpleSchema = new SimpleSchema
 		defaultValue:false
 		autoform:
 			type:"hidden"
-
-	# isResource:
-	# 	type: Boolean,
-	# 	label:"是否资源",
-	# 	defaultValue: false,
-	# 	optional: true
-
-	# spaceId:
-	# 	type: [String],
-	# 	label:"所属工作区"
-	# 	autoform: 
-	# 		type: "universe-select"
-	# 		defaultValue：[""]
-	# 		afFieldInput:
-	# 			multiple: true
-	# 			optionsMethod: "selectGetSpaces"
-				
-
 
 
 Calendars.attachSchema Calendars._simpleSchema

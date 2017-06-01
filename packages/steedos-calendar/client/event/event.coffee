@@ -26,7 +26,6 @@ Calendar.reloadEvents = () ->
 Calendar.getEventsData = ( start, end, timezone, callback )->
 	calendarIds = []
 	if Meteor.isClient
-		console.log !Session.get('calendarIds')
 		if !Session.get('calendarIds')||Session.get('calendarIds')?.length==0
 			objs = Calendars.find().fetch()
 			objs.forEach (obj) ->
@@ -64,8 +63,8 @@ Calendar.generateCalendar = ()->
 				return $('#calendar').height()
 			handleWindowResize: true
 			header: 
-				left: 'month,agendaWeek,agendaDay,listWeek',
-				center: 'prev title next',
+				left: 'month,agendaWeek,agendaDay,listWeek'
+				center: 'prev title next'
 				right: ''
 			selectable: true
 			selectHelper: true
@@ -110,11 +109,32 @@ Calendar.generateCalendar = ()->
 					start: start.toDate()
 					end: end.toDate()
 					calendarid:calendarid
+					opt:'insert'
 				$('.btn.event-add').click(); 
+
+				doc = {
+					start: start.toDate(),
+					end: end.toDate(),
+					calendarid:calendarid
+				}
+				# Session.set 'cmDoc', event
+				# 保存到数据库的object中一条记录
+
+				# Meteor.call('addCalendarObjects',Meteor.userId(),doc,1,
+				# 	(error,result) ->
+				# 		if !error
+				# 			console.log result
+				# 		else
+				# 			console.log error
+				# 	)
+				#
+				# Modal.show('event_detail_modal')
+
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne
 					_id: calEvent.id
 				if event
+					# console.log event
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
 			eventDrop: (event, delta, revertFunc)->

@@ -4,12 +4,14 @@ created = new Date();
 # locale = Session.get 'steedos-locale'
 Events.attachSchema new SimpleSchema 
 	title:  
-		type: String,
-		label:t("calendar_title")
+		type: String
+		# label:t("calendar_title")
+		label:"标题"
 
 	members:  
-		type: [String],
-		label:t("calendar_members"),
+		type: [String]
+		# label:t("calendar_members")
+		label:"成员"
 		autoform: 
 			type: "universe-select"
 			afFieldInput:
@@ -18,7 +20,8 @@ Events.attachSchema new SimpleSchema
 
 	start:  
 		type: Date,
-		label:t("calendar_event_start"),
+		# label:t("calendar_event_start")
+		label:"开始时间"
 		autoform: 
 			afFieldInput:
 				type: "bootstrap-datetimepicker"
@@ -35,9 +38,10 @@ Events.attachSchema new SimpleSchema
 					sideBySide:true
 					
 	end:  
-		type: Date,
-		label:t("calendar_event_end"),
-		optional: true,
+		type: Date
+		# label:t("calendar_event_end")
+		label:"结束时间"
+		optional: true
 		autoform: 
 			type: "bootstrap-datetimepicker"
 			dateTimePickerOptions:
@@ -54,14 +58,16 @@ Events.attachSchema new SimpleSchema
 
 
 	allDay: 
-		type: Boolean,
-		label:t("calendar_event_allDay"),
-		defaultValue: true,
+		type: Boolean
+		# label:t("calendar_event_allDay")
+		label:"全天"
+		defaultValue: true
 		optional: true
 
 	calendarid:
 		type: String,
-		label:t("calendar_event_calendar"),
+		# label:t("calendar_event_calendar")
+		label:"所属日历"
 		autoform:
 			type: "select"
 			options: ()->
@@ -84,7 +90,8 @@ Events.attachSchema new SimpleSchema
 	
 	description:  
 		type: String,
-		label:t("calendar_event_description"),
+		# label:t("calendar_event_description")
+		label:"描述"
 		optional: true,
 		autoform:
 			rows:2
@@ -96,8 +103,9 @@ Events.attachSchema new SimpleSchema
 			omit: true
 
 	alarms:
-		type: [String],
-		label:t("calendar_event_alarms"),
+		type: [String]
+		# label:t("calendar_event_alarms")
+		label:"提醒"
 		optional: true
 		autoform: 
 			type: "universe-select"
