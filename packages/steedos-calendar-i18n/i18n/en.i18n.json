@@ -50,5 +50,6 @@
   "calendar_member_list":"Member List",
   "calendar_event_people":"",
   "calendar_resource_list":"Resource List",
-  "calendar_add_resource": "Add Resource"
+  "calendar_add_resource": "Add Resource",
+  "calendar_subscript":"subscribe"
 }

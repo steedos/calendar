@@ -37,7 +37,8 @@ Template.calendarSidebar.events
 				return $(n).attr("data-value")
 			).toArray()
 		addmembers.forEach (addmember)->
-			Meteor.call('initscription',addmember)
+			if addmember!=Meteor.userId
+				Meteor.call('initscription',addmember)
 			#othercalendarsSub = new SubsManager()
 			#othercalendarsSub.subscribe "othercalendars",addmember
 			#objs = Calendars.find().fetch()
@@ -116,7 +117,7 @@ Template.calendarSidebar.events
 		# 删除表中的记录
 		()->
 			# this._id取值无法删除，删除失败,this未定义
-			Calendars.remove {_id:calendar_id}, (error)->
+			calendarsubscriptions.remove {uri:calendar_id,principaluri:Meteor.userId}, (error)->
 				if error
 					swal(t("calendar_hide_failed"),error.message,"error");
 				else

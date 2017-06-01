@@ -50,5 +50,6 @@
   "calendar_member_list":"成员列表",
   "calendar_event_people":"人",
   "calendar_resource_list":"资源列表",
-  "calendar_add_resource": "添加资源"
+  "calendar_add_resource": "添加资源",
+  "calendar_subscript":"订阅"
 }
