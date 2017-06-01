@@ -93,6 +93,7 @@ Package.onUse(function(api) {
     api.addFiles('models/calendarinstances.coffee');
     api.addFiles('models/calendars.coffee');
     api.addFiles('models/events.coffee');
+    api.addFiles('models/calendarsubscriptions.coffee');
 
     // api.addFiles('lib/attendees.coffee');
 
@@ -103,8 +104,11 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/removeEvents.coffee','server');
     api.addFiles('server/methods/attendeesInit.coffee','server');
     api.addFiles('server/methods/updateinstances.coffee','server');
+    api.addFiles('server/methods/checkcrach.coffee','server');
+    api.addFiles('server/methods/initscription.coffee','server');
     api.addFiles('server/publications/calendars.coffee','server');
     api.addFiles('server/publications/events.coffee','server');
+    api.addFiles('server/publications/subcalendars.coffee','server');
     api.addFiles('server/publications/calendarinstances.coffee','server');
     api.addFiles('server/main.coffee','server');
 
