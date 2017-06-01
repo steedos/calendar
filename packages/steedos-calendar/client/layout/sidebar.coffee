@@ -15,10 +15,11 @@ Template.calendarSidebar.helpers
 	isDefault :()->
 		return this.isDefault
 	isChecked :()->
-		if calendarinstances.find({calendarid:this._id}).count()!=0
-			return true
-		else
+		calendarIds=Session.get('calendarIds')
+		if calendarIds.indexOf(this._id)<0
 			return false
+		else
+			return true
 
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
@@ -35,18 +36,18 @@ Template.calendarSidebar.events
 
 		console.log addmembers
 		$("span.span-resources div.has-items").children().remove(".item")
-
-		# Meteor.call('attendeesInit',obj,addmembers,
-		# 	(error,result) ->
-		# 		if !error
-		# 			Session.set 'cmDoc',result
-		# 			
-		# )
 		
 	'click div.check':(event)->
+		console.log this._id
+		calendarIds=Session.get('calendarIds')
 		checkBox = $(event.currentTarget.childNodes[1])
 		checkBox.toggleClass("fa-check")
-		Meteor.call('updateinstances',this._id,Meteor.userId(),checkBox.hasClass("fa-check"))
+		if checkBox.hasClass("fa-check")
+			calendarIds.push(this._id)
+		else
+			dx = calendarIds.indexOf(this._id)
+			calendarIds.splice(dx,1)
+		Session.set 'calendarIds',calendarIds
 		Calendar.reloadEvents()
 
 	'click .main-sidebar .calendar-add': (event)->

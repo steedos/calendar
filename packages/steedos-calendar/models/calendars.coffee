@@ -81,21 +81,21 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			type:"hidden"
 
-	isResource:
-		type: Boolean,
-		label:"是否资源",
-		defaultValue: false,
-		optional: true
+	# isResource:
+	# 	type: Boolean,
+	# 	label:"是否资源",
+	# 	defaultValue: false,
+	# 	optional: true
 
-	spaceId:
-		type: [String],
-		label:"所属工作区"
-		autoform: 
-			type: "universe-select"
-			defaultValue：[""]
-			afFieldInput:
-				multiple: true
-				optionsMethod: "selectGetSpaces"
+	# spaceId:
+	# 	type: [String],
+	# 	label:"所属工作区"
+	# 	autoform: 
+	# 		type: "universe-select"
+	# 		defaultValue：[""]
+	# 		afFieldInput:
+	# 			multiple: true
+	# 			optionsMethod: "selectGetSpaces"
 				
 
 

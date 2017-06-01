@@ -24,18 +24,23 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
-	instancesSub = new SubsManager()
-	instancesSub.subscribe "calendarinstances",Meteor.userId()
-	objs = calendarinstances.find().fetch()
 	calendarIds = []
-	objs.forEach (obj) ->
-		calendarIds.push(obj.calendarid)
+	if Meteor.isClient
+		console.log !Session.get('calendarIds')
+		if !Session.get('calendarIds')||Session.get('calendarIds')?.length==0
+			objs = Calendars.find().fetch()
+			objs.forEach (obj) ->
+				calendarIds.push(obj._id)
+			Session.set 'calendarIds',calendarIds
+		else
+			calendarIds=Session.get('calendarIds')
+	
 	params = 
 		start: start.toDate()
 		end: end.toDate()
 		timezone: timezone
 		calendar:calendarIds
-	#eventsLoading = true
+
 	eventsSub.subscribe "calendar_objects", params
 
 	Tracker.autorun (c)->
@@ -68,7 +73,7 @@ Calendar.generateCalendar = ()->
 			navLinks: true
 			editable: true
 			eventLimit: true
-			weekNumbers:true
+			weekNumbers:false
 			defaultView:'agendaWeek'
 			events: Calendar.getEventsData
 			timeFormat: 'H:mm'
