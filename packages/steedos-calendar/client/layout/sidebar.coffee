@@ -19,10 +19,17 @@ Template.calendarSidebar.helpers
 		return this.isDefault
 	isChecked :()->
 		calendarIds=Session.get('calendarIds')
-		if calendarIds.indexOf(this._id)<0
+		if calendarIds.indexOf(this?._id)<0
 			return false
 		else
 			return true
+	isCheck :()->
+		calendarIds=Session.get('calendarIds')
+		if calendarIds.indexOf(this.uri)<0
+			return false
+		else
+			return true
+
 
 Template.calendarSidebar.onRendered ->
 	# 读取并刷新
@@ -37,23 +44,26 @@ Template.calendarSidebar.events
 				return $(n).attr("data-value")
 			).toArray()
 		addmembers.forEach (addmember)->
-			if addmember!=Meteor.userId
-				Meteor.call('initscription',addmember)
+			Meteor.call('initscription',addmember)
 			#othercalendarsSub = new SubsManager()
 			#othercalendarsSub.subscribe "othercalendars",addmember
 			#objs = Calendars.find().fetch()
 
 
 		$("span.span-resources div.has-items").children().remove(".item")
-		
+
 	'click div.check':(event)->
 		calendarIds=Session.get('calendarIds')
 		checkBox = $(event.currentTarget.childNodes[1])
 		checkBox.toggleClass("fa-check")
-		if checkBox.hasClass("fa-check")
-			calendarIds.push(this._id)
+		if this?.uri
+			id = this.uri
 		else
-			dx = calendarIds.indexOf(this._id)
+			id = this._id
+		if checkBox.hasClass("fa-check")
+			calendarIds.push(id)
+		else
+			dx = calendarIds.indexOf(id)
 			calendarIds.splice(dx,1)
 		Session.set 'calendarIds',calendarIds
 		Calendar.reloadEvents()
@@ -117,7 +127,7 @@ Template.calendarSidebar.events
 		# 删除表中的记录
 		()->
 			# this._id取值无法删除，删除失败,this未定义
-			calendarsubscriptions.remove {uri:calendar_id,principaluri:Meteor.userId}, (error)->
+			Calendars.remove {_id:calendar_id}, (error)->
 				if error
 					swal(t("calendar_hide_failed"),error.message,"error");
 				else

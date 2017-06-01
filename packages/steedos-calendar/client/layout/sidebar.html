@@ -3,6 +3,7 @@
     <section class="sidebar">
 
       <ul class="sidebar-menu">
+        <li><div>我的日历</div></li>
         {{#each calendars}}
         <li>
           <a href="#">
@@ -34,6 +35,34 @@
           </a>
         </li>
         {{/each}}
+        <li><div>我的订阅</div></li>
+        
+        {{#each subscribe}}
+        <li>
+          <a href="#">
+            <div class="pull-left-title">
+                <div class="check">
+                  <i class="icon fa {{#if isCheck}}fa-check{{/if}}">
+                  </i>
+                </div>
+                <i class="fa fa-calendar" style="color:{{calendarcolor}}"></i>
+                <span>{{calendarname}}</span>
+            </div>
+              <span class="pull-right-container">
+              <div class="operate-box">
+                <i class="fa fa-info-circle calendar-show"></i>
+                &nbsp;&nbsp;
+                <i class="fa fa-eye-slash calendar-hide"></i>
+              </div>
+              </span>
+          </a>
+        </li>
+        {{/each}}
+
+
+
+
+
       </ul>
        <div class="box box-solid invite-box div-resources">
         <div class="box-body no-padding">

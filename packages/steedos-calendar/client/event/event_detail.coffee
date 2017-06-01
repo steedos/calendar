@@ -6,8 +6,8 @@ Template.event_detail_modal.helpers
 	accendeeState:(state)->
 		obj = Session.get('cmDoc')
 		result = ""
-		obj.attendees.forEach (attendee)->
-			if attendee.id == Meteor.userId()
+		obj?.attendees.forEach (attendee)->
+			if attendee?.id == Meteor.userId()
 				if attendee?.partstat==state
 					result = "checked"
 				if state=="TENTATIVE"&&attendee?.partstat=="NEEDS-ACTION"
@@ -21,13 +21,13 @@ Template.event_detail_modal.helpers
 		obj.declinednum=0
 		obj.actionnum=0#待回复
 		obj.curstat=""
-		if Meteor.userId()==obj.ownerId and obj._id==obj.parentId
+		if Meteor.userId()==obj?.ownerId and obj?._id==obj?.parentId
 			obj.isOwner = "true"
 			obj.formOpt = "update"
 		else
 			obj.isOwner = "false"
 			obj.formOpt = "disabled"
-		obj.attendees.forEach (attendee)->
+		obj?.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				obj.reason = attendee?.description
 				switch attendee.partstat
@@ -58,7 +58,7 @@ Template.event_detail_modal.events
 		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		description = $('textarea.description').val()
-		obj.attendees.forEach (attendee)->
+		obj?.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
@@ -74,7 +74,7 @@ Template.event_detail_modal.events
 		description = $('textarea.description').val()
 		obj = Session.get('cmDoc')
 		val=$('input:radio[name="optionsRadios"]:checked').val()
-		obj.attendees.forEach (attendee)->
+		obj?.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description

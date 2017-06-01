@@ -30,6 +30,13 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 			objs = Calendars.find().fetch()
 			objs.forEach (obj) ->
 				calendarIds.push(obj._id)
+
+			resources = calendarsubscriptions.find().fetch()
+			resources.forEach (resource) ->
+				console.log resource.uri
+				calendarIds.push(resource.uri)
+
+			console.log calendarIds
 			Session.set 'calendarIds',calendarIds
 		else
 			calendarIds=Session.get('calendarIds')
@@ -50,7 +57,7 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 
 Calendar.hasPermission = ( event )->
 	obj = Events.findOne({'_id':event._id})
-	if (obj.ownerId==Meteor.userId()&&obj.parentId==obj._id)
+	if (obj?.ownerId==Meteor.userId()&&obj?.parentId==obj?._id)
 		return true
 	else
 		return false
@@ -105,36 +112,34 @@ Calendar.generateCalendar = ()->
 					if obj.isDefault
 						# console.log obj._id
 						calendarid = obj._id
-				Session.set 'cmDoc', 
-					start: start.toDate()
-					end: end.toDate()
-					calendarid:calendarid
-					opt:'insert'
-				$('.btn.event-add').click(); 
+				# Session.set 'cmDoc', 
+				# 	start: start.toDate()
+				# 	end: end.toDate()
+				# 	calendarid:calendarid
+				# 	opt:'insert'
+				# $('.btn.event-add').click(); 
 
 				doc = {
 					start: start.toDate(),
 					end: end.toDate(),
 					calendarid:calendarid
 				}
-				# Session.set 'cmDoc', event
+				
 				# 保存到数据库的object中一条记录
-
-				# Meteor.call('addCalendarObjects',Meteor.userId(),doc,1,
-				# 	(error,result) ->
-				# 		if !error
-				# 			console.log result
-				# 		else
-				# 			console.log error
-				# 	)
-				#
-				# Modal.show('event_detail_modal')
+				# Calendar.addCalendarObjects(Meteor.userId(),doc,1)
+				Meteor.call('addCalendarObjects',Meteor.userId(),doc,1,
+					(error,result) ->
+						if !error
+							console.log result
+							Session.set 'cmDoc', result
+							Modal.show('event_detail_modal')
+					)
 
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne
 					_id: calEvent.id
 				if event
-					# console.log event
+					console.log event
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
 			eventDrop: (event, delta, revertFunc)->

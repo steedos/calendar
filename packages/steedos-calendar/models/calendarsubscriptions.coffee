@@ -17,6 +17,9 @@ calendarsubscriptions.attachSchema new SimpleSchema
 
 	calendarcolor:
 		type: String
+
+	calendarname:
+		type: String
 			
 if (Meteor.isServer) 
 	calendarsubscriptions.allow 

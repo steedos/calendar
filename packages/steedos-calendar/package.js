@@ -104,7 +104,7 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/removeEvents.coffee','server');
     api.addFiles('server/methods/attendeesInit.coffee','server');
     api.addFiles('server/methods/updateinstances.coffee','server');
-    api.addFiles('server/methods/checkcrach.coffee','server');
+    // api.addFiles('server/methods/checkcrach.coffee','server');
     api.addFiles('server/methods/initscription.coffee','server');
     api.addFiles('server/methods/addCalendarObjects.coffee','server');
     api.addFiles('server/publications/calendars.coffee','server');

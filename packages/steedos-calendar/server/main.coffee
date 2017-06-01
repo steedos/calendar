@@ -79,16 +79,16 @@ Meteor.startup ->
 		vevent.setSummary(doc.title);
 		vevent.addProperty("ORGANIZER;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto",Meteor.users.findOne({_id:userId}).steedos_id);
 		vevent.setLocation("Shanghai"); 
-		doc.attendees.forEach (attendee)->
+		doc?.attendees?.forEach (attendee)->
 			attendee_string="ATTENDEE;"+"CUTYPE="+attendee.cutype+";ROLE="+attendee.role+";CN="+attendee.cn+";PARTSTAT="+attendee.partstat+":mailto"
 			vevent.addProperty(attendee_string, attendee.mailto)
-		if doc.allDay==true
+		if doc?.allDay==true
 			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
 			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
 		else
 			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDTHHmmss"));#TZID得改
 			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDTHHmmss"));
-		vevent.addProperty("SEQUENCE",0);#得改
+		vevent?.addProperty("SEQUENCE",0);#得改
 		calendardata = ical.toString();
 		return calendardata
 	#重写object
