@@ -26,13 +26,28 @@ Template.calendarSidebar.onRendered ->
 
 
 Template.calendarSidebar.events
+	'click label.resources-lbl': (event)->
+		addmembers = []
+		addmembers = $("span.span-resources div.selectize-control div.selectize-input div.item").map(
+			(i,n)->
+				return $(n).attr("data-value")
+			).toArray()
+
+		console.log addmembers
+		$("span.span-resources div.has-items").children().remove(".item")
+
+		# Meteor.call('attendeesInit',obj,addmembers,
+		# 	(error,result) ->
+		# 		if !error
+		# 			Session.set 'cmDoc',result
+		# 			
+		# )
+		
 	'click div.check':(event)->
 		checkBox = $(event.currentTarget.childNodes[1])
 		checkBox.toggleClass("fa-check")
 		Meteor.call('updateinstances',this._id,Meteor.userId(),checkBox.hasClass("fa-check"))
-		# })
 		Calendar.reloadEvents()
-		# $("#calendar").fullCalendar("refetchEvents")
 
 	'click .main-sidebar .calendar-add': (event)->
 		$('.btn.calendar-add').click();

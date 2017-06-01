@@ -32,6 +32,20 @@
         </li>
         {{/each}}
       </ul>
+       <div class="box box-solid invite-box div-resources">
+        <div class="box-body no-padding">
+          <span class="pull-left span-resources">
+            {{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=false disabled=false}}
+          </span>
+          <span class="pull-right">
+            <label class="control-label text-light-blue resources-lbl">
+              订阅
+            </label>
+          </span>
+        </div>
+      </div>
+
+
 
       <div class="sidebar-bottom">
         <a href="#" class="calendar-add">
@@ -40,6 +54,7 @@
             <span>{{_ "calendar_add_calendar"}}</span>
           </i>
         </a>
+       
       </div>
     </section>
 
