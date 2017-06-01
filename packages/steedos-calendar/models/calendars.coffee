@@ -92,6 +92,7 @@ Calendars._simpleSchema = new SimpleSchema
 		label:"所属工作区"
 		autoform: 
 			type: "universe-select"
+			defaultValue：[""]
 			afFieldInput:
 				multiple: true
 				optionsMethod: "selectGetSpaces"
