@@ -11,8 +11,7 @@ Meteor.methods
 				timezone:timezone,
 				isDefault:true,
 				components:["VEVENT","VTODO"],
-				synctoken:1,
-				isChecked:true
+				synctoken:1
 			Meteor.call('calendarinsert',doc);
 			#doc=Calendars.find({"ownerId":userId},{"isDefault":true})
 			 #steedosId = Meteor.users.findOne({_id:userId}).steedos_id;

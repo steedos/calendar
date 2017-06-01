@@ -48,8 +48,6 @@ Meteor.startup ->
 			calendarorder:3,
 			calendarcolor: doc.color,
 			timezone :timezone,
-			checked:true,
-			principalid:memberid,
 			share_herf:herf,
 			share_displayname: displayname	
 
