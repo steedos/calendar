@@ -84,6 +84,7 @@ Template.calendarSidebar.events
 		
 
 	'click i.calendar-delete': (event)->
+		$('body').addClass "loading"
 		if Meteor.userId()!=this.ownerId
 			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
@@ -103,15 +104,22 @@ Template.calendarSidebar.events
 		()->
 			# this._id取值无法删除，删除失败,this未定义
 			Calendars.remove {_id:calendar_id}, (error)->
+				$('body').removeClass "loading"
 				if error
-					swal(t("calendar_delete_failed"),error.message,"error");
+					swal(t("calendar_delete_failed"),error.message,"error")
 				else
-					swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success");
+					swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success")
+
 		)
 
 
 
 	'click i.calendar-hide': (event)->
+		$('body').addClass "loading"
+		if this?.uri
+			calendar_id = this.uri
+		else
+			calendar_id = this._id
 		calendar_id=this._id;
 		console.log calendar_id
 		swal({
@@ -128,7 +136,9 @@ Template.calendarSidebar.events
 		# 删除表中的记录
 		()->
 			# this._id取值无法删除，删除失败,this未定义
-			calendarsubscriptions.remove {_id:calendar_id}, (error)->
+			Calendars.remove {_id:calendar_id}, (error)->
+				$('body').removeClass "loading"
+				calendarsubscriptions.remove {_id:calendar_id}, (error)->
 				if error
 					swal(t("calendar_hide_failed"),error.message,"error");
 				else
