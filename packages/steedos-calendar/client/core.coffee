@@ -1,6 +1,6 @@
 @moment_timezone = require('moment-timezone');
 
-# Steedos.API.setAppTitle("Steedos Calendar");
+Steedos.Helpers.setAppTitle("Steedos Calendar");
 
 Meteor.startup ->
 	$("body").css("background-image", "url('/packages/steedos_theme/client/background/birds.jpg')");
