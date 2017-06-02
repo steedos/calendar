@@ -42,7 +42,7 @@ Template.event_detail_modal.helpers
 		obj.curstat=""
 		if Meteor.userId()==obj.ownerId
 			obj.isOwner = "true"
-			obj.formOpt = "update"
+			obj.formOpt = "normal"
 		else
 			obj.isOwner = "false"
 			obj.formOpt = "disabled"
@@ -72,22 +72,7 @@ Template.event_detail_modal.events
 		
 
 	'click button.save_events': (event)->
-		$('body').addClass "loading"
-		obj = Session.get('cmDoc')
-		members = []
-		val=$('input:radio[name="optionsRadios"]:checked').val()
-		description = $('textarea.description').val()
-		obj.attendees.forEach (attendee)->
-			if attendee.id == Meteor.userId()
-				attendee.partstat=val
-				attendee.description=description
-		Session.set 'cmDoc',obj
-		obj = Session.get('cmDoc')
-		Meteor.call('updateAttendees',obj,2,
-			(error,result) ->
-				Modal.hide('event_detail_modal')
-				$('body').removeClass "loading"
-			)
+		
 		
 	'click input:radio[name="optionsRadios"]': (event)->
 		description = $('textarea.description').val()
@@ -123,3 +108,34 @@ Template.event_detail_modal.events
 		 		tempAtt.push attendee
 		obj.attendees = tempAtt
 		Session.set 'cmDoc',obj
+
+
+AutoForm.hooks eventsForm: 
+	onSubmit: (insertDoc, updateDoc, currentDoc) ->
+		$('body').addClass "loading"
+
+		this.event.preventDefault()
+		obj = Session.get("cmDoc")
+		obj.calendarid = AutoForm.getFieldValue("calendarid")
+		obj.title = AutoForm.getFieldValue("title")
+		obj.start = AutoForm.getFieldValue("start")
+		obj.end = AutoForm.getFieldValue("end")
+		obj.description = AutoForm.getFieldValue("description")
+		obj.allDay = AutoForm.getFieldValue("allDay")
+		obj.alarms = AutoForm.getFieldValue("alarms")
+		members = []
+		val=$('input:radio[name="optionsRadios"]:checked').val()
+		description = $('textarea.description').val()
+		obj.attendees.forEach (attendee)->
+			if attendee.id == Meteor.userId()
+				attendee.partstat=val
+				attendee.description=description
+
+		that = this
+		Meteor.call('updateEvents',obj,2,
+			(error,result) ->
+				Modal.hide('event_detail_modal')
+				$('body').removeClass "loading"
+				that.done()
+			)
+		return

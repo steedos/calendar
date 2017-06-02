@@ -1,10 +1,15 @@
 Meteor.methods
-	updateAttendees :(obj,operation)->
+	updateEvents :(obj,operation)->
 		if operation==1
 			attendees=[]
 		else
 			events=Events.find({_id:obj._id}).fetch()
 			attendees=events[0].attendees
+			console.log obj.calendarid
+			Events.direct.update {_id:obj._id}, {$set:
+				calendarid:obj.calendarid
+			}
+
 		#attendees=events[0].attendees
 		newattendeesid=_.pluck(obj.attendees,'id');
 		oldattendeesid=_.pluck(attendees,'id');
@@ -29,7 +34,6 @@ Meteor.methods
 				Events.direct.insert
 					_id:_id;
 					title:doc.title
-					members:doc.members
 					start:doc.start
 					end:doc.end
 					allDay:doc.allDay
@@ -64,9 +68,16 @@ Meteor.methods
 			lastoccurence: doc.lastoccurence,
 			etag: doc.etag,
 			size: doc.size,
-			calendardata: doc.calendardata
+			calendardata: doc.calendardata,
+			parentId:doc._id
 		},{ multi: true }
 		updateattendeesid.forEach (attendeeid)->
-			calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id			
-			event=Events.find({parentId:obj.parentId,calendarid:calendarid},{fields:{uri:1}}).fetch()			
-			Calendar.addChange(calendarid,event[0].uri,2)
+				calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id			
+				if attendeeid==obj.ownerId
+					events=Events.find({_id:obj._id}).fetch()
+					calendarid=events[0].calendarid
+					console.log calendarid
+					color=Calendars.findOne({_id:calendarid}).color
+					console.log color
+				event=Events.find({parentId:obj.parentId,calendarid:calendarid},{fields:{uri:1}}).fetch()			
+				Calendar.addChange(calendarid,event[0].uri,2)
