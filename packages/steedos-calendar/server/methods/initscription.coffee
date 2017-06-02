@@ -6,5 +6,5 @@ Meteor.methods
 				_id:Calendar.uuid()
 				uri:obj._id
 				principaluri:Meteor.userId()
-				calendarcolor:obj.color
+				color:obj.color
 				calendarname:obj.title

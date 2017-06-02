@@ -1,10 +1,9 @@
 @Calendars = new Mongo.Collection('calendars');
 @moment_timezone = require('moment-timezone');
 @Defaulttimezone = 'Asia/Shanghai';
-@CALENDARCOLORS = new Array("#ac725e","#d06b64","#f83a22","#fa573c","#ff7537","#ffad46",
-					"#42d692","#16a765","#7bd148","#b3dc6c","#fbe983","#fad165",
-					"#92e1c0","#9fele7","#9fc6e7","#9fc6e7","#4986e7","#9a9cff","#b99aff",
-					"#c2c2c2","#cabdbf","#f691b2","#cca6ac","#cd74e6","#a47ae2");
+@CALENDARCOLORS = new Array("#ff2d55","#ff9500","#ffcc00",
+					"#65db39","#34aadc","#cc73e1",
+					"#a2845e");
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String,
