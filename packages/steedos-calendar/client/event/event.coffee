@@ -92,17 +92,18 @@ Calendar.generateCalendar = ()->
 			# 	end:'18:00'
 
 			eventDataTransform: (event) ->
+				calendar = Calendars.findOne({'_id':event.calendarid})
 				copy =
 					id: event._id
 					allDay: event.allDay
 					title: event.title
 					url:event.url
-					color:event.eventcolor
+					color:calendar.color
 				if event.start
 					copy.start = moment(event.start)
 				if event.end
 					copy.end = moment(event.end)
-				return copy;
+				return copy
 			select: (start, end, jsEvent, view, resource)->
 				$('body').addClass "loading"
 				objs = Calendars.find()
