@@ -77,6 +77,11 @@ Template.calendarSidebar.events
 		$('.btn.calendar-show').click();
 		
 
+	'click i.subscribe-show': (event)->
+		console.log this
+		Session.set("cmDoc", this);
+		$('.btn.subscribe-show').click();
+
 	'click i.calendar-delete': (event)->
 		$('body').addClass "loading"
 		if Meteor.userId()!=this.ownerId
@@ -108,7 +113,7 @@ Template.calendarSidebar.events
 
 
 
-	'click i.calendar-hide': (event)->
+	'click i.subscribe-hide': (event)->
 		$('body').addClass "loading"
 		if this?.uri
 			calendar_id = this.uri
