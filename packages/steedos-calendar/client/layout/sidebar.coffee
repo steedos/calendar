@@ -19,13 +19,7 @@ Template.calendarSidebar.helpers
 		return this.isDefault
 	isChecked :()->
 		calendarIds=Session.get('calendarIds')
-		if calendarIds.indexOf(this?._id)<0
-			return false
-		else
-			return true
-	isCheck :()->
-		calendarIds=Session.get('calendarIds')
-		if calendarIds.indexOf(this.uri)<0
+		if calendarIds.indexOf(this?._id)<0 && calendarIds.indexOf(this.uri)<0
 			return false
 		else
 			return true
