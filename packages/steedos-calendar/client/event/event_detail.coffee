@@ -1,6 +1,14 @@
 Template.event_detail_modal.onRendered ->
 
 Template.event_detail_modal.helpers
+	showActionBox:()->
+		obj = Session.get('cmDoc')
+		if obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
+			return "none"
+		else
+			return "inline"
+
+
 	accendeeState:(state)->
 		obj = Session.get('cmDoc')
 		result = ""
@@ -19,7 +27,7 @@ Template.event_detail_modal.helpers
 		obj.declinednum=0
 		obj.actionnum=0#待回复
 		obj.curstat=""
-		if Meteor.userId()==obj.ownerId and obj._id==obj.parentId
+		if Meteor.userId()==obj.ownerId
 			obj.isOwner = "true"
 			obj.formOpt = "update"
 		else
