@@ -54,18 +54,17 @@ Package.onUse(function(api) {
 
     api.use('es5-shim@4.6.15');
     api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
+    api.use('simple:json-routes@2.1.0');
+    api.use('rzymek:fullcalendar@3.4.0');
+    api.use('vazco:universe-selectize@0.1.22');
 
 
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base@0.0.14');
     api.use('steedos:theme@0.0.11');
-    api.use('simple:json-routes@2.1.0');
-
-    api.use('rzymek:fullcalendar@3.4.0');
     api.use('steedos:calendar-i18n@0.0.2_4');
 
     api.use('steedos:autoform-modals@0.3.9_4');
-    api.use('steedos:universe-autoform-select@0.3.10');
 
     api.addFiles('client/event/event.html', 'client');
     api.addFiles('client/event/event.coffee', 'client');
