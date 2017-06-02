@@ -3,10 +3,15 @@ Template.event_detail_modal.onRendered ->
 Template.event_detail_modal.helpers
 	showActionBox:()->
 		obj = Session.get('cmDoc')
-		if obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
+		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
+		if onlyOne
 			return "none"
 		else
-			return "inline"
+			attendeesIds=_.pluck(obj.attendees,'id')
+			if attendeesIds.indexOf(Meteor.userId())<0
+				return "none"
+			else
+				return "inline"
 
 
 	accendeeState:(state)->
