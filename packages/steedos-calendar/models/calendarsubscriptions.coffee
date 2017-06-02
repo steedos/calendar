@@ -10,16 +10,25 @@ calendarsubscriptions.attachSchema new SimpleSchema
 	uri:  
 		type: String
 		optional: true
+		autoform: 
+			omit: true
 	
 	principaluri:  
 		type: String
 		optional: true
-
-	calendarcolor:
-		type: String
+		autoform: 
+			omit: true
 
 	calendarname:
 		type: String
+		label:"标题"
+
+	color:
+		type: String
+		label:"颜色"
+		autoform:
+			type: "bootstrap-minicolors"
+
 			
 if (Meteor.isServer) 
 	calendarsubscriptions.allow 
