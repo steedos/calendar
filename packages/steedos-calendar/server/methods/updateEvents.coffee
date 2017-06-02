@@ -59,6 +59,7 @@ Meteor.methods
 			title:doc.title,
 			start:doc.start,
 			end:doc.end,
+			allDay:doc.allDay,
 			description:doc.description,
 			alarms:doc.alarms,
 			attendees:doc.attendees,
