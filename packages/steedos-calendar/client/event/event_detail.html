@@ -65,24 +65,14 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-					<div class="nav-tabs-custom" style="cursor: move;">
-
-						<ul class="nav nav-tabs  pull-right  ui-sortable-handle">
-							<li class="">
-								<a href="#div-resources" data-toggle="tab">
-								  {{_ "calendar_resource_list"}}
-								</a>
-							</li>
-							<li class="active">
-								<a href="#div-members" data-toggle="tab">
-								  {{_ "calendar_member_list"}}
-								</a>
-							</li>
-			            </ul>
-					</div>
-					<div class="tab-content no-padding list-opt">
-						<div class="tab-pane active" id="div-members">
-							<div class="feadback-result" id="div-members">
+						<div class="box box-solid">
+							<div class="box-header with-border">
+							  <span class="members-list-title">
+							  {{_ "calendar_member_list"}}
+							  </span>
+							</div>
+							<div class="box-body no-padding">
+							<div class="feadback-result">
 								<table>
 									<tr>
 										<td>
@@ -122,6 +112,7 @@
 									</tr>
 								</table>
 							</div>
+
 							<div class="members-list">
 								 <ul class="nav nav-pills nav-stacked event-members">
 								{{#each eventObj.attendees}}
@@ -141,7 +132,15 @@
 								{{/each}}
 							  </ul>
 							</div>
-							<div class="box box-solid invite-box {{eventObj.isOwner}}  div-addmembers">
+							</div>
+						  </div>
+						  <div class="box box-solid invite-box {{eventObj.isOwner}}">
+							<!-- <div class="box-header with-border">
+							  <h3 class="box-title">
+							  {{_ "calendar_add_members_event"}}
+							  邀请成员
+							  </h3>
+							</div> -->
 							<div class="box-body no-padding">
 							<span class="pull-left span-addmembers">
 								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=true disabled=false}}
@@ -155,11 +154,6 @@
 
 							</div>
 						  </div>
-						</div>
-					<div class="tab-pane" id="div-resources">
-
-					</div>
-					</div>
 					</div>
 				</div>
 				<div class="modal-footer">
