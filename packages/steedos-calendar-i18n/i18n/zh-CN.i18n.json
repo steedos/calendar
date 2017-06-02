@@ -47,9 +47,9 @@
   "calendar_resource_list": "资源列表",
   "calendar_add_resource": "添加资源",
   "calendar_subscript": "订阅",
-  "calendar_hide_confirm_calendar": "确定隐藏该日历?",
-  "calendar_hide_calendar": "隐藏日历",
-  "calendar_hide_success": "隐藏成功",
-  "calendar_hide_failed": "隐藏失败",
-  "calendar_hide_succsee_info": "该日历已被隐藏！"
+  "calendar_hide_confirm_calendar": "确定取消订阅该日历?",
+  "calendar_hide_calendar": "取消订阅",
+  "calendar_hide_success": "取消订阅成功",
+  "calendar_hide_failed": "取消订阅失败",
+  "calendar_hide_succsee_info": "该日历已被取消订阅！"
 }
