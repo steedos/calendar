@@ -17,7 +17,6 @@
   "calendar_please_input": "请输入...",
   "calendar_no_permission": "无权限",
   "calnedar_no_permission_delete_calendar": "该账号无权限删除日历",
-  "calnedar_no_permission_modify_event": "该账号无权限修改事件",
   "calendar_delete_confirm_calendar": "确定删除该日历?",
   "calendar_delete_calendar": "删除日历",
   "calendar_delete_success": "删除成功",
