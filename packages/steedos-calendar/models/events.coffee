@@ -7,16 +7,7 @@ Events.attachSchema new SimpleSchema
 		type: String
 		# label:t("calendar_title")
 		label:"标题"
-
-	members:  
-		type: [String]
-		# label:t("calendar_members")
-		label:"成员"
-		autoform: 
-			type: "universe-select"
-			afFieldInput:
-				multiple: true
-				optionsMethod: "selectGetUsers"
+		defaultValue:""
 
 	start:  
 		type: Date,
@@ -61,7 +52,7 @@ Events.attachSchema new SimpleSchema
 		type: Boolean
 		# label:t("calendar_event_allDay")
 		label:"全天"
-		defaultValue: true
+		defaultValue: false
 		optional: true
 
 	calendarid:
@@ -80,13 +71,6 @@ Events.attachSchema new SimpleSchema
 				# options[1].select='select'
 				return options
 				
-	# resources:
-	# 	type: [String],
-	# 	autoform:
-	# 		type: "universe-select"
-	# 		afFieldInput:
-	# 			multiple: true
-	# 			optionsMethod: "selectGetUsers"
 	
 	description:  
 		type: String,
@@ -215,7 +199,7 @@ Events.attachSchema new SimpleSchema
 if (Meteor.isServer) 
 	Events.allow 
 		insert: (userId, doc) ->
-			return true
+			return doc._id
 
 		update: (userId, doc) ->
 			return true
@@ -223,34 +207,7 @@ if (Meteor.isServer)
 		remove: (userId, doc) ->
 			return true
 	#创建事件之前，为其添加一些属性
-	Events.before.insert (userId, doc)->
-		doc.componenttype = "VEVENT"
-		doc._id = Calendar.uuid();
-		doc.uid = doc._id	
-		doc.uri = doc._id + ".ics"
-		doc.ownerId=userId;
-		if _.indexOf(doc.members, userId)==-1
-			doc.members.push userId
-		attendees=[]
-		doc.members.forEach (member)->
-			partstat="NEEDS-ACTION"
-			steedosId=Meteor.users.findOne({_id:member}).steedos_id
-			name=Meteor.users.findOne({_id:member}).name
-			attendee = {
-				role:"REQ-PARTICIPANT",
-				cutype:"INDIVIDUAL",
-				partstat:partstat,
-				cn:name,
-				mailto:steedosId,
-				id:member,
-				description:null
-			}
-			if member == doc.ownerId 
-				attendee.partstat="ACCEPTED"
-			attendees.push attendee  	
-		doc.attendees = attendees;
-		Calendar.addCalendarObjects(userId,doc,1);
-		Meteor.call('updateAttendees',doc,1);		
+	Events.before.insert (userId, doc)->	
 		return
 	
 	Events.after.insert (userId, doc)->
