@@ -25,10 +25,13 @@ Calendars._simpleSchema = new SimpleSchema
 	
 	visibility:
 		type: String,
+		optional: true,
 		# label:t("calendar_visibility")
-		label:"可见性"
-		allowedValues: ["private"],
+		#label:"可见性"
+		#allowedValues: ["private","share"],
 		defaultValue: "private"
+		autoform:
+			omit: true
 	
 	color:  
 		type: String,

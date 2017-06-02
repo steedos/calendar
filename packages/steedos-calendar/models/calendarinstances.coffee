@@ -79,15 +79,6 @@ calendarinstances.attachSchema new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
-	checked:
-		type:Boolean,
-		autoform:
-			omit:true
-
-	principalid:
-		type:String,
-		autoform:
-			omit:true
 			
 if (Meteor.isServer) 
 	calendarinstances.allow 
