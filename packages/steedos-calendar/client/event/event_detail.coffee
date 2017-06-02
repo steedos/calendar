@@ -1,6 +1,15 @@
 Template.event_detail_modal.onRendered ->
 
 Template.event_detail_modal.helpers
+	showEventOptBox:()->
+		# 事件是本人创建的/事件成员包含本人，都显示“保存”/“删除”操作
+		obj = Session.get('cmDoc')
+		attendeesIds=_.pluck(obj.attendees,'id')
+		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0
+			return "inline"
+		else
+			return "none"
+
 	showActionBox:()->
 		obj = Session.get('cmDoc')
 		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
@@ -12,7 +21,6 @@ Template.event_detail_modal.helpers
 				return "none"
 			else
 				return "inline"
-
 
 	accendeeState:(state)->
 		obj = Session.get('cmDoc')

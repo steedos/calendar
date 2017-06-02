@@ -48,7 +48,7 @@
 							<div class="eventForm">
 								{{#autoForm id="eventsForm" collection="Events" doc=eventObj type=eventObj.formOpt omitFields="members"  }}
 									{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
-								<div class="col-md-12 event-edit">
+								<div class="col-md-12 event-edit" style="display: {{showEventOptBox}}">
 									<div class="form-group">
 										<div class="pull-left">
 											<button type="submit" class="btn btn-primary save_events">
