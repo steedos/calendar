@@ -9,9 +9,9 @@ Meteor.methods
 			users = Meteor.users.find(
 				{
 					$or: [
-						{"username": {$regex: searchText}},
-						{"name": {$regex: searchText}},
-						{"emails.address": {$regex: searchText}}
+						{"username": searchText},
+						{"name": searchText},
+						{"emails.address": searchText}
 					]
 				}, 
 				{limit: 10}
