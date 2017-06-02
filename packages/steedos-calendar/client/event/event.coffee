@@ -35,8 +35,6 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 			resources.forEach (resource) ->
 				console.log resource.uri
 				calendarIds.push(resource.uri)
-
-			console.log calendarIds
 			Session.set 'calendarIds',calendarIds
 		else
 			calendarIds=Session.get('calendarIds')
@@ -106,32 +104,28 @@ Calendar.generateCalendar = ()->
 					copy.end = moment(event.end)
 				return copy;
 			select: (start, end, jsEvent, view, resource)->
+				$('body').addClass "loading"
 				objs = Calendars.find()
 				calendarid = ""
 				objs.forEach (obj) ->
 					if obj.isDefault
 						calendarid = obj._id
-				# Session.set 'cmDoc', 
-				# 	start: start.toDate()
-				# 	end: end.toDate()
-				# 	calendarid:calendarid
-				# 	opt:'insert'
-				# $('.btn.event-add').click(); 
-
 				doc = {
 					start: start.toDate(),
 					end: end.toDate(),
 					calendarid:calendarid
 				}
-				
 				# 保存到数据库的object中一条记录
-				# Calendar.addCalendarObjects(Meteor.userId(),doc,1)
-				Meteor.call('addCalendarObjects',Meteor.userId(),doc,1,
+				Meteor.call('eventInit',Meteor.userId(),doc,
 					(error,result) ->
+						$('body').removeClass "loading"
 						if !error
-							console.log result
-							Session.set 'cmDoc', result
-							Modal.show('event_detail_modal')
+							event = Events.findOne
+								_id: result
+							if event
+								console.log event
+								Session.set 'cmDoc', event
+								Modal.show('event_detail_modal')
 					)
 
 			eventClick: (calEvent, jsEvent, view)->
