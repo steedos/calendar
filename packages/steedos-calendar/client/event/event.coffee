@@ -93,12 +93,18 @@ Calendar.generateCalendar = ()->
 
 			eventDataTransform: (event) ->
 				calendar = Calendars.findOne({'_id':event.calendarid})
+				color = ""
+				if calendar
+					color = calendar.color
+				else
+					cs = calendarsubscriptions.findOne({'uri':event.calendarid})
+					color = cs.color
 				copy =
 					id: event._id
 					allDay: event.allDay
 					title: event.title
 					url:event.url
-					color:calendar.color
+					color:color
 				if event.start
 					copy.start = moment(event.start)
 				if event.end

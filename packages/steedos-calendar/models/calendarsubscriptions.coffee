@@ -15,7 +15,7 @@ calendarsubscriptions.attachSchema new SimpleSchema
 		type: String
 		optional: true
 
-	calendarcolor:
+	color:
 		type: String
 
 	calendarname:
