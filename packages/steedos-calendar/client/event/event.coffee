@@ -110,7 +110,6 @@ Calendar.generateCalendar = ()->
 				calendarid = ""
 				objs.forEach (obj) ->
 					if obj.isDefault
-						# console.log obj._id
 						calendarid = obj._id
 				# Session.set 'cmDoc', 
 				# 	start: start.toDate()

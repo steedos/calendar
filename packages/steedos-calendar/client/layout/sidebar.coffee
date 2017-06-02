@@ -120,6 +120,8 @@ Template.calendarSidebar.events
 			calendar_id = this.uri
 		else
 			calendar_id = this._id
+		calendar_id=this._id;
+		console.log calendar_id
 		swal({
 		  title: t("calendar_hide_calendar"),
 		  text: t("calendar_hide_confirm_calendar"),
@@ -136,6 +138,7 @@ Template.calendarSidebar.events
 			# this._id取值无法删除，删除失败,this未定义
 			Calendars.remove {_id:calendar_id}, (error)->
 				$('body').removeClass "loading"
+				calendarsubscriptions.remove {_id:calendar_id}, (error)->
 				if error
 					swal(t("calendar_hide_failed"),error.message,"error");
 				else
