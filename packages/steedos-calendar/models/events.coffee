@@ -61,6 +61,8 @@ Events.attachSchema new SimpleSchema
 		label:"所属日历"
 		autoform:
 			type: "select"
+			#afFieldInput:
+			firstOption:false
 			options: ()->
 				options = []
 				objs = Calendars.find({})
@@ -105,6 +107,7 @@ Events.attachSchema new SimpleSchema
 				{label: "1 天前", value: "-P1D"},
 				{label: "2 天前", value: "-P2D"}
 			]
+			sortMethod:"x"
 	componenttype:
 		type: String,
 		optional: true
