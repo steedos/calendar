@@ -1,6 +1,6 @@
 Meteor.methods
 	initscription: (subscripter) ->
-		objs=Calendars.find({$or:[{"ownerId":subscripter},{"members":subscripter}]}).fetch()
+		objs=Calendars.find({"ownerId":subscripter},{isDefault:true}).fetch()
 		if objs.length==0
 			Meteor.call('calendarInit',subscripter,Defaulttimezone)
 			objs=Calendars.find({$or:[{"ownerId":subscripter},{"members":subscripter}]}).fetch()
