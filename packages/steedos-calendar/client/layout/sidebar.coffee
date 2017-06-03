@@ -23,6 +23,12 @@ Template.calendarSidebar.helpers
 			return false
 		else
 			return true
+	calendarActive: ()->
+		selectcalendarid=Session.get("calendarid");
+		if selectcalendarid!=undefined and selectcalendarid==this._id
+			return "active"
+		else
+			return ""
 
 
 Template.calendarSidebar.onRendered ->
@@ -75,8 +81,11 @@ Template.calendarSidebar.events
 	'click i.calendar-show': (event)->
 		Session.set("cmDoc", this);
 		$('.btn.calendar-show').click();
-		
-
+	
+	'click .calendar-row': (event)->
+		console.log this._id
+		Session.set("calendarid",this._id);	
+		$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color);
 	'click i.subscribe-show': (event)->
 		console.log this
 		Session.set("cmDoc", this);

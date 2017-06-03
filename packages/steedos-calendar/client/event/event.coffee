@@ -105,6 +105,8 @@ Calendar.generateCalendar = ()->
 					title: event.title
 					url:event.url
 					color:color
+					backgroundColor:color
+					borderColor:color
 				if event.start
 					copy.start = moment(event.start)
 				if event.end
@@ -113,10 +115,12 @@ Calendar.generateCalendar = ()->
 			select: (start, end, jsEvent, view, resource)->
 				$('body').addClass "loading"
 				objs = Calendars.find()
-				calendarid = ""
-				objs.forEach (obj) ->
-					if obj.isDefault
-						calendarid = obj._id
+				calendarid = Session.get('calendarid')
+				if calendarid==undefined
+					objs.forEach (obj) ->
+						if obj.isDefault
+							calendarid = obj._id
+				console.log calendarid
 				doc = {
 					start: start.toDate(),
 					end: end.toDate(),
@@ -125,14 +129,13 @@ Calendar.generateCalendar = ()->
 				# 保存到数据库的object中一条记录
 				Meteor.call('eventInit',Meteor.userId(),doc,
 					(error,result) ->
+						
 						$('body').removeClass "loading"
 						if !error
-							event = Events.findOne
-								_id: result
-							if event
-								console.log event
-								Session.set 'cmDoc', event
+								Session.set 'cmDoc', result
 								Modal.show('event_detail_modal')
+						else
+							console.log error
 					)
 
 			eventClick: (calEvent, jsEvent, view)->
@@ -143,32 +146,30 @@ Calendar.generateCalendar = ()->
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
 			eventDrop: (event, delta, revertFunc)->
+				console.log event
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
 					swal(t("calendar_no_permission"),t("calnedar_no_permission_modify_event"),"warning");
 					Calendar.reloadEvents()
 					return
-				Events.update({'_id':event._id},{
-					$set:{
-						'start':moment(event.start._d).toDate(),
-						'end':moment(event.end._d).toDate()
-					}
-				})
 
+				obj = Events.findOne({'_id':event._id})
+				obj.start = moment(event.start._d).toDate()
+				obj.end = moment(event.end._d).toDate()
+				Meteor.call('updateEvents',obj,2)
+
+				#Meteor.call('updateEvents',)
 			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
+				console.log event
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
 					swal(t("calendar_no_permission"),t("calnedar_no_permission_modify_event"),"warning");
 					Calendar.reloadEvents()
 					return
-				Events.update({'_id':event._id},{
-					$set:{
-						'start':moment(event.start._d).toDate(),
-						'end':moment(event.end._d).toDate()
-					}
-				})
-
-
+				obj = Events.findOne({'_id':event._id})
+				obj.start = moment(event.start._d).toDate()
+				obj.end = moment(event.end._d).toDate()
+				Meteor.call('updateEvents',obj,2)
 
 		Events.find().observe
 			added: (id, fields) ->

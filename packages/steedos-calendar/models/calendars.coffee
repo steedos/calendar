@@ -37,7 +37,7 @@ Calendars._simpleSchema = new SimpleSchema
 		# label:t("calendar_color")
 		label:"颜色"
 		defaultValue: ->
-				return  CALENDARCOLORS[parseInt(10000*Math.random())%24]
+				return  CALENDARCOLORS[parseInt(10000*Math.random())%7]
 		autoform:
 			type: "bootstrap-minicolors"
 			

@@ -7,7 +7,7 @@ Events.attachSchema new SimpleSchema
 		type: String
 		# label:t("calendar_title")
 		label:"标题"
-		defaultValue:""
+		defaultValue:"新建事件"
 
 	start:  
 		type: Date,
@@ -59,6 +59,8 @@ Events.attachSchema new SimpleSchema
 		type: String,
 		# label:t("calendar_event_calendar")
 		label:"所属日历"
+		defaultValue: ->
+        	return Session.get("calendarid");
 		autoform:
 			type: "select"
 			#afFieldInput:

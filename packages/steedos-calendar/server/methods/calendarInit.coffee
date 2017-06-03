@@ -6,7 +6,7 @@ Meteor.methods
 				title:name,
 				members:[userId],
 				visibility:"private",
-				color:CALENDARCOLORS[parseInt(10000*Math.random())%24],
+				color:CALENDARCOLORS[parseInt(10000*Math.random())%7],
 				ownerId:userId,
 				timezone:timezone,
 				isDefault:true,

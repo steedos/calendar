@@ -17,8 +17,8 @@ Meteor.methods
 		}
 		attendees.push attendee  	
 		doc?.attendees = attendees
-		doc1 = Calendar.addCalendarObjects(userId,doc,1)
-		Events.insert(doc1,(error,result)->
+		doc = Calendar.addCalendarObjects(userId,doc,1)
+		Events.insert(doc,(error,result)->
 				if !error
 					console.log result
 					return result
@@ -26,3 +26,32 @@ Meteor.methods
 					console.log error
 					return
 			)
+		calendar=Calendars.findOne({ownerId:userId},{isDefault:true}, {fields:{_id: 1,color:1}})
+		if calendar._id !=doc.calendarid
+			_id = Calendar.uuid()
+			Events.direct.insert
+				_id:_id;
+				start:doc.start
+				end:doc.end
+				allDay:doc.allDay
+				calendarid:calendar._id
+				description:doc.description
+				alarms:doc.alarms
+				componenttype:doc.componenttype
+				uid:_id
+				uri:_id+".ics"
+				ownerId:doc.ownerId
+				lastmodified:doc.lastmodified
+				firstoccurence:doc.firstoccurence
+				lastoccurence:doc.lastoccurence
+				attendees:doc.attendees
+				calendardata:doc.calendardata
+				etag:doc.etag
+				size:doc.size
+				eventcolor:calendar.color
+				parentId:doc.parentId
+			Calendar.addChange(calendar._id,_id+".ics",1);
+		else
+			Calendar.addChange(doc.calendarid,doc.uri,1);
+
+		return doc

@@ -5,8 +5,8 @@
       <ul class="sidebar-menu">
         <li class="header">我的日历</li>
         {{#each calendars}}
-        <li>
-          <a href="#">
+        <li class="{{calendarActive}}">
+          <a href="#" class="calendar-row">
             <div class="pull-left-title">
                 <div class="check">
                   <i class="icon fa {{#if isChecked}}fa-check{{/if}}">
