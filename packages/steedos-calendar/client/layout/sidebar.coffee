@@ -19,10 +19,13 @@ Template.calendarSidebar.helpers
 		return this.isDefault
 	isChecked :()->
 		calendarIds=Session.get('calendarIds')
-		if calendarIds.indexOf(this?._id)<0 && calendarIds.indexOf(this.uri)<0
-			return false
+		if calendarIds!=undefined
+			if calendarIds.indexOf(this?._id)>=0 || calendarIds.indexOf(this.uri)>=0
+				return true
+			else
+				return false
 		else
-			return true
+			return false
 	calendarActive: ()->
 		selectcalendarid=Session.get("calendarid");
 		if selectcalendarid==undefined
@@ -55,7 +58,14 @@ Template.calendarSidebar.events
 		$("span.span-resources div.has-items").children().remove(".item")
 
 	'click div.check':(event)->
-		calendarIds=Session.get('calendarIds')
+		# calendarIdsString=localStorage.getItem("calendarIds:"+Meteor.userId())
+		calendarIds=[]
+		# if !calendarIdsString
+		# 	calendarIds=calendarIdsString.split(",")
+		# 	console.log calendarIds
+		if Session.get("calendarIds")
+			calendarIds=Session.get("calendarIds")
+		console.log calendarIds
 		checkBox = $(event.currentTarget.childNodes[1])
 		checkBox.toggleClass("fa-check")
 		if this?.uri
@@ -67,6 +77,7 @@ Template.calendarSidebar.events
 		else
 			dx = calendarIds.indexOf(id)
 			calendarIds.splice(dx,1)
+		localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 		Session.set 'calendarIds',calendarIds
 		Calendar.reloadEvents()
 

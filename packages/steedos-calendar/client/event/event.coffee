@@ -24,21 +24,11 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
-	calendarIds = []
-	if Meteor.isClient
-		if !Session.get('calendarIds')||Session.get('calendarIds')?.length==0
-			objs = Calendars.find().fetch()
-			objs.forEach (obj) ->
-				calendarIds.push(obj._id)
-
-			resources = calendarsubscriptions.find().fetch()
-			resources.forEach (resource) ->
-				console.log resource.uri
-				calendarIds.push(resource.uri)
-			Session.set 'calendarIds',calendarIds
-		else
-			calendarIds=Session.get('calendarIds')
-	
+	calendarIds=Session.get('calendarIds')
+	if !calendarIds
+		calendarIds=[]
+	console.log "calendarIds"
+	console.log calendarIds
 	params = 
 		start: start.toDate()
 		end: end.toDate()
