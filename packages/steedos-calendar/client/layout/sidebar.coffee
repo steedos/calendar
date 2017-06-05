@@ -25,6 +25,8 @@ Template.calendarSidebar.helpers
 			return true
 	calendarActive: ()->
 		selectcalendarid=Session.get("calendarid");
+		if selectcalendarid==undefined
+			selectcalendarid=localStorage.getItem("calendarid:"+Meteor.userId());
 		if selectcalendarid!=undefined and selectcalendarid==this._id
 			return "active"
 		else
@@ -84,7 +86,9 @@ Template.calendarSidebar.events
 	
 	'click .calendar-row': (event)->
 		console.log this._id
-		Session.set("calendarid",this._id);	
+		selectcalendarid=Session.set("calendarid",this._id);
+		#localStorage.removeItem("calendarid:"+Meteor.userId(), this._id)	
+		localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
 		$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color);
 	'click i.subscribe-show': (event)->
 		console.log this
