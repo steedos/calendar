@@ -99,7 +99,7 @@ Calendar.generateCalendar = ()->
 					color = calendar.color
 				else
 					cs = calendarsubscriptions.findOne({'uri':event.calendarid})
-					color = cs.color
+					color = cs?.color
 				copy =
 					id: event._id
 					allDay: event.allDay
@@ -122,7 +122,10 @@ Calendar.generateCalendar = ()->
 					objs.forEach (obj) ->
 						if obj.isDefault
 							calendarid = obj._id
-				console.log calendarid
+				calendarIds=Session.get('calendarIds')
+				if calendarIds.indexOf(calendarid)<0
+					calendarIds.push(calendarid)
+					Session.set('calendarIds',calendarIds)
 				doc = {
 					start: start.toDate(),
 					end: end.toDate(),
@@ -134,8 +137,9 @@ Calendar.generateCalendar = ()->
 						
 						$('body').removeClass "loading"
 						if !error
-								Session.set 'cmDoc', result
-								Modal.show('event_detail_modal')
+							AutoForm.resetForm("eventForm")
+							Session.set 'cmDoc', result
+							Modal.show('event_detail_modal')
 						else
 							console.log error
 					)
@@ -145,6 +149,7 @@ Calendar.generateCalendar = ()->
 					_id: calEvent.id
 				if event
 					console.log event
+					AutoForm.resetForm("eventForm")
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
 			eventDrop: (event, delta, revertFunc)->
