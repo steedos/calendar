@@ -46,11 +46,12 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 		calendar:calendarIds
 
 	eventsSub.subscribe "calendar_objects", params
-
+	calendar=Calendars.findOne({'_id':Session.get('calendarid')})
 	Tracker.autorun (c)->
 		if eventsSub.ready()
 			events = Events.find(calendarid:{$in: params.calendar}).fetch()
 			callback(events)
+			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", calendar?.color);
 			c.stop()
 
 Calendar.hasPermission = ( event )->
@@ -88,7 +89,7 @@ Calendar.generateCalendar = ()->
 				listWeek:t("calendar_list_week")
 			# businessHours:
 			# 	dow: [1,2,3,4,5],
-			# 	start:'08:00',
+			# 	start:'08:00'
 			# 	end:'18:00'
 
 			eventDataTransform: (event) ->
@@ -112,6 +113,7 @@ Calendar.generateCalendar = ()->
 				if event.end
 					copy.end = moment(event.end)
 				return copy
+			
 			select: (start, end, jsEvent, view, resource)->
 				$('body').addClass "loading"
 				objs = Calendars.find()
