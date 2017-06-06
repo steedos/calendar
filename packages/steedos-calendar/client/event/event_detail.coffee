@@ -4,15 +4,22 @@ Template.event_detail_modal.helpers
 	showEventOptBox:()->
 		# 事件是本人创建的/事件成员包含本人，都显示“保存”/“删除”操作
 		obj = Session.get('cmDoc')
+		calendars=Calendars.find().fetch()
+		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj.attendees,'id')
-		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0
-			return "inline"
+		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0  
+			 if calendarIds.indexOf(obj.calendarid)>=0
+			 	return "inline"
+			 else
+			 	return "none"
 		else
 			return "none"
 
 	showActionBox:()->
 		obj = Session.get('cmDoc')
 		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
+		calendars=Calendars.find().fetch()
+		calendarIds=_.pluck(calendars,'_id')
 		if onlyOne
 			return "none"
 		else
@@ -20,7 +27,10 @@ Template.event_detail_modal.helpers
 			if attendeesIds.indexOf(Meteor.userId())<0
 				return "none"
 			else
-				return "inline"
+				if calendarIds.indexOf(obj.calendarid)>=0
+					return "inline"
+				else
+					return "none"
 
 	accendeeState:(state)->
 		obj = Session.get('cmDoc')
@@ -113,7 +123,6 @@ Template.event_detail_modal.events
 AutoForm.hooks eventsForm: 
 	onSubmit: (insertDoc, updateDoc, currentDoc) ->
 		$('body').addClass "loading"
-
 		this.event.preventDefault()
 		obj = Session.get("cmDoc")
 		obj.calendarid = AutoForm.getFieldValue("calendarid")

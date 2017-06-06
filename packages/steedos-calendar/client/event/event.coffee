@@ -27,8 +27,6 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	calendarIds=Session.get('calendarIds')
 	if !calendarIds
 		calendarIds=[]
-	console.log "calendarIds"
-	console.log calendarIds
 	params = 
 		start: start.toDate()
 		end: end.toDate()
