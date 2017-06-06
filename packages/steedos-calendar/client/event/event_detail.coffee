@@ -40,7 +40,7 @@ Template.event_detail_modal.helpers
 		obj.declinednum=0
 		obj.actionnum=0#待回复
 		obj.curstat=""
-		if Meteor.userId()==obj.ownerId
+		if Meteor.userId()==obj.ownerId and obj._id==obj.parentId
 			obj.isOwner = "true"
 			obj.formOpt = "normal"
 		else

@@ -15,7 +15,7 @@ Tracker.autorun (c)->
 			localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar[0]?._id)
 		Session.set("calendarid",localStorage.getItem("calendarid:"+Meteor.userId()))
 		calendarIds = []
-		if localStorage.getItem("calendarIds:"+Meteor.userId())==null
+		if !localStorage.getItem("calendarIds:"+Meteor.userId())
 			objs = Calendars.find({isDefault:true,ownerId:Meteor.userId()}).fetch()
 			objs.forEach (obj) ->
 				console.log obj.title
