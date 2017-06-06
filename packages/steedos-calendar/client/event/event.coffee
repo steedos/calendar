@@ -24,9 +24,14 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
+	if !Meteor.userId()
+		callback([])
+		return
 	calendarIds=Session.get('calendarIds')
 	if !calendarIds
 		calendarIds=[]
+	calendar=Calendars.findOne({'_id':Session.get('calendarid')})
+	$('#calendar').fullCalendar("getCalendar").getView().options.eventColor=calendar?.color
 	params = 
 		start: start.toDate()
 		end: end.toDate()
@@ -34,12 +39,10 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 		calendar:calendarIds
 
 	eventsSub.subscribe "calendar_objects", params
-	calendar=Calendars.findOne({'_id':Session.get('calendarid')})
 	Tracker.autorun (c)->
 		if eventsSub.ready()
 			events = Events.find(calendarid:{$in: params.calendar}).fetch()
-			callback(events)
-			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", calendar?.color);
+			callback(events)			
 			c.stop()
 
 Calendar.hasPermission = ( event )->
@@ -165,7 +168,8 @@ Calendar.generateCalendar = ()->
 				obj.start = moment(event.start._d).toDate()
 				obj.end = moment(event.end._d).toDate()
 				Meteor.call('updateEvents',obj,2)
-
+			#eventAfterAllRender:(view)->
+				
 		Events.find().observe
 			added: (id, fields) ->
 				eventsDep.changed();
