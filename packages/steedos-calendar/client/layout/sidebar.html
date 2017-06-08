@@ -7,12 +7,11 @@
         {{#each calendars}}
         <li class="{{calendarActive}}">
           <a href="#" class="calendar-row">
+            <div class="check">
+              <i class="fa {{#if isChecked}}fa-check{{/if}}"></i>
+            </div>
+            <div class="dot" style="background-color:{{color}};"></div>
             <div class="pull-left-title">
-                <div class="check">
-                  <i class="icon fa {{#if isChecked}}fa-check{{/if}}">
-                  </i>
-                </div>
-                <i class="fa fa-circle" style="color:{{color}}"></i>
                 <span>{{title}}</span>
             </div>
               <span class="pull-right-container">
@@ -39,13 +38,12 @@
         
         {{#each subscribe}}
         <li>
-          <a href="#">
+          <a href="#" class="calendar-row">
+            <div class="check">
+              <i class="fa {{#if isChecked}}fa-check{{/if}}"></i>
+            </div>
+            <div class="dot" style="background-color:{{color}};"></div>
             <div class="pull-left-title">
-                <div class="check">
-                  <i class="icon fa {{#if isChecked}}fa-check{{/if}}">
-                  </i>
-                </div>
-                <i class="fa fa-circle" style="color:{{color}}"></i>
                 <span>{{calendarname}}</span>
             </div>
               <span class="pull-right-container">
