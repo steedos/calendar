@@ -118,7 +118,6 @@ Meteor.startup ->
 				miliseconds=0
 				if alarm[2]=='T'
 					if alarm[alarm.length-1]=='M'
-						console.log "MMMM"
 						i=3 
 						mimutes=0
 						while i<alarm.length-1
@@ -129,24 +128,20 @@ Meteor.startup ->
 					else if alarm[alarm.length-1]=='S'
 							remindtime=moment(start).utc().valueOf()
 						else 
-							console.log "HHHH"
 							i=3 
 							hours=0
 							while i<alarm.length-1
 								hours=hours+alarm[i]*(Math.pow(10,alarm.length-2-i))
 								i++
 							miliseconds=hours*60*60*1000
-							console.log miliseconds
 							remindtime=moment(start).utc().valueOf()-miliseconds
 				else
 					i=2
 					days=0
-					console.log "DDDD"
 					while i<alarm.length-1
 						days=days+alarm[i]*(Math.pow(10,alarm.length-2-i))
 						i++
 					miliseconds=days*24*60*60*1000
-					console.log miliseconds
 					remindtime=moment(start).utc().valueOf()-miliseconds
 				remindtimes.push remindtime
 		return remindtimes
