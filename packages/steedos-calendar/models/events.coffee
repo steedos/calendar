@@ -110,6 +110,11 @@ Events.attachSchema new SimpleSchema
 				{label: "2 天前", value: "-P2D"}
 			]
 			sortMethod:"x"
+	remindtimes:
+		type: [String],
+		optional: true
+		autoform:
+			omit:true
 	componenttype:
 		type: String,
 		optional: true

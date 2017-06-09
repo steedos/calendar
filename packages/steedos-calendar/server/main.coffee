@@ -100,6 +100,7 @@ Meteor.startup ->
 		doc.firstoccurence = parseInt(myDate.getTime()/1000);
 		myDate = new Date (doc.end)
 		doc.lastoccurence = parseInt(myDate.getTime()/1000);
+		doc.remindtimes=Calendar.remindtimes(doc.alarms,doc.start)
 		doc.calendardata = Calendar.addEvent(userId,doc);
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length;
@@ -110,7 +111,45 @@ Meteor.startup ->
 		if operation==1
 			doc.parentId=doc._id;
 		return doc
-	
+	remindtimes:(alarms,start)->
+		remindtimes=[]
+		if alarms
+			alarms.forEach (alarm)->
+				miliseconds=0
+				if alarm[2]=='T'
+					if alarm[alarm.length-1]=='M'
+						console.log "MMMM"
+						i=3 
+						mimutes=0
+						while i<alarm.length-1
+							mimutes=mimutes+alarm[i]*(Math.pow(10,alarm.length-2-i))
+							i++
+						miliseconds=mimutes*60*1000
+						remindtime=moment(start).utc().valueOf()-miliseconds
+					else if alarm[alarm.length-1]=='S'
+							remindtime=moment(start).utc().valueOf()
+						else 
+							console.log "HHHH"
+							i=3 
+							hours=0
+							while i<alarm.length-1
+								hours=hours+alarm[i]*(Math.pow(10,alarm.length-2-i))
+								i++
+							miliseconds=hours*60*60*1000
+							console.log miliseconds
+							remindtime=moment(start).utc().valueOf()-miliseconds
+				else
+					i=2
+					days=0
+					console.log "DDDD"
+					while i<alarm.length-1
+						days=days+alarm[i]*(Math.pow(10,alarm.length-2-i))
+						i++
+					miliseconds=days*24*60*60*1000
+					console.log miliseconds
+					remindtime=moment(start).utc().valueOf()-miliseconds
+				remindtimes.push remindtime
+		return remindtimes
 	bytesToUuid:(buf, offset)->
 		byteToHex = [];
 		j=0;

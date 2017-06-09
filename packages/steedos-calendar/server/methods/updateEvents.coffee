@@ -4,7 +4,7 @@ Meteor.methods
 			attendees=[]
 		else
 			events=Events.find({_id:obj._id}).fetch()
-			attendees=events[0].attendees
+			attendees=events[0].attendees	
 		newattendeesid=_.pluck(obj.attendees,'id');
 		oldattendeesid=_.pluck(attendees,'id');
 		subattendeesid=_.difference oldattendeesid,newattendeesid;
@@ -56,6 +56,7 @@ Meteor.methods
 			allDay:doc.allDay,
 			description:doc.description,
 			alarms:doc.alarms,
+			remindtimes:doc.remindtimes,
 			attendees:doc.attendees,
 			componenttype:doc.componenttype
 			lastmodified: doc.lastmodified,
@@ -76,6 +77,7 @@ Meteor.methods
 						calendarid:doc.calendarid
 						description:doc.description,
 						alarms:doc.alarms,
+						remindtimes:doc.remindtimes,
 						attendees:doc.attendees,
 						componenttype:doc.componenttype
 						lastmodified: doc.lastmodified,
