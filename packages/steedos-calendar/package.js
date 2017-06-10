@@ -112,6 +112,7 @@ Package.onUse(function(api) {
     api.addFiles('server/publications/events.coffee','server');
     api.addFiles('server/publications/subcalendars.coffee','server');
     api.addFiles('server/publications/calendarinstances.coffee','server');
+    api.addFiles('server/publications/reminders.coffee','server');
     api.addFiles('server/main.coffee','server');
 
 });

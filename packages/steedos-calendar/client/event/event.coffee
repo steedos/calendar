@@ -14,13 +14,17 @@ Template.calendarContainer.onRendered ->
 
 eventsDep = new Tracker.Dependency
 eventsSub = new SubsManager()
-eventsRange = null
-eventsLoading = false
 
+eventsRange = null
+eventsLoading = false 
+
+Meteor.startup ->
+	
+	
 Calendar.reloadEvents = () ->
 	eventsDep.depend()
 	$("#calendar").fullCalendar("refetchEvents")
-
+	
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
@@ -42,7 +46,7 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	Tracker.autorun (c)->
 		if eventsSub.ready()
 			events = Events.find(calendarid:{$in: params.calendar}).fetch()
-			callback(events)			
+			callback(events)				
 			c.stop()
 
 Calendar.hasPermission = ( event )->

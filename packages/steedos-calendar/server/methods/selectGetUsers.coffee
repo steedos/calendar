@@ -4,7 +4,7 @@ Meteor.methods
 		searchText = options.searchText;
 		values = options.values;
 		users = []
-
+ 
 		if (searchText?.length>1)
 			users = Meteor.users.find({ $or: [
 				{ 'name': searchText }

@@ -15,10 +15,8 @@ Meteor.startup ->
 					events.forEach (event)->
 						tempReminders = []
 						if event.remindtimes
-							#console.log event.remindtimes
 							event.remindtimes.forEach (remindtime)->
 								if remindtime-currenttime._d<=0
-									#swal(event.title,"开始时间"+event.start,"warning")
 									remindtimes=event.remindtimes
 									swal({
 										  title: event.title,
@@ -37,20 +35,13 @@ Meteor.startup ->
 												newremindtime=moment().valueOf()+5*60*1000
 												indexOf=_.indexOf(remindtimes,remindtime);
 												remindtimes[indexOf]=newremindtime;
-												#setTimeout('showReminders', 5*60*1000)
 											else
 												indexOf = _.indexOf(remindtimes,remindtimes);
 												remindtimes.splice(indexOf,1);
-											console.log remindtimes
 											Events.direct.update({_id:event._id},{$set:{remindtimes:remindtimes}})
 											
 										);
 		10*1000)																
-		
-		#setTimeout('showReminders', 10*1000)
-	# Tracker.autorun ->
-	# 	calendarsSub.subscribe "calendars_members", Session.get("calendarId")
-	#showReminders()
 
 Tracker.autorun (c)->
 	if calendarsSub.ready()
