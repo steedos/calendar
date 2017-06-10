@@ -115,4 +115,6 @@ Package.onUse(function(api) {
     api.addFiles('server/publications/reminders.coffee','server');
     api.addFiles('server/main.coffee','server');
 
+    api.addFiles('server/routes/api_calendar_events.coffee','server');
+
 });
