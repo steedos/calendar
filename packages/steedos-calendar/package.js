@@ -67,6 +67,8 @@ Package.onUse(function(api) {
 
     api.use('steedos:autoform-modals@0.3.9_6');
 
+	api.use('steedos:meteor-cookie-login@0.0.5');
+
     api.addFiles('client/event/event.html', 'client');
     api.addFiles('client/event/event.coffee', 'client');
     api.addFiles('client/event/event.less', 'client');

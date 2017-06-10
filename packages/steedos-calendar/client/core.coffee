@@ -12,6 +12,8 @@ Tracker.autorun ()->
 	
 	Steedos.Helpers.setAppTitle("Steedos Calendar");
 
-Tracker.autorun ()->
-	if Meteor.userId()
-		Meteor.call('calendarInit',Meteor.userId(),moment_timezone.tz.guess())
+Meteor.startup ->
+	Tracker.autorun ()->
+		if Meteor.userId()
+			Meteor.call('calendarInit',Meteor.userId(),moment_timezone.tz.guess())
+			FlowRouter.go "/calendar"

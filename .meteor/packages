@@ -46,6 +46,7 @@ dburles:collection-helpers
 
 momentjs:moment
 
+steedos:meteor-cookie-login
 steedos:adminlte@2.3.12_2
 steedos:base@0.0.9
 steedos:theme@0.0.12
