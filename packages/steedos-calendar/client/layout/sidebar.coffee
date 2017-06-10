@@ -95,7 +95,7 @@ Template.calendarSidebar.events
 		Session.set("cmDoc", this);
 		$('.btn.calendar-show').click();
 	
-	'click .calendar-row': (event)->
+	'click .my-calendar': (event)->
 		console.log this._id
 		selectcalendarid=Session.set("calendarid",this._id);
 		#localStorage.removeItem("calendarid:"+Meteor.userId(), this._id)	
