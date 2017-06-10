@@ -110,6 +110,7 @@ Calendar.generateCalendar = ()->
 				return copy
 			
 			select: (start, end, jsEvent, view, resource)->
+				$("div.check").click()
 				$('body').addClass "loading"
 				objs = Calendars.find()
 				calendarid = Session.get('calendarid')
