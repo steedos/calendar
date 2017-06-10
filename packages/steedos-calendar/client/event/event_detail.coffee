@@ -17,6 +17,9 @@ Template.event_detail_modal.helpers
 
 	showActionBox:()->
 		obj = Session.get('cmDoc')
+		ownerId = obj.ownerId
+		if ownerId == Meteor.userId()
+			return "none"
 		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
