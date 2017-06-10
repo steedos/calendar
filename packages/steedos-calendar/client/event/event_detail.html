@@ -122,7 +122,9 @@
 											{{cn}}
 											<span class="pull-right">
 												<i class="fa {{partstat}} attendees"></i>
-												<i class="fa fa-trash delete-members"></i>
+												{{#unless isShowDeleteMember id}}
+													<i class="fa fa-trash delete-members"></i>
+												{{/unless}}
 											</span>
 										</a>
 										<div class="descrip-comments">
