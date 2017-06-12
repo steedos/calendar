@@ -1,5 +1,5 @@
 Meteor.methods
-	updateEvents :(obj,operation)->
+	updateEvents :(obj,operation,relatetodefaultcalendar)->
 		if operation==1
 			attendees=[]
 		else
@@ -12,6 +12,10 @@ Meteor.methods
 			addattendeesid=_.difference newattendeesid,oldattendeesid;
 			updateattendeesid=_.difference newattendeesid,addattendeesid
 			#被去掉的attendees的对应event需要删除
+			if relatetodefaultcalendar=='No'
+				addattendeesid.push Meteor.userId()
+			if relatetodefaultcalendar=='Yes'
+				subattendeesid.push Meteor.userId()
 			subattendeesid.forEach (attendeeid)->
 				calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
 				event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()

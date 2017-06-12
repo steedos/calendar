@@ -93,7 +93,7 @@ Template.event_detail_modal.events
 	'click button.save_events': (event)->
 		$('body').addClass "loading"
 		obj = Session.get('cmDoc')
-		Meteor.call('updateEvents',obj,2,
+		Meteor.call('updateEvents',obj,2,'',
 			(error,result) ->
 				Modal.hide('event_detail_modal')
 				$('body').removeClass "loading"
@@ -140,6 +140,13 @@ AutoForm.hooks eventsForm:
 		$('body').addClass "loading"
 		this.event.preventDefault()
 		obj = Session.get("cmDoc")
+		if obj.calendarid!=AutoForm.getFieldValue("calendarid")
+			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid")
+				relatetodefaultcalendar="Yes"
+			else
+				relatetodefaultcalendar="No"
+		else
+			relatetodefaultcalendar=null
 		obj.calendarid = AutoForm.getFieldValue("calendarid")
 		obj.title = AutoForm.getFieldValue("title")
 		obj.start = AutoForm.getFieldValue("start")
@@ -156,7 +163,7 @@ AutoForm.hooks eventsForm:
 				attendee.description=description
 
 		that = this
-		Meteor.call('updateEvents',obj,2,
+		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,
 			(error,result) ->
 				Modal.hide('event_detail_modal')
 				$('body').removeClass "loading"
