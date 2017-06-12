@@ -46,8 +46,13 @@ dburles:collection-helpers
 
 momentjs:moment
 
+steedos:useraccounts-core
+steedos:useraccounts-bootstrap
+steedos:useraccounts-flow-routing
+
 steedos:adminlte@2.3.12_2
-steedos:base@0.0.16
+steedos:base@0.0.17
+steedos:accounts@0.0.3
 steedos:theme@0.0.12
 
 matb33:collection-hooks
