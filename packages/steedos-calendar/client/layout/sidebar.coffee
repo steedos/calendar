@@ -37,9 +37,9 @@ Template.calendarSidebar.helpers
 
 
 Template.calendarSidebar.onRendered ->
-	# 读取并刷新
+	calendarsubscriptions.after.update (userId,doc)->
+		Calendar.reloadEvents()
 # Template.calendarSidebar.on ->
-
 
 Template.calendarSidebar.events
 	'click label.resources-lbl': (event)->
