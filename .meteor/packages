@@ -47,7 +47,7 @@ dburles:collection-helpers
 momentjs:moment
 
 steedos:adminlte@2.3.12_2
-steedos:base@0.0.9
+steedos:base@0.0.16
 steedos:theme@0.0.12
 
 matb33:collection-hooks
