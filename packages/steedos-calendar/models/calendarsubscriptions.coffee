@@ -22,6 +22,8 @@ calendarsubscriptions.attachSchema new SimpleSchema
 	calendarname:
 		type: String
 		label:"标题"
+		autoform: 
+			omit: true
 
 	color:
 		type: String

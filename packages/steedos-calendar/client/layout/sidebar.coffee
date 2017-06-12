@@ -65,7 +65,6 @@ Template.calendarSidebar.events
 		# 	console.log calendarIds
 		if Session.get("calendarIds")
 			calendarIds=Session.get("calendarIds")
-		console.log calendarIds
 		checkBox = $(event.currentTarget.childNodes[1])
 		checkBox.toggleClass("fa-check")
 		if this?.uri
@@ -96,13 +95,11 @@ Template.calendarSidebar.events
 		$('.btn.calendar-show').click();
 	
 	'click .my-calendar': (event)->
-		console.log this._id
 		selectcalendarid=Session.set("calendarid",this._id);
 		#localStorage.removeItem("calendarid:"+Meteor.userId(), this._id)	
 		localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
 		$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color);
 	'click i.subscribe-show': (event)->
-		console.log this
 		Session.set("cmDoc", this);
 		$('.btn.subscribe-show').click();
 
@@ -144,7 +141,6 @@ Template.calendarSidebar.events
 		else
 			calendar_id = this._id
 		calendar_id=this._id;
-		console.log calendar_id
 		swal({
 		  title: t("calendar_hide_calendar"),
 		  text: t("calendar_hide_confirm_calendar"),

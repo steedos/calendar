@@ -143,10 +143,11 @@ AutoForm.hooks eventsForm:
 		if obj.calendarid!=AutoForm.getFieldValue("calendarid")
 			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid")
 				relatetodefaultcalendar="Yes"
-			else
-				relatetodefaultcalendar="No"
+			else if Session.get('defaultcalendarid')==obj.calendarid
+					relatetodefaultcalendar="No"
 		else
 			relatetodefaultcalendar=null
+		console.log relatetodefaultcalendar
 		obj.calendarid = AutoForm.getFieldValue("calendarid")
 		obj.title = AutoForm.getFieldValue("title")
 		obj.start = AutoForm.getFieldValue("start")
