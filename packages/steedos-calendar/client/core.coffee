@@ -30,7 +30,7 @@ Tracker.autorun ()->
 	else
 		TAPi18n.setLanguage("en")		
 	
-	Steedos.Helpers.setAppTitle("Steedos Calendar");
+	Steedos.Helpers.setAppTitle(t "Steedos Calendar");
 
 Meteor.startup ->
 	if (!Accounts._storedUserId())
