@@ -60,7 +60,8 @@ Package.onUse(function(api) {
 
 
     api.use('steedos:adminlte@2.3.12_3');
-    api.use('steedos:base@0.0.14');
+    api.use('steedos:base@0.0.17');
+    api.use('steedos:accounts@0.0.3');
     api.use('steedos:theme@0.0.11');
     api.use('steedos:i18n@0.0.2');
     api.use('steedos:calendar-i18n@0.0.2_4');
