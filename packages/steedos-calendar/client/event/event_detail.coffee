@@ -138,7 +138,6 @@ Template.event_detail_modal.events
 AutoForm.hooks eventsForm: 
 	onSubmit: (insertDoc, updateDoc, currentDoc) ->
 		$('body').addClass "loading"
-		console.log "000"
 		this.event.preventDefault()
 		obj = Session.get("cmDoc")
 		obj.calendarid = AutoForm.getFieldValue("calendarid")
@@ -163,4 +162,11 @@ AutoForm.hooks eventsForm:
 				$('body').removeClass "loading"
 				that.done()
 			)
+		calendarIds=Session.get("calendarIds")
+		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid"))<0
+			calendarIds.push AutoForm.getFieldValue("calendarid")
+			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
+			Session.set 'calendarIds',calendarIds
+			selectcalendarid=Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
+			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
 		return

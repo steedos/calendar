@@ -110,14 +110,14 @@ Calendar.generateCalendar = ()->
 				return copy
 			
 			select: (start, end, jsEvent, view, resource)->
-				calendarIds = []
-				calendarid = Session.get "calendarid"
-				calendarIds.push calendarid
-				checkBox = $(event.currentTarget.childNodes[1])
-				checkBox.addClass("fa-check")
-				localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
-				Session.set 'calendarIds',calendarIds
-				Calendar.reloadEvents()
+				# calendarIds = []
+				# calendarid = Session.get "calendarid"
+				# calendarIds.push calendarid
+				# checkBox = $(event.currentTarget.childNodes[1])
+				# checkBox.addClass("fa-check")
+				# localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
+				# Session.set 'calendarIds',calendarIds
+				# Calendar.reloadEvents()
 				$('body').addClass "loading"
 				objs = Calendars.find()
 				calendarid = Session.get('calendarid')
