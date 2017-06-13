@@ -131,7 +131,8 @@ Template.calendarSidebar.events
 					swal(t("calendar_delete_failed"),error.message,"error")
 				else
 					swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success")
-
+					localStorage.setItem("calendarid:"+Meteor.userId(),Session.get('defaultcalendarid'))
+					Session.set("calendarid",Session.get('defaultcalendarid'))
 		)
 
 
