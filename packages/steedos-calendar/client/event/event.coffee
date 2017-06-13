@@ -129,6 +129,7 @@ Calendar.generateCalendar = ()->
 				if calendarIds.indexOf(calendarid)<0
 					calendarIds.push(calendarid)
 					Session.set('calendarIds',calendarIds)
+					localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 				doc = {
 					start: start.toDate(),
 					end: end.toDate(),

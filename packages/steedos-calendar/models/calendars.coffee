@@ -37,6 +37,10 @@ Calendars._simpleSchema = new SimpleSchema
 		# label:t("calendar_color")
 		label:"颜色"
 		defaultValue: ->
+				# count1=Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()}]}).count()
+				# count2=calendarsubscriptions.find({principaluri:Meteor.userId()}).count()
+				# console.log count1+count2
+				# console.log CALENDARCOLORS[(count1+count2)%7]
 				return  CALENDARCOLORS[parseInt(10000*Math.random())%7]
 		autoform:
 			type: "bootstrap-minicolors"
