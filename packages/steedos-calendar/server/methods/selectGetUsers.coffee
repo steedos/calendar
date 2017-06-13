@@ -1,7 +1,3 @@
-@Spaces = new Mongo.Collection('spaces');
-
-@SpaceUsers = new Mongo.Collection('space_users');
-
 Meteor.methods
 	selectGetUsers: (options) ->
 		this.unblock();
@@ -9,7 +5,7 @@ Meteor.methods
 		values = options.values;
 		users = []
 
-		space_users = SpaceUsers.find({user: this.userId})
+		space_users = db.space_users.find({user: this.userId})
 
 		spaces = []
 
@@ -27,7 +23,7 @@ Meteor.methods
 		#			return []
 
 		if (searchText?.length > 1)
-			users = SpaceUsers.find({
+			users = db.space_users.find({
 				$or: [
 					{'name': searchText}
 					{'email': searchText}
@@ -35,7 +31,7 @@ Meteor.methods
 				], space: {$in: spaces}
 			}, limit: 10).fetch()
 		else if (values.length)
-			users = SpaceUsers.find({user: {$in: values}}).fetch();
+			users = db.space_users.find({user: {$in: values}}).fetch();
 		else
 			return []
 

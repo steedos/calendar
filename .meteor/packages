@@ -54,6 +54,8 @@ steedos:adminlte@2.3.12_2
 steedos:base@0.0.18
 steedos:accounts@0.0.4
 steedos:theme@0.0.12
+steedos:jstree
+rubaxa:sortable
 
 matb33:collection-hooks
 
