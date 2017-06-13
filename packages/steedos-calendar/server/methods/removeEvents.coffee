@@ -10,4 +10,10 @@ Meteor.methods
 				if event.length!=0
 					Events.direct.remove({parentId:obj._id,calendarid:calendarid})
 					Calendar.addChange(calendarid,event[0].uri,3);
-		
+		attendeesid=_.pluck(obj.attendees,'id');
+		dx=attendeesid.indexOf(Meteor.userId())
+		console.log dx
+		console.log obj.attendees[dx]
+		obj.attendees[dx].partstat="DECLINED"
+		Events.direct.update {parentId:obj.parentId},{$set:
+			attendees:obj.attendees},{ multi: true }
