@@ -3,8 +3,8 @@ calendarsSub = new SubsManager();
 Meteor.startup ->
 	calendarsSub.subscribe "calendars"
 	calendarsSub.subscribe "subcalendars"
-	calendarsSub.subscribe "reminders"			
-	Session.set('Intervaltime',10*1000)
+	calendarsSub.subscribe "reminders"
+	isRemindlater=false
 	setInterval(
 		()->
 			defaultcalendarid=Session.get('defaultcalendarid')
@@ -16,11 +16,11 @@ Meteor.startup ->
 						tempReminders = []
 						if event.remindtimes
 							event.remindtimes.forEach (remindtime)->
-								if remindtime-currenttime._d<=0
+								if remindtime-currenttime._d<=0 and !Session.get(event._id+":isRemindlater")
 									remindtimes=event.remindtimes
 									swal({
 										  title: event.title,
-										  text: "开始时间"+event.start,
+										  text: "定于"+moment(event.start).format("YYYY年MM月DD日 HH:mm"),
 										  type: "warning",
 										  showCancelButton: true,
 										  cancelButtonText:"关闭",
@@ -35,13 +35,20 @@ Meteor.startup ->
 												newremindtime=moment().valueOf()+5*60*1000
 												indexOf=_.indexOf(remindtimes,remindtime);
 												remindtimes[indexOf]=newremindtime;
+												isRemindlater=true
+												Session.set(event._id+":isRemindlater",isRemindlater);
+												setTimeout(
+													()->
+														isRemindlater=false
+														Session.set(event._id+":isRemindlater",isRemindlater); 
+													,5*60*1000)
 											else
 												indexOf = _.indexOf(remindtimes,remindtimes);
 												remindtimes.splice(indexOf,1);
 											Events.direct.update({_id:event._id},{$set:{remindtimes:remindtimes}})
 											
 										);
-		10*1000)																
+		,10*1000)																
 
 Tracker.autorun (c)->
 	if calendarsSub.ready()
@@ -53,13 +60,7 @@ Tracker.autorun (c)->
 		if !localStorage.getItem("calendarIds:"+Meteor.userId())
 			objs = Calendars.find({isDefault:true,ownerId:Meteor.userId()}).fetch()
 			objs.forEach (obj) ->
-				console.log obj.title
 				calendarIds.push(obj._id)
-
-			# resources = calendarsubscriptions.find().fetch()
-			# resources.forEach (resource) ->
-			# 	console.log resource.uri
-			# 	calendarIds.push(resource.uri)
 			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 		#localStorage.getItem("calendarIds:"+Meteor.userId())
 		calendarIdsString=localStorage.getItem("calendarIds:"+Meteor.userId())
