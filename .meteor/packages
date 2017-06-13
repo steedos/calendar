@@ -51,8 +51,8 @@ steedos:useraccounts-bootstrap
 steedos:useraccounts-flow-routing
 
 steedos:adminlte@2.3.12_2
-steedos:base@0.0.17
-steedos:accounts@0.0.3
+steedos:base@0.0.18
+steedos:accounts@0.0.4
 steedos:theme@0.0.12
 
 matb33:collection-hooks
