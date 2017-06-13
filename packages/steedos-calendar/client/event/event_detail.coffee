@@ -98,7 +98,10 @@ Template.event_detail_modal.events
 				Modal.hide('event_detail_modal')
 				$('body').removeClass "loading"
 			)
-		
+	
+	'click button.cancel_events': (event) ->
+		Modal.hide('event_detail_modal')
+
 	'click input:radio[name="optionsRadios"]': (event)->
 		description = $('textarea.description').val()
 		obj = Session.get('cmDoc')
