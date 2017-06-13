@@ -80,6 +80,21 @@ Template.event_detail_modal.helpers
 		if id == ownerId
 			return true
 
+	add_membersFields: ()->
+		fields =
+			addmembers:
+				autoform:
+					type: 'selectuser'
+					multiple: true
+				optional: false
+				type: [ String ]
+				label: ''
+
+		return new SimpleSchema(fields)
+
+	values: ()->
+		return {}
+
 Template.event_detail_modal.events
 	'click button.delete_events': (event)->
 		obj = Session.get('cmDoc')
@@ -114,11 +129,7 @@ Template.event_detail_modal.events
 			
 	
 	'click label.addmembers-lbl': (event)->
-		addmembers = []
-		addmembers = $("span.span-addmembers div.selectize-control div.selectize-input div.item").map(
-			(i,n)->
-				return $(n).attr("data-value")
-			).toArray()
+		addmembers = AutoForm.getFieldValue("addmembers","event-addmembers") || []
 		obj = Session.get('cmDoc')
 		Meteor.call('attendeesInit',obj,addmembers,
 				(error,result) ->

@@ -55,8 +55,7 @@
 											{{_ "calendar_delete"}}</button>
 										</div>
 										<div class="pull-right">
-											<button type="submit" class="btn btn-default cancel_events">
-											{{_ "calendar_cancel"}}</button>
+											<button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{_ "calendar_cancel"}}</button>
 										</div>
 										<div class="pull-right">
 											<button type="submit" class="btn btn-primary save_events">
@@ -149,7 +148,11 @@
 							</div> -->
 							<div class="box-body no-padding">
 							<span class="pull-left span-addmembers">
-								{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=false disabled=false}}
+								<!--{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=false disabled=false}}-->
+
+								{{#autoForm id='event-addmembers' schema=add_membersFields doc=values }}
+									{{> afFormGroup name="addmembers" label=false}}
+								{{/autoForm}}
 							</span>
 							<span class="pull-right">
 								<label class="control-label text-light-blue addmembers-lbl">
