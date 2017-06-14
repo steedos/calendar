@@ -105,8 +105,9 @@ Template.event_detail_modal.events
 		obj = Session.get('cmDoc')
 		Meteor.call('removeEvents',obj,
 			(error,result) ->
+				console.log error
 				if !error
-					Modal.hide('event_detail_modal')
+					$('[data-dismiss="modal"]').click()
 		)
 		
 
