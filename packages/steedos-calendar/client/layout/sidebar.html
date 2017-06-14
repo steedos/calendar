@@ -3,7 +3,7 @@
     <section class="sidebar">
 
       <ul class="sidebar-menu">
-        <li class="header">我的日历</li>
+        <li class="header">我的日历<i class="fa fa-plus pull-right calendar-add"></i></li>
         {{#each calendars}}
         <li class="{{calendarActive}}">
           <a href="#" class="calendar-row my-calendar">
@@ -34,7 +34,7 @@
         </li>
         {{/each}}
         
-        <li class="header">我的订阅</li>
+        <li class="header">我的订阅<i class="fa fa-plus pull-right sub-calendar"></i></li>
         
         {{#each subscribe}}
         <li>
@@ -61,10 +61,12 @@
 
 
       </ul>
-       <div class="box box-solid invite-box div-resources">
+      <div class="box box-solid invite-box div-resources" style="display: none;">
         <div class="box-body no-padding">
           <span class="pull-left span-resources">
-            {{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=false disabled=false}}
+            {{#autoForm id='calendar-submembers' schema=add_membersFields doc=values }}
+              {{> afFormGroup name="addmembers" label=false}}
+            {{/autoForm}}
           </span>
           <span class="pull-right">
             <label class="control-label text-light-blue resources-lbl">
@@ -75,14 +77,14 @@
       </div>
     </section>
 
-    <div class="sidebar-bottom">
+    <!-- <div class="sidebar-bottom">
       <a href="#" class="calendar-add">
         <i class="fa fa-plus">
           &nbsp;&nbsp;
           <span>{{_ "calendar_add_calendar"}}</span>
         </i>
       </a>
-    </div>
+    </div> -->
 
   </aside>
   {{#afModal class="btn btn-primary calendar-add hidden" collection="Calendars" operation="insert" buttonContent="新建" meteormethod="calendarinsert" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}

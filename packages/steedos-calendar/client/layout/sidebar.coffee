@@ -35,6 +35,21 @@ Template.calendarSidebar.helpers
 		else
 			return ""
 
+	add_membersFields: ()->
+		fields =
+			addmembers:
+				autoform:
+					type: 'selectuser'
+					multiple: true
+				optional: false
+				type: [ String ]
+				label: ''
+
+		return new SimpleSchema(fields)
+
+	values: ()->
+		return {}
+
 
 Template.calendarSidebar.onRendered ->
 	if !Steedos.isMobile()
@@ -45,11 +60,7 @@ Template.calendarSidebar.onRendered ->
 
 Template.calendarSidebar.events
 	'click label.resources-lbl': (event)->
-		addmembers = []
-		addmembers = $("span.span-resources div.selectize-control div.selectize-input div.item").map(
-			(i,n)->
-				return $(n).attr("data-value")
-			).toArray()
+		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
 		addmembers.forEach (addmember)->
 			Meteor.call('initscription',addmember)
 			#othercalendarsSub = new SubsManager()
@@ -166,3 +177,12 @@ Template.calendarSidebar.events
 				else
 					swal(t("calendar_hide_success"),t("calendar_hide_succsee_info"),"success");
 		);
+
+	'click i.sub-calendar':()->
+		$("input[name='addmembers']").click()
+
+	'change input[name="addmembers"]':()->
+		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
+		addmembers.forEach (addmember)->
+			Meteor.call('initscription',addmember)
+		AutoForm.resetForm("calendar-submembers")
