@@ -46,14 +46,16 @@ dburles:collection-helpers
 
 momentjs:moment
 
+steedos:loaders-css
+
 steedos:useraccounts-core
 steedos:useraccounts-bootstrap
 steedos:useraccounts-flow-routing
 
 steedos:adminlte@2.3.12_2
-steedos:base@0.0.19
-steedos:accounts@0.0.4
-steedos:theme@0.0.13
+steedos:base@0.0.21
+steedos:accounts@0.0.5
+steedos:theme@0.0.14
 steedos:jstree
 rubaxa:sortable
 
