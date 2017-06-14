@@ -80,9 +80,14 @@ Template.event_detail_modal.helpers
 		if id == ownerId
 			return true
 
+	isShowAddMembers: ()->
+		ownerId = Session.get('cmDoc').ownerId
+		userId = Meteor.userId()
+		return ownerId == userId
+
 	add_membersFields: ()->
 		fields =
-			addmembers:
+			addmembers_event:
 				autoform:
 					type: 'selectuser'
 					multiple: true
@@ -126,11 +131,12 @@ Template.event_detail_modal.events
 				attendee.partstat=val
 				attendee.description=description
 		Session.set 'cmDoc',obj
-			
 	
-	'click label.addmembers-lbl': (event)->
-		addmembers=[]
-		addmembers = AutoForm.getFieldValue("addmembers","event-addmembers") || []
+	'click i.add-members': ()->
+		$("input[name='addmembers_event']").click()
+
+	'change input[name="addmembers_event"]':()->
+		addmembers = AutoForm.getFieldValue("addmembers_event","event-addmembers") || []
 		obj = Session.get('cmDoc')
 		Meteor.call('attendeesInit',obj,addmembers,
 				(error,result) ->
@@ -139,6 +145,7 @@ Template.event_detail_modal.events
 						$("span.span-addmembers div.has-items").children().remove(".item")
 			)
 		AutoForm.resetForm("event-addmembers")
+
 	'click i.delete-members': (event)->
 		obj = Session.get('cmDoc')
 		attendeeid = this.id
@@ -181,7 +188,7 @@ AutoForm.hooks eventsForm:
 		that = this
 		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,
 			(error,result) ->
-				Modal.hide('event_detail_modal')
+				$('[data-dismiss="modal"]').click()
 				$('body').removeClass "loading"
 				that.done()
 			)

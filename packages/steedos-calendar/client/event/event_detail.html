@@ -72,6 +72,9 @@
 							<div class="box-header with-border">
 							  <span class="members-list-title">
 							  {{_ "calendar_member_list"}}
+							  {{#if isShowAddMembers}}
+							  	<i class="fa fa-plus pull-right add-members"></i>
+							  {{/if}}
 							  </span>
 							</div>
 							<div class="box-body no-padding">
@@ -146,21 +149,12 @@
 							  邀请成员
 							  </h3>
 							</div> -->
-							<div class="box-body no-padding">
-							<span class="pull-left span-addmembers">
-								<!--{{> universeSelectize name="addmembers" optionsMethod="selectGetUsers" multiple=true create=false disabled=false}}-->
-
-								{{#autoForm id='event-addmembers' schema=add_membersFields doc=values }}
-									{{> afFormGroup name="addmembers" label=false}}
-								{{/autoForm}}
-							</span>
-							<span class="pull-right">
-								<label class="control-label text-light-blue addmembers-lbl">
-									{{_ "calendar_add"}}
-								</label>
-							</span>
-
-
+							<div class="box-body no-padding" style="display: none;">
+								<span class="pull-left span-addmembers">
+									{{#autoForm id='event-addmembers' schema=add_membersFields doc=values }}
+										{{> afFormGroup name="addmembers_event" label=false}}
+									{{/autoForm}}
+								</span>
 							</div>
 						  </div>
 					</div>
