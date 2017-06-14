@@ -129,6 +129,7 @@ Template.event_detail_modal.events
 			
 	
 	'click label.addmembers-lbl': (event)->
+		addmembers=[]
 		addmembers = AutoForm.getFieldValue("addmembers","event-addmembers") || []
 		obj = Session.get('cmDoc')
 		Meteor.call('attendeesInit',obj,addmembers,
@@ -137,7 +138,7 @@ Template.event_detail_modal.events
 						Session.set 'cmDoc',result
 						$("span.span-addmembers div.has-items").children().remove(".item")
 			)
-
+		AutoForm.resetForm("event-addmembers")
 	'click i.delete-members': (event)->
 		obj = Session.get('cmDoc')
 		attendeeid = this.id
