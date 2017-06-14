@@ -184,5 +184,6 @@ Template.calendarSidebar.events
 	'change input[name="addmembers"]':()->
 		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
 		addmembers.forEach (addmember)->
-			Meteor.call('initscription',addmember)
+			if addmember != Meteor.userId()
+				Meteor.call('initscription',addmember)
 		AutoForm.resetForm("calendar-submembers")
