@@ -117,6 +117,7 @@ steedos:base@0.0.18
 steedos:calendar@0.0.2_5
 steedos:calendar-i18n@0.0.2_4
 steedos:i18n@0.0.3
+steedos:ionicons@0.1.7
 steedos:jstree@3.3.2
 steedos:theme@0.0.12
 steedos:toastr@2.1.3
