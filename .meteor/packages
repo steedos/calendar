@@ -51,9 +51,9 @@ steedos:useraccounts-bootstrap
 steedos:useraccounts-flow-routing
 
 steedos:adminlte@2.3.12_2
-steedos:base@0.0.18
+steedos:base@0.0.19
 steedos:accounts@0.0.4
-steedos:theme@0.0.12
+steedos:theme@0.0.13
 steedos:jstree
 rubaxa:sortable
 
