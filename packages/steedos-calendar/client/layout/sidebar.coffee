@@ -53,7 +53,7 @@ Template.calendarSidebar.helpers
 
 Template.calendarSidebar.onRendered ->
 	if !Steedos.isMobile()
-		$(".sidebar").perfectScrollbar({suppressScrollX: true})
+		$(".main-sidebar").perfectScrollbar({suppressScrollX: true})
 	calendarsubscriptions.after.update (userId,doc)->
 		Calendar.reloadEvents()
 # Template.calendarSidebar.on ->
