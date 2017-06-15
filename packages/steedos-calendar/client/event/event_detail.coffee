@@ -100,6 +100,14 @@ Template.event_detail_modal.helpers
 	values: ()->
 		return {}
 
+	isAlarmDisabled: ()->
+		obj = Session.get "cmDoc"
+		ownerId = obj.ownerId
+		if ownerId == Meteor.userId()
+			return false
+		else
+			return true
+
 Template.event_detail_modal.events
 	'click button.delete_events': (event)->
 		obj = Session.get('cmDoc')
