@@ -1,101 +1,107 @@
-ul.sidebar-menu{
-	margin-bottom: 8px;
-	li.header{
-		border-bottom: 0px;
-		color: #4b646f;
-		background: azure;
-		font-size: 14px;
-		font-weight: bold;
-		.sub-calendar,.calendar-add{
-			display: inline-block;
-			margin-top: 4px;
-			cursor: pointer;
+.steedos-calendar{
+	ul.sidebar-menu{
+		margin-top: 3px;
+		margin-bottom: 8px;
+		li.header{
+			border-bottom: 0px;
+			color: #4b646f;
+			background: azure;
+			font-size: 14px;
+			font-weight: bold;
+			.sub-calendar,.calendar-add{
+				display: inline-block;
+				margin-top: 4px;
+				cursor: pointer;
+			}
 		}
 	}
-}
 
 
 
-div.div-resources{
-	background: rgba(0, 0, 0, 0) none repeat scroll !important;
-	margin-left: 3px;
-	margin-right: 3px;
-}
-
-
-.main-sidebar {
-	.sidebar{
-		position: relative;
-    	max-height: 100%;
-    	padding-bottom: 12px;
+	div.div-resources{
+		background: rgba(0, 0, 0, 0) none repeat scroll !important;
+		margin-left: 3px;
+		margin-right: 3px;
 	}
-	div.sidebar-bottom{
-		padding-top: 10px;
-		border-top: 1px solid rgba(0, 0, 0, 0.1);
-		position: absolute;
-		bottom: 0px;
-		left: 0;
-		right: 0;
-		a{
-			display: inline-block;
+
+
+	.main-sidebar {
+		.sidebar{
+			position: relative;
+	    	max-height: 100%;
+	    	padding-bottom: 12px;
+	    	margin-top: 0px;
+	    	top: 0 !important;
+	    	bottom: 3px;
+		}
+		div.sidebar-bottom{
+			padding-top: 10px;
+			border-top: 1px solid rgba(0, 0, 0, 0.1);
+			position: absolute;
+			bottom: 0px;
+			left: 0;
+			right: 0;
+			a{
+				display: inline-block;
+				margin-bottom: 10px;
+				margin-left: 20px;
+				color: #3c8dbc;
+			}
+		}
+	}
+	.sidebar-menu li:hover{
+		a span .operate-box{
+			visibility:visible;
+		}
+	}
+	.sidebar-menu li{
+		a span .operate-box{
+			visibility:hidden;
+		}
+	}
+
+	.calendar-row{
+		.check{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0px;
+			width: 34px;
+			i{
+				margin: 15px 12px;
+			}
+		}
+		.dot{
+			height: 8px;
+			width: 8px;
+			border-radius: 4px;
+			position: absolute;
+			top: 50%;
+			margin-top: -4px;
+			left: 36px;
+		}
+		.pull-left-title{
+			margin-left: 36px;
+		}
+	}
+
+	div.box{
+		.alert{
+			padding: 10px 10px 25px 10px;
 			margin-bottom: 10px;
-			margin-left: 20px;
-			color: #3c8dbc;
+			border: 0px;
 		}
 	}
-}
-.sidebar-menu li:hover{
-	a span .operate-box{
-		visibility:visible;
-	}
-}
-.sidebar-menu li{
-	a span .operate-box{
-		visibility:hidden;
-	}
-}
-
-.calendar-row{
-	.check{
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0px;
-		width: 34px;
-		i{
-			margin: 15px 12px;
+	div.div-resources{
+		margin-top: 10px;
+		span.pull-right{
+			margin-right: 20px;
+			margin-top: 4px;
 		}
-	}
-	.dot{
-		height: 8px;
-		width: 8px;
-		border-radius: 4px;
-		position: absolute;
-		top: 50%;
-		margin-top: -4px;
-		left: 36px;
-	}
-	.pull-left-title{
-		margin-left: 36px;
-	}
-}
-
-div.box{
-	.alert{
-		padding: 10px 10px 25px 10px;
-		margin-bottom: 10px;
-		border: 0px;
-	}
-}
-div.div-resources{
-	margin-top: 10px;
-	span.pull-right{
-		margin-right: 20px;
-		margin-top: 4px;
-	}
-	span.pull-left{
-		width: 146px;
-		margin-left: 17px;
+		span.pull-left{
+			width: 146px;
+			margin-left: 17px;
+		}
 	}
 }
 
