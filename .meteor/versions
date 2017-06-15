@@ -43,6 +43,7 @@ es5-shim@4.6.15
 fastclick@1.0.13
 flemay:less-autoprefixer@1.2.0
 fortawesome:fontawesome@4.7.0
+francocatena:status@1.5.3
 geojson-utils@1.0.10
 hausor:autoform-bs-minicolors@1.0.0
 hot-code-push@1.0.4
