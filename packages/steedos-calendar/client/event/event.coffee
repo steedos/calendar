@@ -11,6 +11,8 @@ import Calendar from '../core'
 
 Template.calendarContainer.onRendered ->
 	Calendar.generateCalendar();
+	unless $("[data-toggle=offcanvas]").length 
+		$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
 
 eventsDep = new Tracker.Dependency
 eventsSub = new SubsManager()
@@ -24,7 +26,6 @@ Meteor.startup ->
 Calendar.reloadEvents = () ->
 	eventsDep.depend()
 	$("#calendar").fullCalendar("refetchEvents")
-	
 
 
 Calendar.getEventsData = ( start, end, timezone, callback )->
@@ -64,9 +65,9 @@ Calendar.generateCalendar = ()->
 				return $('#calendar').height()
 			handleWindowResize: true
 			header: 
-				left: 'month,agendaWeek,agendaDay,listWeek'
+				left: ''
 				center: 'prev title next'
-				right: ''
+				right: 'month,agendaWeek,agendaDay,listWeek'
 			selectable: true
 			selectHelper: true
 			# weekends:false
