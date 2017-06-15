@@ -1,19 +1,38 @@
 #calendar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: white;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: white;
+	background-color: rgba(255, 255, 255, 0.8);
 	.fc-header-toolbar{
-		padding: 8px 10px 12px 10px;
+		padding: 8px 10px 14px 10px;
 		margin-top: 0.8em;
 		margin-bottom: 0px;
+		background: transparent;
+		@media (max-width: 767px){
+			margin-top: 0px;
+		}
 		.fc-center{
 			h2{
 				font-size: 18px;
-				line-height: 32px;
+				line-height: 30px;
+				vertical-align: middle;
 			}
+			@media (max-width: 767px){
+				margin-top: 0.8em;
+				width: 100%;
+				button,h2{
+					float: none;
+					display: inline-block;
+				}
+			}
+		}
+		.fc-prev-button,.fc-next-button{
+			background: transparent;
+			border: none;
+			box-shadow: none;
 		}
 	}
 }
@@ -23,7 +42,7 @@
 }
 .fc-agendaWeek-view{
 	.fc-day-grid.fc-unselectable {
- 		border-right-width: 1px;
+		border-right-width: 1px;
 	}
 }
 
