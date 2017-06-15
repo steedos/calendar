@@ -15,13 +15,10 @@ Calendars._simpleSchema = new SimpleSchema
 		# label:t("calendar_members")
 		label:"成员"
 		defaultValue:[""]
-		autoform: 
-			type: "universe-select"
-			afFieldInput:
-				defaultValue:[]
-				multiple: true
-				optionsMethod: "selectGetUsers"
-	
+		autoform:
+			type: "selectuser"
+			multiple: true
+
 	visibility:
 		type: String,
 		optional: true,

@@ -2,16 +2,21 @@
 	ul.sidebar-menu{
 		margin-top: 3px;
 		margin-bottom: 8px;
-		li.header{
-			border-bottom: 0px;
-			color: #4b646f;
-			background: azure;
-			font-size: 14px;
-			font-weight: bold;
-			.sub-calendar,.calendar-add{
-				display: inline-block;
-				margin-top: 4px;
-				cursor: pointer;
+		li{
+			&.header{
+				border-bottom: 0px;
+				color: #4b646f;
+				background: azure;
+				font-size: 14px;
+				font-weight: bold;
+				.sub-calendar,.calendar-add{
+					display: inline-block;
+					margin-top: 4px;
+					cursor: pointer;
+				}
+			}
+			.pull-right-container{
+				margin-top: -9px;
 			}
 		}
 	}
