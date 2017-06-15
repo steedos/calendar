@@ -151,7 +151,7 @@ Calendar.generateCalendar = ()->
 
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne
-					_id: calEvent.id
+					_id: calEvent?.id
 				if event
 					console.log event
 					AutoForm.resetForm("eventForm")
