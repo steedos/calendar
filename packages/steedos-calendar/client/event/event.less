@@ -9,10 +9,22 @@
 		padding: 8px 10px 14px 10px;
 		margin-top: 0.8em;
 		margin-bottom: 0px;
+		@media (max-width: 767px){
+			margin-top: 0px;
+		}
 		.fc-center{
 			h2{
 				font-size: 18px;
 				line-height: 30px;
+				vertical-align: middle;
+			}
+			@media (max-width: 767px){
+				margin-top: 0.8em;
+				width: 100%;
+				button,h2{
+					float: none;
+					display: inline-block;
+				}
 			}
 		}
 		.fc-prev-button,.fc-next-button{
