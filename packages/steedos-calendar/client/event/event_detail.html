@@ -12,8 +12,8 @@
 				</div>
 				<div class="modal-body">
 
-					<div class="col-sm-8">
-						<div class="box box-solid" style="display: {{showActionBox}}">
+					<div class="col-sm-8 event-left-content">
+						<div class="" style="display: {{showActionBox}}">
 							<div class="feadback well">
 								<table role="form" aria-label='{{_ "calendar_event_feadback"}}'>
 									<tbody>
@@ -44,7 +44,7 @@
 								</table>
 							</div>
 						</div>
-						<div class="box box-solid" style="padding-top: 4px;">
+						<div class="" style="padding-top: 4px;">
 							<div class="eventForm">
 								{{#autoForm id="eventsForm" collection="Events" doc=eventObj type=eventObj.formOpt omitFields="members"  disabled=isAlarmDisabled}}
 									{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
@@ -52,9 +52,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-4">
-						<div class="box box-solid">
-							<div class="box-header with-border">
+					<div class="col-sm-4 event-right-content">
+						<div class="">
+							<div class="box-header">
 							  <span class="members-list-title">
 							  {{_ "calendar_member_list"}}
 							  {{#if isShowAddMembers}}
@@ -62,7 +62,7 @@
 							  {{/if}}
 							  </span>
 							</div>
-							<div class="box-body no-padding">
+							<div class="no-padding">
 							<div class="feadback-result">
 								<table>
 									<tr>
@@ -139,7 +139,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<div class="col-sm-8 event-edit" style="display: {{showEventOptBox}}">
+					<div class="event-edit" style="display: {{showEventOptBox}}">
 						<div class="pull-left">
 							<button type="button" class="btn btn-danger btn-remove delete_events">
 							{{_ "calendar_delete"}}</button>
