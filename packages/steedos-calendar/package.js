@@ -58,7 +58,7 @@ Package.onUse(function(api) {
     api.use('rzymek:fullcalendar@3.4.0');
     api.use('vazco:universe-selectize@0.1.22');
 
-
+    api.use('steedos:sso')
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base@0.0.18');
     api.use('steedos:accounts@0.0.3');
