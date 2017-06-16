@@ -187,3 +187,24 @@ Template.calendarSidebar.events
 			if addmember != Meteor.userId()
 				Meteor.call('initscription',addmember)
 		AutoForm.resetForm("calendar-submembers")
+
+	'click i.add-event': ()->
+		calendarid = Session.get 'calendarid'
+		start = new Date()
+		end = new Date()
+		doc = {
+			start: start
+			end: end
+			calendarid: calendarid
+		}
+		Meteor.call('eventInit',Meteor.userId(),doc,
+			(error,result) ->
+				
+				$('body').removeClass "loading"
+				if !error
+					AutoForm.resetForm("eventForm")
+					Session.set 'cmDoc', result
+					Modal.show('event_detail_modal')
+				else
+					console.log error
+			)
