@@ -1,14 +1,5 @@
 <template name="calendarContainer">
 
 	<div id="calendar"></div>
-
-	{{#afModal class="btn btn-primary event-add" collection="Events" operation="insert" 
-	buttonContent="新建" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
-	  {{_ "calendar_add_event"}}
-	{{/afModal}}
-
-	{{#afModal class="btn btn-primary event-edit" collection="Events" operation="update"}}
-	  {{_ "calendar_edit_event"}}
-	{{/afModal}}
 	
 </template>
