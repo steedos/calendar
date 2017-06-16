@@ -32,7 +32,7 @@ Template.event_detail_modal.helpers
 				return "none"
 			else
 				if calendarIds.indexOf(obj.calendarid)>=0
-					return "inline"
+					return "block"
 				else
 					return "none"
 
