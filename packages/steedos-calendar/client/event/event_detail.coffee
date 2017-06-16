@@ -123,22 +123,19 @@ Template.event_detail_modal.events
 	'click button.save_events': (event)->
 		$('body').addClass "loading"
 		obj = Session.get('cmDoc')
-		Meteor.call('updateEvents',obj,2,'',
-			(error,result) ->
-				Modal.hide('event_detail_modal')
-				$('body').removeClass "loading"
-			)
-		$("#eventsForm").submit()
-
-	'click input:radio[name="optionsRadios"]': (event)->
 		description = $('textarea.description').val()
-		obj = Session.get('cmDoc')
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		obj.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
 		Session.set 'cmDoc',obj
+		Meteor.call('updateEvents',obj,2,'',
+			(error,result) ->
+				Modal.hide('event_detail_modal')
+				$('body').removeClass "loading"
+			)
+		$("#eventsForm").submit()
 	
 	'click i.add-members': ()->
 		$("input[name='addmembers_event']").click()
