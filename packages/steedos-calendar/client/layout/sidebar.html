@@ -91,12 +91,13 @@
     </div> -->
 
   </aside>
-  {{#afModal class="btn btn-primary calendar-add hidden" collection="Calendars" operation="insert" buttonContent="新建" meteormethod="calendarinsert" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+  {{#afModal class="btn btn-primary calendar-add hidden" collection="Calendars" operation="insert" buttonContent=afModalInsert meteormethod="calendarinsert" 
+    template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
     {{_ "calendar_add_calendar"}}
   {{/afModal}}
 
-  {{#afModal class="btn btn-primary calendar-edit hidden" collection="Calendars" operation="update"  
-  buttonContent="保存" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+  {{#afModal class="btn btn-primary calendar-edit hidden" collection="Calendars" operation="update" buttonContent=afModalUpdate  
+    template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
     {{_ "calendar_edit_calendar"}}
   {{/afModal}}
 
@@ -104,7 +105,8 @@
     {{_ "calendar_info_calendar"}}
   {{/afModal}}
 
-  {{#afModal class="btn btn-primary subscribe-show hidden" collection="calendarsubscriptions" operation="update" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+  {{#afModal class="btn btn-primary subscribe-show hidden" collection="calendarsubscriptions" operation="update"  buttonContent=afModalUpdate  
+    template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
     {{_ "calendar_info_calendar"}}
   {{/afModal}}
 
