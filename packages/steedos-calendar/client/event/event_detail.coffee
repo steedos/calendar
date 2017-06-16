@@ -1,4 +1,5 @@
 Template.event_detail_modal.onRendered ->
+	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
 
 Template.event_detail_modal.helpers
 	showEventOptBox:()->
@@ -127,9 +128,7 @@ Template.event_detail_modal.events
 				Modal.hide('event_detail_modal')
 				$('body').removeClass "loading"
 			)
-	
-	'click button.cancel_events': (event) ->
-		Modal.hide('event_detail_modal')
+		$("#eventsForm").submit()
 
 	'click input:radio[name="optionsRadios"]': (event)->
 		description = $('textarea.description').val()

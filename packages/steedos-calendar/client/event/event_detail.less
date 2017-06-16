@@ -1,7 +1,19 @@
 #event_detail_modal{
+	overflow: hidden;
 	div.modal-body{
 		position: relative;
 		padding: 0px 0px 0px 0px;
+		overflow: auto;
+	}
+	div.modal-footer{
+		button.save_events,button.cancel_events{
+			margin-right: 10px;
+		}
+	}
+	.box-header{
+		@media (max-width: 767px){
+			padding-top: 0 !important;
+		}
 	}
 }
 
@@ -9,12 +21,10 @@
 	div.event-edit.false{
 		display:none;
 	}
-	.btn-primary{
-		margin-right: 12px;
-	}
 }
 
 div.feadback-result{
+	padding-top: 10px;
 	table{
 		width: 100%;
 		margin-left: 1%;
@@ -55,6 +65,7 @@ div.members-list{
 div.eventForm {
 	margin-left: 1%;
 	margin-right: 1%;
+	overflow: hidden;
 }
 
 div.invite-box.false{

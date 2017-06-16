@@ -44,30 +44,15 @@
 								</table>
 							</div>
 						</div>
-						<div class="box box-solid">
+						<div class="box box-solid" style="padding-top: 4px;">
 							<div class="eventForm">
 								{{#autoForm id="eventsForm" collection="Events" doc=eventObj type=eventObj.formOpt omitFields="members"  disabled=isAlarmDisabled}}
 									{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
-								<div class="col-md-12 event-edit" style="display: {{showEventOptBox}}">
-									<div class="form-group">
-										<div class="pull-left">
-											<button type="button" class="btn btn-danger btn-remove delete_events">
-											{{_ "calendar_delete"}}</button>
-										</div>
-										<div class="pull-right">
-											<button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{_ "calendar_cancel"}}</button>
-										</div>
-										<div class="pull-right">
-											<button type="submit" class="btn btn-primary save_events">
-											{{_ "calendar_save"}}</button>
-										</div>
-									</div>
-								</div>
 								{{/autoForm}}
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-sm-4">
 						<div class="box box-solid">
 							<div class="box-header with-border">
 							  <span class="members-list-title">
@@ -143,12 +128,6 @@
 							</div>
 						  </div>
 						  <div class="box box-solid invite-box {{eventObj.isOwner}}">
-							<!-- <div class="box-header with-border">
-							  <h3 class="box-title">
-							  {{_ "calendar_add_members_event"}}
-							  邀请成员
-							  </h3>
-							</div> -->
 							<div class="box-body no-padding" style="display: none;">
 								<span class="pull-left span-addmembers">
 									{{#autoForm id='event-addmembers' schema=add_membersFields doc=values }}
@@ -160,6 +139,19 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<div class="col-sm-8 event-edit" style="display: {{showEventOptBox}}">
+						<div class="pull-left">
+							<button type="button" class="btn btn-danger btn-remove delete_events">
+							{{_ "calendar_delete"}}</button>
+						</div>
+						<div class="pull-right">
+							<button type="button" class="btn btn-default cancel_events" data-dismiss="modal">{{_ "calendar_cancel"}}</button>
+						</div>
+						<div class="pull-right">
+							<button type="submit" class="btn btn-primary save_events">
+							{{_ "calendar_save"}}</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
