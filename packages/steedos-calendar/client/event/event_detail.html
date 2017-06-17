@@ -12,31 +12,32 @@
 				</div>
 				<div class="modal-body">
 
-					<div class="col-sm-8 event-left-content">
+					<div class="col-md-8 col-sm-12 event-left-content">
 						<div class="feadback well" style="display: {{showActionBox}}">
 							<table role="form" aria-label='{{_ "calendar_event_feadback"}}'>
 								<tbody>
 									<tr>
-										<td valign="top" class="col-sm-3 control-label">{{_ "calendar_event_answer"}}</td>
-										<td valign="top" class="col-sm-2 td-feadback" role="menu">
-											<span class="text-light-blue">
+										<td valign="top" class="col-md-3 col-xs-12 ">
+											<span class="feadback-title">{{_ "calendar_event_answer"}}</span>
+										</td>
+										<td valign="top" class="col-md-2 col-xs-12" role="menu">
+											<div class="feadback-options text-light-blue">
 												<label>
 													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
-													{{_ "calendar_event_accepted"}}
+													<span>{{_ "calendar_event_accepted"}}</span>
 												</label>
 												<label>
 													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>
-													{{_ "calendar_event_tentative"}}
+													<span>{{_ "calendar_event_tentative"}}</span>
 												</label>
 												<label>
 													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>
-													{{_ "calendar_event_declined"}}
+													<span>{{_ "calendar_event_declined"}}</span>
 												</label>
-												
-											</span>
+											</div>
 										</td>
-										<td class="col-sm-7">
-											<textarea rows="3" placeholder='{{_ "calendar_event_note"}}' class="description">{{eventObj.reason}}</textarea>
+										<td class="col-md-7 col-xs-12">
+											<textarea rows="3" placeholder='{{_ "calendar_event_note"}}' class="description form-control">{{eventObj.reason}}</textarea>
 										</td>
 									</tr>
 								</tbody>
@@ -48,7 +49,7 @@
 							{{/autoForm}}
 						</div>
 					</div>
-					<div class="col-sm-4 event-right-content">
+					<div class="col-md-4 col-sm-12 event-right-content">
 						<div class="members-box">
 							<div class="members-header">
 							  <span class="members-list-title">

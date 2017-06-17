@@ -5,7 +5,7 @@
 		padding: 0px 0px 0px 0px;
 		overflow: auto;
 		background: #fafafa;
-		@media (max-width: 767px){
+		@media (max-width: 992px){
 			background: #fff;
 		}
 		.event-left-content{
@@ -14,23 +14,28 @@
 			padding: 0px;
 			.feadback{
 				margin: 15px;
+				margin-bottom: 20px;
+				input[type=radio]{
+					float: left;
+					margin-right: 6px;
+				}
 			}
 			.event-content-form{
 				margin: 2px;
 				.checkbox{
 					margin-bottom: 20px;
-					@media (max-width: 767px){
+					@media (max-width: 992px){
 						margin-top: -10px;
 					}
 				}
-				@media (max-width: 767px){
+				@media (max-width: 992px){
 					padding-top: 15px;
 				}
 			}
 		}
 		.event-right-content{
 			.members-box{
-				@media (max-width: 767px){
+				@media (max-width: 992px){
 					border: solid 1px #eee;
 					border-radius: 4px;
 				}
@@ -38,6 +43,7 @@
 			.members-header{
 				border-bottom: 1px solid #eee;
 				padding: 10px;
+				background: #fafafa;
 			}
 			.feadback-result{
 				padding-bottom: 10px;
@@ -46,14 +52,14 @@
 				border-top: solid 1px #eee;
 				li{
 					border-bottom: solid 1px #eee;
-					@media (max-width: 767px){
+					@media (max-width: 992px){
 						&:last-child{
 							border-bottom: none!important;
 						}
 					}
 				}
 			}
-			@media (max-width: 767px){
+			@media (max-width: 992px){
 				padding-top: 10px;
 			}
 		}
@@ -64,7 +70,7 @@
 		}
 	}
 	.box-header{
-		@media (max-width: 767px){
+		@media (max-width: 992px){
 			padding-top: 0 !important;
 		}
 	}
@@ -196,28 +202,22 @@ div.feadback{
 		cellspacing:0;
 		border:0;
 		width:100%;
-		tbody tr td.control-label{
-			display: inline-block;
-			max-width: 100%;
-			margin-bottom: 5px;
-			font-weight: bold;
-		}
 		tbody tr td{
 			float:left;
 			padding-right:0px;
-			textarea{
-				overflow: auto;
-				float: right;
-				width: 100%;
-				color:black;
-				margin-right: 10px;
+			.feadback-title{
+				font-weight: bold;
+			}
+			.feadback-options{
+				label{
+					display: block;
+					cursor: pointer;
+				}
+			}
+			.feadback-title,.feadback-options,textarea{
+				margin-left: -7px;
 			}
 		}
-
-
-
-
-
 	}
 
 span{
