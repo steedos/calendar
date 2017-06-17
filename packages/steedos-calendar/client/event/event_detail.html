@@ -12,64 +12,47 @@
 				</div>
 				<div class="modal-body">
 
-					<div class="col-sm-8">
-						<div class="box box-solid" style="display: {{showActionBox}}">
-							<div class="feadback well">
-								<table role="form" aria-label='{{_ "calendar_event_feadback"}}'>
-									<tbody>
-										<tr>
-											<td valign="top" class="col-sm-3 control-label">{{_ "calendar_event_answer"}}</td>
-											<td valign="top" class="col-sm-2 td-feadback" role="menu">
-												<span class="text-light-blue">
-													<label>
-														<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
-														{{_ "calendar_event_accepted"}}
-													</label>
-													<label>
-														<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>
-														{{_ "calendar_event_tentative"}}
-													</label>
-													<label>
-														<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>
-														{{_ "calendar_event_declined"}}
-													</label>
-													
-												</span>
-											</td>
-											<td class="col-sm-7">
-												<textarea rows="3" placeholder='{{_ "calendar_event_note"}}' class="description">{{eventObj.reason}}</textarea>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+					<div class="col-sm-8 event-left-content">
+						<div class="feadback well" style="display: {{showActionBox}}">
+							<table role="form" aria-label='{{_ "calendar_event_feadback"}}'>
+								<tbody>
+									<tr>
+										<td valign="top" class="col-sm-3 control-label">{{_ "calendar_event_answer"}}</td>
+										<td valign="top" class="col-sm-2 td-feadback" role="menu">
+											<span class="text-light-blue">
+												<label>
+													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
+													{{_ "calendar_event_accepted"}}
+												</label>
+												<label>
+													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>
+													{{_ "calendar_event_tentative"}}
+												</label>
+												<label>
+													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>
+													{{_ "calendar_event_declined"}}
+												</label>
+												
+											</span>
+										</td>
+										<td class="col-sm-7">
+											<textarea rows="3" placeholder='{{_ "calendar_event_note"}}' class="description">{{eventObj.reason}}</textarea>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
-						<div class="box box-solid">
+						<div class="event-content-form">
 							<div class="eventForm">
 								{{#autoForm id="eventsForm" collection="Events" doc=eventObj type=eventObj.formOpt omitFields="members"  disabled=isAlarmDisabled}}
 									{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}
-								<div class="col-md-12 event-edit" style="display: {{showEventOptBox}}">
-									<div class="form-group">
-										<div class="pull-left">
-											<button type="button" class="btn btn-danger btn-remove delete_events">
-											{{_ "calendar_delete"}}</button>
-										</div>
-										<div class="pull-right">
-											<button type="button" class="btn btn-default pull-right" data-dismiss="modal">{{_ "calendar_cancel"}}</button>
-										</div>
-										<div class="pull-right">
-											<button type="submit" class="btn btn-primary save_events">
-											{{_ "calendar_save"}}</button>
-										</div>
-									</div>
-								</div>
 								{{/autoForm}}
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="box box-solid">
-							<div class="box-header with-border">
+					<div class="col-sm-4 event-right-content">
+						<div>
+							<div class="box-header">
 							  <span class="members-list-title">
 							  {{_ "calendar_member_list"}}
 							  {{#if isShowAddMembers}}
@@ -77,7 +60,7 @@
 							  {{/if}}
 							  </span>
 							</div>
-							<div class="box-body no-padding">
+							<div class="no-padding">
 							<div class="feadback-result">
 								<table>
 									<tr>
@@ -143,12 +126,6 @@
 							</div>
 						  </div>
 						  <div class="box box-solid invite-box {{eventObj.isOwner}}">
-							<!-- <div class="box-header with-border">
-							  <h3 class="box-title">
-							  {{_ "calendar_add_members_event"}}
-							  邀请成员
-							  </h3>
-							</div> -->
 							<div class="box-body no-padding" style="display: none;">
 								<span class="pull-left span-addmembers">
 									{{#autoForm id='event-addmembers' schema=add_membersFields doc=values }}
@@ -160,6 +137,19 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<div class="event-edit" style="display: {{showEventOptBox}}">
+						<div class="pull-left">
+							<button type="button" class="btn btn-danger btn-remove delete_events">
+							{{_ "calendar_delete"}}</button>
+						</div>
+						<div class="pull-right">
+							<button type="button" class="btn btn-default cancel_events" data-dismiss="modal">{{_ "calendar_cancel"}}</button>
+						</div>
+						<div class="pull-right">
+							<button type="submit" class="btn btn-primary save_events">
+							{{_ "calendar_save"}}</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -149,7 +149,6 @@ Template.calendarSidebar.events
 
 
 	'click i.subscribe-hide': (event)->
-		$('body').addClass "loading"
 		if this?.uri
 			calendar_id = this.uri
 		else
@@ -168,6 +167,7 @@ Template.calendarSidebar.events
 		},
 		# 删除表中的记录
 		()->
+			$('body').addClass "loading"
 			# this._id取值无法删除，删除失败,this未定义
 			Calendars.remove {_id:calendar_id}, (error)->
 				$('body').removeClass "loading"

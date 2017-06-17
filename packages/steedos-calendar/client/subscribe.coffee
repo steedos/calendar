@@ -53,7 +53,7 @@ Meteor.startup ->
 Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")
-		if localStorage.getItem("calendarid:"+Meteor.userId())==null
+		if localStorage.getItem("calendarid:"+Meteor.userId())=="undefined" || localStorage.getItem("calendarid:"+Meteor.userId())==null
 			defaultcalendar=Calendars.find({isDefault:true}).fetch()
 			localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar[0]?._id)
 		Session.set("calendarid",localStorage.getItem("calendarid:"+Meteor.userId()))

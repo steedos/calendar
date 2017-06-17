@@ -1,4 +1,5 @@
 Template.event_detail_modal.onRendered ->
+	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
 
 Template.event_detail_modal.helpers
 	showEventOptBox:()->
@@ -31,7 +32,7 @@ Template.event_detail_modal.helpers
 				return "none"
 			else
 				if calendarIds.indexOf(obj.calendarid)>=0
-					return "inline"
+					return "block"
 				else
 					return "none"
 
@@ -122,24 +123,19 @@ Template.event_detail_modal.events
 	'click button.save_events': (event)->
 		$('body').addClass "loading"
 		obj = Session.get('cmDoc')
-		Meteor.call('updateEvents',obj,2,'',
-			(error,result) ->
-				Modal.hide('event_detail_modal')
-				$('body').removeClass "loading"
-			)
-	
-	'click button.cancel_events': (event) ->
-		Modal.hide('event_detail_modal')
-
-	'click input:radio[name="optionsRadios"]': (event)->
 		description = $('textarea.description').val()
-		obj = Session.get('cmDoc')
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		obj.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
 		Session.set 'cmDoc',obj
+		Meteor.call('updateEvents',obj,2,'',
+			(error,result) ->
+				Modal.hide('event_detail_modal')
+				$('body').removeClass "loading"
+			)
+		$("#eventsForm").submit()
 	
 	'click i.add-members': ()->
 		$("input[name='addmembers_event']").click()

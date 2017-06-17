@@ -11,8 +11,6 @@ import Calendar from '../core'
 
 Template.calendarContainer.onRendered ->
 	Calendar.generateCalendar();
-	unless $("[data-toggle=offcanvas]").length 
-		$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
 
 eventsDep = new Tracker.Dependency
 eventsSub = new SubsManager()
@@ -46,6 +44,10 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	eventsSub.subscribe "calendar_objects", params
 	Tracker.autorun (c)->
 		if eventsSub.ready()
+			unless $("[data-toggle=offcanvas]").length 
+				$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
+			unless $("button#add-event").length
+				$(".fc-button-group").prepend('<button type="button" class="btn btn-default" id="add-event"><i class="fa fa-plus"></i></button>')
 			events = Events.find(calendarid:{$in: params.calendar}).fetch()
 			callback(events)				
 			c.stop()
@@ -205,3 +207,23 @@ Calendar.generateCalendar = ()->
 
 
 Template.calendarContainer.events
+	'click button#add-event': ()->
+		calendarid = Session.get 'calendarid'
+		start = new Date()
+		end = new Date()
+		doc = {
+			start: start
+			end: end
+			calendarid: calendarid
+		}
+		Meteor.call('eventInit',Meteor.userId(),doc,
+			(error,result) ->
+				
+				$('body').removeClass "loading"
+				if !error
+					AutoForm.resetForm("eventForm")
+					Session.set 'cmDoc', result
+					Modal.show('event_detail_modal')
+				else
+					console.log error
+			)
