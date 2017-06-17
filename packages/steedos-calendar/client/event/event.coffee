@@ -149,7 +149,7 @@ Calendar.generateCalendar = ()->
 						
 						$('body').removeClass "loading"
 						if !error
-							AutoForm.resetForm("eventForm")
+							AutoForm.resetForm("eventsForm")
 							Session.set 'cmDoc', result
 							Modal.show('event_detail_modal')
 						else
@@ -160,8 +160,7 @@ Calendar.generateCalendar = ()->
 				event = Events.findOne
 					_id: calEvent?.id
 				if event
-					console.log event
-					AutoForm.resetForm("eventForm")
+					AutoForm.resetForm("eventsForm")
 					Session.set 'cmDoc', event
 					Modal.show('event_detail_modal')
 			eventDrop: (event, delta, revertFunc)->
@@ -221,7 +220,7 @@ Template.calendarContainer.events
 				
 				$('body').removeClass "loading"
 				if !error
-					AutoForm.resetForm("eventForm")
+					AutoForm.resetForm("eventsForm")
 					Session.set 'cmDoc', result
 					Modal.show('event_detail_modal')
 				else
