@@ -1,5 +1,8 @@
 Meteor.methods
 	updateEvents :(obj,operation,relatetodefaultcalendar)->
+		if obj.start.getTime().toString() > obj.end.getTime().toString()
+			throw new Meteor.Error(400,"start_time_must_be_less_than_end_time
+")
 		if operation==1
 			attendees=[]
 		else

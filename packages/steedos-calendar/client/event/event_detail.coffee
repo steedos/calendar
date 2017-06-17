@@ -132,7 +132,6 @@ Template.event_detail_modal.events
 		Session.set 'cmDoc',obj
 		Meteor.call('updateEvents',obj,2,'',
 			(error,result) ->
-				Modal.hide('event_detail_modal')
 				$('body').removeClass "loading"
 			)
 		$("#eventsForm").submit()
@@ -193,9 +192,12 @@ AutoForm.hooks eventsForm:
 		that = this
 		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,
 			(error,result) ->
-				$('[data-dismiss="modal"]').click()
-				$('body').removeClass "loading"
-				that.done()
+				if !error
+					$('[data-dismiss="modal"]').click()
+					$('body').removeClass "loading"
+					that.done()
+				else
+					toastr.error t(error.reason)
 			)
 		calendarIds=Session.get("calendarIds")
 		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid"))<0
