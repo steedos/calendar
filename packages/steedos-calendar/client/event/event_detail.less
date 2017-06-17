@@ -17,19 +17,16 @@
 				margin-bottom: 20px;
 				input[type=radio]{
 					float: left;
-					margin-right: 6px;
+					margin-right: 4px;
 				}
 			}
 			.event-content-form{
 				margin: 2px;
 				.checkbox{
 					margin-bottom: 20px;
-					@media (max-width: 992px){
+					@media (max-width: 767px){
 						margin-top: -10px;
 					}
-				}
-				@media (max-width: 992px){
-					padding-top: 15px;
 				}
 			}
 		}
@@ -209,9 +206,14 @@ div.feadback{
 				font-weight: bold;
 			}
 			.feadback-options{
+				float: right;
+				@media (max-width: 992px){
+					margin-right: 10px;
+				}
 				label{
-					display: block;
+					display: inline-block;
 					cursor: pointer;
+				    margin-left: 6px;
 				}
 			}
 			.feadback-title,.feadback-options,textarea{
