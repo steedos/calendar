@@ -5,6 +5,9 @@
 		padding: 0px 0px 0px 0px;
 		overflow: auto;
 		background: #fafafa;
+		@media (max-width: 767px){
+			background: #fff;
+		}
 		.event-left-content{
 			border-right: solid 1px #eee;
 			background: #fff;
@@ -13,12 +16,28 @@
 				margin: 15px;
 			}
 			.event-content-form{
-
+				margin: 2px;
+				.checkbox{
+					margin-bottom: 20px;
+					@media (max-width: 767px){
+						margin-top: -10px;
+					}
+				}
+				@media (max-width: 767px){
+					padding-top: 15px;
+				}
 			}
 		}
 		.event-right-content{
-			.box-header{
+			.members-box{
+				@media (max-width: 767px){
+					border: solid 1px #eee;
+					border-radius: 4px;
+				}
+			}
+			.members-header{
 				border-bottom: 1px solid #eee;
+				padding: 10px;
 			}
 			.feadback-result{
 				padding-bottom: 10px;
@@ -27,12 +46,20 @@
 				border-top: solid 1px #eee;
 				li{
 					border-bottom: solid 1px #eee;
+					@media (max-width: 767px){
+						&:last-child{
+							border-bottom: none!important;
+						}
+					}
 				}
+			}
+			@media (max-width: 767px){
+				padding-top: 10px;
 			}
 		}
 	}
 	div.modal-footer{
-		button.save_events,button.cancel_events{
+		button.save_events{
 			margin-right: 10px;
 		}
 	}
@@ -46,6 +73,12 @@
 #eventsForm{
 	div.event-edit.false{
 		display:none;
+	}
+	.selectize-input.disabled{
+		background: #dcdcdc;
+		cursor: not-allowed !important;
+		border: 1px solid #a7a7a7;
+		border-radius: 0;
 	}
 }
 
@@ -64,6 +97,7 @@ span.members-list-title{
 	font-weight: bold;
 	.add-members{
 		cursor: pointer;
+		margin-top: 4px;
 	}
 }
 div.list-opt{
@@ -79,26 +113,20 @@ div.members-list{
 	max-height: 250px;
 	overflow: auto;
 	ul li div.descrip-comments{
-	    margin-bottom: 2px;
-	    margin-left: 10px;
-    	overflow-wrap: break-word;
-    	color: #888;
-	    font-size: 12px;
-	    padding: 0 0 0 6px;
+		margin-bottom: 2px;
+		margin-left: 10px;
+		overflow-wrap: break-word;
+		color: #888;
+		font-size: 12px;
+		padding: 0 0 0 6px;
 	}
-}
-
-div.eventForm {
-	margin-left: 1%;
-	margin-right: 1%;
-	overflow: hidden;
 }
 
 div.invite-box.false{
 	display:none;
 }
 div.invite-box{
-    box-shadow: none;
+	box-shadow: none;
 	span.pull-left{
 		width: 80%;
 	}
@@ -161,8 +189,8 @@ div.invite-info-box.true{
 
 div.feadback{
 	margin-top: 10px;
-    padding: 20px 10px 20px 10px;
-    margin-bottom: 10px;
+	padding: 20px 10px 20px 10px;
+	margin-bottom: 10px;
 	table{
 		cellpadding:0;
 		cellspacing:0;

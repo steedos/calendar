@@ -52,5 +52,6 @@
   "calendar_hide_calendar": "取消订阅",
   "calendar_hide_success": "取消订阅成功",
   "calendar_hide_failed": "取消订阅失败",
-  "calendar_hide_succsee_info": "该日历已被取消订阅"
+  "calendar_hide_succsee_info": "该日历已被取消订阅",
+  "start_time_must_be_less_than_end_time": "开始时间必须小于结束时间"
 }
