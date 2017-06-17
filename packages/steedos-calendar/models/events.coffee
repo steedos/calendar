@@ -2,7 +2,8 @@
 icalendar = require('icalendar');
 created = new Date();
 # locale = Session.get 'steedos-locale'
-Events.attachSchema new SimpleSchema 
+
+eventSchema = 
 	title:  
 		type: String
 		# label:t("calendar_title")
@@ -15,18 +16,18 @@ Events.attachSchema new SimpleSchema
 		label:"开始时间"
 		autoform: 
 			afFieldInput:
-				type: "bootstrap-datetimepicker"
-				dateTimePickerOptions:
-					language:'zh-cn'
-					format:"YYYY-MM-DD HH:mm"
-					# format: ()->
-					# 	obj = Session.get 'cmDoc'
-					# 	console.log obj
-					# 	if obj?.allDay
-					# 		return "YYYY-MM-DD"
-					# 	else
-					# 		return "YYYY-MM-DD HH:mm"
-					sideBySide:true
+				type: "date"
+				# dateTimePickerOptions:
+				# 	language:'zh-cn'
+				# 	format:"YYYY-MM-DD HH:mm"
+				# 	# format: ()->
+				# 	# 	obj = Session.get 'cmDoc'
+				# 	# 	console.log obj
+				# 	# 	if obj?.allDay
+				# 	# 		return "YYYY-MM-DD"
+				# 	# 	else
+				# 	# 		return "YYYY-MM-DD HH:mm"
+				# 	sideBySide:true
 					
 	end:  
 		type: Date
@@ -34,18 +35,18 @@ Events.attachSchema new SimpleSchema
 		label:"结束时间"
 		optional: true
 		autoform: 
-			type: "bootstrap-datetimepicker"
-			dateTimePickerOptions:
-				language:'zh-cn'
-				format:"YYYY-MM-DD HH:mm"
-				# format:()->
-				# 	obj = Session.get 'cmDoc'
-				# 	console.log obj
-				# 	if obj?.allDay
-				# 		return "YYYY-MM-DD"
-				# 	else
-				# 		return "YYYY-MM-DD HH:mm"
-				sideBySide:true
+			type: "date"
+			# dateTimePickerOptions:
+			# 	language:'zh-cn'
+			# 	format:"YYYY-MM-DD HH:mm"
+			# 	# format:()->
+			# 	# 	obj = Session.get 'cmDoc'
+			# 	# 	console.log obj
+			# 	# 	if obj?.allDay
+			# 	# 		return "YYYY-MM-DD"
+			# 	# 	else
+			# 	# 		return "YYYY-MM-DD HH:mm"
+			# 	sideBySide:true
 
 
 	allDay: 
@@ -204,6 +205,24 @@ Events.attachSchema new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
+
+
+if !Steedos.isMobile()
+	eventSchema.start.autoform.afFieldInput.type = 'bootstrap-datetimepicker'
+	eventSchema.start.autoform.afFieldInput.dateTimePickerOptions = 
+		language:'zh-cn'
+		format:"YYYY-MM-DD HH:mm"
+		sideBySide:true
+
+	eventSchema.end.autoform.type = 'bootstrap-datetimepicker'
+	eventSchema.end.autoform.dateTimePickerOptions = 
+		language:'zh-cn'
+		format:"YYYY-MM-DD HH:mm"
+		sideBySide:true
+
+
+Events.attachSchema new SimpleSchema eventSchema
+	
 	
 
 if (Meteor.isServer) 
