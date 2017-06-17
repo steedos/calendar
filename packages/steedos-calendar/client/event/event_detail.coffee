@@ -122,19 +122,64 @@ Template.event_detail_modal.events
 
 	'click button.save_events': (event)->
 		$('body').addClass "loading"
-		obj = Session.get('cmDoc')
-		description = $('textarea.description').val()
+		obj = Session.get("cmDoc")
+		if obj.calendarid!=AutoForm.getFieldValue("calendarid","eventsForm")
+			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid","eventsForm")
+				relatetodefaultcalendar="Yes"
+			else if Session.get('defaultcalendarid')==obj.calendarid
+					relatetodefaultcalendar="No"
+		else
+			relatetodefaultcalendar = null
+		if AutoForm.getFieldValue("calendarid","eventsForm") == undefined
+			relatetodefaultcalendar = null
+		console.log relatetodefaultcalendar
+		obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm") || obj.calendarid
+		obj.title = AutoForm.getFieldValue("title","eventsForm") || obj.title
+		obj.start = AutoForm.getFieldValue("start","eventsForm") || obj.start 
+		obj.end = AutoForm.getFieldValue("end","eventsForm") || obj.end
+		obj.description = AutoForm.getFieldValue("description","eventsForm") || obj.description
+		obj.allDay = AutoForm.getFieldValue("allDay","eventsForm") || obj.allDay
+		obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || obj.alarms
+		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
+		description = $('textarea.description').val()
 		obj.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
-		Session.set 'cmDoc',obj
-		Meteor.call('updateEvents',obj,2,'',
+
+		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,
 			(error,result) ->
-				$('body').removeClass "loading"
+				if !error
+					$('[data-dismiss="modal"]').click()
+					$('body').removeClass "loading"
+				else
+					toastr.error t(error.reason)
+					$('body').removeClass "loading"
 			)
-		$("#eventsForm").submit()
+		calendarIds=Session.get("calendarIds")
+		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid"))<0
+			calendarIds.push AutoForm.getFieldValue("calendarid")
+			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
+			Session.set 'calendarIds',calendarIds
+			selectcalendarid=Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
+			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
+		return
+		# $('body').addClass "loading"
+		# obj = Session.get('cmDoc')
+		# description = $('textarea.description').val()
+		# val=$('input:radio[name="optionsRadios"]:checked').val()
+		# obj.attendees.forEach (attendee)->
+		# 	if attendee.id == Meteor.userId()
+		# 		attendee.partstat=val
+		# 		attendee.description=description
+		# Session.set 'cmDoc',obj
+		# Meteor.call('updateEvents',obj,2,'',
+		# 	(error,result) ->
+		# 		$('body').removeClass "loading"
+		# 	)
+		# debugger
+		# $("#eventsForm").submit()
 	
 	'click i.add-members': ()->
 		$("input[name='addmembers_event']").click()
@@ -161,49 +206,50 @@ Template.event_detail_modal.events
 		Session.set 'cmDoc',obj
 
 
-AutoForm.hooks eventsForm: 
-	onSubmit: (insertDoc, updateDoc, currentDoc) ->
-		$('body').addClass "loading"
-		this.event.preventDefault()
-		obj = Session.get("cmDoc")
-		if obj.calendarid!=AutoForm.getFieldValue("calendarid")
-			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid")
-				relatetodefaultcalendar="Yes"
-			else if Session.get('defaultcalendarid')==obj.calendarid
-					relatetodefaultcalendar="No"
-		else
-			relatetodefaultcalendar=null
-		console.log relatetodefaultcalendar
-		obj.calendarid = AutoForm.getFieldValue("calendarid")
-		obj.title = AutoForm.getFieldValue("title")
-		obj.start = AutoForm.getFieldValue("start")
-		obj.end = AutoForm.getFieldValue("end")
-		obj.description = AutoForm.getFieldValue("description")
-		obj.allDay = AutoForm.getFieldValue("allDay")
-		obj.alarms = AutoForm.getFieldValue("alarms")
-		members = []
-		val=$('input:radio[name="optionsRadios"]:checked').val()
-		description = $('textarea.description').val()
-		obj.attendees.forEach (attendee)->
-			if attendee.id == Meteor.userId()
-				attendee.partstat=val
-				attendee.description=description
+# AutoForm.hooks eventsForm: 
+# 	onSubmit: (insertDoc, updateDoc, currentDoc) ->
+# 		debugger
+# 		$('body').addClass "loading"
+# 		this.event.preventDefault()
+# 		obj = Session.get("cmDoc")
+# 		if obj.calendarid!=AutoForm.getFieldValue("calendarid")
+# 			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid")
+# 				relatetodefaultcalendar="Yes"
+# 			else if Session.get('defaultcalendarid')==obj.calendarid
+# 					relatetodefaultcalendar="No"
+# 		else
+# 			relatetodefaultcalendar=null
+# 		console.log relatetodefaultcalendar
+# 		obj.calendarid = AutoForm.getFieldValue("calendarid")
+# 		obj.title = AutoForm.getFieldValue("title")
+# 		obj.start = AutoForm.getFieldValue("start")
+# 		obj.end = AutoForm.getFieldValue("end")
+# 		obj.description = AutoForm.getFieldValue("description")
+# 		obj.allDay = AutoForm.getFieldValue("allDay")
+# 		obj.alarms = AutoForm.getFieldValue("alarms")
+# 		members = []
+# 		val=$('input:radio[name="optionsRadios"]:checked').val()
+# 		description = $('textarea.description').val()
+# 		obj.attendees.forEach (attendee)->
+# 			if attendee.id == Meteor.userId()
+# 				attendee.partstat=val
+# 				attendee.description=description
 
-		that = this
-		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,
-			(error,result) ->
-				if !error
-					$('[data-dismiss="modal"]').click()
-					$('body').removeClass "loading"
-					that.done()
-				else
-					toastr.error t(error.reason)
-			)
-		calendarIds=Session.get("calendarIds")
-		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid"))<0
-			calendarIds.push AutoForm.getFieldValue("calendarid")
-			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
-			Session.set 'calendarIds',calendarIds
-			selectcalendarid=Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
-			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
-		return
+# 		that = this
+# 		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,
+# 			(error,result) ->
+# 				if !error
+# 					$('[data-dismiss="modal"]').click()
+# 					$('body').removeClass "loading"
+# 					that.done()
+# 				else
+# 					toastr.error t(error.reason)
+# 			)
+# 		calendarIds=Session.get("calendarIds")
+# 		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid"))<0
+# 			calendarIds.push AutoForm.getFieldValue("calendarid")
+# 			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
+# 			Session.set 'calendarIds',calendarIds
+# 			selectcalendarid=Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
+# 			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
+# 		return
