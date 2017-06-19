@@ -94,6 +94,8 @@ Meteor.startup ->
 	#重写object
 	#operation: 1新建，2更新，3删除
 	addCalendarObjects:(userId, doc,operation)->
+		if doc.start > doc.end
+			throw new Meteor.Error(400, "start_time_must_be_less_than_end_time");
 		myDate = new Date();
 		doc.lastmodified = parseInt(myDate.getTime()/1000);
 		myDate = new Date(doc.start)
@@ -105,8 +107,6 @@ Meteor.startup ->
 		doc.etag = MD5(doc.calendardata);
 		doc.size = doc.calendardata.length;
 		color = Calendars.findOne({_id:doc.calendarid}).color;
-		if doc.start > doc.end
-			throw new Meteor.Error(400, "开始时间不能大于结束时间");
 		doc.eventcolor =color;
 		if operation==1
 			doc.parentId=doc._id;
