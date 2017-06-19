@@ -4,7 +4,6 @@ Template.event_detail_modal.onRendered ->
 Template.event_detail_modal.helpers
 	showEventOptBox:()->
 		# 事件是本人创建的/事件成员包含本人，都显示“保存”/“删除”操作
-		debugger
 		obj = Template.instance().data
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
@@ -182,21 +181,20 @@ Template.event_detail_modal.events
 
 	'change input[name="addmembers_event"]':(event, template)->
 		addmembers = AutoForm.getFieldValue("addmembers_event","event-addmembers") || []
-		obj = Session.get('cmDoc')
+		obj = template.data
 		Meteor.call('attendeesInit',obj,addmembers,
 				(error,result) ->
 					if !error
-						Session.set 'cmDoc',result
+						template.data.attendees = result.attendees
 						$("span.span-addmembers div.has-items").children().remove(".item")
 			)
 		AutoForm.resetForm("event-addmembers")
 
 	'click i.delete-members': (event, template)->
-		obj = Session.get('cmDoc')
+		obj = template.data
 		attendeeid = this.id
 		tempAtt = []
 		obj.attendees.forEach (attendee)->
 		 	if attendee.id!=attendeeid
 		 		tempAtt.push attendee
 		obj.attendees = tempAtt
-		Session.set 'cmDoc',obj

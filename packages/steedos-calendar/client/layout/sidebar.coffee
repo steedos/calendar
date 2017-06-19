@@ -187,4 +187,4 @@ Template.calendarSidebar.events
 		addmembers.forEach (addmember)->
 			if addmember != Meteor.userId()
 				Meteor.call('initscription',addmember)
-		# AutoForm.resetForm("calendar-submembers")
+		AutoForm.resetForm("calendar-submembers")
