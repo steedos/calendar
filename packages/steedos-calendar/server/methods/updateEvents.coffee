@@ -78,9 +78,10 @@ Meteor.methods
 				if attendeeid==obj.ownerId
 					Calendar.addChange(doc.calendarid,doc.uri,2)
 				else
-					calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id			
-					event=Events.find({parentId:obj.parentId,calendarid:calendarid},{fields:{uri:1}}).fetch()			
-					Calendar.addChange(calendarid,event[0].uri,2)
+					calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id	
+					event=Events.find({parentId:obj.parentId,calendarid:calendarid},{fields:{uri:1}})?.fetch()	
+					if event		
+						Calendar.addChange(calendarid,event[0]?.uri,2)
 		else
 			Calendar.addCalendarObjects(obj.ownerId,obj,operation);
 			Events.direct.update {parentId:obj.parentId}, {$set:
