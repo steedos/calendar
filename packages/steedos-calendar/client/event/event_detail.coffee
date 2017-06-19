@@ -4,7 +4,8 @@ Template.event_detail_modal.onRendered ->
 Template.event_detail_modal.helpers
 	showEventOptBox:()->
 		# 事件是本人创建的/事件成员包含本人，都显示“保存”/“删除”操作
-		obj = Session.get('cmDoc')
+		debugger
+		obj = Template.instance().data
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj.attendees,'id')
@@ -17,7 +18,7 @@ Template.event_detail_modal.helpers
 			return false
 
 	showActionBox:()->
-		obj = Session.get('cmDoc')
+		obj = Template.instance().data
 		ownerId = obj.ownerId
 		if ownerId == Meteor.userId()
 			return "none"
@@ -37,7 +38,7 @@ Template.event_detail_modal.helpers
 					return "none"
 
 	accendeeState:(state)->
-		obj = Session.get('cmDoc')
+		obj = Template.instance().data
 		result = ""
 		obj.attendees.forEach (attendee)->
 			if attendee.id == Meteor.userId()
@@ -48,7 +49,7 @@ Template.event_detail_modal.helpers
 		return result
 
 	eventObj:()->
-		obj = Session.get('cmDoc')
+		obj = Template.instance().data
 		obj.acceptednum=0
 		obj.tentativenum=0	#不确定
 		obj.declinednum=0
@@ -76,13 +77,13 @@ Template.event_detail_modal.helpers
 		return obj
 
 	isShowDeleteMember: (id) ->
-		obj = Session.get('cmDoc')
+		obj = Template.instance().data
 		ownerId = obj.ownerId
 		if id == ownerId
 			return true
 
 	isShowAddMembers: ()->
-		ownerId = Session.get('cmDoc').ownerId
+		ownerId = Template.instance().data.ownerId
 		userId = Meteor.userId()
 		return ownerId == userId
 
@@ -102,7 +103,7 @@ Template.event_detail_modal.helpers
 		return {}
 
 	isAlarmDisabled: ()->
-		obj = Session.get "cmDoc"
+		obj = Template.instance().data
 		ownerId = obj.ownerId
 		if ownerId == Meteor.userId()
 			return false
@@ -120,8 +121,8 @@ Template.event_detail_modal.helpers
 			return "fa fa-fw"
 
 Template.event_detail_modal.events
-	'click button.delete_events': (event)->
-		obj = Session.get('cmDoc')
+	'click button.delete_events': (event, template)->
+		obj = template.data
 		Meteor.call('removeEvents',obj,
 			(error,result) ->
 				console.log error
@@ -130,9 +131,9 @@ Template.event_detail_modal.events
 		)
 		
 
-	'click button.save_events': (event)->
+	'click button.save_events': (event, template)->
 		$('body').addClass "loading"
-		obj = Session.get("cmDoc")
+		obj = template.data
 		if obj.calendarid!=AutoForm.getFieldValue("calendarid","eventsForm")
 			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid","eventsForm")
 				relatetodefaultcalendar="Yes"
@@ -176,10 +177,10 @@ Template.event_detail_modal.events
 			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
 		return
 	
-	'click i.add-members': ()->
+	'click i.add-members': (event, template)->
 		$("input[name='addmembers_event']").click()
 
-	'change input[name="addmembers_event"]':()->
+	'change input[name="addmembers_event"]':(event, template)->
 		addmembers = AutoForm.getFieldValue("addmembers_event","event-addmembers") || []
 		obj = Session.get('cmDoc')
 		Meteor.call('attendeesInit',obj,addmembers,
@@ -190,7 +191,7 @@ Template.event_detail_modal.events
 			)
 		AutoForm.resetForm("event-addmembers")
 
-	'click i.delete-members': (event)->
+	'click i.delete-members': (event, template)->
 		obj = Session.get('cmDoc')
 		attendeeid = this.id
 		tempAtt = []

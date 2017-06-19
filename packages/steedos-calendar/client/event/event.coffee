@@ -146,12 +146,10 @@ Calendar.generateCalendar = ()->
 				# 保存到数据库的object中一条记录
 				Meteor.call('eventInit',Meteor.userId(),doc,
 					(error,result) ->
-						
 						$('body').removeClass "loading"
 						if !error
 							AutoForm.resetForm("eventsForm")
-							Session.set 'cmDoc', result
-							Modal.show('event_detail_modal')
+							Modal.show('event_detail_modal', result)
 						else
 							console.log error
 					)
@@ -161,8 +159,7 @@ Calendar.generateCalendar = ()->
 					_id: calEvent?.id
 				if event
 					AutoForm.resetForm("eventsForm")
-					Session.set 'cmDoc', event
-					Modal.show('event_detail_modal')
+					Modal.show('event_detail_modal', event)
 			eventDrop: (event, delta, revertFunc)->
 				console.log event
 				hasPermission = Calendar.hasPermission(event)
@@ -221,8 +218,7 @@ Template.calendarContainer.events
 				$('body').removeClass "loading"
 				if !error
 					AutoForm.resetForm("eventsForm")
-					Session.set 'cmDoc', result
-					Modal.show('event_detail_modal')
+					Modal.show('event_detail_modal', result)
 				else
 					console.log error
 			)
