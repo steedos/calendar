@@ -37,6 +37,8 @@ tsega:bootstrap3-datetimepicker@=3.1.3_3
 steedos:autoform-modals
 hausor:autoform-bs-minicolors
 
+gwendall:simple-schema-i18n
+
 francocatena:status
 
 steedos:toastr@2.1.3
