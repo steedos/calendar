@@ -109,6 +109,16 @@ Template.event_detail_modal.helpers
 		else
 			return true
 
+	partstatIcon: (partstat)->
+		if partstat == "ACCEPTED"
+			return "ion ion-checkmark-round"
+		else if partstat == "TENTATIVE"
+			return "fa fa-fw fa-question"
+		else if partstat == "DECLINED"
+			return "fa fa-fw fa-ban"
+		else if partstat == "NEEDS-ACTION"
+			return "fa fa-fw"
+
 Template.event_detail_modal.events
 	'click button.delete_events': (event)->
 		obj = Session.get('cmDoc')
