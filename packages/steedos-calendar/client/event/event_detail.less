@@ -78,16 +78,36 @@
 #event_detail_modal.showActionBox-is-none{
 	.event-right-content{
 		height: 347px;
-		.members-list{
-			max-height: 246px;
+		@media (max-width: 992px){
+			background: #fff !important;
+		    height: auto;
+		    max-height: 347px;	
+		}
+		.members-box{
+			@media (max-width: 992px){
+				margin-bottom: 5px;
+			}
+			.members-list{
+				max-height: 246px;
+			}
 		}
 	}
 }
 #event_detail_modal.showActionBox-is-block{
 	.event-right-content{
 		height: 484px;
-		.members-list{
-			max-height: 382px;
+		@media (max-width: 992px){
+			background: #fff !important;
+		    height: auto;
+		    max-height: 484px;
+		}
+		.members-box{
+			@media (max-width: 992px){
+				margin-bottom: 5px;
+			}
+			.members-list{
+				max-height: 382px;
+			}
 		}
 	}
 }
