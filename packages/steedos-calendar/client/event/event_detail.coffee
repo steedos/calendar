@@ -10,11 +10,11 @@ Template.event_detail_modal.helpers
 		attendeesIds=_.pluck(obj.attendees,'id')
 		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0  
 			 if calendarIds.indexOf(obj.calendarid)>=0
-			 	return "inline"
+			 	return true
 			 else
-			 	return "none"
+			 	return false
 		else
-			return "none"
+			return false
 
 	showActionBox:()->
 		obj = Session.get('cmDoc')

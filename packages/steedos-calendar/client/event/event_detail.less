@@ -2,9 +2,8 @@
 	overflow: hidden;
 	div.modal-body{
 		position: relative;
-		padding: 0px 0px 0px 0px;
+		padding: 0px 0px 5px 0px;
 		overflow: auto;
-		background: #fafafa;
 		@media (max-width: 992px){
 			background: #fff;
 		}
@@ -31,6 +30,7 @@
 			}
 		}
 		.event-right-content{
+			background: #fafafa;
 			.members-box{
 				@media (max-width: 992px){
 					border: solid 1px #eee;
@@ -62,6 +62,9 @@
 		}
 	}
 	div.modal-footer{
+		&.false{
+			display: none;
+		}
 		button.save_events{
 			margin-right: 10px;
 		}
@@ -72,11 +75,24 @@
 		}
 	}
 }
+#event_detail_modal.showActionBox-is-none{
+	.event-right-content{
+		height: 347px;
+		.members-list{
+			max-height: 246px;
+		}
+	}
+}
+#event_detail_modal.showActionBox-is-block{
+	.event-right-content{
+		height: 484px;
+		.members-list{
+			max-height: 382px;
+		}
+	}
+}
 
 #eventsForm{
-	div.event-edit.false{
-		display:none;
-	}
 	.selectize-input.disabled{
 		background: #dcdcdc;
 		cursor: not-allowed !important;
@@ -113,7 +129,6 @@ div.div-addmembers{
 	max-height: 200px;
 }
 div.members-list{
-	max-height: 246px;
 	overflow: auto;
 	ul li div.descrip-comments{
 		margin-bottom: 2px;
