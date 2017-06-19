@@ -117,7 +117,7 @@ Template.calendarSidebar.events
 		$('.btn.subscribe-show').click();
 
 	'click i.calendar-delete': (event)->
-		$('body').addClass "loading"
+		
 		if Meteor.userId()!=this.ownerId
 			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
@@ -136,6 +136,7 @@ Template.calendarSidebar.events
 		# 删除表中的记录
 		()->
 			# this._id取值无法删除，删除失败,this未定义
+			$('body').addClass "loading"
 			Calendars.remove {_id:calendar_id}, (error)->
 				$('body').removeClass "loading"
 				if error
