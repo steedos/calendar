@@ -168,10 +168,10 @@ Template.event_detail_modal.events
 					$('body').removeClass "loading"
 			)
 		calendarIds=Session.get("calendarIds")
-		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid"))<0
-			calendarIds.push AutoForm.getFieldValue("calendarid")
+		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid","eventsForm"))<0
+			calendarIds.push AutoForm.getFieldValue("calendarid","eventsForm")
 			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
-			Session.set 'calendarIds',calendarIds
+			Session.set("calendarIds",calendarIds)
 			selectcalendarid=Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
 			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
 		return
