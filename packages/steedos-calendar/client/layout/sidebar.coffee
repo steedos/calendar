@@ -94,6 +94,7 @@ Template.calendarSidebar.events
 		Calendar.reloadEvents()
 
 	'click .main-sidebar .calendar-add': (event)->
+		Session.set("cmDoc",{})
 		$('.btn.calendar-add').click();
 
 	'click i.calendar-edit': (event)->

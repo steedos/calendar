@@ -8,6 +8,8 @@ Calendars._simpleSchema = new SimpleSchema
 	title:  
 		type: String,
 		# label:t("calendar_title")
+		defaultValue: ->
+			return t("calendar_add_calendar")
 		label:"标题"
 
 	members:  
