@@ -1,3 +1,6 @@
+Template.event_detail_modal.onCreated ->
+	this.reactiveAttendees = new ReactiveVar()
+
 Template.event_detail_modal.onRendered ->
 	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
 
@@ -49,6 +52,8 @@ Template.event_detail_modal.helpers
 
 	eventObj:()->
 		obj = Template.instance().data
+		if Template.instance().reactiveAttendees.get()
+			obj.attendees = Template.instance().reactiveAttendees.get()
 		obj.acceptednum=0
 		obj.tentativenum=0	#不确定
 		obj.declinednum=0
@@ -185,7 +190,7 @@ Template.event_detail_modal.events
 		Meteor.call('attendeesInit',obj,addmembers,
 				(error,result) ->
 					if !error
-						template.data.attendees = result.attendees
+						template.reactiveAttendees.set(result.attendees)
 						$("span.span-addmembers div.has-items").children().remove(".item")
 			)
 		AutoForm.resetForm("event-addmembers")
@@ -197,4 +202,4 @@ Template.event_detail_modal.events
 		obj.attendees.forEach (attendee)->
 		 	if attendee.id!=attendeeid
 		 		tempAtt.push attendee
-		obj.attendees = tempAtt
+		template.reactiveAttendees.set(tempAtt)
