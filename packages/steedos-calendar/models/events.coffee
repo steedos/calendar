@@ -3,15 +3,16 @@ icalendar = require('icalendar');
 created = new Date();
 # locale = Session.get 'steedos-locale'
 
-Events.attachSchema new SimpleSchema
-	title:  
+Events._simpleSchema = new SimpleSchema
+	title:
 		type: String
+		max: 50
 		# label:t("calendar_title")
 		label:"标题"
 		defaultValue:"新建事件"
 
 	start:  
-		type: Date,
+		type: Date
 		# label:t("calendar_event_start")
 		label:"开始时间"
 		autoform: 
@@ -35,7 +36,6 @@ Events.attachSchema new SimpleSchema
 		type: Date
 		# label:t("calendar_event_end")
 		label:"结束时间"
-		optional: true
 		autoform: 
 			type:()->
 				if Steedos.isMobile()
@@ -209,7 +209,11 @@ Events.attachSchema new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
-	
+
+Events.attachSchema Events._simpleSchema
+
+if Meteor.isClient
+	Events._simpleSchema.i18n("calendar_objects");
 
 if (Meteor.isServer) 
 	Events.allow 
