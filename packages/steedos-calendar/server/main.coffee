@@ -64,6 +64,12 @@ Meteor.startup ->
 		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[0])/60+"00");
 		standard.addProperty("TZOFFSETTO","0"+(-zones.offsets[1])/60+"00");
 		standard.addProperty("TZNAME",zones.abbrs[0]);
+		daylight = vtimezone.addComponent("DAYLIGHT");
+		daylight.addProperty("TZOFFSETFROM","0"+(-zones.offsets[1])/60+"00");
+		daylight.addProperty("DTSTART","19910414T000000");
+		daylight.addProperty("TZNAME","GMT+8");
+		daylight.addProperty("TZOFFSETTO","0"+(-zones.offsets[0])/60+"00");
+		daylight.addProperty("RDATE","19910414T000000");
 		date=new Date(2017/5/1);
 		standard.addProperty("DTSTART",date);
 		if doc.alarms !=undefined
