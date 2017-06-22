@@ -5,7 +5,7 @@ Tracker.autorun ()->
 		TAPi18n.setLanguage("zh-CN")
 	else
 		TAPi18n.setLanguage("en")		
-	
+
 	Steedos.Helpers.setAppTitle(t "Steedos Calendar");
 
 Meteor.startup ->
@@ -13,3 +13,6 @@ Meteor.startup ->
 		if Meteor.userId()
 			Meteor.call('calendarInit',Meteor.userId(),moment_timezone.tz.guess())
 
+	Tracker.autorun ()->
+		if Steedos.getAccountZoomValue()
+			$(window).trigger("resize")
