@@ -50,7 +50,7 @@ Meteor.methods
 						calendardata:doc.calendardata
 						etag:doc.etag
 						size:doc.size
-						eventcolor:calendar.color
+						Isdavmodified:false
 						parentId:doc.parentId
 					Calendar.addChange(calendar._id,_id+".ics",1);
 			updateattendeesid.forEach (attendeeid)->
@@ -63,11 +63,12 @@ Meteor.methods
 					end:doc.end,
 					allDay:doc.allDay,
 					description:doc.description,
-					alarms:doc.alarms,
-					remindtimes:doc.remindtimes,
-					attendees:doc.attendees,
-					componenttype:doc.componenttype
+					alarms: doc.alarms,
+					remindtimes: doc.remindtimes,
+					attendees: doc.attendees,
+					componenttype: doc.componenttype,
 					lastmodified: doc.lastmodified,
+					Isdavmodified:false,
 					firstoccurence:doc.firstoccurence,
 					lastoccurence: doc.lastoccurence,
 					etag: doc.etag,

@@ -211,6 +211,8 @@ Events._simpleSchema = new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
+	Isdavmodified:
+		type:Boolean
 		optional:true
 		autoform:
 			omit:true

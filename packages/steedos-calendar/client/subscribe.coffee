@@ -1,5 +1,4 @@
 calendarsSub = new SubsManager();
-
 Meteor.startup ->
 	calendarsSub.subscribe "calendars"
 	calendarsSub.subscribe "subcalendars"
@@ -50,6 +49,13 @@ Meteor.startup ->
 										);
 		,10*1000)																
 
+	setInterval(
+		()->
+			events=Events.find().fetch()
+			events.forEach (event)->
+				if event.Isdavmodified
+					Meteor.call('davModifiedEvent',event)
+		,30*1000)
 Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")
