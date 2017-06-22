@@ -42,6 +42,7 @@ Meteor.methods
 				uri:_id+".ics"
 				ownerId:doc.ownerId
 				lastmodified:doc.lastmodified
+				Isdavmodified:false
 				firstoccurence:doc.firstoccurence
 				lastoccurence:doc.lastoccurence
 				attendees:doc.attendees

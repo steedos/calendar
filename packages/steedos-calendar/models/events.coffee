@@ -187,20 +187,22 @@ Events._simpleSchema = new SimpleSchema
 			omit: true
 	"attendees.$.role":
 		type:String
-
+		optional: true
 	"attendees.$.cutype": 
 		type:String
-
+		optional: true
 	"attendees.$.partstat": 
 		type:String
-
+		optional: true
 	"attendees.$.cn": 
 		type:String
 		optional: true
 	"attendees.$.mailto": 
 		type:String
+		optional: true
 	"attendees.$.id": 
 		type:String
+		optional: true
 	"attendees.$.description": 
 		type:String
 		optional: true
@@ -209,7 +211,9 @@ Events._simpleSchema = new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
-
+		optional:true
+		autoform:
+			omit:true
 Events.attachSchema Events._simpleSchema
 
 if Meteor.isClient
