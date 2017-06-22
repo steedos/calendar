@@ -9,6 +9,10 @@ Tracker.autorun ()->
 	Steedos.Helpers.setAppTitle(t "Steedos Calendar");
 
 Meteor.startup ->
+	if Meteor.isClient
+		# 因日历中fullCalendar控件在大字体下拖动新建事件有BUG，这里暂时禁用浏览器中的大字体功能
+		if not Steedos.isNode() and not Steedos.isAndroidOrIOS()
+			Steedos.applyAccountZoomValue = ->
 	Tracker.autorun ()->
 		if Meteor.userId()
 			Meteor.call('calendarInit',Meteor.userId(),moment_timezone.tz.guess())
