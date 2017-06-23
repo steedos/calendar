@@ -60,10 +60,10 @@ Package.onUse(function(api) {
 
     api.use('steedos:sso')
     api.use('steedos:adminlte@2.3.12_3');
-    api.use('steedos:base@0.0.18');
-    api.use('steedos:accounts@0.0.3');
+    api.use('steedos:base@0.0.27');
+    api.use('steedos:accounts@0.0.6');
     api.use('steedos:theme@0.0.11');
-    api.use('steedos:i18n@0.0.3');
+    api.use('steedos:i18n@0.0.5');
     api.use('steedos:calendar-i18n@0.0.2_4');
 	api.use('steedos:autoform@0.0.1');
 
