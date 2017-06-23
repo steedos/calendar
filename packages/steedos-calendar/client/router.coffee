@@ -5,7 +5,7 @@ checkUserSigned = (context, redirect) ->
 
 calendarRoutes = FlowRouter.group
 	triggersEnter: [ checkUserSigned ],
-	prefix: '/calendar',
+	prefix: '/',
 	name: 'calendar'
 
 calendarRoutes.route '/',
@@ -17,7 +17,3 @@ calendarRoutes.route '/event/:_id',
 	action: (params, queryParams)->
 		BlazeLayout.render 'calendarLayout',
 			main: "eventDetail"
-
-FlowRouter.route '/',
-	action: (params, queryParams)->
-		FlowRouter.go "/calendar"
