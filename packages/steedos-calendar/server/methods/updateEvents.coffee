@@ -39,6 +39,7 @@ Meteor.methods
 						calendarid:calendar._id
 						description:doc.description
 						alarms:doc.alarms
+						remindtimes: doc.remindtimes
 						componenttype:doc.componenttype
 						uid:_id
 						uri:_id+".ics"
@@ -86,7 +87,10 @@ Meteor.methods
 		else
 			Calendar.addCalendarObjects(obj.ownerId,obj,operation);
 			Events.direct.update {parentId:obj.parentId}, {$set:
-				attendees:obj.attendees},{ multi: true }	
+				attendees:obj.attendees},{ multi: true }
+			Events.direct.update {_id:obj._id}, {$set:
+				alarms:obj.alarms
+				remindtimes:obj.remindtimes}	
 			events=Events.find({parentId:obj.parentId}).fetch()
 			events.forEach (event)->
 				Calendar.addChange(event.calendarid,event.uri,2)

@@ -107,12 +107,12 @@ Template.event_detail_modal.helpers
 		return {}
 
 	isAlarmDisabled: ()->
-		obj = Template.instance().data
-		ownerId = obj.ownerId
-		if ownerId == Meteor.userId()
-			return false
-		else
-			return true
+		# obj = Template.instance().data
+		# ownerId = obj.ownerId
+		# if ownerId == Meteor.userId()
+		# 	return false
+		# else
+		# 	return true
 
 	partstatIcon: (partstat)->
 		if partstat == "ACCEPTED"
