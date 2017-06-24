@@ -65,7 +65,7 @@ Calendar.generateCalendar = ()->
 			defaultView = 'agendaWeek'
 		$('#calendar').fullCalendar
 			height: ()->
-				return $('#calendar').height() - 1
+				return $('#calendar').height() - 2
 			handleWindowResize: true
 			header: 
 				left: ''
