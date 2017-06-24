@@ -39,8 +39,8 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 		if eventsSub.ready()
 			unless $("[data-toggle=offcanvas]").length 
 				$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
-			unless $("button#add-event").length
-				$(".fc-button-group").prepend('<button type="button" class="btn btn-default" id="add-event"><i class="ion ion-plus-round"></i></button>')
+			unless $("button.btn-add-event").length
+				$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-add-event"><i class="ion ion-plus-round"></i></button>')
 			events = Events.find(calendarid:{$in: params.calendar}).fetch()
 			callback(events)				
 			c.stop()
@@ -196,7 +196,7 @@ Calendar.generateCalendar = ()->
 
 
 Template.calendarContainer.events
-	'click button#add-event': ()->
+	'click button.btn-add-event': ()->
 		calendarid = Session.get 'calendarid'
 		start = new Date()
 		end = new Date()
