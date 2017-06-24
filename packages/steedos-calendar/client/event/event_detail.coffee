@@ -107,7 +107,12 @@ Template.event_detail_modal.helpers
 		return {}
 
 	isAlarmDisabled: ()->
-		# obj = Template.instance().data
+		obj = Template.instance().data
+		calendar = Calendars.findOne({_id:obj.calendarid})
+		if calendar
+			return false
+		else
+			return true
 		# ownerId = obj.ownerId
 		# if ownerId == Meteor.userId()
 		# 	return false
@@ -137,7 +142,8 @@ Template.event_detail_modal.events
 
 	'click button.save_events': (event, template)->
 		$('body').addClass "loading"
-		obj = template.data
+		obj = 
+		oldcalendarid=obj.calendarid
 		if obj.calendarid!=AutoForm.getFieldValue("calendarid","eventsForm")
 			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid","eventsForm")
 				relatetodefaultcalendar="Yes"
@@ -163,7 +169,7 @@ Template.event_detail_modal.events
 				attendee.partstat=val
 				attendee.description=description
 
-		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,
+		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid,
 			(error,result) ->
 				if !error
 					$('[data-dismiss="modal"]').click()
