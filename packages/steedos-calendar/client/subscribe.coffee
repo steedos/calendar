@@ -13,10 +13,10 @@ Meteor.startup ->
 				if events
 					events.forEach (event)->
 						tempReminders = []
-						if event.remindtimes and event.end-currenttime._d>0
-							event.remindtimes.forEach (remindtime)->
+						remindtimes = event.remindtimes
+						if remindtimes and event.end - currenttime._d>0
+							remindtimes.forEach (remindtime)->
 								if remindtime-currenttime._d<=0 and !Session.get(event._id+":isRemindlater")
-									remindtimes=event.remindtimes
 									subdays =event.start.getDate()-currenttime._d.getDate()
 									if subdays==0
 										if event.start.getHours()>=12
