@@ -14,9 +14,6 @@ eventsSub = new SubsManager()
 eventsRange = null
 eventsLoading = false 
 
-Meteor.startup ->
-	
-	
 Calendar.reloadEvents = () ->
 	eventsDep.depend()
 	$("#calendar").fullCalendar("refetchEvents")
