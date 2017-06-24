@@ -13,13 +13,29 @@ Meteor.startup ->
 				if events
 					events.forEach (event)->
 						tempReminders = []
-						if event.remindtimes
+						if event.remindtimes and event.end-currenttime._d>0
 							event.remindtimes.forEach (remindtime)->
 								if remindtime-currenttime._d<=0 and !Session.get(event._id+":isRemindlater")
 									remindtimes=event.remindtimes
+									subdays =event.start.getDate()-currenttime._d.getDate()
+									if subdays==0
+										if event.start.getHours()>=12
+											remindText="定于下午"+moment(event.start).format("hh:mm")
+										else
+											remindText="定于上午"+moment(event.start).format("hh:mm")
+									else if subdays==1
+											if event.start.getHours()>=12
+												remindText="定于明天下午"+moment(event.start).format("hh:mm")
+											else
+												remindText="定于明天上午"+moment(event.start).format("hh:mm")
+										else
+											if event.start.getHours()>=12
+												remindText="定于后天下午"+moment(event.start).format("hh:mm")
+											else
+												remindText="定于后天上午"+moment(event.start).format("hh:mm")
 									swal({
 										  title: event.title,
-										  text: "定于"+moment(event.start).format("YYYY年MM月DD日 HH:mm"),
+										  text: remindText,
 										  type: "warning",
 										  showCancelButton: true,
 										  cancelButtonText:"关闭",
