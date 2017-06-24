@@ -51,15 +51,19 @@ Meteor.startup ->
 
 	setInterval(
 		()->
-			events=Events.find().fetch()
-			events.forEach (event)->
-				if event.Isdavmodified
-					Meteor.call('davModifiedEvent',event)
+			Meteor.call('davModifiedEvent')
 		,30*1000)
 Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")
-		if localStorage.getItem("calendarid:"+Meteor.userId())=="undefined" || localStorage.getItem("calendarid:"+Meteor.userId())==null
+		if localStorage.getItem("calendarid:"+Meteor.userId())
+			selectCalendar=Calendars.findOne({_id:localStorage.getItem("calendarid:"+Meteor.userId())})
+			console.log selectCalendar
+			if !selectCalendar
+				console.log "000"
+				defaultcalendar=Calendars.find({isDefault:true}).fetch()
+				localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar[0]?._id)
+		else
 			defaultcalendar=Calendars.find({isDefault:true}).fetch()
 			localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar[0]?._id)
 		Session.set("calendarid",localStorage.getItem("calendarid:"+Meteor.userId()))
