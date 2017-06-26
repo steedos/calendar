@@ -17,6 +17,7 @@ Meteor.methods
 		}
 		attendees.push attendee  	
 		doc?.attendees = attendees
+		doc.Isdavmodified = false
 		doc = Calendar.addCalendarObjects(userId,doc,1)
 		Events.insert(doc,(error,result)->
 				if !error

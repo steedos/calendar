@@ -2,7 +2,7 @@ Meteor.methods
 	removeEvents :(obj)->
 		Events.direct.remove({_id:obj._id})
 		Calendar.addChange(obj.calendarid,obj.uri,3);
-		if obj.parentId==obj._id
+		if obj.ownerId==Meteor.userId()
 			attendeesid=_.pluck(obj.attendees,'id');
 			attendeesid.forEach (attendeeid)->
 				calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
@@ -12,8 +12,6 @@ Meteor.methods
 					Calendar.addChange(calendarid,event[0].uri,3);
 		attendeesid=_.pluck(obj.attendees,'id');
 		dx=attendeesid.indexOf(Meteor.userId())
-		console.log dx
-		console.log obj.attendees[dx]
 		obj.attendees[dx].partstat="DECLINED"
 		Events.direct.update {parentId:obj.parentId},{$set:
 			attendees:obj.attendees},{ multi: true }
