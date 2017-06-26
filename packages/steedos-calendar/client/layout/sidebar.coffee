@@ -96,6 +96,7 @@ Template.calendarSidebar.events
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
 		$('.btn.calendar-add').click();
+		$('.modal-body').addClass("modal-zoom")
 
 	'click i.calendar-edit': (event)->
 		if Meteor.userId()!=this.ownerId
@@ -103,10 +104,12 @@ Template.calendarSidebar.events
 			return;
 		Session.set("cmDoc", this);
 		$('.btn.calendar-edit').click();
+		$('.modal-body').addClass("modal-zoom")
 
 	'click i.calendar-show': (event)->
 		Session.set("cmDoc", this);
 		$('.btn.calendar-show').click();
+		$('.modal-body').addClass("modal-zoom")
 	
 	'click .my-calendar': (event)->
 		selectcalendarid=Session.set("calendarid",this._id);
@@ -116,6 +119,7 @@ Template.calendarSidebar.events
 	'click i.subscribe-show': (event)->
 		Session.set("cmDoc", this);
 		$('.btn.subscribe-show').click();
+		$('.modal-body').addClass("modal-zoom")
 
 	'click i.calendar-delete': (event)->
 		
