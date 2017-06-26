@@ -9,13 +9,11 @@
           <a href="#" class="calendar-row my-calendar">
             <div class="check">
               <i class="fa {{#if isChecked}}fa-check{{/if}}"></i>
+              <i class="dot" style="background-color:{{color}};"></i>
             </div>
-            <div class="dot" style="background-color:{{color}};"></div>
-            <div class="pull-left-title">
-                <span>{{title}}</span>
-            </div>
-              <span class="pull-right-container">
-              <div class="operate-box">
+            <span>{{title}}</span>
+            <span class="pull-right-container">
+            <div class="operate-box">
               {{#if isCalendarOwner}}
                   {{#if isDefault}}
                         <i class="fa fa-edit calendar-edit"></i>
@@ -28,8 +26,8 @@
                 <i class="fa fa-info-circle calendar-show"></i>
                 <!-- &nbsp;&nbsp;<i class="fa fa-eye-slash calendar-hide"></i> -->
               {{/if}}
-              </div>
-              </span>
+            </div>
+            </span>
           </a>
         </li>
         {{/each}}
@@ -41,17 +39,15 @@
           <a href="#" class="calendar-row">
             <div class="check">
               <i class="fa {{#if isChecked}}fa-check{{/if}}"></i>
+              <i class="dot" style="background-color:{{color}};"></i>
             </div>
-            <div class="dot" style="background-color:{{color}};"></div>
-            <div class="pull-left-title">
-                <span>{{calendarname}}</span>
-            </div>
-              <span class="pull-right-container">
+            <span>{{calendarname}}</span>
+            <span class="pull-right-container">
               <div class="operate-box">
                 <i class="fa fa-info-circle subscribe-show"></i>
                 &nbsp;&nbsp;<i class="fa fa-eye-slash subscribe-hide"></i>
               </div>
-              </span>
+            </span>
           </a>
         </li>
         {{/each}}
