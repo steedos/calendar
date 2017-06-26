@@ -53,5 +53,11 @@
   "calendar_hide_success": "取消订阅成功",
   "calendar_hide_failed": "取消订阅失败",
   "calendar_hide_succsee_info": "该日历已被取消订阅",
-  "start_time_must_be_less_than_end_time": "开始时间必须小于结束时间"
+  "start_time_must_be_less_than_end_time": "开始时间必须小于结束时间",
+  "call_at_pm":"定于下午 %s",
+  "call_at_am":"定于上午 %s",
+  "call_at_tomorrow_pm":"定于明天下午 %s",
+  "call_at_tomorrow_am":"定于明天上午 %s",
+  "call_at_the_day_after_tomorrow_pm":"定于后天下午 %s",
+  "call_at_the_day_after_tomorrow_am":"定于后天上午 %s"
 }

@@ -20,19 +20,19 @@ Meteor.startup ->
 									subdays =event.start.getDate()-currenttime._d.getDate()
 									if subdays==0
 										if event.start.getHours()>=12
-											remindText="定于下午"+moment(event.start).format("hh:mm")
+											remindText=t("call_at_pm",moment(event.start).format("hh:mm"))
 										else
-											remindText="定于上午"+moment(event.start).format("hh:mm")
+											remindText=t("call_at_am",moment(event.start).format("hh:mm"))
 									else if subdays==1
 											if event.start.getHours()>=12
-												remindText="定于明天下午"+moment(event.start).format("hh:mm")
+												remindText=t("call_at_tomorrow_pm",moment(event.start).format("hh:mm"))
 											else
-												remindText="定于明天上午"+moment(event.start).format("hh:mm")
+												remindText=t("call_at_tomorrow_am",moment(event.start).format("hh:mm"))
 										else
 											if event.start.getHours()>=12
-												remindText="定于后天下午"+moment(event.start).format("hh:mm")
+												remindText=t("call_at_the_day_after_tomorrow_pm",moment(event.start).format("hh:mm"))
 											else
-												remindText="定于后天上午"+moment(event.start).format("hh:mm")
+												remindText=t("call_at_the_day_after_tomorrow_am",moment(event.start).format("hh:mm"))
 									swal({
 										  title: event.title,
 										  text: remindText,
