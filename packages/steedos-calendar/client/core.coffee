@@ -19,6 +19,7 @@ Meteor.startup ->
 			
 Meteor.startup ->
 	if Meteor.isClient
+		$("body").removeClass("skin-blue").addClass("skin-blue-light")
 		db.apps.INTERNAL_APPS = []
 		Tracker.autorun ()->
 			if !Meteor.userId() and !Meteor.loggingIn()
