@@ -34,8 +34,8 @@ Meteor.startup ->
 											else
 												remindText=t("call_at_the_day_after_tomorrow_am",moment(event.start).format("hh:mm"))
 									swal({
-										  title: event.title,
-										  text: remindText,
+										  title: event.title+remindText,
+										  #text: '',
 										  type: "warning",
 										  showCancelButton: true,
 										  cancelButtonText:"关闭",

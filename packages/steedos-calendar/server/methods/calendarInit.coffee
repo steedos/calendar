@@ -2,7 +2,7 @@ Meteor.methods
 	calendarInit: (userId,timezone) ->
 		if Calendars.find({"ownerId":userId},{"isDefault":true}).count()==0
 			name=Meteor.users.findOne({_id:userId})?.name
-			if name==null
+			if !name
 				name="未命名"
 			doc =
 				title:name,

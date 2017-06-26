@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 icalendar = require('icalendar');
 MD5 = require('MD5');
+ICAL = require('ical.js');
 @moment_timezone = require('moment-timezone');
 Meteor.startup ->
 	
@@ -62,16 +63,17 @@ Meteor.startup ->
 		vtimezone.addProperty("TZID",zones.name);
 		standard = vtimezone.addComponent("STANDARD");
 		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[0])/60+"00");
+		standard.addProperty("RRULE","FREQ=YEARLY;UNTIL=19910914T150000Z;BYMONTH=9;BYDAY=3SU")
 		standard.addProperty("TZOFFSETTO","0"+(-zones.offsets[1])/60+"00");
 		standard.addProperty("TZNAME",zones.abbrs[0]);
+		date=new Date(2017/5/1);
+		standard.addProperty("DTSTART",new Date(1989,8,17,8,0,0));
 		daylight = vtimezone.addComponent("DAYLIGHT");
 		daylight.addProperty("TZOFFSETFROM","0"+(-zones.offsets[1])/60+"00");
-		daylight.addProperty("DTSTART","19910414T000000");
+		daylight.addProperty("DTSTART",new Date(1991,3,14,8,0,0));
 		daylight.addProperty("TZNAME","GMT+8");
 		daylight.addProperty("TZOFFSETTO","0"+(-zones.offsets[0])/60+"00");
-		daylight.addProperty("RDATE","19910414T000000");
-		date=new Date(2017/5/1);
-		standard.addProperty("DTSTART",date);
+		daylight.addProperty("RDATE",new Date(1991,3,14,8,0,0));
 		if doc.alarms !=undefined
 			doc.alarms.forEach (alarm)->
 				Alarm = vevent.addComponent('VALARM');
@@ -102,20 +104,21 @@ Meteor.startup ->
 	addCalendarObjects:(userId, doc,operation)->
 		if doc.start > doc.end
 			throw new Meteor.Error(400, "start_time_must_be_less_than_end_time");
-		myDate = new Date();
-		doc.lastmodified = parseInt(myDate.getTime()/1000);
-		myDate = new Date(doc.start)
-		doc.firstoccurence = parseInt(myDate.getTime()/1000);
-		myDate = new Date (doc.end)
-		doc.lastoccurence = parseInt(myDate.getTime()/1000);
 		doc.remindtimes=Calendar.remindtimes(doc.alarms,doc.start)
-		doc.calendardata = Calendar.addEvent(userId,doc);
-		doc.etag = MD5(doc.calendardata);
-		doc.size = doc.calendardata.length;
-		color = Calendars.findOne({_id:doc.calendarid}).color;
-		doc.eventcolor =color;
-		if operation==1
-			doc.parentId=doc._id;
+		if !doc.Isdavmodified
+			myDate = new Date();
+			doc.lastmodified = parseInt(myDate.getTime()/1000);
+			myDate = new Date(doc.start)
+			doc.firstoccurence = parseInt(myDate.getTime()/1000);
+			myDate = new Date (doc.end)
+			doc.lastoccurence = parseInt(myDate.getTime()/1000);
+			doc.calendardata = Calendar.addEvent(userId,doc);
+			doc.etag = MD5(doc.calendardata);
+			doc.size = doc.calendardata.length;
+			# color = Calendars.findOne({_id:doc.calendarid}).color;
+			# doc.eventcolor =color;
+			if operation==1
+				doc.parentId=doc._id;
 		return doc
 	remindtimes:(alarms,start)->
 		remindtimes=[]
