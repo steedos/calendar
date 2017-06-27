@@ -17,5 +17,6 @@ Meteor.startup ->
 		if Steedos.getAccountZoomValue()
 			$(window).trigger("resize")
 
-if Meteor.isClient
-	db.apps.INTERNAL_APPS = []
+Meteor.startup ->
+	if Meteor.isClient
+		db.apps.INTERNAL_APPS = []
