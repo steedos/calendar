@@ -3,17 +3,22 @@ Meteor.methods
 		events=Events.find().fetch()
 		events.forEach (obj)->
 			if obj.Isdavmodified
-				console.log obj
 				jcalData = ICAL.parse(obj.calendardata);
 				vcalendar = new ICAL.Component(jcalData);
 				vevent = vcalendar.getFirstSubcomponent('vevent');
 				obj.title = vevent.getFirstPropertyValue('summary').toString();
+				if vevent.getFirstPropertyValue('description')!=null
+					obj.description = vevent.getFirstPropertyValue('description').toString();
 				start =vevent.getFirstPropertyValue('dtstart').toString()
 				start=new Date(start)
 				obj.start = new Date(start-8*60*60*1000)
 				end =vevent.getFirstPropertyValue('dtend').toString()
 				end=new Date(end)
 				obj.end=new Date(end-8*60*60*1000)
+				if (obj.end - obj.start)%86400==0
+					obj.allDay = true
+				else
+					obj.allDay = false
 				obj.ownerId =Meteor.userId()
 				obj.parentId = obj._id
 				props = vevent.getAllProperties('attendee')

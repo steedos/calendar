@@ -55,7 +55,7 @@ Meteor.startup ->
 	#新建或跟更新事件，事件对应的calendardata
 	addEvent :(userId, doc)->
 		ical = new icalendar.iCalendar();
-		vevent = new icalendar.VEvent(doc._id);
+		vevent = new icalendar.VEvent(doc.uid);
 		timezone=Calendars.findOne({_id:doc.calendarid}).timezone;
 		zones=moment_timezone.tz.zone(timezone);
 		vtimezone=ical.addComponent('VTIMEZONE');

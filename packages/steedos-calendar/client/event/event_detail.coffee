@@ -21,9 +21,9 @@ Template.event_detail_modal.helpers
 
 	showActionBox:()->
 		obj = Template.instance().data
-		ownerId = obj.ownerId
-		if ownerId == Meteor.userId()
-			return "none"
+		# ownerId = obj.ownerId
+		# if ownerId == Meteor.userId()
+		# 	return "none"
 		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
@@ -59,8 +59,7 @@ Template.event_detail_modal.helpers
 		obj.declinednum=0
 		obj.actionnum=0#待回复
 		obj.curstat=""
-		calendar=Calendars.findOne({_id:obj.calendarid})
-		console.log calendar 
+		calendar=Calendars.findOne({_id:obj.calendarid}) 
 		if Meteor.userId()==obj.ownerId and calendar
 			obj.isOwner = "true"
 			obj.formOpt = "normal"
@@ -83,10 +82,10 @@ Template.event_detail_modal.helpers
 		return obj
 
 	isShowDeleteMember: (id) ->
-		obj = Template.instance().data
-		ownerId = obj.ownerId
-		if id == ownerId
-			return true
+		# obj = Template.instance().data
+		# ownerId = obj.ownerId
+		# if id == ownerId
+		# 	return true
 
 	isShowAddMembers: ()->
 		ownerId = Template.instance().data.ownerId
@@ -155,7 +154,6 @@ Template.event_detail_modal.events
 			relatetodefaultcalendar = null
 		if AutoForm.getFieldValue("calendarid","eventsForm") == undefined
 			relatetodefaultcalendar = null
-		console.log relatetodefaultcalendar
 		obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm") || obj.calendarid
 		obj.title = AutoForm.getFieldValue("title","eventsForm") || obj.title
 		obj.start = AutoForm.getFieldValue("start","eventsForm") || obj.start 

@@ -27,7 +27,7 @@ Meteor.methods
 			#新加的attendees需要新建event
 			doc=Calendar.addCalendarObjects(obj.ownerId,obj,operation);	
 			addattendeesid.forEach (attendeeid)->
-				calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})
+				calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})				
 				if calendar==undefined
 					Meteor.call('calendarInit',attendeeid,Defaulttimezone);
 					calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})			
@@ -62,7 +62,7 @@ Meteor.methods
 					Events.direct.update {_id:obj._id}, {$set: 
 						calendarid:doc.calendarid}
 					Calendar.addChange(doc.calendarid,doc.uri,2)
-			Events.direct.update {parentId:obj.parentId,ownerId:obj.ownerId}, {$set: 
+			Events.direct.update {parentId:obj.parentId}, {$set: 
 				title:doc.title,
 				start:doc.start,
 				end:doc.end,

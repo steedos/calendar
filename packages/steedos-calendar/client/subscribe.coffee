@@ -28,7 +28,7 @@ Meteor.startup ->
 												remindText="定于明天下午"+moment(event.start).format("hh:mm")
 											else
 												remindText="定于明天上午"+moment(event.start).format("hh:mm")
-										else
+										else if subdays==2
 											if event.start.getHours()>=12
 												remindText="定于后天下午"+moment(event.start).format("hh:mm")
 											else

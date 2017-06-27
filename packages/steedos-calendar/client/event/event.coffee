@@ -154,7 +154,6 @@ Calendar.generateCalendar = ()->
 					AutoForm.resetForm("eventsForm")
 					Modal.show('event_detail_modal', event)
 			eventDrop: (event, delta, revertFunc)->
-				console.log event
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
 					swal(t("calendar_no_permission"),t("calnedar_no_permission_modify_event"),"warning");
@@ -168,7 +167,6 @@ Calendar.generateCalendar = ()->
 
 				#Meteor.call('updateEvents',)
 			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
-				console.log event
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
 					swal(t("calendar_no_permission"),t("calnedar_no_permission_modify_event"),"warning");
