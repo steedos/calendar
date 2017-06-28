@@ -182,9 +182,9 @@ Template.event_detail_modal.events
 		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid","eventsForm"))<0
 			calendarIds.push AutoForm.getFieldValue("calendarid","eventsForm")
 			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
-			Session.set("calendarIds",calendarIds)
-			Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
-			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
+			Session.set("calendarIds",calendarIds)			
+		localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid","eventsForm"))
+		Session.set("calendarid",AutoForm.getFieldValue("calendarid","eventsForm"));
 		return
 	
 	'click i.add-members': (event, template)->
