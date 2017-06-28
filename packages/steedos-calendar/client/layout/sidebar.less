@@ -9,7 +9,7 @@
 	.calendar-row{
 		.check{
 			position: relative;
-			right: 6px;
+			right: -1px;
 		}
 	}
 }
@@ -51,9 +51,6 @@
 			top: 0 !important;
 			bottom: 3px;
 			overflow-y: auto;
-			.ion {
-				top: 0px!important;
-			}
 		}
 		div.sidebar-bottom{
 			padding-top: 10px;
@@ -84,17 +81,12 @@
 	.calendar-row{
 		.check{
 			display: inline-block;
-			width: 32px;
+			width: 16px;
 			height: 100%;
-		}
-		.dot{
-			height: 8px;
-			width: 8px;
-			border-radius: 4px;
-			display: inline-block;
-			float: right;
-			margin-top: 5px;
-			margin-right: 3px;
+			.ion{
+				font-size: 130%;
+				top: 2px !important;
+			}
 		}
 		.pull-left-title{
 			margin-left: 36px;

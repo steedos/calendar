@@ -77,12 +77,12 @@ Template.calendarSidebar.events
 		if Session.get("calendarIds")
 			calendarIds=Session.get("calendarIds")
 		checkBox = $(event.currentTarget.childNodes[1])
-		checkBox.toggleClass("fa-check")
+		checkBox.toggleClass("ion-android-checkbox")
 		if this?.uri
 			id = this.uri
 		else
 			id = this._id
-		if checkBox.hasClass("fa-check")
+		if checkBox.hasClass("ion-android-checkbox")
 			calendarIds.push(id)
 		else
 			dx = calendarIds.indexOf(id)

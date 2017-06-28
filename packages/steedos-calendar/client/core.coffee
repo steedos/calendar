@@ -17,6 +17,8 @@ Meteor.startup ->
 		if Steedos.getAccountZoomValue()
 			$(window).trigger("resize")
 
+	$("body").removeClass("skin-blue").addClass("skin-blue-light")
+
 Meteor.startup ->
 	if Meteor.isClient
 		db.apps.INTERNAL_APPS = []
