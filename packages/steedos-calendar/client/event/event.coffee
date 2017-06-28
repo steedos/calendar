@@ -200,6 +200,7 @@ Template.calendarContainer.events
 		start = moment(new Date()).format("YYYY-MM-DD HH:mm")
 		end = moment(new Date()).format("YYYY-MM-DD HH:mm")
 		doc = {
+			title: t("new_event")
 			start: start
 			end: end
 			calendarid: calendarid

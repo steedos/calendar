@@ -7,15 +7,11 @@
 Calendars._simpleSchema = new SimpleSchema 
 	title:  
 		type: String,
-		# label:t("calendar_title")
 		defaultValue: ->
 			return t("calendar_add_calendar")
-		label:"标题"
 
 	members:  
 		type: [String],
-		# label:t("calendar_members")
-		label:"成员"
 		defaultValue:[""]
 		autoform:
 			type: "selectuser"
@@ -24,8 +20,6 @@ Calendars._simpleSchema = new SimpleSchema
 	visibility:
 		type: String,
 		optional: true,
-		# label:t("calendar_visibility")
-		#label:"可见性"
 		#allowedValues: ["private","share"],
 		defaultValue: "private"
 		autoform:
@@ -33,8 +27,6 @@ Calendars._simpleSchema = new SimpleSchema
 	
 	color:  
 		type: String,
-		# label:t("calendar_color")
-		label:"颜色"
 		defaultValue: ->
 				# count1=Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()}]}).count()
 				# count2=calendarsubscriptions.find({principaluri:Meteor.userId()}).count()
