@@ -38,9 +38,9 @@ Meteor.startup ->
 										  #text: '',
 										  type: "warning",
 										  showCancelButton: true,
-										  cancelButtonText:"关闭",
+										  cancelButtonText:t("close"),
 										  confirmButtonColor: "#DD6B55",
-										  confirmButtonText: "稍后提醒",
+										  confirmButtonText: t("remind_me_later"),
 										  closeOnConfirm: true,
 										  closeOnCancel: true,
 										  html: false
