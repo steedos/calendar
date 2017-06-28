@@ -32,6 +32,7 @@ Meteor.methods
 			_id = Calendar.uuid()
 			Events.direct.insert
 				_id:_id;
+				title:doc.title
 				start:doc.start
 				end:doc.end
 				allDay:doc.allDay
