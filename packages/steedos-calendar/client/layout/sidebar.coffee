@@ -69,6 +69,8 @@ Template.calendarSidebar.events
 		$("span.span-resources div.has-items").children().remove(".item")
 
 	'click div.check':(event)->
+		event.stopPropagation()
+
 		# calendarIdsString=localStorage.getItem("calendarIds:"+Meteor.userId())
 		calendarIds=[]
 		# if !calendarIdsString
