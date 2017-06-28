@@ -55,10 +55,10 @@ Calendar.hasPermission = ( event )->
 Calendar.generateCalendar = ()->
 	if !$('#calendar').children()?.length
 		if Steedos.isMobile()
-			option = 'month,agendaDay,listWeek'
-			defaultView = 'listWeek'
+			rightHeaderView = 'month,agendaDay'
+			defaultView = 'month'
 		else
-			option = 'month,agendaWeek,agendaDay,listWeek'
+			rightHeaderView = 'month,agendaWeek,agendaDay,listWeek'
 			defaultView = 'agendaWeek'
 		$('#calendar').fullCalendar
 			height: ()->
@@ -67,7 +67,7 @@ Calendar.generateCalendar = ()->
 			header: 
 				left: ''
 				center: 'prev title next'
-				right: option
+				right: rightHeaderView
 			selectable: true
 			selectHelper: true
 			# weekends:false
