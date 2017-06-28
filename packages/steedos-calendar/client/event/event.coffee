@@ -75,6 +75,7 @@ Calendar.generateCalendar = ()->
 			editable: true
 			eventLimit: true
 			weekNumbers:false
+			nowIndicator: true
 			defaultView:defaultView
 			events: Calendar.getEventsData
 			timeFormat: 'H:mm'
