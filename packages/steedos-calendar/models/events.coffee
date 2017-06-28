@@ -1,4 +1,5 @@
 @Events = new Mongo.Collection('calendar_objects');
+moment_timezone = require('moment-timezone');
 icalendar = require('icalendar');
 created = new Date();
 # locale = Session.get 'steedos-locale'
@@ -16,22 +17,21 @@ Events._simpleSchema = new SimpleSchema
 		# label:t("calendar_event_start")
 		label:"开始时间"
 		autoform: 
-			afFieldInput:
-				type:()->
-					if Steedos.isMobile()
-						return "date"
-					else
-						return "bootstrap-datetimepicker"
-				dateTimePickerOptions:()->
-					if Steedos.isMobile()
-						return null
-					else
-						return  {
-							language:'zh-cn'
-							format:"YYYY-MM-DD HH:mm"
-							sideBySide:true
-						}
-					
+			type:()->
+				if Steedos.isMobile()
+					return "datetime-local"
+				else
+					return "bootstrap-datetimepicker"
+			dateTimePickerOptions:()->
+				if Steedos.isMobile()
+					return null
+				else
+					return  {
+						language:'zh-cn'
+						format:"YYYY-MM-DD HH:mm"
+						sideBySide:true
+					}
+
 	end:  
 		type: Date
 		# label:t("calendar_event_end")
@@ -39,7 +39,7 @@ Events._simpleSchema = new SimpleSchema
 		autoform: 
 			type:()->
 				if Steedos.isMobile()
-					return "date"
+					return "datetime-local"
 				else
 					return "bootstrap-datetimepicker"
 			dateTimePickerOptions:()->

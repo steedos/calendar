@@ -1,3 +1,18 @@
+.sidebar-collapse{
+	.steedos-calendar{
+		.main-sidebar{
+			.sidebar{
+				overflow-y: inherit;
+			}
+		}
+	}
+	.calendar-row{
+		.check{
+			position: relative;
+			right: 6px;
+		}
+	}
+}
 .steedos-calendar{
 	ul.sidebar-menu{
 		margin-top: 3px;
@@ -35,6 +50,7 @@
 			margin-top: 0px;
 			top: 0 !important;
 			bottom: 3px;
+			overflow-y: auto;
 			.ion {
 				top: 0px!important;
 			}
@@ -75,10 +91,10 @@
 			height: 8px;
 			width: 8px;
 			border-radius: 4px;
-			position: absolute;
-			top: 50%;
-			margin-top: -4px;
-			left: 36px;
+			display: inline-block;
+			float: right;
+			margin-top: 5px;
+			margin-right: 3px;
 		}
 		.pull-left-title{
 			margin-left: 36px;

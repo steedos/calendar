@@ -53,5 +53,11 @@
   "calendar_hide_success": "Hide Success",
   "calendar_hide_failed": "Hide Failed",
   "calendar_hide_succsee_info": "This Calendar has Hided",
-  "start_time_must_be_less_than_end_time": "Start time must be less than end time"
+  "start_time_must_be_less_than_end_time": "Start time must be less than end time",
+  "call_at_pm":"Call at %s pm",
+  "call_at_am":"Call at %s am",
+  "call_at_tomorrow_pm":"Call at tomorrow %s pm",
+  "call_at_tomorrow_am":"Call at tomorrow %s am",
+  "call_at_the_day_after_tomorrow_pm":"Call at the day after tomorrow %s pm",
+  "call_at_the_day_after_tomorrow_am":"Call at the day after tomorrow %s am"
 }
