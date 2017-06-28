@@ -132,6 +132,7 @@ Calendar.generateCalendar = ()->
 					Session.set('calendarIds',calendarIds)
 					localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 				doc = {
+					title: t("new_event")
 					start: start.toDate(),
 					end: end.toDate(),
 					calendarid:calendarid

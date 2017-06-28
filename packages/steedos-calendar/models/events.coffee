@@ -8,11 +8,10 @@ Events._simpleSchema = new SimpleSchema
 	title:
 		type: String
 		max: 50
-		defaultValue:"新建事件"
-		# autoform:
-		# 	type:"text"
-		# 	defaultValue:()->
-		# 		return t("new_event")
+		autoform:
+			type:"text"
+			defaultValue:()->
+				return t("new_event")
 
 	start:  
 		type: Date
