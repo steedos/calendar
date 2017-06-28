@@ -19,11 +19,13 @@ Meteor.methods
 			if relatetodefaultcalendar=='Yes'
 				subattendeesid.push Meteor.userId()
 				Calendar.addChange(oldcalendarid,obj.uri,3);
+				#if obj.Isdavmodified==true
+
 			subattendeesid.forEach (attendeeid)->
 				calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
 				event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
 				Events.direct.remove({parentId:obj._id,calendarid:calendarid})
-				Calendar.addChange(calendarid,event[0].uri,3);
+				Calendar.addChange(calendarid,event[0]?.uri,3);
 			#新加的attendees需要新建event
 			doc=Calendar.addCalendarObjects(obj.ownerId,obj,operation);	
 			addattendeesid.forEach (attendeeid)->
