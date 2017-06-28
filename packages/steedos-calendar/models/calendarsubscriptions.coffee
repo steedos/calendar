@@ -1,6 +1,6 @@
 @calendarsubscriptions = new Mongo.Collection('calendar_subscriptions');
 
-calendarsubscriptions.attachSchema new SimpleSchema 
+calendarsubscriptions._simpleSchema = new SimpleSchema 
 	_id:  
 		type: String
 		optional: true
@@ -21,15 +21,18 @@ calendarsubscriptions.attachSchema new SimpleSchema
 
 	calendarname:
 		type: String
-		label:"标题"
 		autoform: 
 			disabled: true
 
 	color:
 		type: String
-		label:"颜色"
 		autoform:
 			type: "bootstrap-minicolors"
+
+calendarsubscriptions.attachSchema calendarsubscriptions._simpleSchema
+
+if Meteor.isClient
+	calendarsubscriptions._simpleSchema.i18n("calendar_subscriptions");
 
 			
 if (Meteor.isServer) 
