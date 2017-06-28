@@ -24,7 +24,7 @@ Template.event_detail_modal.helpers
 		# ownerId = obj.ownerId
 		# if ownerId == Meteor.userId()
 		# 	return "none"
-		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0].id==Meteor.userId()
+		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0]?.id==Meteor.userId()
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		if onlyOne
@@ -183,7 +183,7 @@ Template.event_detail_modal.events
 			calendarIds.push AutoForm.getFieldValue("calendarid","eventsForm")
 			localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 			Session.set("calendarIds",calendarIds)
-			selectcalendarid=Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
+			Session.set("calendarid",AutoForm.getFieldValue("calendarid"));
 			localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid"))
 		return
 	
