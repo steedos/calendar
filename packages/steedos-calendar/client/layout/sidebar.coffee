@@ -131,7 +131,6 @@ Template.calendarSidebar.events
 		dropdownMenu.toggleClass("show-dropdown-menu")
 
 	'click .main-sidebar': (event)->
-		debugger
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
 
 
