@@ -70,11 +70,31 @@
 	.sidebar-menu li:hover{
 		a span .operate-box{
 			visibility:visible;
+			.show-dropdown-menu{
+				display: block;
+			}
+			.dropdown-menu{
+				width: 100px;
+				.subscribe-menu{
+					font-size: 13px;
+					span{
+						margin-left: 5px;
+					}
+				}
+			}
+			@media (max-width: 767px){
+				.dropdown-menu{
+					width: 100px;
+				}
+			}
 		}
 	}
-	.sidebar-menu li{
-		a span .operate-box{
-			visibility:hidden;
+
+	@media(min-width:768px){
+		.sidebar-menu li{
+			a span .operate-box{
+				visibility:hidden;
+			}
 		}
 	}
 

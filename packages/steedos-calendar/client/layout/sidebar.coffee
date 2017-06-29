@@ -112,12 +112,31 @@ Template.calendarSidebar.events
 		$('.modal-body').addClass("modal-zoom")
 	
 	'click .my-calendar': (event)->
+		event.stopPropagation()
 		selectcalendarid=Session.set("calendarid",this._id);
 		#localStorage.removeItem("calendarid:"+Meteor.userId(), this._id)	
 		localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
 		$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color);
-	'click i.subscribe-show': (event)->
+	
+	'click .subscribe-calendar': (event)->
+		event.stopPropagation()
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
+
+	'click .dropdown-toggle': (event)->
+		event.stopPropagation()
+		dropdownMenu = $(event.currentTarget).next()
+		otherMenu = $(".dropdown-menu").not(dropdownMenu)
+		otherMenu.removeClass("show-dropdown-menu")
+		dropdownMenu.toggleClass("show-dropdown-menu")
+
+	'click .main-sidebar': (event)->
+		debugger
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
+
+
+	'click .show-subscribe': (event)->
 		Session.set("cmDoc", this);
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		$('.btn.subscribe-show').click();
 		$('.modal-body').addClass("modal-zoom")
 
@@ -154,7 +173,8 @@ Template.calendarSidebar.events
 
 
 
-	'click i.subscribe-hide': (event)->
+	'click .hide-subscribe': (event)->
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		if this?.uri
 			calendar_id = this.uri
 		else
