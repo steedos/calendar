@@ -12,10 +12,12 @@ Calendars._simpleSchema = new SimpleSchema
 
 	members:  
 		type: [String],
-		defaultValue:[""]
+		optional: false
 		autoform:
 			type: "selectuser"
 			multiple: true
+			defaultValue: ()->
+				return [Meteor.userId()]
 
 	visibility:
 		type: String,
