@@ -10,22 +10,52 @@
             <div class="check">
               <i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
             </div>
-            <span>{{title}}</span>
+            <span>
+              <span class="text-overflow calendar-name">{{title}}</span>
+            </span>
             <span class="pull-right-container">
-            <div class="operate-box">
-              {{#if isCalendarOwner}}
-                  {{#if isDefault}}
-                        <i class="fa fa-edit calendar-edit"></i>
-                  {{else}}
-                        <i class="fa fa-edit calendar-edit"></i>
-                        &nbsp;&nbsp;
-                        <i class="fa fa-trash-o calendar-delete"></i>
-                  {{/if}}
-              {{else}}
-                <i class="fa fa-info-circle calendar-show"></i>
-                <!-- &nbsp;&nbsp;<i class="fa fa-eye-slash calendar-hide"></i> -->
-              {{/if}}
-            </div>
+              <div class="operate-box">
+                {{#if isCalendarOwner}}
+                    {{#if isDefault}}
+                          <!-- <i class="fa fa-edit calendar-edit"></i> -->
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="fa fa-ellipsis-h"></span>
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                              <a class="calendar-menu edit-calendar">
+                                <i class="fa fa-edit"></i>
+                                <span>编辑日历</span>
+                              </a>
+                            </li>
+                          </ul>
+                    {{else}}
+                          <!-- <i class="fa fa-edit calendar-edit"></i>
+                          &nbsp;&nbsp;
+                          <i class="fa fa-trash-o calendar-delete"></i> -->
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="fa fa-ellipsis-h"></span>
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                              <a class="calendar-menu edit-calendar">
+                                <i class="fa fa-edit"></i>
+                                <span>编辑日历</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a class="calendar-menu calendar-delete">
+                                <i class="fa fa-trash-o"></i>
+                                <span>删除日历</span>
+                              </a>
+                            </li>
+                          </ul>
+                    {{/if}}
+                {{else}}
+                  <i class="fa fa-info-circle calendar-show"></i>
+                  <!-- &nbsp;&nbsp;<i class="fa fa-eye-slash calendar-hide"></i> -->
+                {{/if}}
+              </div>
             </span>
           </a>
         </li>
@@ -40,7 +70,7 @@
               <i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
             </div>
             <span>
-              <span class="text-overflow subscribe-calendar-name">{{calendarname}}</span>
+              <span class="text-overflow calendar-name">{{calendarname}}</span>
             </span>
             <span class="pull-right-container">
               <div class="operate-box">
@@ -49,13 +79,13 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                   <li>
-                    <a class="subscribe-menu show-subscribe">
+                    <a class="calendar-menu show-subscribe">
                       <i class="fa fa-info-circle"></i>
                       <span>查看详情</span>
                     </a>
                   </li>
                   <li>
-                    <a class="subscribe-menu hide-subscribe"> 
+                    <a class="calendar-menu hide-subscribe"> 
                       <i class="fa fa-eye-slash subscribe-hide"></i>
                       <span>取消订阅</span>
                     </a>

@@ -98,7 +98,8 @@ Template.calendarSidebar.events
 		$('.btn.calendar-add').click();
 		$('.modal-body').addClass("modal-zoom")
 
-	'click i.calendar-edit': (event)->
+	'click .edit-calendar': (event)->
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		if Meteor.userId()!=this.ownerId
 			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
@@ -140,8 +141,8 @@ Template.calendarSidebar.events
 		$('.btn.subscribe-show').click();
 		$('.modal-body').addClass("modal-zoom")
 
-	'click i.calendar-delete': (event)->
-		
+	'click .calendar-delete': (event)->
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		if Meteor.userId()!=this.ownerId
 			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
