@@ -12,6 +12,7 @@ Meteor.methods
 					Calendar.addChange(calendarid,event[0].uri,3);
 		attendeesid=_.pluck(obj.attendees,'id');
 		dx=attendeesid.indexOf(Meteor.userId())
-		obj.attendees[dx].partstat="DECLINED"
+		if dx>-1
+			obj.attendees[dx].partstat="DECLINED"
 		Events.direct.update {parentId:obj.parentId},{$set:
 			attendees:obj.attendees},{ multi: true }
