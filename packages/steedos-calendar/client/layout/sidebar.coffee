@@ -112,10 +112,11 @@ Template.calendarSidebar.events
 		$('.modal-body').addClass("modal-zoom")
 	
 	'click .my-calendar': (event)->
-		selectcalendarid=Session.set("calendarid",this._id);
-		#localStorage.removeItem("calendarid:"+Meteor.userId(), this._id)	
-		localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
-		$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color);
+		currentCalendarid = Session.set("calendarid")
+		if currentCalendarid != this._id
+			Session.set("calendarid",this._id)
+			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
+			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
 	'click i.subscribe-show': (event)->
 		Session.set("cmDoc", this);
 		$('.btn.subscribe-show').click();
