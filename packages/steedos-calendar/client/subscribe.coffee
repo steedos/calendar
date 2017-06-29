@@ -14,7 +14,9 @@ Meteor.startup ->
 					events.forEach (event)->
 						tempReminders = []
 						remindtimes = event.remindtimes
-						if remindtimes and event.end - currenttime._d>0
+						attendeesid=_.pluck(event.attendees,'id');
+						dx=attendeesid.indexOf(Meteor.userId())
+						if remindtimes and event.end - currenttime._d>0 and event.attendees[dx].partstat=='ACCEPTED'
 							remindtimes.forEach (remindtime)->
 								if remindtime-currenttime._d<=0 and !Session.get(event._id+":isRemindlater")
 									subdays =event.start.getDate()-currenttime._d.getDate()
@@ -68,7 +70,7 @@ Meteor.startup ->
 	setInterval(
 		()->
 			Meteor.call('davModifiedEvent')
-		,30*1000)
+		,10*1000)
 Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")
