@@ -113,10 +113,11 @@ Template.calendarSidebar.events
 	
 	'click .my-calendar': (event)->
 		event.stopPropagation()
-		selectcalendarid=Session.set("calendarid",this._id);
-		#localStorage.removeItem("calendarid:"+Meteor.userId(), this._id)	
-		localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
-		$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color);
+		currentCalendarid = Session.set("calendarid")
+		if currentCalendarid != this._id
+			Session.set("calendarid",this._id)
+			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
+			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
 	
 	'click .subscribe-calendar': (event)->
 		event.stopPropagation()
