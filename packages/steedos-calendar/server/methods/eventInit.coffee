@@ -21,7 +21,6 @@ Meteor.methods
 		doc = Calendar.addCalendarObjects(userId,doc,1)
 		Events.insert(doc,(error,result)->
 				if !error
-					console.log result
 					return result
 				else
 					console.log error

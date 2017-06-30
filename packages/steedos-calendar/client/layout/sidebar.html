@@ -24,7 +24,6 @@
                           <ul class="dropdown-menu dropdown-menu-right">
                             <li>
                               <a class="calendar-menu edit-calendar">
-                                <i class="fa fa-edit"></i>
                                 <span>编辑日历</span>
                               </a>
                             </li>
@@ -39,21 +38,28 @@
                           <ul class="dropdown-menu dropdown-menu-right">
                             <li>
                               <a class="calendar-menu edit-calendar">
-                                <i class="fa fa-edit"></i>
                                 <span>编辑日历</span>
                               </a>
                             </li>
                             <li>
                               <a class="calendar-menu calendar-delete">
-                                <i class="fa fa-trash-o"></i>
                                 <span>删除日历</span>
                               </a>
                             </li>
                           </ul>
                     {{/if}}
                 {{else}}
-                  <i class="fa fa-info-circle calendar-show"></i>
-                  <!-- &nbsp;&nbsp;<i class="fa fa-eye-slash calendar-hide"></i> -->
+                  <!-- <i class="fa fa-info-circle calendar-show"></i> -->
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="fa fa-ellipsis-h"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                      <a class="calendar-menu show-calendar">
+                        <span>查看详情</span>
+                      </a>
+                    </li>
+                  </ul>
                 {{/if}}
               </div>
             </span>
@@ -80,13 +86,11 @@
                 <ul class="dropdown-menu dropdown-menu-right">
                   <li>
                     <a class="calendar-menu show-subscribe">
-                      <i class="fa fa-info-circle"></i>
                       <span>查看详情</span>
                     </a>
                   </li>
                   <li>
                     <a class="calendar-menu hide-subscribe"> 
-                      <i class="fa fa-eye-slash subscribe-hide"></i>
                       <span>取消订阅</span>
                     </a>
                   </li>

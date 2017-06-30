@@ -107,7 +107,7 @@ Template.calendarSidebar.events
 		$('.btn.calendar-edit').click();
 		$('.modal-body').addClass("modal-zoom")
 
-	'click i.calendar-show': (event)->
+	'click .show-calendar': (event)->
 		Session.set("cmDoc", this);
 		$('.btn.calendar-show').click();
 		$('.modal-body').addClass("modal-zoom")
