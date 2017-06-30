@@ -1,7 +1,6 @@
 Meteor.methods
 	initscription: (subscripter) ->
 		obj=Calendars.findOne({ownerId:subscripter},{isDefault:true})
-		console.log obj
 		if !obj
 			Meteor.call('calendarInit',subscripter,Defaulttimezone)
 			obj=Calendars.findOne({ownerId:subscripter},{isDefault:true})

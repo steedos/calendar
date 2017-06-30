@@ -15,7 +15,6 @@ Meteor.methods
 		errorstring=''
 		crachattendees.forEach (crachattendee)->
 			errorstring=errorstring+crachattendee+"有时间冲突"
-		console.log errorstring
 		if errorstring!=''
 			throw new Meteor.Error(400, errorstring);
 

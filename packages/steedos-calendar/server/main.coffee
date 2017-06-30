@@ -22,9 +22,7 @@ Meteor.startup ->
 			transp = false;
 		else
 			transp = true;
-		#console.log doc.timezone
 		zones=moment_timezone.tz.zone(doc.timezone);
-		#console.log zones
 		ical = new icalendar.iCalendar();
 		vtimezone=ical.addComponent('VTIMEZONE');
 		vtimezone.addProperty("TZID",doc.timezone);

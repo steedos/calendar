@@ -1,9 +1,7 @@
 Meteor.methods
 	attendeesInit :(obj,addmembers)->
 		attendeesid=_.pluck(obj.attendees,'id');
-		console.log attendeesid
 		addmembers.forEach (addmember)->
-			console.log addmember
 			if _.indexOf(attendeesid, addmember)==-1
 				partstat="NEEDS-ACTION"
 				steedosId=Meteor.users.findOne({_id:addmember}).steedos_id
