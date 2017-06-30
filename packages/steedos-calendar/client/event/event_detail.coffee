@@ -1,5 +1,6 @@
 Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
+	this.reactiveRemindtimes = new ReactiveVar()
 
 Template.event_detail_modal.onRendered ->
 	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
@@ -188,11 +189,14 @@ Template.event_detail_modal.events
 		return
 	
 	'click i.add-members': (event, template)->
+		alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
+		template.reactiveRemindtimes.set(alarms)
 		$("input[name='addmembers_event']").click()
 
 	'change input[name="addmembers_event"]':(event, template)->
 		addmembers = AutoForm.getFieldValue("addmembers_event","event-addmembers") || []
 		obj = template.data
+		obj.alarms = template.reactiveRemindtimes.get()
 		Meteor.call('attendeesInit',obj,addmembers,
 				(error,result) ->
 					if !error
