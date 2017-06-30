@@ -120,7 +120,7 @@ Calendar.generateCalendar = ()->
 				# localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 				# Session.set 'calendarIds',calendarIds
 				# Calendar.reloadEvents()
-				$('body').addClass "loading"
+				#$('body').addClass "loading"
 				objs = Calendars.find()
 				calendarid = Session.get('calendarid')
 				if calendarid==undefined
@@ -132,22 +132,31 @@ Calendar.generateCalendar = ()->
 					calendarIds.push(calendarid)
 					Session.set('calendarIds',calendarIds)
 					localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
+				Session.set "startTime",start.toDate()
+				Session.set "endTime",end.toDate()
+				Session.set 'userId',Meteor.userId()
+				attendees=[]
+				userId= Meteor.userId()
+				attendee = {
+					role:"REQ-PARTICIPANT",
+					cutype:"INDIVIDUAL",
+					partstat:"ACCEPTED",
+					cn:Meteor.users.findOne({_id:userId}).name,
+					mailto:Meteor.users.findOne({_id:userId}).steedos_id,
+					id:userId,
+					description:null
+				}
+				attendees.push attendee
+				
 				doc = {
 					title: t("new_event")
 					start: start.toDate(),
 					end: end.toDate(),
-					calendarid:calendarid
+					calendarid:calendarid,
+					ownerId:Meteor.userId(),
+					attendees:attendees
 				}
-				# 保存到数据库的object中一条记录
-				Meteor.call('eventInit',Meteor.userId(),doc,
-					(error,result) ->
-						$('body').removeClass "loading"
-						if !error
-							AutoForm.resetForm("eventsForm")
-							Modal.show('event_detail_modal', result)
-						else
-							console.log error
-					)
+				Modal.show('event_detail_modal',doc)
 
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne
