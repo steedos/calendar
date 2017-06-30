@@ -30,6 +30,8 @@ Events._simpleSchema = new SimpleSchema
 						format:"YYYY-MM-DD HH:mm"
 						sideBySide:true
 					}
+			defaultValue:()->
+				return Session.get "startTime"
 
 	end:  
 		type: Date
@@ -48,6 +50,8 @@ Events._simpleSchema = new SimpleSchema
 						format:"YYYY-MM-DD HH:mm"
 						sideBySide:true
 					}
+			defaultValue:()->
+				return Session.get "endTime"
 
 
 	allDay: 
@@ -59,12 +63,12 @@ Events._simpleSchema = new SimpleSchema
 	calendarid:
 		type: String,
 		# label:t("calendar_event_calendar")
-		defaultValue: ->
-        	return Session.get("calendarid");
 		autoform:
 			type: "select"
 			#afFieldInput:
 			firstOption:false
+			defaultValue: ->
+				return Session.get("calendarid");
 			options: ()->
 				options = []
 				objs = Calendars.find({})
@@ -87,8 +91,9 @@ Events._simpleSchema = new SimpleSchema
 		type: String,
 		optional: true
 		autoform: 
-			omit: true
-
+			omit: true,
+			defaultValue:->
+				return Session.get('userId')	
 	alarms:
 		type: [String]
 		# label:t("calendar_event_alarms")
@@ -183,21 +188,33 @@ Events._simpleSchema = new SimpleSchema
 	"attendees.$.role":
 		type:String
 		optional: true
+		defaultValue:"REQ-PARTICIPANT"
 	"attendees.$.cutype": 
 		type:String
 		optional: true
+		defaultValue:"INDIVIDUAL"
 	"attendees.$.partstat": 
 		type:String
 		optional: true
+		defaultValue:"ACCEPTED"
 	"attendees.$.cn": 
 		type:String
 		optional: true
+		autoform:
+			defaultValue: ->
+				return Meteor.users.findOne({_id:Session.get('userId')}).name
 	"attendees.$.mailto": 
 		type:String
 		optional: true
+		autoform:
+			defaultValue: ->
+				return Meteor.users.findOne({_id:Session.get('userId')}).steedos_id
 	"attendees.$.id": 
 		type:String
 		optional: true
+		autoform:
+			defaultValue: ->
+				return Session.get('userId')
 	"attendees.$.description": 
 		type:String
 		optional: true

@@ -43,7 +43,7 @@ Template.event_detail_modal.helpers
 	accendeeState:(state)->
 		obj = Template.instance().data
 		result = ""
-		obj.attendees.forEach (attendee)->
+		obj.attendees?.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				if attendee?.partstat==state
 					result = "checked"
@@ -67,7 +67,7 @@ Template.event_detail_modal.helpers
 		else
 			obj.isOwner = "false"
 			obj.formOpt = "disabled"
-		obj.attendees.forEach (attendee)->
+		obj.attendees?.forEach (attendee)->
 			if attendee.id == Meteor.userId()
 				obj.reason = attendee?.description
 				switch attendee.partstat
@@ -169,16 +169,25 @@ Template.event_detail_modal.events
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
-
-		Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid,
-			(error,result) ->
-				if !error
-					$('[data-dismiss="modal"]').click()
-					$('body').removeClass "loading"
-				else
-					toastr.error t(error.reason)
-					$('body').removeClass "loading"
+		if !obj._id
+			Meteor.call('eventInit',Meteor.userId(),obj,
+				(error,result) ->
+					if !error
+						$('[data-dismiss="modal"]').click()
+						$('body').removeClass "loading"
+					else
+						toastr.error t(error.reason)
 			)
+		else
+		 	Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid,
+				(error,result) ->
+					if !error
+						$('[data-dismiss="modal"]').click()
+						$('body').removeClass "loading"
+					else
+						toastr.error t(error.reason)
+						$('body').removeClass "loading"
+				)
 		calendarIds=Session.get("calendarIds")
 		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid","eventsForm"))<0
 			calendarIds.push AutoForm.getFieldValue("calendarid","eventsForm")
