@@ -136,7 +136,6 @@ Template.event_detail_modal.events
 		obj = template.data
 		Meteor.call('removeEvents',obj,
 			(error,result) ->
-				console.log error
 				if !error
 					$('[data-dismiss="modal"]').click()
 		)
