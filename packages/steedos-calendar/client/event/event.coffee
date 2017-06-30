@@ -149,9 +149,6 @@ Calendar.generateCalendar = ()->
 				attendees.push attendee
 				
 				doc = {
-					title: t("new_event")
-					start: start.toDate(),
-					end: end.toDate(),
 					calendarid:calendarid,
 					ownerId:Meteor.userId(),
 					attendees:attendees
@@ -207,21 +204,26 @@ Calendar.generateCalendar = ()->
 Template.calendarContainer.events
 	'click button.btn-add-event': ()->
 		calendarid = Session.get 'calendarid'
-		start = moment(new Date()).format("YYYY-MM-DD HH:mm")
-		end = moment(new Date()).format("YYYY-MM-DD HH:mm")
-		doc = {
-			title: t("new_event")
-			start: start
-			end: end
-			calendarid: calendarid
+		start = new Date()
+		end = new Date()
+		attendees=[]
+		userId = Meteor.userId()
+		attendee = {
+			role:"REQ-PARTICIPANT",
+			cutype:"INDIVIDUAL",
+			partstat:"ACCEPTED",
+			cn:Meteor.users.findOne({_id:userId}).name,
+			mailto:Meteor.users.findOne({_id:userId}).steedos_id,
+			id:userId,
+			description:null
 		}
-		Meteor.call('eventInit',Meteor.userId(),doc,
-			(error,result) ->
-				
-				$('body').removeClass "loading"
-				if !error
-					AutoForm.resetForm("eventsForm")
-					Modal.show('event_detail_modal', result)
-				else
-					console.log error
-			)
+		attendees.push attendee
+		
+		doc = {
+			start: start,
+			end: end,
+			calendarid:calendarid,
+			ownerId:userId,
+			attendees:attendees
+		}
+		Modal.show('event_detail_modal',doc)
