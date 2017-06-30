@@ -94,13 +94,15 @@ Calendar.generateCalendar = ()->
 				color = ""
 				if calendar
 					color = calendar.color
+					title = event.title
 				else
 					cs = calendarsubscriptions.findOne({'uri':event.calendarid})
 					color = cs?.color
+					title = ""
 				copy =
 					id: event._id
 					allDay: event.allDay
-					title: event.title
+					title: title
 					url:event.url
 					color:color
 					backgroundColor:color
