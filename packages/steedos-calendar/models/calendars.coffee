@@ -145,6 +145,10 @@ if (Meteor.isServer)
 		return
 	# 移除关联的events,instances,changes
 	Calendars.before.remove (userId, doc)->
+		events=Events.find({"calendarid":doc._id}).fetch()
+		events.forEach (event)->
+			if event._id==event.parentId
+				Events.direct.remove({parentId:event.parentId})
 		Events.remove({"calendarid":doc._id});
 		calendarchanges.remove({"calendarid":doc._id});
 		calendarinstances.remove({"calendarid" : doc._id}); 
