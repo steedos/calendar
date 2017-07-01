@@ -94,13 +94,15 @@ Calendar.generateCalendar = ()->
 				color = ""
 				if calendar
 					color = calendar.color
+					title = event.title
 				else
 					cs = calendarsubscriptions.findOne({'uri':event.calendarid})
 					color = cs?.color
+					title = ""
 				copy =
 					id: event._id
 					allDay: event.allDay
-					title: event.title
+					title: title
 					url:event.url
 					color:color
 					backgroundColor:color
@@ -149,9 +151,6 @@ Calendar.generateCalendar = ()->
 				attendees.push attendee
 				
 				doc = {
-					title: t("new_event")
-					start: start.toDate(),
-					end: end.toDate(),
 					calendarid:calendarid,
 					ownerId:Meteor.userId(),
 					attendees:attendees
@@ -161,9 +160,12 @@ Calendar.generateCalendar = ()->
 			eventClick: (calEvent, jsEvent, view)->
 				event = Events.findOne
 					_id: calEvent?.id
-				if event
-					AutoForm.resetForm("eventsForm")
-					Modal.show('event_detail_modal', event)
+				defaultCalendarid = Session.get "defaultcalendarid"
+				eventsId = Events.find({calendarid:defaultCalendarid})?.fetch()?.getProperty("_id")
+				if _.indexOf(eventsId,calEvent?.id) > -1
+					if event
+						AutoForm.resetForm("eventsForm")
+						Modal.show('event_detail_modal', event)
 			eventDrop: (event, delta, revertFunc)->
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
@@ -207,21 +209,26 @@ Calendar.generateCalendar = ()->
 Template.calendarContainer.events
 	'click button.btn-add-event': ()->
 		calendarid = Session.get 'calendarid'
-		start = moment(new Date()).format("YYYY-MM-DD HH:mm")
-		end = moment(new Date()).format("YYYY-MM-DD HH:mm")
-		doc = {
-			title: t("new_event")
-			start: start
-			end: end
-			calendarid: calendarid
+		start = new Date()
+		end = new Date()
+		attendees=[]
+		userId = Meteor.userId()
+		attendee = {
+			role:"REQ-PARTICIPANT",
+			cutype:"INDIVIDUAL",
+			partstat:"ACCEPTED",
+			cn:Meteor.users.findOne({_id:userId}).name,
+			mailto:Meteor.users.findOne({_id:userId}).steedos_id,
+			id:userId,
+			description:null
 		}
-		Meteor.call('eventInit',Meteor.userId(),doc,
-			(error,result) ->
-				
-				$('body').removeClass "loading"
-				if !error
-					AutoForm.resetForm("eventsForm")
-					Modal.show('event_detail_modal', result)
-				else
-					console.log error
-			)
+		attendees.push attendee
+		
+		doc = {
+			start: start,
+			end: end,
+			calendarid:calendarid,
+			ownerId:userId,
+			attendees:attendees
+		}
+		Modal.show('event_detail_modal',doc)

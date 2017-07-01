@@ -99,6 +99,7 @@ Template.event_detail_modal.helpers
 				autoform:
 					type: 'selectuser'
 					multiple: true
+					spaceId: false
 				optional: false
 				type: [ String ]
 				label: ''

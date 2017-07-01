@@ -41,6 +41,7 @@ Template.calendarSidebar.helpers
 				autoform:
 					type: 'selectuser'
 					multiple: true
+					spaceId: false
 				optional: false
 				type: [ String ]
 				label: ''
