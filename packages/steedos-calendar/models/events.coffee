@@ -7,6 +7,7 @@ created = new Date();
 Events._simpleSchema = new SimpleSchema
 	title:
 		type: String
+		optional: true
 		max: 50
 		autoform:
 			type:"text"

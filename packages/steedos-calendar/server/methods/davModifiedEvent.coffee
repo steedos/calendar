@@ -1,12 +1,13 @@
 Meteor.methods
 	davModifiedEvent: () ->
-		events=Events.find().fetch()
+		events=Events.find(ownerId:Meteor.userId()).fetch()
 		events.forEach (obj)->
 			if obj.Isdavmodified
 				jcalData = ICAL.parse(obj.calendardata);
 				vcalendar = new ICAL.Component(jcalData);
 				vevent = vcalendar.getFirstSubcomponent('vevent');
-				obj.title = vevent.getFirstPropertyValue('summary').toString();
+				if vevent.getFirstPropertyValue('summary')!=null
+					obj.title = vevent.getFirstPropertyValue('summary').toString();
 				if vevent.getFirstPropertyValue('description')!=null
 					obj.description = vevent.getFirstPropertyValue('description').toString();
 				start =vevent.getFirstPropertyValue('dtstart').toString()
@@ -15,12 +16,12 @@ Meteor.methods
 				end =vevent.getFirstPropertyValue('dtend').toString()
 				end=new Date(end)
 				obj.end=new Date(end-8*60*60*1000)
-				if (obj.end - obj.start)%86400==0
+				if (obj.end - obj.start)%86400000==0
 					obj.allDay = true
 				else
 					obj.allDay = false
-				obj.ownerId =Meteor.userId()
-				obj.parentId = obj._id
+				
+				#obj.ownerId =Meteor.userId()
 				props = vevent.getAllProperties('attendee')
 				len = props.length
 				newattendees=[]
@@ -68,6 +69,16 @@ Meteor.methods
 					newalarms.push alarms[j].getFirstPropertyValue('trigger').toString()
 					j++
 				obj.alarms=newalarms
-				Meteor.call('updateEvents',obj,2,'','')
+				oldcalendarid=Events.findOne({uid:obj.uid}).calendarid
+				defaultcalendarid = Calendars.findOne({ownerId:obj.ownerId},{isDefault:true})._id
+				if oldcalendarid
+					if obj.calendarid!=oldcalendarid
+						if defaultcalendarid==obj.calendarid
+							relatetodefaultcalendar="Yes"
+						else if oldcalendarid==defaultcalendarid
+								relatetodefaultcalendar="No"
+					else
+						relatetodefaultcalendar = null
+				Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid)
 		return
 
