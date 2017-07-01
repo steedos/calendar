@@ -14,6 +14,7 @@ Calendars._simpleSchema = new SimpleSchema
 		type: [String],
 		optional: false
 		autoform:
+			spaceId: false
 			type: "selectuser"
 			multiple: true
 			defaultValue: ()->
