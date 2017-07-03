@@ -210,8 +210,8 @@ Calendar.generateCalendar = ()->
 Template.calendarContainer.events
 	'click button.btn-add-event': ()->
 		calendarid = Session.get 'calendarid'
-		start = moment(new Date(),"YYYY-MM-DD HH:ss").toDate()
-		end = moment(new Date(),"YYYY-MM-DD HH:ss").toDate()
+		start = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
+		end = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
 		Session.set "startTime",start
 		Session.set "endTime",end
 		attendees=[]
