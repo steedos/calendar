@@ -80,5 +80,6 @@
   "edit_calendar":"编辑日历",
   "delete_calendar":"删除日历",
   "view_details":"查看详情",
-  "cancel_subscribtion":"取消订阅"
+  "cancel_subscribtion":"取消订阅",
+  "this_event_is_belong_to_subscription_you_cannot_read_the_detail":"该事件属于订阅日历，您不能查看详细信息"
 }
