@@ -20,7 +20,7 @@
 										<td valign="top" class="col-md-3 col-sm-4 col-xs-4">
 											<span class="feadback-title">{{_ "calendar_event_answer"}}</span>
 										</td>
-										<td valign="top" class="col-md-2 col-sm-8 col-xs-8" role="menu">
+										<td valign="top" class="col-md-3 col-sm-8 col-xs-8" role="menu">
 											<div class="feadback-options text-light-blue">
 												<label>
 													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
@@ -36,7 +36,7 @@
 												</label>
 											</div>
 										</td>
-										<td class="col-md-7 col-sm-12 col-xs-12">
+										<td class="col-md-6 col-sm-12 col-xs-12">
 											<textarea rows="3" placeholder='{{_ "calendar_event_note"}}' class="description form-control">{{eventObj.reason}}</textarea>
 										</td>
 									</tr>
@@ -110,9 +110,7 @@
 													{{cn}}
 													<span class="pull-right">
 														<i class="attendees {{partstatIcon partstat}}"></i>
-														{{#unless isShowDeleteMember id}}
-															<i class="fa fa-trash delete-members"></i>
-														{{/unless}}
+														<i class="fa fa-trash delete-members"></i>
 													</span>
 												</a>
 												<div class="descrip-comments">

@@ -89,12 +89,6 @@ Template.event_detail_modal.helpers
 				when "NEEDS-ACTION" then obj.actionnum++
 		return obj
 
-	isShowDeleteMember: (id) ->
-		# obj = Template.instance().data
-		# ownerId = obj.ownerId
-		# if id == ownerId
-		# 	return true
-
 	isShowAddMembers: ()->
 		ownerId = Template.instance().data.ownerId
 		userId = Meteor.userId()

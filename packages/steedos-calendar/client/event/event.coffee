@@ -167,6 +167,8 @@ Calendar.generateCalendar = ()->
 					if event
 						AutoForm.resetForm("eventsForm")
 						Modal.show('event_detail_modal', event)
+				else
+					toastr.info t("this_event_is_belong_to_subscription_you_cannot_read_the_detail")
 			eventDrop: (event, delta, revertFunc)->
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
@@ -210,8 +212,10 @@ Calendar.generateCalendar = ()->
 Template.calendarContainer.events
 	'click button.btn-add-event': ()->
 		calendarid = Session.get 'calendarid'
-		start = new Date()
-		end = new Date()
+		start = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
+		end = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
+		Session.set "startTime",start
+		Session.set "endTime",end
 		attendees=[]
 		userId = Meteor.userId()
 		attendee = {
@@ -226,8 +230,6 @@ Template.calendarContainer.events
 		attendees.push attendee
 		
 		doc = {
-			start: start,
-			end: end,
 			calendarid:calendarid,
 			ownerId:userId,
 			attendees:attendees
