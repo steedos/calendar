@@ -76,5 +76,9 @@
   "close":"Close",
   "my_calendar":"My calendars",
   "my_subscription":"My subscriptions",
-  "new_event":"New Event"
+  "new_event":"New Event",
+  "edit_calendar":"Edit calendar",
+  "delete_calendar":"Delete calendar",
+  "view_details":"View details",
+  "cancel_subscribtion":"Cancel subscription"
 }

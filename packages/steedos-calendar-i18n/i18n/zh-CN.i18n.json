@@ -76,5 +76,9 @@
   "close":"关闭",
   "my_calendar":"我的日历",
   "my_subscription":"我的订阅",
-  "new_event":"新建事件"
+  "new_event":"新建事件",
+  "edit_calendar":"编辑日历",
+  "delete_calendar":"删除日历",
+  "view_details":"查看详情",
+  "cancel_subscribtion":"取消订阅"
 }
