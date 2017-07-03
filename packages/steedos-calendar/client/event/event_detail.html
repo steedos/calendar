@@ -7,7 +7,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-					{{_ "calendar_info_event"}}
+						{{formTitle}}
 					</h4>
 				</div>
 				<div class="modal-body">
@@ -138,10 +138,12 @@
 				{{#if showEventOptBox}}
 					<div class="modal-footer">
 						<div class="event-edit">
+						{{#if isShowDeleteBtn}}
 							<div class="pull-left">
 								<button type="button" class="btn btn-danger btn-remove delete_events">
 								{{_ "calendar_delete"}}</button>
 							</div>
+						{{/if}}
 							<div class="pull-right">
 								<button type="button" class="btn btn-default cancel_events" data-dismiss="modal">{{_ "calendar_cancel"}}</button>
 							</div>

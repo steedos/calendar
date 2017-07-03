@@ -6,6 +6,13 @@ Template.event_detail_modal.onRendered ->
 	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
 
 Template.event_detail_modal.helpers
+	formTitle:()->
+		option = Session.get "userOption"
+		if option == "select"
+			return t("new_event")
+		else if option == "click"
+			return t("calendar_info_event")
+
 	showEventOptBox:()->
 		# 事件是本人创建的/事件成员包含本人，都显示“保存”/“删除”操作
 		obj = Template.instance().data
@@ -131,6 +138,13 @@ Template.event_detail_modal.helpers
 			return "fa fa-fw fa-ban"
 		else if partstat == "NEEDS-ACTION"
 			return "fa fa-fw"
+
+	isShowDeleteBtn: ()->
+		option = Session.get "userOption"
+		if option == "select"
+			return false
+		else if option == "click"
+			return true
 
 Template.event_detail_modal.events
 	'click button.delete_events': (event, template)->

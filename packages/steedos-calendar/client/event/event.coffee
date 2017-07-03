@@ -136,7 +136,8 @@ Calendar.generateCalendar = ()->
 					localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 				Session.set "startTime",start.toDate()
 				Session.set "endTime",end.toDate()
-				Session.set 'userId',Meteor.userId()
+				Session.set "userId",Meteor.userId()
+				Session.set "userOption","select"
 				attendees=[]
 				userId= Meteor.userId()
 				attendee = {
@@ -158,13 +159,11 @@ Calendar.generateCalendar = ()->
 				Modal.show('event_detail_modal',doc)
 
 			eventClick: (calEvent, jsEvent, view)->
+				Session.set "userOption","click"
 				event = Events.findOne
 					_id: calEvent?.id
-				defaultCalendarid = Session.get "defaultcalendarid"
-				eventIds = Events.find({calendarid:defaultCalendarid})?.fetch()?.getProperty("_id")
-				parentIds = Events.find({calendarid:defaultCalendarid})?.fetch()?.getProperty("parentId")
-				showDetailEventIds = _.uniq(eventIds.concat(parentIds))
-				if _.indexOf(showDetailEventIds,calEvent?.id) > -1
+				calendarids = Calendars.find().fetch()?.getProperty("_id")
+				if _.indexOf(calendarids,event?.calendarid) > -1
 					if event
 						AutoForm.resetForm("eventsForm")
 						Modal.show('event_detail_modal', event)
