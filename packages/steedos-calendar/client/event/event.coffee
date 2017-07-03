@@ -161,8 +161,10 @@ Calendar.generateCalendar = ()->
 				event = Events.findOne
 					_id: calEvent?.id
 				defaultCalendarid = Session.get "defaultcalendarid"
-				eventsId = Events.find({calendarid:defaultCalendarid})?.fetch()?.getProperty("_id")
-				if _.indexOf(eventsId,calEvent?.id) > -1
+				eventIds = Events.find({calendarid:defaultCalendarid})?.fetch()?.getProperty("_id")
+				parentIds = Events.find({calendarid:defaultCalendarid})?.fetch()?.getProperty("parentId")
+				showDetailEventIds = _.uniq(eventIds.concat(parentIds))
+				if _.indexOf(showDetailEventIds,calEvent?.id) > -1
 					if event
 						AutoForm.resetForm("eventsForm")
 						Modal.show('event_detail_modal', event)
