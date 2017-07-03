@@ -60,18 +60,18 @@ Meteor.startup ->
 		ical.addComponent(vevent);
 		vtimezone.addProperty("TZID",zones.name);
 		standard = vtimezone.addComponent("STANDARD");
-		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[0])/60+"00");
+		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[1])/60+"00");
 		standard.addProperty("RRULE","FREQ=YEARLY;UNTIL=19910914T150000Z;BYMONTH=9;BYDAY=3SU")
-		standard.addProperty("TZOFFSETTO","0"+(-zones.offsets[1])/60+"00");
-		standard.addProperty("TZNAME",zones.abbrs[0]);
-		date=new Date(2017/5/1);
-		standard.addProperty("DTSTART",new Date(1989,8,17,8,0,0));
+		standard.addProperty("TZOFFSETTO","0"+(-zones.offsets[0])/60+"00");
+		standard.addProperty("TZNAME","GMT+8");
+		standard.addProperty("DTSTART",new Date("1989-09-17T00:00:00"));
+		#standard.addProperty("RDATE",new Date("1901-01-01T08:00:00"));
 		daylight = vtimezone.addComponent("DAYLIGHT");
-		daylight.addProperty("TZOFFSETFROM","0"+(-zones.offsets[1])/60+"00");
-		daylight.addProperty("DTSTART",new Date(1991,3,14,8,0,0));
+		daylight.addProperty("TZOFFSETFROM","0"+(-zones.offsets[0])/60+"00");
+		daylight.addProperty("DTSTART",new Date("1991-04-14T08:00:00"));
 		daylight.addProperty("TZNAME","GMT+8");
-		daylight.addProperty("TZOFFSETTO","0"+(-zones.offsets[0])/60+"00");
-		daylight.addProperty("RDATE",new Date(1991,3,14,8,0,0));
+		daylight.addProperty("TZOFFSETTO","0"+(-zones.offsets[1])/60+"00");
+		daylight.addProperty("RDATE",new Date("1991-04-14T08:00:00"));
 		if doc.alarms !=undefined
 			doc.alarms.forEach (alarm)->
 				Alarm = vevent.addComponent('VALARM');
