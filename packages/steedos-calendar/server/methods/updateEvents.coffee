@@ -5,7 +5,7 @@ Meteor.methods
 		else
 			events=Events.find({_id:obj._id}).fetch()
 			attendees=events[0].attendees	
-		if obj.ownerId==Meteor.userId()
+		if obj.ownerId==Meteor.userId() || obj.Isdavmodified
 			newattendeesid=_.pluck(obj.attendees,'id');
 			oldattendeesid=_.pluck(attendees,'id');
 			subattendeesid=_.difference oldattendeesid,newattendeesid;

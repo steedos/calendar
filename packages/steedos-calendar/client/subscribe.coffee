@@ -66,11 +66,6 @@ Meteor.startup ->
 											
 										);
 		,10*1000)																
-
-	setInterval(
-		()->
-			Meteor.call('davModifiedEvent')
-		,10*1000)
 Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")

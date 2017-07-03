@@ -1,6 +1,6 @@
 Meteor.methods
 	davModifiedEvent: () ->
-		events=Events.find(ownerId:Meteor.userId()).fetch()
+		events=Events.find().fetch()
 		events.forEach (obj)->
 			if obj.Isdavmodified
 				jcalData = ICAL.parse(obj.calendardata);
@@ -82,3 +82,8 @@ Meteor.methods
 				Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid)
 		return
 
+Meteor.startup ->
+	Meteor.setInterval(
+		()->
+			Meteor.call('davModifiedEvent')
+		,10*1000)
