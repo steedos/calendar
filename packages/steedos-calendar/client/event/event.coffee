@@ -210,8 +210,10 @@ Calendar.generateCalendar = ()->
 Template.calendarContainer.events
 	'click button.btn-add-event': ()->
 		calendarid = Session.get 'calendarid'
-		start = new Date()
-		end = new Date()
+		start = moment(new Date(),"YYYY-MM-DD HH:ss").toDate()
+		end = moment(new Date(),"YYYY-MM-DD HH:ss").toDate()
+		Session.set "startTime",start
+		Session.set "endTime",end
 		attendees=[]
 		userId = Meteor.userId()
 		attendee = {
@@ -226,8 +228,6 @@ Template.calendarContainer.events
 		attendees.push attendee
 		
 		doc = {
-			start: start,
-			end: end,
 			calendarid:calendarid,
 			ownerId:userId,
 			attendees:attendees
