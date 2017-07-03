@@ -12,3 +12,4 @@ Meteor.methods
 				herf="mailto:" + steedosId;
 				displayname=steedosId;
 				Calendar.addInstance(member,doc,doc._id,steedosId,2,herf,displayname);	
+		return doc._id

@@ -215,3 +215,13 @@ Template.calendarSidebar.events
 			if addmember != Meteor.userId()
 				Meteor.call('initscription',addmember)
 		AutoForm.resetForm("calendar-submembers")
+
+
+AutoForm.hooks calendarForm:
+	onSuccess: (formType,result) ->
+		calendarIds = Session.get("calendarIds")
+		calendarIds.push(result)
+		Session.set "calendarIds",calendarIds
+		Session.set "calendarid",result
+		localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
+		localStorage.setItem("calendarid:"+Meteor.userId(),result)
