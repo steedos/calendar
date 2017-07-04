@@ -1,9 +1,37 @@
+EventDetailModal =
+	switchAllDay: (isAllDay, value, input)->
+		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
+			if isAllDay
+				input.attr("type","datetime")
+				value = moment(value).format("YYYY-MM-DD")
+				input.val(value)
+			else
+				input.attr("type","datetime-local")
+				value = moment(value).format("YYYY-MM-DDTHH:mm")
+				input.val(value)
+		else
+			startDP = input.data("DateTimePicker")
+			if isAllDay
+				startDP.format = "YYYY-MM-DD"
+				startDP.setValue(startDP.date)
+			else
+				startDP.format = "YYYY-MM-DD HH:mm"
+				startDP.setValue(startDP.date)
+
 Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
 	this.reactiveRemindtimes = new ReactiveVar()
 
 Template.event_detail_modal.onRendered ->
 	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
+
+	data = Template.instance().data
+	isAllDay = data.allDay
+	startInput = $("#event_detail_modal .modal-body input[name=start]")
+	EventDetailModal.switchAllDay isAllDay, data.start, startInput
+	endInput = $("#event_detail_modal .modal-body input[name=end]")
+	EventDetailModal.switchAllDay isAllDay, data.end, endInput
+
 
 Template.event_detail_modal.helpers
 	formTitle:()->
@@ -158,13 +186,13 @@ Template.event_detail_modal.events
 			relatetodefaultcalendar = null
 		if AutoForm.getFieldValue("calendarid","eventsForm") == undefined
 			relatetodefaultcalendar = null
-		obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm") || obj.calendarid
-		obj.title = AutoForm.getFieldValue("title","eventsForm") || obj.title
-		obj.start = AutoForm.getFieldValue("start","eventsForm") || obj.start 
-		obj.end = AutoForm.getFieldValue("end","eventsForm") || obj.end
-		obj.description = AutoForm.getFieldValue("description","eventsForm") || obj.description
-		obj.allDay = AutoForm.getFieldValue("allDay","eventsForm") || obj.allDay
-		obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || obj.alarms
+		obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm")
+		obj.title = AutoForm.getFieldValue("title","eventsForm")
+		obj.start = AutoForm.getFieldValue("start","eventsForm")
+		obj.end = AutoForm.getFieldValue("end","eventsForm")
+		obj.description = AutoForm.getFieldValue("description","eventsForm")
+		obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")
+		obj.alarms = AutoForm.getFieldValue("alarms","eventsForm")
 		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		description = $('textarea.description').val()
@@ -199,7 +227,7 @@ Template.event_detail_modal.events
 		localStorage.setItem("calendarid:"+Meteor.userId(), AutoForm.getFieldValue("calendarid","eventsForm"))
 		Session.set("calendarid",AutoForm.getFieldValue("calendarid","eventsForm"));
 		return
-	
+
 	'click i.add-members': (event, template)->
 		alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 		template.reactiveRemindtimes.set(alarms)
@@ -225,3 +253,12 @@ Template.event_detail_modal.events
 			if attendee.id!=attendeeid
 				tempAtt.push attendee
 		template.reactiveAttendees.set(tempAtt)
+
+	'change input[name=allDay]': (event, template)->
+		data = template.data
+		isAllDay = $(event.currentTarget).is(':checked')
+		startInput = $("#event_detail_modal .modal-body input[name=start]")
+		EventDetailModal.switchAllDay isAllDay, data.start, startInput
+		endInput = $("#event_detail_modal .modal-body input[name=end]")
+		EventDetailModal.switchAllDay isAllDay, data.end, endInput
+
