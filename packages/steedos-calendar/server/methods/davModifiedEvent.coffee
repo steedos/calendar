@@ -69,10 +69,11 @@ Meteor.methods
 					newalarms.push alarms[j].getFirstPropertyValue('trigger').toString()
 					j++
 				obj.alarms=[]
-				newalarms.forEach (newalarm)->
-					if newalarm[0]!='-'
-						newalarm='-'+newalarm
-						obj.alarms.push  newalarm
+				if newalarms
+					newalarms.forEach (newalarm)->
+						if newalarm[0]!='-'
+							newalarm='-'+newalarm
+							obj.alarms.push  newalarm
 				oldcalendarid=Events.findOne({uid:obj.uid}).calendarid
 				defaultcalendarid = Calendars.findOne({ownerId:obj.ownerId},{isDefault:true})._id
 				if oldcalendarid
