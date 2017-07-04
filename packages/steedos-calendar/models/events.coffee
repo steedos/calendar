@@ -18,12 +18,12 @@ Events._simpleSchema = new SimpleSchema
 		type: Date
 		autoform: 
 			type:()->
-				if Steedos.isMobile()
+				if Steedos.isMobile() or Steedos.isAndroidOrIOS()
 					return "datetime-local"
 				else
 					return "bootstrap-datetimepicker"
 			dateTimePickerOptions:()->
-				if Steedos.isMobile()
+				if Steedos.isMobile() or Steedos.isAndroidOrIOS()
 					return null
 				else
 					return  {
@@ -38,12 +38,12 @@ Events._simpleSchema = new SimpleSchema
 		type: Date
 		autoform: 
 			type:()->
-				if Steedos.isMobile()
+				if Steedos.isMobile() or Steedos.isAndroidOrIOS()
 					return "datetime-local"
 				else
 					return "bootstrap-datetimepicker"
 			dateTimePickerOptions:()->
-				if Steedos.isMobile()
+				if Steedos.isMobile() or Steedos.isAndroidOrIOS()
 					return null
 				else
 					return  {
