@@ -14,7 +14,7 @@ Events._simpleSchema = new SimpleSchema
 			defaultValue:()->
 				return t("new_event")
 
-	start:  
+	start:
 		type: Date
 		autoform: 
 			type:()->
@@ -34,7 +34,7 @@ Events._simpleSchema = new SimpleSchema
 			defaultValue:()->
 				return Session.get "startTime"
 
-	end:  
+	end:
 		type: Date
 		autoform: 
 			type:()->
@@ -55,7 +55,7 @@ Events._simpleSchema = new SimpleSchema
 				return Session.get "endTime"
 
 
-	allDay: 
+	allDay:
 		type: Boolean
 		# label:t("calendar_event_allDay")
 		defaultValue: false
@@ -81,14 +81,14 @@ Events._simpleSchema = new SimpleSchema
 				return options
 				
 	
-	description:  
+	description:
 		type: String,
 		# label:t("calendar_event_description")
 		optional: true,
 		autoform:
 			rows:2
 
-	ownerId:  
+	ownerId:
 		type: String,
 		optional: true
 		autoform: 
@@ -180,8 +180,8 @@ Events._simpleSchema = new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
-    
-	attendees: 
+
+	attendees:
 		type:[Object],
 		optional:true
 		autoform: 

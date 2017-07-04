@@ -20,10 +20,10 @@ Template.event_detail_modal.helpers
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj.attendees,'id')
 		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0  
-			 if calendarIds.indexOf(obj.calendarid)>=0
-			 	return true
-			 else
-			 	return false
+			if calendarIds.indexOf(obj.calendarid)>=0
+				return true
+			else
+				return false
 		else
 			return false
 
@@ -117,11 +117,6 @@ Template.event_detail_modal.helpers
 			return false
 		else
 			return true
-		# ownerId = obj.ownerId
-		# if ownerId == Meteor.userId()
-		# 	return false
-		# else
-		# 	return true
 
 	partstatIcon: (partstat)->
 		if partstat == "ACCEPTED"
@@ -187,7 +182,7 @@ Template.event_detail_modal.events
 						toastr.error t(error.reason)
 			)
 		else
-		 	Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid,
+			Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid,
 				(error,result) ->
 					if !error
 						$('[data-dismiss="modal"]').click()
@@ -227,6 +222,6 @@ Template.event_detail_modal.events
 		attendeeid = this.id
 		tempAtt = []
 		obj.attendees.forEach (attendee)->
-		 	if attendee.id!=attendeeid
-		 		tempAtt.push attendee
+			if attendee.id!=attendeeid
+				tempAtt.push attendee
 		template.reactiveAttendees.set(tempAtt)

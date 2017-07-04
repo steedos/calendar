@@ -52,12 +52,12 @@
 					<div class="col-md-4 col-sm-12 event-right-content modal-zoom">
 						<div class="members-box">
 							<div class="members-header">
-							  <span class="members-list-title">
-							  {{_ "calendar_member_list"}}
-							  {{#if isShowAddMembers}}
-								<i class="ion ion-plus-round pull-right add-members"></i>
-							  {{/if}}
-							  </span>
+								<span class="members-list-title">
+									{{_ "calendar_member_list"}}
+									{{#if isShowAddMembers}}
+										<i class="ion ion-plus-round pull-right add-members"></i>
+									{{/if}}
+								</span>
 							</div>
 							<div class="no-padding">
 								<div class="feadback-result">
@@ -121,8 +121,8 @@
 									</ul>
 								</div>
 							</div>
-						  </div>
-						  <div class="box box-solid invite-box {{eventObj.isOwner}}">
+						</div>
+						<div class="box box-solid invite-box {{eventObj.isOwner}}">
 							<div class="box-body no-padding">
 								<span class="pull-left span-addmembers">
 									{{#autoForm id='event-addmembers' schema=add_membersFields doc=values }}
@@ -130,7 +130,7 @@
 									{{/autoForm}}
 								</span>
 							</div>
-						  </div>
+						</div>
 					</div>
 				</div>
 				{{#if showEventOptBox}}

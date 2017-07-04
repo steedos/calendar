@@ -84,10 +84,6 @@ Calendar.generateCalendar = ()->
 			noEventsMessage:t("no_events_message")
 			buttonText:
 				listWeek:t("calendar_list_week")
-			# businessHours:
-			# 	dow: [1,2,3,4,5],
-			# 	start:'08:00'
-			# 	end:'18:00'
 
 			eventDataTransform: (event) ->
 				calendar = Calendars.findOne({'_id':event.calendarid})
@@ -114,15 +110,6 @@ Calendar.generateCalendar = ()->
 				return copy
 			
 			select: (start, end, jsEvent, view, resource)->
-				# calendarIds = []
-				# calendarid = Session.get "calendarid"
-				# calendarIds.push calendarid
-				# checkBox = $(event.currentTarget.childNodes[1])
-				# checkBox.addClass("fa-check")
-				# localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
-				# Session.set 'calendarIds',calendarIds
-				# Calendar.reloadEvents()
-				#$('body').addClass "loading"
 				objs = Calendars.find()
 				calendarid = Session.get('calendarid')
 				if calendarid==undefined

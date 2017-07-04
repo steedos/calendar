@@ -55,28 +55,17 @@ Template.calendarSidebar.helpers
 Template.calendarSidebar.onRendered ->
 	calendarsubscriptions.after.update (userId,doc)->
 		Calendar.reloadEvents()
-# Template.calendarSidebar.on ->
 
 Template.calendarSidebar.events
 	'click label.resources-lbl': (event)->
 		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
 		addmembers.forEach (addmember)->
 			Meteor.call('initscription',addmember)
-			#othercalendarsSub = new SubsManager()
-			#othercalendarsSub.subscribe "othercalendars",addmember
-			#objs = Calendars.find().fetch()
-
-
 		$("span.span-resources div.has-items").children().remove(".item")
 
 	'click div.check':(event)->
 		event.stopPropagation()
-
-		# calendarIdsString=localStorage.getItem("calendarIds:"+Meteor.userId())
 		calendarIds=[]
-		# if !calendarIdsString
-		# 	calendarIds=calendarIdsString.split(",")
-		# 	console.log calendarIds
 		if Session.get("calendarIds")
 			calendarIds=Session.get("calendarIds")
 		checkBox = $(event.currentTarget.childNodes[1])
@@ -149,31 +138,29 @@ Template.calendarSidebar.events
 			return;
 		calendar_id=this._id;
 		swal({
-		  title: t("calendar_delete_calendar"),
-		  text: t("calendar_delete_confirm_calendar"),
-		  type: "warning",
-		  showCancelButton: true,
-		  cancelButtonText:t("calendar_cancel"),
-		  confirmButtonColor: "#DD6B55",
-		  confirmButtonText: t("calendar_ok"),
-		  closeOnConfirm: false,
-		  html: false
-		},
-		# 删除表中的记录
-		()->
-			# this._id取值无法删除，删除失败,this未定义
-			$('body').addClass "loading"
-			Calendars.remove {_id:calendar_id}, (error)->
-				$('body').removeClass "loading"
-				if error
-					swal(t("calendar_delete_failed"),error.message,"error")
-				else
-					swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success")
-					localStorage.setItem("calendarid:"+Meteor.userId(),Session.get('defaultcalendarid'))
-					Session.set("calendarid",Session.get('defaultcalendarid'))
+				title: t("calendar_delete_calendar"),
+				text: t("calendar_delete_confirm_calendar"),
+				type: "warning",
+				showCancelButton: true,
+				cancelButtonText:t("calendar_cancel"),
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: t("calendar_ok"),
+				closeOnConfirm: false,
+				html: false
+			},
+			# 删除表中的记录
+			()->
+				# this._id取值无法删除，删除失败,this未定义
+				$('body').addClass "loading"
+				Calendars.remove {_id:calendar_id}, (error)->
+					$('body').removeClass "loading"
+					if error
+						swal(t("calendar_delete_failed"),error.message,"error")
+					else
+						swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success")
+						localStorage.setItem("calendarid:"+Meteor.userId(),Session.get('defaultcalendarid'))
+						Session.set("calendarid",Session.get('defaultcalendarid'))
 		)
-
-
 
 	'click .hide-subscribe': (event)->
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
@@ -183,27 +170,27 @@ Template.calendarSidebar.events
 			calendar_id = this._id
 		calendar_id=this._id;
 		swal({
-		  title: t("calendar_hide_calendar"),
-		  text: t("calendar_hide_confirm_calendar"),
-		  type: "warning",
-		  showCancelButton: true,
-		  cancelButtonText:t("calendar_cancel"),
-		  confirmButtonColor: "#DD6B55",
-		  confirmButtonText: t("calendar_ok"),
-		  closeOnConfirm: false,
-		  html: false
-		},
-		# 删除表中的记录
-		()->
-			$('body').addClass "loading"
-			# this._id取值无法删除，删除失败,this未定义
-			Calendars.remove {_id:calendar_id}, (error)->
-				$('body').removeClass "loading"
-				calendarsubscriptions.remove {_id:calendar_id}, (error)->
-				if error
-					swal(t("calendar_hide_failed"),error.message,"error");
-				else
-					swal(t("calendar_hide_success"),t("calendar_hide_succsee_info"),"success");
+				title: t("calendar_hide_calendar"),
+				text: t("calendar_hide_confirm_calendar"),
+				type: "warning",
+				showCancelButton: true,
+				cancelButtonText:t("calendar_cancel"),
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: t("calendar_ok"),
+				closeOnConfirm: false,
+				html: false
+			},
+			# 删除表中的记录
+			()->
+				$('body').addClass "loading"
+				# this._id取值无法删除，删除失败,this未定义
+				Calendars.remove {_id:calendar_id}, (error)->
+					$('body').removeClass "loading"
+					calendarsubscriptions.remove {_id:calendar_id}, (error)->
+					if error
+						swal(t("calendar_hide_failed"),error.message,"error");
+					else
+						swal(t("calendar_hide_success"),t("calendar_hide_succsee_info"),"success");
 		);
 
 	'click i.sub-calendar':()->
