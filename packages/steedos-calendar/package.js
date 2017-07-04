@@ -41,7 +41,7 @@ Package.onUse(function(api) {
     api.use('kadira:flow-router@2.10.1');
 
     api.use('aldeed:autoform-bs-datetimepicker@1.0.6');
-    api.use('hausor:autoform-bs-minicolors@1.0.0');
+    api.use('steedos:autoform-bs-minicolors@1.0.0');
 
     api.use('meteorhacks:ssr@2.2.0');
     api.use('tap:i18n@1.7.0');
