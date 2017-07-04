@@ -198,6 +198,7 @@ Calendar.generateCalendar = ()->
 
 Template.calendarContainer.events
 	'click button.btn-add-event': ()->
+		Session.set "userOption","select" 
 		calendarid = Session.get 'calendarid'
 		start = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
 		end = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
