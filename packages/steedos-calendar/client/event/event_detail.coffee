@@ -2,7 +2,7 @@ EventDetailModal =
 	switchAllDay: (isAllDay, value, input)->
 		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
 			if isAllDay
-				input.attr("type","datetime")
+				input.attr("type","date")
 				value = moment(value).format("YYYY-MM-DD")
 				input.val(value)
 			else
@@ -261,4 +261,20 @@ Template.event_detail_modal.events
 		EventDetailModal.switchAllDay isAllDay, data.start, startInput
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
 		EventDetailModal.switchAllDay isAllDay, data.end, endInput
+
+	'change input[name=start]': (event, template)->
+		data = template.data
+		startInput = $("#event_detail_modal .modal-body input[name=start]")
+		endInput = $("#event_detail_modal .modal-body input[name=end]")
+		timespan = moment(startInput.val()).toDate() - data.start
+		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
+			endValue = moment(data.end.getTime() + timespan)
+			if endInput.attr("type") == "date"
+				endInput.val(endValue.format("YYYY-MM-DD"))
+			else
+				endInput.val(endValue.format("YYYY-MM-DDTHH:mm"))
+		else
+			endDP = endInput.data("DateTimePicker")
+			if endDP
+				endDP.setValue(moment(data.end.getTime() + timespan))
 
