@@ -168,7 +168,8 @@ Template.calendarSidebar.events
 			calendar_id = this.uri
 		else
 			calendar_id = this._id
-		calendar_id=this._id;
+		calendar_uri = this.uri
+		calendar_id = this._id;
 		swal({
 				title: t("calendar_hide_calendar"),
 				text: t("calendar_hide_confirm_calendar"),
@@ -184,13 +185,17 @@ Template.calendarSidebar.events
 			()->
 				$('body').addClass "loading"
 				# this._id取值无法删除，删除失败,this未定义
-				Calendars.remove {_id:calendar_id}, (error)->
-					$('body').removeClass "loading"
-					calendarsubscriptions.remove {_id:calendar_id}, (error)->
+				calendarsubscriptions.remove {_id:calendar_id}, (error)->
 					if error
 						swal(t("calendar_hide_failed"),error.message,"error");
 					else
 						swal(t("calendar_hide_success"),t("calendar_hide_succsee_info"),"success");
+						$("body").removeClass "loading"
+						calendarIds = Session.get("calendarIds")
+						# 将删除的订阅日历从calendarIds中移除
+						calendarIds = _.without(calendarIds,calendar_uri) 
+						Session.set "calendarIds",calendarIds
+						localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 		);
 
 	'click i.sub-calendar':()->
