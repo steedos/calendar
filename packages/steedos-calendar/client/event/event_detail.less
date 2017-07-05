@@ -1,5 +1,10 @@
 #event_detail_modal{
 	overflow: hidden;
+	@media (max-width: 991px){
+		div.modal-body{
+			background-color: #fff !important;
+		}
+	}
 	div.modal-body{
 		position: relative;
 		padding: 0px 0px 0px 0px;
@@ -16,6 +21,11 @@
 					float: left;
 					margin-right: 4px;
 				}
+				@media(max-width: 991px){
+					input[type=radio]{
+						margin-top: 3px;
+					}
+				}
 			}
 			.event-content-form{
 				margin: 2px;
@@ -30,7 +40,7 @@
 		.event-right-content{
 			background: #fafafa;
 			.members-box{
-				@media (max-width: 992px){
+				@media (max-width: 991px){
 					border: solid 1px #eee;
 					border-radius: 4px;
 				}
@@ -47,14 +57,14 @@
 				border-top: solid 1px #eee;
 				li{
 					border-bottom: solid 1px #eee;
-					@media (max-width: 992px){
+					@media (max-width: 991px){
 						&:last-child{
 							border-bottom: none!important;
 						}
 					}
 				}
 			}
-			@media (max-width: 992px){
+			@media (max-width: 991px){
 				padding-top: 10px;
 			}
 		}
@@ -68,7 +78,7 @@
 		}
 	}
 	.box-header{
-		@media (max-width: 992px){
+		@media (max-width: 991px){
 			padding-top: 0 !important;
 		}
 	}
@@ -76,13 +86,13 @@
 #event_detail_modal.showActionBox-is-none{
 	.event-right-content{
 		height: 345px;
-		@media (max-width: 992px){
+		@media (max-width: 991px){
 			background: transparent !important;
 		    height: auto;
 		    max-height: 345px;	
 		}
 		.members-box{
-			@media (max-width: 992px){
+			@media (max-width: 991px){
 				margin-bottom: 5px;
 			}
 			.members-list{
@@ -94,13 +104,13 @@
 #event_detail_modal.showActionBox-is-block{
 	.event-right-content{
 		height: 484px;
-		@media (max-width: 992px){
+		@media (max-width: 991px){
 			background: transparent !important;
 		    height: auto;
 		    max-height: 484px;
 		}
 		.members-box{
-			@media (max-width: 992px){
+			@media (max-width: 991px){
 				margin-bottom: 5px;
 			}
 			.members-list{
@@ -116,6 +126,28 @@
 		cursor: not-allowed !important;
 		border: 1px solid #a7a7a7;
 		border-radius: 0;
+	}
+	.form-group{
+		label.control-label{
+			padding-top: 7px;
+		}
+		.checkbox{
+			input[type="checkbox"]{
+				margin-top: 3px;
+			}
+		}
+	}
+	@media (max-width: 991px){
+		.form-group{
+			label.control-label{
+				padding-top: 0;
+			}
+			.checkbox{
+				input[type="checkbox"]{
+					margin-top: 2px;
+				}
+			}
+		}
 	}
 }
 
@@ -216,10 +248,10 @@ div.feadback{
 			}
 			.feadback-options{
 				float: right;
-				@media (max-width: 992px){
+				@media (max-width: 991px){
 					margin-right: 10px;
 				}
-				@media (min-width: 993px){
+				@media (min-width: 992px){
 					label{
 						width: 100%;
 					}
