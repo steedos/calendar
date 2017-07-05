@@ -1,16 +1,18 @@
 <template name="calendarLayout">
-	<div class="steedos app-wrapper steedos-calendar skin-blue-light">
-		{{# AdminLTE skin="blue" sidebarMini="true" }}
-			{{> steedosHeader}}
-			{{> calendarSidebar}}
+	{{#if subsReady}}
+		<div class="steedos app-wrapper steedos-calendar skin-blue-light">
+			{{# AdminLTE skin="blue" sidebarMini="true" }}
+				{{> steedosHeader}}
+				{{> calendarSidebar}}
 
-			<div class="content-wrapper">
-				<div class="connection-status">
-					{{> status}}
+				<div class="content-wrapper">
+					<div class="connection-status">
+						{{> status}}
+					</div>
+					{{> Template.dynamic template=main}}
 				</div>
-				{{> Template.dynamic template=main}}
-			</div>
-		{{/ AdminLTE}}
-		{{> autoformModals}}
-	</div>
+			{{/ AdminLTE}}
+			{{> autoformModals}}
+		</div>
+	{{/if}}
 </template>

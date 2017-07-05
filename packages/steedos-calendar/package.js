@@ -82,12 +82,12 @@ Package.onUse(function(api) {
 
     api.addFiles('client/layout/layout.html', 'client');
     api.addFiles('client/layout/layout.less', 'client');
+    api.addFiles('client/layout/layout.coffee', 'client');
     api.addFiles('client/layout/sidebar.html', 'client');
     api.addFiles('client/layout/sidebar.coffee', 'client');
     api.addFiles('client/layout/sidebar.less', 'client');
 
     api.addFiles('client/core.coffee', 'client');
-    api.addFiles('client/local.coffee', 'client');
     api.addFiles('client/router.coffee', 'client');
     api.addFiles('client/subscribe.coffee', 'client');
 
