@@ -7,8 +7,13 @@ calendarsLoading = false
 
 Template.calendarSidebar.helpers
 	calendars: ()->
-		userId= Meteor.userId()
-		objs = Calendars.find()
+		objs = Calendars.find().fetch()
+		defaultcalendarIndex = 0
+		objs.forEach (obj,index) ->
+			if obj.ownerId == Meteor.userId() and obj.isDefault == true
+				defaultcalendarIndex = index
+		defaultcalendar = objs.splice(defaultcalendarIndex,1)
+		objs = defaultcalendar.concat(objs)
 		return objs
 	subscribe: ()->
 		objs = calendarsubscriptions.find()
