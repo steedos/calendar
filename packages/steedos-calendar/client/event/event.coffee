@@ -57,9 +57,11 @@ Calendar.generateCalendar = ()->
 		if Steedos.isMobile()
 			rightHeaderView = 'month,agendaDay'
 			defaultView = 'month'
+			dayNamesShortValue = [t('Sun'), t('Mon'), t('Tue'), t('Wed'), t('Thu'), t('Fri'), t('Sat')]
 		else
 			rightHeaderView = 'month,agendaWeek,agendaDay,listWeek'
 			defaultView = 'agendaWeek'
+			dayNamesShortValue = undefined
 		$('#calendar').fullCalendar
 			height: ()->
 				return $('#calendar').height() - 2
@@ -82,6 +84,7 @@ Calendar.generateCalendar = ()->
 			timezone: 'local'
 			locale: Session.get('steedos-locale')
 			noEventsMessage:t("no_events_message")
+			dayNamesShort:dayNamesShortValue
 			buttonText:
 				listWeek:t("calendar_list_week")
 

@@ -81,5 +81,12 @@
   "delete_calendar":"Delete calendar",
   "view_details":"View details",
   "cancel_subscribtion":"Cancel subscription",
-  "this_event_is_belong_to_subscription_you_cannot_read_the_detail":"This event is belong to subscription,you cannot read the detail"
+  "this_event_is_belong_to_subscription_you_cannot_read_the_detail":"This event is belong to subscription,you cannot read the detail",
+  "Sun":"Sun",
+  "Mon":"Mon",
+  "Tue":"Tue",
+  "Wed":"Wed",
+  "Thu":"Thu",
+  "Fri":"Fri",
+  "Sat":"Sat"
 }
