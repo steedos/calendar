@@ -174,6 +174,8 @@ Template.event_detail_modal.events
 		
 
 	'click button.save_events': (event, template)->
+		unless AutoForm.validateForm("eventsForm")
+			return
 		$('body').addClass "loading"
 		obj = Template.instance().data
 		oldcalendarid=obj.calendarid
