@@ -171,7 +171,6 @@ Calendar.generateCalendar = ()->
 				obj.end = moment(event.end._d).toDate()
 				Meteor.call('updateEvents',obj,2)
 
-				#Meteor.call('updateEvents',)
 			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
@@ -182,7 +181,6 @@ Calendar.generateCalendar = ()->
 				obj.start = moment(event.start._d).toDate()
 				obj.end = moment(event.end._d).toDate()
 				Meteor.call('updateEvents',obj,2)
-			#eventAfterAllRender:(view)->
 				
 		Events.find().observe
 			added: (id, fields) ->
