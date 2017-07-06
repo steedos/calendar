@@ -155,8 +155,8 @@ Calendar.generateCalendar = ()->
 				calendarids = Calendars.find().fetch()?.getProperty("_id")
 				if _.indexOf(calendarids,event?.calendarid) > -1
 					if event
-						AutoForm.resetForm("eventsForm")
 						Modal.show('event_detail_modal', event)
+						AutoForm.resetForm("eventsForm")
 				else
 					toastr.info t("this_event_is_belong_to_subscription_you_cannot_read_the_detail")
 			eventDrop: (event, delta, revertFunc)->

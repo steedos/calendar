@@ -11,6 +11,8 @@ EventDetailModal =
 				input.val(value)
 		else
 			startDP = input.data("DateTimePicker")
+			unless startDP
+				return
 			if isAllDay
 				startDP.format = "YYYY-MM-DD"
 				startDP.setValue(startDP.date)
