@@ -5,10 +5,12 @@
 					"#65db39","#34aadc","#cc73e1",
 					"#a2845e");
 Calendars._simpleSchema = new SimpleSchema 
-	title:  
+	title:
 		type: String,
-		defaultValue: ->
-			return t("calendar_add_calendar")
+		autoform:
+			type:"text"
+			defaultValue: ->
+				return t("calendar_add_calendar")
 
 	members:  
 		type: [String],
