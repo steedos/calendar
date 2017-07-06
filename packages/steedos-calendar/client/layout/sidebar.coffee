@@ -103,6 +103,8 @@ Template.calendarSidebar.events
 		$('.modal-body').addClass("modal-zoom")
 
 	'click .show-calendar': (event)->
+		event.stopPropagation()
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		Session.set("cmDoc", this);
 		$('.btn.calendar-show').click();
 		$('.modal-body').addClass("modal-zoom")
