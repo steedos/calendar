@@ -190,13 +190,15 @@ Template.event_detail_modal.events
 			relatetodefaultcalendar = null
 		if AutoForm.getFieldValue("calendarid","eventsForm") == undefined
 			relatetodefaultcalendar = null
-		obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm")
-		obj.title = AutoForm.getFieldValue("title","eventsForm")
-		obj.start = AutoForm.getFieldValue("start","eventsForm")
-		obj.end = AutoForm.getFieldValue("end","eventsForm")
-		obj.description = AutoForm.getFieldValue("description","eventsForm")
-		obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")
-		obj.alarms = AutoForm.getFieldValue("alarms","eventsForm")
+
+		# 用户是事件的接收者，表单处于只读状态，AutoForm.getFieldValue获取不到数据，需要赋值为obj原来的值
+		obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm") || obj.calendarid
+		obj.title = AutoForm.getFieldValue("title","eventsForm") || obj.title
+		obj.start = AutoForm.getFieldValue("start","eventsForm") || obj.start
+		obj.end = AutoForm.getFieldValue("end","eventsForm") || obj.end
+		obj.description = AutoForm.getFieldValue("description","eventsForm") || obj.description
+		obj.allDay = AutoForm.getFieldValue("allDay","eventsForm") || obj.allDay
+		obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || obj.alarms
 		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		description = $('textarea.description').val()
@@ -204,6 +206,7 @@ Template.event_detail_modal.events
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
+		debugger
 		if !obj._id
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->
