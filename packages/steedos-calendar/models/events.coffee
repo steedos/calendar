@@ -13,6 +13,12 @@ Events._simpleSchema = new SimpleSchema
 			defaultValue:()->
 				return t("new_event")
 
+	allDay:
+		type: Boolean
+		# label:t("calendar_event_allDay")
+		defaultValue: false
+		optional: true
+
 	start:
 		type: Date
 		autoform: 
@@ -53,13 +59,27 @@ Events._simpleSchema = new SimpleSchema
 			defaultValue:()->
 				return Session.get "endTime"
 
-
-	allDay:
-		type: Boolean
-		# label:t("calendar_event_allDay")
-		defaultValue: false
+	alarms:
+		type: [String]
+		# label:t("calendar_event_alarms")
 		optional: true
-
+		autoform: 
+			type: "universe-select"
+			multiple: true
+			options: () ->
+				options=[
+					{label: t("events_alarms_label_when_events_occur"), value: "-PT0S"},
+					{label: t("events_alarms_label_5_minutes_before"), value: "-PT5M"},
+					{label: t("events_alarms_label_10_minutes_before"), value: "-PT10M"},
+					{label: t("events_alarms_label_15_minutes_before"), value: "-PT15M"},
+					{label: t("events_alarms_label_30_minutes_before"), value: "-PT30M"},
+					{label: t("events_alarms_label_1_hour_before"), value: "-PT1H"},
+					{label: t("events_alarms_label_2_hours_before"), value: "-PT2H"},
+					{label: t("events_alarms_label_24_hours_before"), value: "-P1D"},
+					{label: t("events_alarms_label_48_hours_before"), value: "-P2D"}
+				]
+				return options
+			sortMethod:"x"
 	calendarid:
 		type: String,
 		# label:t("calendar_event_calendar")
@@ -94,27 +114,7 @@ Events._simpleSchema = new SimpleSchema
 			omit: true,
 			defaultValue:->
 				return Session.get('userId')	
-	alarms:
-		type: [String]
-		# label:t("calendar_event_alarms")
-		optional: true
-		autoform: 
-			type: "universe-select"
-			multiple: true
-			options: () ->
-				options=[
-					{label: t("events_alarms_label_when_events_occur"), value: "-PT0S"},
-					{label: t("events_alarms_label_5_minutes_before"), value: "-PT5M"},
-					{label: t("events_alarms_label_10_minutes_before"), value: "-PT10M"},
-					{label: t("events_alarms_label_15_minutes_before"), value: "-PT15M"},
-					{label: t("events_alarms_label_30_minutes_before"), value: "-PT30M"},
-					{label: t("events_alarms_label_1_hour_before"), value: "-PT1H"},
-					{label: t("events_alarms_label_2_hours_before"), value: "-PT2H"},
-					{label: t("events_alarms_label_24_hours_before"), value: "-P1D"},
-					{label: t("events_alarms_label_48_hours_before"), value: "-P2D"}
-				]
-				return options
-			sortMethod:"x"
+	
 	remindtimes:
 		type: [String],
 		optional: true
