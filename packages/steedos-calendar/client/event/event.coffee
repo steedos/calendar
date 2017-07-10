@@ -97,7 +97,7 @@ Calendar.generateCalendar = ()->
 				else
 					cs = calendarsubscriptions.findOne({'uri':event.calendarid})
 					color = cs?.color
-					title = ""
+					title = t("busy")
 				copy =
 					id: event._id
 					allDay: event.allDay
