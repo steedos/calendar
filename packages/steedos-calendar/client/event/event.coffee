@@ -146,6 +146,8 @@ Calendar.generateCalendar = ()->
 					start: start.toDate(),
 					end: end.toDate()
 				}
+				if view.options?.allDaySlot
+					doc.allDay = true
 				Modal.show('event_detail_modal',doc)
 
 			eventClick: (calEvent, jsEvent, view)->
