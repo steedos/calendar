@@ -146,7 +146,8 @@ Calendar.generateCalendar = ()->
 					start: start.toDate(),
 					end: end.toDate()
 				}
-				if view.options?.allDaySlot
+				if $(jsEvent.target).closest(".fc-day-grid.fc-unselectable").length
+					# 从全天区域新建事件应该设置allDay属性
 					doc.allDay = true
 				Modal.show('event_detail_modal',doc)
 
