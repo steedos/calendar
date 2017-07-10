@@ -36,8 +36,6 @@ Events._simpleSchema = new SimpleSchema
 						format:"YYYY-MM-DD HH:mm"
 						sideBySide:true
 					}
-			defaultValue:()->
-				return Session.get "startTime"
 
 	end:
 		type: Date

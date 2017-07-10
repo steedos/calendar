@@ -10,15 +10,15 @@ EventDetailModal =
 				value = moment(value).format("YYYY-MM-DDTHH:mm")
 				input.val(value)
 		else
-			startDP = input.data("DateTimePicker")
-			unless startDP
+			dp = input.data("DateTimePicker")
+			unless dp
 				return
 			if isAllDay
-				startDP.format = "YYYY-MM-DD"
-				startDP.setValue(startDP.date)
+				dp.format = "YYYY-MM-DD"
+				dp.setValue(dp.date)
 			else
-				startDP.format = "YYYY-MM-DD HH:mm"
-				startDP.setValue(startDP.date)
+				dp.format = "YYYY-MM-DD HH:mm"
+				dp.setValue(dp.date)
 
 Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
@@ -26,14 +26,6 @@ Template.event_detail_modal.onCreated ->
 
 Template.event_detail_modal.onRendered ->
 	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
-
-	data = Template.instance().data
-	isAllDay = data.allDay
-	startInput = $("#event_detail_modal .modal-body input[name=start]")
-	EventDetailModal.switchAllDay isAllDay, data.start, startInput
-	endInput = $("#event_detail_modal .modal-body input[name=end]")
-	EventDetailModal.switchAllDay isAllDay, data.end, endInput
-
 
 Template.event_detail_modal.helpers
 	formTitle:()->
@@ -206,7 +198,6 @@ Template.event_detail_modal.events
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
-		debugger
 		if !obj._id
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->
@@ -264,6 +255,14 @@ Template.event_detail_modal.events
 	'change input[name=allDay]': (event, template)->
 		data = template.data
 		isAllDay = $(event.currentTarget).is(':checked')
+		startInput = $("#event_detail_modal .modal-body input[name=start]")
+		EventDetailModal.switchAllDay isAllDay, data.start, startInput
+		endInput = $("#event_detail_modal .modal-body input[name=end]")
+		EventDetailModal.switchAllDay isAllDay, data.end, endInput
+
+	'shown.bs.modal #event_detail_modal': (event, template)->
+		data = template.data
+		isAllDay = data.allDay
 		startInput = $("#event_detail_modal .modal-body input[name=start]")
 		EventDetailModal.switchAllDay isAllDay, data.start, startInput
 		endInput = $("#event_detail_modal .modal-body input[name=end]")

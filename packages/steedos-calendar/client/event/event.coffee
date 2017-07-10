@@ -124,8 +124,6 @@ Calendar.generateCalendar = ()->
 					calendarIds.push(calendarid)
 					Session.set('calendarIds',calendarIds)
 					localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
-				Session.set "startTime",start.toDate()
-				Session.set "endTime",end.toDate()
 				Session.set "userId",Meteor.userId()
 				Session.set "userOption","select"
 				attendees=[]
@@ -144,8 +142,12 @@ Calendar.generateCalendar = ()->
 				doc = {
 					calendarid:calendarid,
 					ownerId:Meteor.userId(),
-					attendees:attendees
+					attendees:attendees,
+					start: start.toDate(),
+					end: end.toDate()
 				}
+				if view.options?.allDaySlot
+					doc.allDay = true
 				Modal.show('event_detail_modal',doc)
 
 			eventClick: (calEvent, jsEvent, view)->
@@ -203,8 +205,6 @@ Template.calendarContainer.events
 		calendarid = Session.get 'calendarid'
 		start = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
 		end = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
-		Session.set "startTime",start
-		Session.set "endTime",end
 		attendees=[]
 		userId = Meteor.userId()
 		attendee = {
@@ -214,7 +214,9 @@ Template.calendarContainer.events
 			cn:Meteor.users.findOne({_id:userId}).name,
 			mailto:Meteor.users.findOne({_id:userId}).steedos_id,
 			id:userId,
-			description:null
+			description:null,
+			start: start,
+			end: end
 		}
 		attendees.push attendee
 		
