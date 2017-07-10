@@ -206,7 +206,6 @@ Template.event_detail_modal.events
 			if attendee.id == Meteor.userId()
 				attendee.partstat=val
 				attendee.description=description
-		debugger
 		if !obj._id
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->
