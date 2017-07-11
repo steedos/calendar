@@ -143,11 +143,6 @@ Calendar.generateCalendar = ()->
 					$(".fc-list-table > tbody").prepend(thead)
 					$(".fc-widget-header").attr("colspan","5") 
 					headeringArr = $(".fc-list-heading-alt")
-					i = 0
-					while i < headeringArr.length
-						headeringHTML = $(headeringArr[i]).html()
-						$(headeringArr[i]).html("（#{headeringHTML}）")
-						i++
 
 			select: (start, end, jsEvent, view, resource)->
 				objs = Calendars.find()
