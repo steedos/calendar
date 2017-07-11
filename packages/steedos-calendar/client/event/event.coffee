@@ -104,6 +104,8 @@ Calendar.generateCalendar = ()->
 					title: title
 					url:event.url
 					color:color
+					site: event.site
+					participation: event.participation
 					backgroundColor:color
 					borderColor:color
 				if event.start
@@ -111,7 +113,42 @@ Calendar.generateCalendar = ()->
 				if event.end
 					copy.end = moment(event.end)
 				return copy
-			
+
+			eventRender:(event,element,view) ->
+				if view.name == "listWeek"
+					start = moment(event.start._d).format("H:mm")
+					end = moment(event.end._d).format("H:mm")
+					color = event.color 
+					title = event.title
+					site = event.site || ""
+					participation = event.participation || ""
+					tdContent = """
+						<td class="fc-list-item-time fc-widget-content">#{start} - #{end}</td>
+						<td class="fc-list-item-title fc-widget-content"><span class="fc-event-dot" style="background-color:#{color}"></span><a>#{title}</a></td>
+						<td class="fc-list-item-site fc-widget-content">#{site}</td>
+						<td class="fc-list-item-participation fc-widget-content">#{participation}</td>
+					"""
+					element.html(tdContent)
+
+			eventAfterAllRender:(view) ->
+				if view.name == "listWeek"
+					thead = """
+    					<tr class="fc-list-header">
+    						<td class="fc-list-item-time fc-widget-content">时间</td>
+    						<td class="fc-list-item-title fc-widget-content">内容</td>
+    						<td class="fc-list-item-site fc-widget-content">地点</td>
+    						<td class="fc-list-item-participation fc-widget-content">参加人员</td>
+    					</tr>
+					"""
+					$(".fc-list-table > tbody").prepend(thead)
+					$(".fc-widget-header").attr("colspan","5") 
+					headeringArr = $(".fc-list-heading-alt")
+					i = 0
+					while i < headeringArr.length
+						headeringHTML = $(headeringArr[i]).html()
+						$(headeringArr[i]).html("（#{headeringHTML}）")
+						i++
+
 			select: (start, end, jsEvent, view, resource)->
 				objs = Calendars.find()
 				calendarid = Session.get('calendarid')
