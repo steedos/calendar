@@ -96,6 +96,14 @@ Events._simpleSchema = new SimpleSchema
 						value: obj._id
 				# options[1].select='select'
 				return options
+
+	site:
+		type: String,
+		optional: true
+
+	participation:
+		type: String,
+		optional: true
 				
 	
 	description:

@@ -42,6 +42,8 @@ Meteor.methods
 						end:doc.end
 						allDay:doc.allDay
 						calendarid:calendar._id
+						site:doc.site
+						participation:doc.participation
 						description:doc.description
 						alarms:doc.alarms
 						remindtimes: doc.remindtimes
@@ -69,6 +71,8 @@ Meteor.methods
 				start:doc.start,
 				end:doc.end,
 				allDay:doc.allDay,
+				site:doc.site,
+				participation:doc.participation,
 				description:doc.description,
 				alarms: doc.alarms,
 				remindtimes: doc.remindtimes,

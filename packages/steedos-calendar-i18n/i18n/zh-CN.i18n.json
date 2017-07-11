@@ -33,6 +33,8 @@
   "calendar_objects_calendarid":"所属日历",
   "calendar_objects_description":"描述",
   "calendar_objects_alarms":"提醒",
+  "calendar_objects_site":"地点",
+  "calendar_objects_participation":"参加人员",
   "calendars_title":"标题",
   "calendars_members": "成员",
   "calendars_visibility": "可见性",

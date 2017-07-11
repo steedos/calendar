@@ -190,7 +190,8 @@ Template.event_detail_modal.events
 		obj.end = AutoForm.getFieldValue("end","eventsForm") || obj.end
 		obj.description = AutoForm.getFieldValue("description","eventsForm") || obj.description
 		obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || obj.alarms
-
+		obj.site = AutoForm.getFieldValue("site","eventsForm") || obj.site
+		obj.participation = AutoForm.getFieldValue("participation","eventsForm") || obj.participation
 		unless AutoForm.getFieldValue("allDay","eventsForm") == undefined
 			#有权限的时候才能修改“全天字段”,AutoForm.getFieldValue("allDay","eventsForm")为空时表示只读
 			obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")

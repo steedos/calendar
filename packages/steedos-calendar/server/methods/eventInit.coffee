@@ -31,6 +31,8 @@ Meteor.methods
 						end:doc.end
 						allDay:doc.allDay
 						calendarid:calendar._id
+						site:doc.site
+						participation:doc.participation
 						description:doc.description
 						alarms:doc.alarms
 						componenttype:doc.componenttype
