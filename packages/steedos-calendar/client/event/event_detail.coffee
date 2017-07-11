@@ -1,13 +1,13 @@
 EventDetailModal =
-	switchAllDay: (isAllDay, value, input)->
+	switchAllDay: (isAllDay, input)->
 		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
 			if isAllDay
 				input.attr("type","date")
-				value = moment(value).format("YYYY-MM-DD")
+				value = moment(input.val()).format("YYYY-MM-DD")
 				input.val(value)
 			else
 				input.attr("type","datetime-local")
-				value = moment(value).format("YYYY-MM-DDTHH:mm")
+				value = moment(input.val()).format("YYYY-MM-DDTHH:mm")
 				input.val(value)
 		else
 			dp = input.data("DateTimePicker")
@@ -258,20 +258,35 @@ Template.event_detail_modal.events
 		template.reactiveAttendees.set(tempAtt)
 
 	'change input[name=allDay]': (event, template)->
-		data = template.data
 		isAllDay = $(event.currentTarget).is(':checked')
 		startInput = $("#event_detail_modal .modal-body input[name=start]")
-		EventDetailModal.switchAllDay isAllDay, data.start, startInput
+		EventDetailModal.switchAllDay isAllDay, startInput
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
-		EventDetailModal.switchAllDay isAllDay, data.end, endInput
+		EventDetailModal.switchAllDay isAllDay, endInput
+		# 如果切换“全天”开关时开始时间大于结束时间，则把结束时间值设置为等于开始时间，避免保存时报“开始时间不能大于结束时间”
+		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
+			startInputMoment = moment(startInput.val())
+			endInputMoment = moment(endInput.val())
+			startInputDate = startInputMoment.toDate()
+			endInputDate = endInputMoment.toDate()
+			if startInputDate > endInputDate
+				if endInput.attr("type") == "date"
+					endInput.val(startInputMoment.format("YYYY-MM-DD"))
+				else
+					endInput.val(startInputMoment.format("YYYY-MM-DDTHH:mm"))
+		else
+			startDP = startInput.data("DateTimePicker")
+			endDP = endInput.data("DateTimePicker")
+			if startDP and endDP and startDP.date.toDate() > endDP.date.toDate()
+				endDP.setValue(startDP.date)
 
 	'shown.bs.modal #event_detail_modal': (event, template)->
 		data = template.data
 		isAllDay = data.allDay
 		startInput = $("#event_detail_modal .modal-body input[name=start]")
-		EventDetailModal.switchAllDay isAllDay, data.start, startInput
+		EventDetailModal.switchAllDay isAllDay, startInput
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
-		EventDetailModal.switchAllDay isAllDay, data.end, endInput
+		EventDetailModal.switchAllDay isAllDay, endInput
 
 	'change input[name=start]': (event, template)->
 		data = template.data
