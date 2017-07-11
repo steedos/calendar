@@ -36,6 +36,7 @@
   "calendar_objects_participation":"participation",
   "calendars_title":"Title",
   "calendars_members": "Members",
+  "calendars_members_readonly":"Authorized to view",
   "calendars_visibility": "Visibility",
   "calendars_color": "Color",
   "calendar_subscriptions_calendarname":"Title",

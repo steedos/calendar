@@ -219,8 +219,14 @@ Template.calendarSidebar.events
 AutoForm.hooks calendarForm:
 	onSuccess: (formType,result) ->
 		calendarIds = Session.get("calendarIds")
-		calendarIds.push(result)
+		calendarIds.push(result._id)
 		Session.set "calendarIds",calendarIds
-		Session.set "calendarid",result
+		Session.set "calendarid",result._id
 		localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
-		localStorage.setItem("calendarid:"+Meteor.userId(),result)
+		localStorage.setItem("calendarid:"+Meteor.userId(),result._id)
+		Meteor.call("shareCalendar",result)
+
+AutoForm.hooks editCalendarForm:
+	onSuccess: (formType,result) ->
+		calendarObj = Session.get("cmDoc")
+		Meteor.call("shareCalendar",calendarObj)

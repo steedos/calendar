@@ -22,6 +22,16 @@ Calendars._simpleSchema = new SimpleSchema
 			defaultValue: ()->
 				return [Meteor.userId()]
 
+	members_readonly:
+		type: [String],
+		optional: true
+		autoform:
+			spaceId: false
+			type: "selectuser"
+			multiple: true
+			defaultValue: ()->
+				return []
+
 	visibility:
 		type: String,
 		optional: true,
