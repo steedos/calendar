@@ -92,5 +92,6 @@
   "Thu":"四",
   "Fri":"五",
   "Sat":"六",
-  "busy":"忙碌"
+  "busy":"忙碌",
+  "events_allday":"全天"
 }

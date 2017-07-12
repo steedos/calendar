@@ -91,5 +91,6 @@
   "Thu":"Thu",
   "Fri":"Fri",
   "Sat":"Sat",
-  "busy":"busy"
+  "busy":"busy",
+  "events_allday":"all-day"
 }
