@@ -7,7 +7,7 @@ calendarsLoading = false
 
 Template.calendarSidebar.helpers
 	calendars: ()->
-		objs = Calendars.find().fetch()
+		objs = Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()}]}).fetch()
 		defaultcalendarIndex = 0
 		objs.forEach (obj,index) ->
 			if obj.ownerId == Meteor.userId() and obj.isDefault == true
@@ -206,7 +206,8 @@ Template.calendarSidebar.events
 		);
 
 	'click i.sub-calendar':()->
-		$("input[name='addmembers']").click()
+		# $("input[name='addmembers']").click()
+		Modal.show("subcalendar_modal")
 
 	'change input[name="addmembers"]':()->
 		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
@@ -224,7 +225,7 @@ AutoForm.hooks calendarForm:
 		Session.set "calendarid",result._id
 		localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 		localStorage.setItem("calendarid:"+Meteor.userId(),result._id)
-		Meteor.call("shareCalendar",result,"new")
+		# Meteor.call("shareCalendar",result,"new")
 
 AutoForm.hooks editCalendarForm:
 	onSuccess: (formType,result) ->
@@ -237,4 +238,4 @@ AutoForm.hooks editCalendarForm:
 			title: title
 			color: color
 			members_readonly: members_readonly
-		Meteor.call("shareCalendar",calendarObj,"update")
+		# Meteor.call("shareCalendar",calendarObj,"update")

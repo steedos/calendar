@@ -1,5 +1,5 @@
 {
-  "Steedos Calendar": "一周工作安排",
+  "Steedos Calendar": "一周工作安排日程表",
   "calendar_add": "添加",
   "calendar_save": "保存",
   "calendar_delete": "删除",
@@ -78,7 +78,7 @@
   "remind_me_later":"稍后提醒",
   "close":"关闭",
   "my_calendar":"我的日历",
-  "my_subscription":"我的订阅",
+  "other_calendars":"其他日历",
   "new_event":"新建事件",
   "edit_calendar":"编辑日历",
   "delete_calendar":"删除日历",
@@ -92,5 +92,6 @@
   "Thu":"四",
   "Fri":"五",
   "Sat":"六",
-  "busy":"忙碌"
+  "busy":"忙碌",
+  "choose_calendars":"请选择日历"
 }

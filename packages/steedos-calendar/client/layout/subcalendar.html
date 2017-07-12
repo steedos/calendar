@@ -1,0 +1,31 @@
+<template name="subcalendar_modal">
+	<div class="modal fade ins-opinion-modal" id="subcalendar_modal" role="dialog" aria-labelledby="subcalendar_modal_label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content ins-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+							aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="subcalendar_modal_label">{{_ "choose_calendars"}}</h4>
+				</div>
+
+				<div class="modal-body modal-zoom panel panel-default">
+					{{#each subCalendars}}
+						<div class="weui-cell">
+			                <div class="weui-cell__hd sub-calendar-box {{#if isCalendarSub _id}}active{{/if}}">
+			                	{{#if isCalendarSub _id}}
+			                		<i class="ion ion-android-star"></i>
+			                	{{else}}
+			                		<i class="ion ion-android-star-outline"></i>
+			                	{{/if}}
+			                </div>
+			                <div class="weui-cell__bd sub-calendar-title">
+			                    <span>{{title}}</span>
+			                </div>
+			            </div>
+					{{/each}}
+					<span class="help-block" style="padding: 4px"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

@@ -77,7 +77,7 @@
   "remind_me_later":"Remind me later",
   "close":"Close",
   "my_calendar":"My calendars",
-  "my_subscription":"My subscriptions",
+  "other_calendars":"Other calendars",
   "new_event":"New Event",
   "edit_calendar":"Edit calendar",
   "delete_calendar":"Delete calendar",
@@ -91,5 +91,6 @@
   "Thu":"Thu",
   "Fri":"Fri",
   "Sat":"Sat",
-  "busy":"busy"
+  "busy":"busy",
+  "choose_calendars":"Please choose calendars"
 }

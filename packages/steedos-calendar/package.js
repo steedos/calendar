@@ -62,7 +62,7 @@ Package.onUse(function(api) {
     api.use('steedos:adminlte@2.3.12_3');
     api.use('steedos:base@0.0.38');
     api.use('steedos:accounts@0.0.12');
-    api.use('steedos:theme@0.0.17');
+    api.use('steedos:theme@0.0.18');
     api.use('steedos:i18n@0.0.5');
     api.use('steedos:calendar-i18n@0.0.2_4');
 	api.use('steedos:autoform@0.0.1');
@@ -86,6 +86,9 @@ Package.onUse(function(api) {
     api.addFiles('client/layout/sidebar.html', 'client');
     api.addFiles('client/layout/sidebar.coffee', 'client');
     api.addFiles('client/layout/sidebar.less', 'client');
+    api.addFiles('client/layout/subcalendar.html', 'client');
+    api.addFiles('client/layout/subcalendar.coffee', 'client');
+    api.addFiles('client/layout/subcalendar.less', 'client');
 
     api.addFiles('client/core.coffee', 'client');
     api.addFiles('client/router.coffee', 'client');
