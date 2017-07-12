@@ -224,9 +224,17 @@ AutoForm.hooks calendarForm:
 		Session.set "calendarid",result._id
 		localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 		localStorage.setItem("calendarid:"+Meteor.userId(),result._id)
-		Meteor.call("shareCalendar",result)
+		Meteor.call("shareCalendar",result,"new")
 
 AutoForm.hooks editCalendarForm:
 	onSuccess: (formType,result) ->
-		calendarObj = Session.get("cmDoc")
-		Meteor.call("shareCalendar",calendarObj)
+		calendarId = Session.get("cmDoc")._id
+		members_readonly = AutoForm.getFieldValue("members_readonly","editCalendarForm")
+		title = AutoForm.getFieldValue("title","editCalendarForm")
+		color = AutoForm.getFieldValue("color","editCalendarForm")
+		calendarObj = 
+			_id: calendarId
+			title: title
+			color: color
+			members_readonly: members_readonly
+		Meteor.call("shareCalendar",calendarObj,"update")
