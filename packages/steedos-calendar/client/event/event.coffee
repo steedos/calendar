@@ -60,7 +60,7 @@ Calendar.generateCalendar = ()->
 			dayNamesShortValue = [t('Sun'), t('Mon'), t('Tue'), t('Wed'), t('Thu'), t('Fri'), t('Sat')]
 		else
 			rightHeaderView = 'month,agendaWeek,agendaDay,listWeek'
-			defaultView = 'agendaWeek'
+			defaultView = 'listWeek'
 			dayNamesShortValue = undefined
 		$('#calendar').fullCalendar
 			height: ()->
