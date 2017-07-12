@@ -17,7 +17,6 @@ Template.subcalendar_modal.events
 			color: this.color
 		Meteor.call("shareCalendar",calendarObj,"sub",
 			(error,result)->
-				debugger
 				if !error and result
 					calendarIds = Session.get("calendarIds")
 					calendarIds = _.without(calendarIds,result)
