@@ -93,5 +93,6 @@
   "Fri":"五",
   "Sat":"六",
   "busy":"忙碌",
-  "choose_calendars":"请选择日历"
+  "choose_calendars":"请选择日历",
+  "events_allday":"全天"
 }

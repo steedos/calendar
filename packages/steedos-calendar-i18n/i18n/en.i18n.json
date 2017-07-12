@@ -92,5 +92,6 @@
   "Fri":"Fri",
   "Sat":"Sat",
   "busy":"busy",
-  "choose_calendars":"Please choose calendars"
+  "choose_calendars":"Please choose calendars",
+  "events_allday":"all-day"
 }

@@ -116,14 +116,20 @@ Calendar.generateCalendar = ()->
 
 			eventRender:(event,element,view) ->
 				if view.name == "listWeek"
-					start = moment(event.start._d).format("H:mm")
-					end = moment(event.end._d).format("H:mm")
+					start = event.start?.format("H:mm")
+					end = event.end?.format("H:mm")
+					if event.allDay
+						timeText = t "events_allday"
+					else if end
+						timeText = "#{start} - #{end}"
+					else
+						timeText = "#{start}"
 					color = event.color 
 					title = event.title
 					site = event.site || ""
 					participation = event.participation || ""
 					tdContent = """
-						<td class="fc-list-item-time fc-widget-content">#{start} - #{end}</td>
+						<td class="fc-list-item-time fc-widget-content">#{timeText}</td>
 						<td class="fc-list-item-title fc-widget-content"><span class="fc-event-dot" style="background-color:#{color}"></span><a>#{title}</a></td>
 						<td class="fc-list-item-site fc-widget-content">#{site}</td>
 						<td class="fc-list-item-participation fc-widget-content">#{participation}</td>
@@ -202,8 +208,8 @@ Calendar.generateCalendar = ()->
 					return
 
 				obj = Events.findOne({'_id':event._id})
-				obj.start = moment(event.start._d).toDate()
-				obj.end = moment(event.end._d).toDate()
+				obj.start = event.start.toDate()
+				obj.end = event.end.toDate()
 				Meteor.call('updateEvents',obj,2)
 
 			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
@@ -213,8 +219,8 @@ Calendar.generateCalendar = ()->
 					Calendar.reloadEvents()
 					return
 				obj = Events.findOne({'_id':event._id})
-				obj.start = moment(event.start._d).toDate()
-				obj.end = moment(event.end._d).toDate()
+				obj.start = event.start.toDate()
+				obj.end = event.end.toDate()
 				Meteor.call('updateEvents',obj,2)
 				
 		Events.find().observe
