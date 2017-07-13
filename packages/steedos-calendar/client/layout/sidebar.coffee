@@ -95,7 +95,6 @@ Template.calendarSidebar.events
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
 		$('.btn.calendar-add').click();
-		$('.modal-body').addClass("modal-zoom")
 
 	'click .edit-calendar': (event)->
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
@@ -104,14 +103,12 @@ Template.calendarSidebar.events
 			return;
 		Session.set("cmDoc", this);
 		$('.btn.calendar-edit').click();
-		$('.modal-body').addClass("modal-zoom")
 
 	'click .show-calendar': (event)->
 		event.stopPropagation()
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		Session.set("cmDoc", this);
 		$('.btn.calendar-show').click();
-		$('.modal-body').addClass("modal-zoom")
 	
 	'click .my-calendar': (event)->
 		event.stopPropagation()
@@ -140,7 +137,6 @@ Template.calendarSidebar.events
 		Session.set("cmDoc", this);
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		$('.btn.subscribe-show').click();
-		$('.modal-body').addClass("modal-zoom")
 
 	'click .calendar-delete': (event)->
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
