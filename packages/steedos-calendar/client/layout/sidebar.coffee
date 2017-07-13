@@ -56,6 +56,10 @@ Template.calendarSidebar.helpers
 	values: ()->
 		return {}
 
+	hasSubCalendars: ()->
+		userId = Meteor.userId()
+		return Calendars.find({members_readonly:userId}).count() > 0
+
 
 Template.calendarSidebar.onRendered ->
 	calendarsubscriptions.after.update (userId,doc)->
