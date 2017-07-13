@@ -12,11 +12,11 @@
 				{{#if subCalendars}}
 					{{#each subCalendars}}
 						<div class="weui-cell">
-			                <div class="weui-cell__hd sub-calendar-box {{#if isCalendarSub _id}}active{{/if}}">
+			                <div class="weui-cell__hd sub-calendar-box" style="color:{{color}};">
 			                	{{#if isCalendarSub _id}}
 			                		<i class="ion ion-android-star"></i>
 			                	{{else}}
-			                		<i class="ion ion-android-star-outline"></i>
+			                		<i class="ion ion-android-star-outline" style="color:{{color}};"></i>
 			                	{{/if}}
 			                </div>
 			                <div class="weui-cell__bd sub-calendar-title">

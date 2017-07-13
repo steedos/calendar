@@ -206,7 +206,9 @@ Template.calendarSidebar.events
 		);
 
 	'click i.sub-calendar':()->
-		# $("input[name='addmembers']").click()
+		$("input[name='addmembers']").click()
+
+	'click .browse-calendars':()->
 		Modal.show("subcalendar_modal")
 
 	'change input[name="addmembers"]':()->
