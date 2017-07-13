@@ -1,7 +1,11 @@
 Template.subcalendar_modal.helpers
 	subCalendars: ()->
 		userId = Meteor.userId()
-		return Calendars.find({members_readonly:userId}).fetch()
+		if Calendars.find({members_readonly:userId}).count() > 0
+			return Calendars.find({members_readonly:userId}).fetch()
+		else
+			return false	
+		
 
 	isCalendarSub: (calendarId)->
 		if calendarsubscriptions.find({uri:calendarId}).count()

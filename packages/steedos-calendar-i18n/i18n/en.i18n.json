@@ -93,5 +93,6 @@
   "Sat":"Sat",
   "busy":"busy",
   "choose_calendars":"Please choose calendars",
-  "events_allday":"all-day"
+  "events_allday":"all-day",
+  "no_calendar_to_choose":"No calendar to choose"
 }

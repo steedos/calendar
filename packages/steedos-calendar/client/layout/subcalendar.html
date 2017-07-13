@@ -9,6 +9,7 @@
 				</div>
 
 				<div class="modal-body modal-zoom panel panel-default">
+				{{#if subCalendars}}
 					{{#each subCalendars}}
 						<div class="weui-cell">
 			                <div class="weui-cell__hd sub-calendar-box {{#if isCalendarSub _id}}active{{/if}}">
@@ -23,7 +24,14 @@
 			                </div>
 			            </div>
 					{{/each}}
-					<span class="help-block" style="padding: 4px"></span>
+				{{else}}
+					<div class="weui-cell">
+						<div class="weui-cell__bd sub-calendar-title" style="text-align: center;font-size: 16px;">
+			            	<span>{{_ "no_calendar_to_choose"}}</span>
+			            </div>
+					</div>
+				{{/if}}
+					<span class="help-block"></span>
 				</div>
 			</div>
 		</div>
