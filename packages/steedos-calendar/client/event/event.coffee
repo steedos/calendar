@@ -209,8 +209,12 @@ Calendar.generateCalendar = ()->
 					return
 
 				obj = Events.findOne({'_id':event._id})
+				obj.allDay = event.allDay
 				obj.start = event.start.toDate()
-				obj.end = event.end.toDate()
+				if event.end == null
+					obj.end = event.start.toDate()
+				else
+					obj.end = event.end.toDate()
 				Meteor.call('updateEvents',obj,2)
 
 			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
