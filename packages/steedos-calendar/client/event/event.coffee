@@ -60,7 +60,7 @@ Calendar.generateCalendar = ()->
 			dayNamesShortValue = [t('Sun'), t('Mon'), t('Tue'), t('Wed'), t('Thu'), t('Fri'), t('Sat')]
 		else
 			rightHeaderView = 'month,agendaWeek,agendaDay,listWeek'
-			defaultView = 'listWeek'
+			defaultView = localStorage.getItem("defaultView"+Meteor.userId()) || 'listWeek'
 			dayNamesShortValue = undefined
 		$('#calendar').fullCalendar
 			height: ()->
@@ -137,6 +137,7 @@ Calendar.generateCalendar = ()->
 					element.html(tdContent)
 
 			eventAfterAllRender:(view) ->
+				localStorage.setItem("defaultView"+Meteor.userId(),view.name)
 				if view.name == "listWeek"
 					thead = """
     					<tr class="fc-list-header">
