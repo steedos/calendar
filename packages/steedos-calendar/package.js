@@ -115,6 +115,7 @@ Package.onUse(function(api) {
     // api.addFiles('server/methods/checkcrach.coffee','server');
     api.addFiles('server/methods/initscription.coffee','server');
     api.addFiles('server/methods/addCalendarObjects.coffee','server');
+    api.addFiles('server/methods/updateSubcalendar.coffee','server');
     api.addFiles('server/publications/calendars.coffee','server');
     api.addFiles('server/publications/events.coffee','server');
     api.addFiles('server/publications/subcalendars.coffee','server');

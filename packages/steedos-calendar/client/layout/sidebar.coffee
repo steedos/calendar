@@ -232,12 +232,12 @@ AutoForm.hooks calendarForm:
 AutoForm.hooks editCalendarForm:
 	onSuccess: (formType,result) ->
 		calendarId = Session.get("cmDoc")._id
-		members_readonly = AutoForm.getFieldValue("members_readonly","editCalendarForm")
 		title = AutoForm.getFieldValue("title","editCalendarForm")
-		color = AutoForm.getFieldValue("color","editCalendarForm")
 		calendarObj = 
 			_id: calendarId
 			title: title
-			color: color
-			members_readonly: members_readonly
-		# Meteor.call("shareCalendar",calendarObj,"update")
+		Meteor.call("updateSubcalendar",calendarObj,
+			(error,result) ->
+				if error
+					console.log error
+		)
