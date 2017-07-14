@@ -99,7 +99,8 @@ Calendar.generateCalendar = ()->
 					color = cs?.color
 					title = t("busy")
 				subCalendar = Calendars.findOne({'_id':event.calendarid,"members_readonly":Meteor.userId()})
-				if subCalendar
+				subCalendarInfo = calendarsubscriptions.findOne({'uri':event.calendarid})
+				if subCalendarInfo
 					color = calendarsubscriptions.findOne({'uri':event.calendarid}).color
 				copy =
 					id: event._id
