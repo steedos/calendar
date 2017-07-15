@@ -26,6 +26,15 @@
 			td.fc-list-item-participation.fc-widget-content{
 				width: 35%;
 			}
+			@media (max-width: 420px){
+				/*手机竖屏时不显示表头并且只显示两列*/
+				tr:nth-child(1){
+					display:none;
+				}
+				tr td:nth-child(3),tr td:nth-child(4){
+					display:none;
+				}
+			}
 		}
 	}
 	.fc-header-toolbar{
@@ -36,6 +45,11 @@
 		background: transparent;
 		@media (max-width: 767px){
 			margin: 6px 0;
+		}
+		@media (max-width: 420px){
+			.fc-agendaDay-button{
+				display:none;
+			}
 		}
 		.fc-center{
 			h2{

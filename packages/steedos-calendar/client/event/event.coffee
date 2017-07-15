@@ -55,13 +55,15 @@ Calendar.hasPermission = ( event )->
 Calendar.generateCalendar = ()->
 	if !$('#calendar').children()?.length
 		if Steedos.isMobile()
-			rightHeaderView = 'month,agendaDay'
-			defaultView = 'month'
+			rightHeaderView = 'month,agendaDay,listWeek'
+			defaultView = 'listWeek'
 			dayNamesShortValue = [t('Sun'), t('Mon'), t('Tue'), t('Wed'), t('Thu'), t('Fri'), t('Sat')]
+			listWeekText = t("calendar_list_week_mobile")
 		else
 			rightHeaderView = 'month,agendaWeek,agendaDay,listWeek'
 			defaultView = localStorage.getItem("defaultView"+Meteor.userId()) || 'listWeek'
 			dayNamesShortValue = undefined
+			listWeekText = t("calendar_list_week")
 		$('#calendar').fullCalendar
 			height: ()->
 				return $('#calendar').height() - 2
@@ -86,7 +88,7 @@ Calendar.generateCalendar = ()->
 			noEventsMessage:t("no_events_message")
 			dayNamesShort:dayNamesShortValue
 			buttonText:
-				listWeek:t("calendar_list_week")
+				listWeek:listWeekText
 
 			eventDataTransform: (event) ->
 				calendar = Calendars.findOne({'_id':event.calendarid})

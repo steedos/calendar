@@ -26,6 +26,7 @@
   "calendar_delete_succsee_info": "This Calendar has bean Deleted!",
   "no_events_message": "No scheduled this week",
   "calendar_list_week": "This week schedule",
+  "calendar_list_week_mobile": "Week",
   "calendar_objects_title": "Title",
   "calendar_objects_start": "Start",
   "calendar_objects_end":"End",
