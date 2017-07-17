@@ -5,7 +5,9 @@ JsonRoutes.add "get", "/api/calendar/events", (req, res, next) ->
 
 	space_id = req.headers['x-space-id']
 
-	if !user_id
+	user = Steedos.getAPILoginUser(req, res)
+
+	if !user
 			JsonRoutes.sendResult res,
 				code: 401,
 				data:
@@ -17,7 +19,7 @@ JsonRoutes.add "get", "/api/calendar/events", (req, res, next) ->
 		return obj._id
 	userEvent = []
 	userCalendar.forEach (id) ->
-		Events.find({calendarid:id},{sort:{start:-1},limit:5},{fields:{title:1,start:1,end:1}}).fetch().forEach (obj) ->
+		Events.find({calendarid:id},{fields: {title: 1, start: 1, end: 1, site: 1, participation: 1, allDay: 1},sort:{start:-1},limit:5}).fetch().forEach (obj) ->
 			obj.start = moment(obj.start).format("YYYY-MM-DD HH:mm")
 			obj.end = moment(obj.end).format("YYYY-MM-DD HH:mm")
 			userEvent.push obj
