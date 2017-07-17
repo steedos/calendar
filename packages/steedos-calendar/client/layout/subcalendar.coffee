@@ -19,7 +19,7 @@ Template.subcalendar_modal.events
 			_id: this._id
 			title: this.title
 			color: this.color
-		Meteor.call("shareCalendar",calendarObj,"sub",
+		Meteor.call("subCalendar",calendarObj,"sub",
 			(error,result)->
 				if !error and result
 					calendarIds = Session.get("calendarIds")
@@ -33,7 +33,7 @@ Template.subcalendar_modal.events
 			_id: this._id
 			title: this.title
 			color: this.color
-		Meteor.call("shareCalendar",calendarObj,"check",
+		Meteor.call("subCalendar",calendarObj,"check",
 			(error,result)->
 				if !error
 					Session.set("calendarIds",[result])
