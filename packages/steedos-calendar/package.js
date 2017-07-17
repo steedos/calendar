@@ -113,6 +113,7 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/davModifiedEvent.coffee','server');
     api.addFiles('server/methods/subCalendar.coffee','server');
     api.addFiles('server/methods/shareCalendar.coffee','server');
+    api.addFiles('server/methods/removeSubCalendars.coffee','server');
     // api.addFiles('server/methods/checkcrach.coffee','server');
     api.addFiles('server/methods/initscription.coffee','server');
     api.addFiles('server/methods/addCalendarObjects.coffee','server');

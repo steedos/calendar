@@ -164,6 +164,11 @@ Template.calendarSidebar.events
 					if error
 						swal(t("calendar_delete_failed"),error.message,"error")
 					else
+						Meteor.call("removeSubCalendars",calendar_id,
+							(error,result) ->
+								if error
+									console.log error
+						)
 						swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success")
 						localStorage.setItem("calendarid:"+Meteor.userId(),Session.get('defaultcalendarid'))
 						Session.set("calendarid",Session.get('defaultcalendarid'))
