@@ -264,15 +264,15 @@ Template.calendarContainer.events
 			cn:Meteor.users.findOne({_id:userId}).name,
 			mailto:Meteor.users.findOne({_id:userId}).steedos_id,
 			id:userId,
-			description:null,
-			start: start,
-			end: end
+			description:null
 		}
 		attendees.push attendee
 		
 		doc = {
 			calendarid:calendarid,
 			ownerId:userId,
-			attendees:attendees
+			attendees:attendees,
+			start: start,
+			end: end
 		}
 		Modal.show('event_detail_modal',doc)
