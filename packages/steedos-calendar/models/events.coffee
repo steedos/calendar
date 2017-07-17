@@ -89,7 +89,7 @@ Events._simpleSchema = new SimpleSchema
 				return Session.get("calendarid");
 			options: ()->
 				options = []
-				objs = Calendars.find({})
+				objs = Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()}]}).fetch()
 				objs.forEach (obj) ->
 					options.push
 						label: t(obj.title),
