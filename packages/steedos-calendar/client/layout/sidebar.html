@@ -3,7 +3,11 @@
     <section class="sidebar">
 
       <ul class="sidebar-menu">
-        <li class="header">{{_ "my_calendar"}}<i class="ion ion-plus-round pull-right calendar-add"></i></li>
+        <li class="header">{{_ "my_calendar"}}
+          {{#if showAddCalendar}}
+          <i class="ion ion-plus-round pull-right calendar-add"></i>
+          {{/if}}
+        </li>
         {{#each calendars}}
         <li class="{{calendarActive}}">
           <a href="#" class="calendar-row my-calendar">

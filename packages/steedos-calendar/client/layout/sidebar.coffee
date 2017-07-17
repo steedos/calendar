@@ -60,6 +60,10 @@ Template.calendarSidebar.helpers
 		userId = Meteor.userId()
 		return Calendars.find({members_readonly:userId}).count() > 0
 
+	showAddCalendar: ()->
+		spaceId = Session.get("spaceId")
+		return Steedos.isSpaceAdmin(spaceId)
+
 
 Template.calendarSidebar.onRendered ->
 	calendarsubscriptions.after.update (userId,doc)->
