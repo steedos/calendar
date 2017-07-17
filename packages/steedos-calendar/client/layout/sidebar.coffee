@@ -56,9 +56,16 @@ Template.calendarSidebar.helpers
 	values: ()->
 		return {}
 
-	hasSubCalendars: ()->
+	ShowMoreCalendars: ()->
 		userId = Meteor.userId()
-		return Calendars.find({members_readonly:userId}).count() > 0
+		browseCalendarIds = Calendars.find({members_readonly:Meteor.userId()}).fetch().getProperty("_id")
+		subCalendars = calendarsubscriptions.find().fetch().getProperty("uri")
+		ShowMoreCalendars = false
+		browseCalendarIds.forEach (id,index) ->
+			if _.indexOf(subCalendars,id) < 0
+				ShowMoreCalendars = true
+		return ShowMoreCalendars
+		
 
 	showAddCalendar: ()->
 		spaceId = Session.get("spaceId")
