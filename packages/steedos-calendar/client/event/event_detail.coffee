@@ -2,12 +2,12 @@ EventDetailModal =
 	switchAllDay: (isAllDay, input)->
 		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
 			if isAllDay
-				input.attr("type","date")
 				value = moment(input.val()).format("YYYY-MM-DD")
+				input.attr("type","date")
 				input.val(value)
 			else
-				input.attr("type","datetime-local")
 				value = moment(input.val()).format("YYYY-MM-DDTHH:mm")
+				input.attr("type","datetime-local")
 				input.val(value)
 		else
 			dp = input.data("DateTimePicker")
