@@ -96,5 +96,6 @@
   "choose_calendars":"Please choose calendars",
   "events_allday":"all-day",
   "no_calendar_to_choose":"No calendar to choose",
-  "more_calendars":"More calendas..."
+  "more_calendars":"More calendas...",
+  "subscribe_or_unsubscribe_to_this_calendar":"Subscribe or unsubscribe to this calendar"
 }
