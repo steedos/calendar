@@ -195,7 +195,7 @@ Template.calendarSidebar.events
 		calendar_id = this._id;
 		swal({
 				title: t("calendar_hide_calendar"),
-				text: t("calendar_hide_confirm_calendar"),
+				text: t("When_you_cancel_your_subscription_the_calendar_will_not_appear_in_your_shared_calendar"),
 				type: "warning",
 				showCancelButton: true,
 				cancelButtonText:t("calendar_cancel"),
@@ -212,7 +212,7 @@ Template.calendarSidebar.events
 					if error
 						swal(t("calendar_hide_failed"),error.message,"error");
 					else
-						swal(t("calendar_hide_success"),t("calendar_hide_succsee_info"),"success");
+						swal(t("calendar_hide_success"),"","success");
 						$("body").removeClass "loading"
 						calendarIds = Session.get("calendarIds")
 						# 将删除的订阅日历从calendarIds中移除
