@@ -123,15 +123,26 @@ Template.calendarSidebar.events
 	
 	'click .my-calendar': (event)->
 		event.stopPropagation()
-		currentCalendarid = Session.set("calendarid")
+		currentCalendarid = Session.get("calendarid")
 		if currentCalendarid != this._id
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
 			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
+			Session.set("calendarIds",[this._id])
+			localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
+			Calendar.reloadEvents()
 	
 	'click .subscribe-calendar': (event)->
 		event.stopPropagation()
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
+		calendarid = Session.get("calendarid")
+		if calendarid != this._id
+			Session.set("calendarid",this._id)
+			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
+			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
+			Session.set("calendarIds",[this.uri])
+			localStorage.setItem("calendarIds:"+Meteor.userId(),[this.uri])	
+			Calendar.reloadEvents()
 
 	'click .dropdown-toggle': (event)->
 		event.stopPropagation()

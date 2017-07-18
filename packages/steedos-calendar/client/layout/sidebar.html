@@ -74,7 +74,7 @@
         <li class="header">{{_ "shared_calendars"}}<i class="ion ion-plus-round pull-right sub-calendar"></i></li>
         
         {{#each subscribe}}
-        <li>
+        <li class="{{calendarActive}}">
           <a href="#" class="calendar-row subscribe-calendar">
             <div class="check">
               <i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
