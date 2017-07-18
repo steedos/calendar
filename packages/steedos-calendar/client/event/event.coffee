@@ -28,9 +28,12 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 		calendarIds=[]
 	calendar=Calendars.findOne({'_id':Session.get('calendarid')})
 	$('#calendar').fullCalendar("getCalendar").getView().options.eventColor=calendar?.color
+	utcOffsetHours = moment().utcOffset()/60
+	start = start.subtract(utcOffsetHours, "hours").toDate()
+	end = end.subtract(utcOffsetHours,"hours").toDate()
 	params = 
-		start: start.toDate()
-		end: end.toDate()
+		start: start
+		end: end
 		timezone: timezone
 		calendar:calendarIds
 
@@ -221,7 +224,11 @@ Calendar.generateCalendar = ()->
 					obj.end = event.start.toDate()
 				else
 					obj.end = event.end.toDate()
-				Meteor.call('updateEvents',obj,2)
+				Meteor.call('updateEvents',obj,2,
+					(error,result)->
+						if error
+							console.log error
+				)
 
 			eventResize: (event, delta, revertFunc, jsEvent, ui, view)->
 				hasPermission = Calendar.hasPermission(event)
