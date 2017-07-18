@@ -6,8 +6,11 @@ Meteor.methods
 			events=Events.find({_id:obj._id}).fetch()
 			attendees=events[0].attendees	
 		if obj.ownerId==Meteor.userId() || obj.Isdavmodified
-			newattendeesid=_.pluck(obj.attendees,'id');
-			oldattendeesid=_.pluck(attendees,'id');
+			newattendeesid=_.pluck(obj?.attendees,'id');
+			if attendees
+				oldattendeesid=_.pluck(attendees,'id');
+			else
+				oldattendeesid=[]
 			subattendeesid=_.difference oldattendeesid,newattendeesid;
 			addattendeesid=_.difference newattendeesid,oldattendeesid;
 			updateattendeesid=_.difference newattendeesid,addattendeesid
@@ -94,7 +97,7 @@ Meteor.methods
 		else
 			Calendar.addCalendarObjects(obj.ownerId,obj,operation);
 			Events.direct.update {parentId:obj.parentId}, {$set:
-				attendees:obj.attendees},{ multi: true }
+				attendees:obj?.attendees},{ multi: true }
 			Events.direct.update {_id:obj._id}, {$set:
 				alarms:obj.alarms
 				remindtimes:obj.remindtimes}	

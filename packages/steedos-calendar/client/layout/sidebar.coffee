@@ -128,9 +128,9 @@ Template.calendarSidebar.events
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
 			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
-			Session.set("calendarIds",[this._id])
-			localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
-			Calendar.reloadEvents()
+		Session.set("calendarIds",[this._id])
+		localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
+		Calendar.reloadEvents()
 	
 	'click .subscribe-calendar': (event)->
 		event.stopPropagation()
@@ -140,9 +140,9 @@ Template.calendarSidebar.events
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
 			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
-			Session.set("calendarIds",[this.uri])
-			localStorage.setItem("calendarIds:"+Meteor.userId(),[this.uri])	
-			Calendar.reloadEvents()
+		Session.set("calendarIds",[this.uri])
+		localStorage.setItem("calendarIds:"+Meteor.userId(),[this.uri])	
+		Calendar.reloadEvents()
 
 	'click .dropdown-toggle': (event)->
 		event.stopPropagation()

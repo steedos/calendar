@@ -174,23 +174,11 @@ Calendar.generateCalendar = ()->
 					localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 				Session.set "userId",Meteor.userId()
 				Session.set "userOption","select"
-				attendees=[]
 				userId= Meteor.userId()
-				attendee = {
-					role:"REQ-PARTICIPANT",
-					cutype:"INDIVIDUAL",
-					partstat:"ACCEPTED",
-					cn:Meteor.users.findOne({_id:userId}).name,
-					mailto:Meteor.users.findOne({_id:userId}).steedos_id,
-					id:userId,
-					description:null
-				}
-				attendees.push attendee
 				
 				doc = {
 					calendarid:calendarid,
 					ownerId:Meteor.userId(),
-					attendees:attendees,
 					start: start.toDate(),
 					end: end.toDate()
 				}
@@ -262,23 +250,12 @@ Template.calendarContainer.events
 		calendarid = Session.get 'calendarid'
 		start = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
 		end = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
-		attendees=[]
 		userId = Meteor.userId()
-		attendee = {
-			role:"REQ-PARTICIPANT",
-			cutype:"INDIVIDUAL",
-			partstat:"ACCEPTED",
-			cn:Meteor.users.findOne({_id:userId}).name,
-			mailto:Meteor.users.findOne({_id:userId}).steedos_id,
-			id:userId,
-			description:null
-		}
-		attendees.push attendee
+		
 		
 		doc = {
 			calendarid:calendarid,
 			ownerId:userId,
-			attendees:attendees,
 			start: start,
 			end: end
 		}

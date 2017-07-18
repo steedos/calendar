@@ -1,6 +1,10 @@
 Meteor.methods
 	attendeesInit :(obj,addmembers)->
-		attendeesid=_.pluck(obj.attendees,'id');
+		if obj?.attendees
+			attendeesid=_.pluck(obj.attendees,'id');
+		else
+			attendeesid = []
+			obj.attendees = []
 		addmembers.forEach (addmember)->
 			if _.indexOf(attendeesid, addmember)==-1
 				partstat="NEEDS-ACTION"

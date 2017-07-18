@@ -40,7 +40,7 @@ Template.event_detail_modal.helpers
 		obj = Template.instance().data
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
-		attendeesIds=_.pluck(obj.attendees,'id')
+		attendeesIds=_.pluck(obj?.attendees,'id')
 		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0  
 			if calendarIds.indexOf(obj.calendarid)>=0
 				return true
@@ -51,33 +51,27 @@ Template.event_detail_modal.helpers
 
 	showActionBox:()->
 		obj = Template.instance().data
-		# ownerId = obj.ownerId
-		# if ownerId == Meteor.userId()
-		# 	return "none"
-		onlyOne = obj?.attendees?.length<2 && obj?.attendees[0]?.id==Meteor.userId()
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
-		if onlyOne
+		attendeesIds=_.pluck(obj?.attendees,'id')
+		if attendeesIds.indexOf(Meteor.userId())<0
 			return "none"
 		else
-			attendeesIds=_.pluck(obj.attendees,'id')
-			if attendeesIds.indexOf(Meteor.userId())<0
-				return "none"
+			if calendarIds.indexOf(obj.calendarid)>=0
+				return "block"
 			else
-				if calendarIds.indexOf(obj.calendarid)>=0
-					return "block"
-				else
-					return "none"
+				return "none"
 
 	accendeeState:(state)->
 		obj = Template.instance().data
 		result = ""
-		obj.attendees?.forEach (attendee)->
-			if attendee.id == Meteor.userId()
-				if attendee?.partstat==state
-					result = "checked"
-				if state=="TENTATIVE"&&attendee?.partstat=="NEEDS-ACTION"
-					result = "checked"
+		if obj?.attendees
+			obj.attendees.forEach (attendee)->
+				if attendee.id == Meteor.userId()
+					if attendee?.partstat==state
+						result = "checked"
+					if state=="TENTATIVE"&&attendee?.partstat=="NEEDS-ACTION"
+						result = "checked"
 		return result
 
 	eventObj:()->
@@ -96,19 +90,20 @@ Template.event_detail_modal.helpers
 		else
 			obj.isOwner = "false"
 			obj.formOpt = "disabled"
-		obj.attendees?.forEach (attendee)->
-			if attendee.id == Meteor.userId()
-				obj.reason = attendee?.description
+		if obj?.attendees
+			obj.attendees.forEach (attendee)->
+				if attendee.id == Meteor.userId()
+					obj.reason = attendee?.description
+					switch attendee.partstat
+						when "ACCEPTED" then obj.accepted==true
+						when "TENTATIVE" then obj.tentative==true
+						when "DECLINED" then obj.declined==true
+						when "NEEDS-ACTION" then obj.action==true
 				switch attendee.partstat
-					when "ACCEPTED" then obj.accepted==true
-					when "TENTATIVE" then obj.tentative==true
-					when "DECLINED" then obj.declined==true
-					when "NEEDS-ACTION" then obj.action==true
-			switch attendee.partstat
-				when "ACCEPTED" then obj.acceptednum++
-				when "TENTATIVE" then obj.tentativenum++
-				when "DECLINED" then obj.declinednum++
-				when "NEEDS-ACTION" then obj.actionnum++
+					when "ACCEPTED" then obj.acceptednum++
+					when "TENTATIVE" then obj.tentativenum++
+					when "DECLINED" then obj.declinednum++
+					when "NEEDS-ACTION" then obj.actionnum++
 		return obj
 
 	isShowAddMembers: ()->
@@ -199,10 +194,11 @@ Template.event_detail_modal.events
 		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		description = $('textarea.description').val()
-		obj.attendees.forEach (attendee)->
-			if attendee.id == Meteor.userId()
-				attendee.partstat=val
-				attendee.description=description
+		if obj?.attendees
+			obj.attendees.forEach (attendee)->
+				if attendee.id == Meteor.userId()
+					attendee.partstat=val
+					attendee.description=description
 		if !obj._id
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->
@@ -252,7 +248,7 @@ Template.event_detail_modal.events
 		obj = template.data
 		attendeeid = this.id
 		tempAtt = []
-		obj.attendees.forEach (attendee)->
+		obj?.attendees.forEach (attendee)->
 			if attendee.id!=attendeeid
 				tempAtt.push attendee
 		template.reactiveAttendees.set(tempAtt)
