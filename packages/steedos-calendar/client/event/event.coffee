@@ -194,6 +194,7 @@ Calendar.generateCalendar = ()->
 				calendarids = Calendars.find().fetch()?.getProperty("_id")
 				if _.indexOf(calendarids,event?.calendarid) > -1
 					if event
+						Session.set "eventCalendarId",event.calendarid
 						Modal.show('event_detail_modal', event)
 						AutoForm.resetForm("eventsForm")
 				else

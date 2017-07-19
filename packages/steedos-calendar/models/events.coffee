@@ -89,12 +89,19 @@ Events._simpleSchema = new SimpleSchema
 				return Session.get("calendarid");
 			options: ()->
 				options = []
+				eventCalendarId = Session.get("eventCalendarId")
 				objs = Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()}]}).fetch()
 				objs.forEach (obj) ->
 					options.push
 						label: t(obj.title),
 						value: obj._id
-				# options[1].select='select'
+				calendarids = objs.getProperty("_id")
+				if eventCalendarId
+					if _.indexOf(calendarids,eventCalendarId) < 0
+						eventObj = Calendars.findOne({_id:eventCalendarId})
+						options.push
+							label: eventObj.title,
+							value: eventObj._id
 				return options
 
 	site:
