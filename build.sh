@@ -5,6 +5,7 @@ BUNDLE_PATH="/srv/calendar"
 [ ! -d $BUNDLE_PATH ] && mkdir -p $BUNDLE_PATH || :
 
 if [ -d "$BUNDLE_PATH" ]; then
+	npm install --registry https://registry.npm.taobao.org --save
 	meteor build --server https://cn.steedos.com/calendar --directory $BUNDLE_PATH --allow-superuser
 	cd $BUNDLE_PATH/bundle/programs/server
 	npm install --registry https://registry.npm.taobao.org -d
