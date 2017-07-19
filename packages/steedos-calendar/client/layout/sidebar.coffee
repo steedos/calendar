@@ -46,7 +46,7 @@ Template.calendarSidebar.helpers
 				autoform:
 					type: 'selectuser'
 					multiple: true
-					spaceId: false
+					is_within_user_organizations: true
 				optional: false
 				type: [ String ]
 				label: ''

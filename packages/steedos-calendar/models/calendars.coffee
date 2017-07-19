@@ -16,9 +16,9 @@ Calendars._simpleSchema = new SimpleSchema
 		type: [String],
 		optional: false
 		autoform:
-			spaceId: false
 			type: "selectuser"
 			multiple: true
+			is_within_user_organizations: true
 			defaultValue: ()->
 				return [Meteor.userId()]
 
@@ -26,9 +26,9 @@ Calendars._simpleSchema = new SimpleSchema
 		type: [String],
 		optional: true
 		autoform:
-			spaceId: false
 			type: "selectuser"
 			multiple: true
+			is_within_user_organizations: true
 			defaultValue: ()->
 				return []
 
