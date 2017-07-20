@@ -283,7 +283,8 @@ Template.event_detail_modal.events
 		EventDetailModal.switchAllDay isAllDay, startInput
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
 		EventDetailModal.switchAllDay isAllDay, endInput
-		$("input[name='title']").focus().select()
+		if data.ownerId == Meteor.userId()
+			$("input[name='title']").focus().select()
 
 	'change input[name=start]': (event, template)->
 		data = template.data
