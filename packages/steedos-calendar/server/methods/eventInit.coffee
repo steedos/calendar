@@ -14,6 +14,8 @@ Meteor.methods
 					return
 			)
 		attendeesid=_.pluck(doc.attendees,'id')
+		if attendeesid.length == 0 
+			attendeesid.push(userId)
 		attendeesid.forEach (attendeeid)->
 				calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})				
 				if calendar==undefined
