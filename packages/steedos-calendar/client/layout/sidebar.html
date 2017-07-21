@@ -19,7 +19,7 @@
             </span>
             <span class="pull-right-container">
               <div class="operate-box">
-                {{#if isCalendarOwner}}
+                {{#if isCalendarEditable}}
                     {{#if isDefault}}
                           <!-- <i class="fa fa-edit calendar-edit"></i> -->
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -45,11 +45,13 @@
                                 <span>{{_ "edit_calendar"}}</span>
                               </a>
                             </li>
-                            <li>
-                              <a class="calendar-menu calendar-delete">
-                                <span>{{_ "delete_calendar"}}</span>
-                              </a>
-                            </li>
+                            {{#if isCalendarOwner}}
+                              <li>
+                                <a class="calendar-menu calendar-delete">
+                                  <span>{{_ "delete_calendar"}}</span>
+                                </a>
+                              </li>
+                            {{/if}}
                           </ul>
                     {{/if}}
                 {{else}}

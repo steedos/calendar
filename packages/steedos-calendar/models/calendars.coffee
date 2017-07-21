@@ -94,19 +94,16 @@ if Meteor.isClient
 if (Meteor.isServer) 
 	Calendars.allow 
 		insert: (userId, doc) ->
-			if userId==""
-				return false
-			return true
+			if userId
+				return true
 
 		update: (userId, doc) ->
-			if userId!=doc.ownerId
-				return false
-			return true
+			if userId
+				return true
 
 		remove: (userId, doc) ->
-			if userId!=doc.ownerId
-				return false
-			return true
+			if userId
+				return true
 	#添加字段之前，强制给Calendar的Ownerid赋值,且
 	Calendars.before.insert (userId,doc)->
 		# doc.ownerId=Meteor.userId()

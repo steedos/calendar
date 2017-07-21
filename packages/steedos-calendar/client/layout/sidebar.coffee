@@ -18,8 +18,15 @@ Template.calendarSidebar.helpers
 	subscribe: ()->
 		objs = calendarsubscriptions.find()
 		return objs
+	isCalendarEditable: ()->
+		userId = Meteor.userId()
+		members = this?.members || []
+		if _.indexOf(members,userId) >= 0 || this.isDefault
+			return true
+		else
+			return false
 	isCalendarOwner: ()->
-		return this.ownerId == Meteor.userId()
+		return this?.ownerId == Meteor.userId()
 	isDefault :()->
 		return this.isDefault
 	isChecked :()->
@@ -109,7 +116,9 @@ Template.calendarSidebar.events
 
 	'click .edit-calendar': (event)->
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
-		if Meteor.userId()!=this.ownerId
+		userId = Meteor.userId()
+		members = this?.members || []
+		unless _.indexOf(members,userId) >= 0 || this.isDefault
 			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
 		Session.set("cmDoc", this);
