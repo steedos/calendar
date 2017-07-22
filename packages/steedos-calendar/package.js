@@ -76,7 +76,9 @@ Package.onUse(function(api) {
     api.addFiles('client/event/event_detail.html', 'client');
     api.addFiles('client/event/event_detail.coffee', 'client');
     api.addFiles('client/event/event_detail.less', 'client');
-
+    api.addFiles('client/event/event_pending.html', 'client');
+    api.addFiles('client/event/event_pending.coffee', 'client');
+    api.addFiles('client/event/event_pending.less', 'client');
 
 
 
@@ -99,6 +101,7 @@ Package.onUse(function(api) {
     api.addFiles('models/calendars.coffee');
     api.addFiles('models/events.coffee');
     api.addFiles('models/calendarsubscriptions.coffee');
+    api.addFiles('models/tabular.coffee');
 
     // api.addFiles('lib/attendees.coffee');
 
@@ -123,6 +126,7 @@ Package.onUse(function(api) {
     api.addFiles('server/publications/subcalendars.coffee','server');
     api.addFiles('server/publications/calendarinstances.coffee','server');
     api.addFiles('server/publications/reminders.coffee','server');
+    api.addFiles('server/publications/event_need_action.coffee','server');
     api.addFiles('server/main.coffee','server');
 
     api.addFiles('server/routes/api_calendar_events.coffee','server');

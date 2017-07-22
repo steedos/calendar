@@ -132,6 +132,9 @@ Template.calendarSidebar.events
 	
 	'click .my-calendar': (event)->
 		event.stopPropagation()
+		path = FlowRouter.current().path
+		if path == "/inbox"
+			FlowRouter.go("/")
 		currentCalendarid = Session.get("calendarid")
 		if currentCalendarid != this._id
 			Session.set("calendarid",this._id)

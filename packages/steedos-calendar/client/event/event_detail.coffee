@@ -50,6 +50,7 @@ Template.event_detail_modal.helpers
 			return false
 
 	showActionBox:()->
+		debugger
 		obj = Template.instance().data
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')

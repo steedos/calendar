@@ -2,18 +2,14 @@ checkUserSigned = (context, redirect) ->
 	if !Meteor.userId()
 		FlowRouter.go '/steedos/sign-in?redirect=' + context.path;
 
-
-calendarRoutes = FlowRouter.group
+FlowRouter.route '/',
 	triggersEnter: [ checkUserSigned ],
-	prefix: '/',
-	name: 'calendar'
-
-calendarRoutes.route '/',
 	action: (params, queryParams)->
 		BlazeLayout.render 'calendarLayout',
 			main: "calendarContainer"
 
-calendarRoutes.route '/event/:_id',
+FlowRouter.route '/inbox',
+	triggersEnter: [ checkUserSigned ],
 	action: (params, queryParams)->
 		BlazeLayout.render 'calendarLayout',
-			main: "eventDetail"
+			main: "eventPending"

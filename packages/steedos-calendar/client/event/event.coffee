@@ -6,7 +6,8 @@ import Calendar from '../core'
 @moment = moment
 
 Template.calendarContainer.onRendered ->
-	Calendar.generateCalendar();
+	Tracker.afterFlush ->
+		Calendar.generateCalendar();
 
 eventsDep = new Tracker.Dependency
 eventsSub = new SubsManager()

@@ -1,0 +1,13 @@
+<template name="eventPending">
+	<div class="event-pending-wrapper">
+		<div class="event-pending-header">
+			<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>
+			<div class="header">
+				<h2>待处理事件</h2>
+			</div>
+		</div>	
+		<div class="event-pending-body">
+			{{> tabular table=TabularTables.event_needs_action_tabular selector=EventListSelector class="table table-striped table-condensed datatable-posts"}}
+		</div>
+	</div>
+</template>

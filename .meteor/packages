@@ -29,6 +29,7 @@ accounts-password
 fortawesome:fontawesome
 tap:i18n
 
+aldeed:tabular
 aldeed:collection2
 aldeed:simple-schema
 aldeed:autoform
