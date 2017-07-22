@@ -4,8 +4,7 @@ Meteor.publish "event-need-action",(calendarid) ->
 			calendarid: calendarid,
 			"attendees": {
 				$elemMatch: {
-					id: userId,
-					partstat: "NEEDS-ACTION"
+					id: this.userId,
 				}
 			}
 		}

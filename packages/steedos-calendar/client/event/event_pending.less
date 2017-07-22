@@ -15,11 +15,11 @@
 		}
 		.header{
 			display: inline-block;
-    		height: 43px;
-    		position: absolute;
-    		left: 70px;
-    		right: 70px;
-    		h2{
+			height: 43px;
+			position: absolute;
+			left: 70px;
+			right: 70px;
+			h2{
 				line-height: 43px;
 				margin: 0;
 			}
@@ -33,5 +33,37 @@
 		left: 0;
 		right: 0;
 		background: #fff;
+		overflow-y: auto;
+		.form-inline{
+			div.row:first-child{
+				background: rgba(238, 238, 238, 0.72);
+			}
+			div.dataTables_filter label{
+				margin-top: 8px;
+    			margin-right: 10px;
+   	 			margin-bottom: 7px;
+   	 			border-bottom: 1px solid #E8E8E8;
+			}
+			.datatable-events{
+				thead th:first-child{
+					padding-left: 20px !important;
+				}
+				tr > td {
+					padding: 8px 5px;
+					border-bottom: 1px solid #E8E8E8;
+					border-top: 0px;
+					.need-action{
+						display: inline-block;
+						position: absolute;
+						margin-top: 5px;
+						color: #1f95ec;
+						font-size: 90%;
+					}
+					.event-title{
+						padding-left: 16px;
+					}
+				}
+			}
+		}
 	}
 }

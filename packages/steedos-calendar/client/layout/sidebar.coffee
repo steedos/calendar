@@ -78,6 +78,20 @@ Template.calendarSidebar.helpers
 		spaceId = Session.get("spaceId")
 		return Steedos.isSpaceAdmin(spaceId)
 
+	eventNeedOptionCounts :()->
+		calendarid = Session.get("defaultcalendarid")
+		userId = Meteor.userId()
+		selector = 
+			{
+				calendarid: calendarid,
+				"attendees": {
+					$elemMatch: {
+						id: userId,
+						partstat: "NEEDS-ACTION"
+					}
+				}
+			}
+		return Events.find(selector).count()
 
 Template.calendarSidebar.onRendered ->
 	calendarsubscriptions.after.update (userId,doc)->
@@ -110,6 +124,12 @@ Template.calendarSidebar.events
 		Session.set 'calendarIds',calendarIds
 		Calendar.reloadEvents()
 
+	'click .count-container': (event)->
+		event.stopPropagation()
+		path = FlowRouter.current().path
+		if path == "/"
+			FlowRouter.go("/inbox")
+
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
 		$('.btn.calendar-add').click();
@@ -132,18 +152,16 @@ Template.calendarSidebar.events
 	
 	'click .my-calendar': (event)->
 		event.stopPropagation()
-		path = FlowRouter.current().path
-		if path == "/inbox"
-			FlowRouter.go("/")
 		currentCalendarid = Session.get("calendarid")
+		Session.set("calendarIds",[this._id])
+		localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
 		if currentCalendarid != this._id
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
-			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
-		Session.set("calendarIds",[this._id])
-		localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
-		Calendar.reloadEvents()
-	
+		path = FlowRouter.current().path
+		if path == "/inbox"
+			FlowRouter.go("/")
+
 	'click .subscribe-calendar': (event)->
 		event.stopPropagation()
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
@@ -151,10 +169,11 @@ Template.calendarSidebar.events
 		if calendarid != this._id
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
-			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
 		Session.set("calendarIds",[this.uri])
 		localStorage.setItem("calendarIds:"+Meteor.userId(),[this.uri])	
-		Calendar.reloadEvents()
+		path = FlowRouter.current().path
+		if path == "/inbox"
+			FlowRouter.go("/")
 
 	'click .dropdown-toggle': (event)->
 		event.stopPropagation()
