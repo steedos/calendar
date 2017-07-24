@@ -124,12 +124,6 @@ Template.calendarSidebar.events
 		Session.set 'calendarIds',calendarIds
 		Calendar.reloadEvents()
 
-	'click .count-container': (event)->
-		event.stopPropagation()
-		path = FlowRouter.current().path
-		if path == "/"
-			FlowRouter.go("/inbox")
-
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
 		$('.btn.calendar-add').click();

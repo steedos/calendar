@@ -17,15 +17,6 @@
             <span>
               <span class="text-overflow calendar-name">{{title}}</span>
             </span>
-            {{#if isDefault}}
-              <span class="pull-right-container count-container">
-              {{#if eventNeedOptionCounts}}
-                <span class="label pull-right bg-red">
-                  {{eventNeedOptionCounts}}
-                </span>
-              {{/if}}
-              </span>
-            {{/if}}
             <span class="pull-right-container operate-container">
               <div class="operate-box">
                 {{#if isCalendarEditable}}
@@ -127,6 +118,13 @@
         <li>
           <a href="#" class="calendar-row browse-invations">
             <span>{{_ "your_meetings_invitations"}}</span>
+            <span class="pull-right-container count-container">
+              {{#if eventNeedOptionCounts}}
+                <span class="label pull-right bg-red">
+                  {{eventNeedOptionCounts}}
+                </span>
+              {{/if}}
+            </span>
           </a>
         </li>
 

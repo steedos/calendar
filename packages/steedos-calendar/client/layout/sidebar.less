@@ -12,6 +12,9 @@
 			right: -1px;
 		}
 	}
+	.browse-calendars,.browse-invations{
+		display: none;
+	}
 }
 .sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a.calendar-row > .pull-right-container{
 	display: none !important;
@@ -35,14 +38,11 @@
 				}
 			}
 			.pull-right-container{
-				&.operate-container{
-					margin-top: -9px;
-					margin-right: 5px;
-				}
-				&.count-container{
-					display: block !important;
-					right: 26px;
-				}
+				margin-top: -9px;
+				margin-right: 5px;
+			}
+			.pull-right-container.count-container{
+				margin-right: -5px;
 			}
 		}
 	}
