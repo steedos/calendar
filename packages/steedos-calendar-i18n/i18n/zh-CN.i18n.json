@@ -101,5 +101,9 @@
   "more_calendars":"更多...",
   "subscribe_or_unsubscribe_to_this_calendar":"订阅或取消订阅该日历",
   "your_meetings_invitations":"您的会议邀请",
-  "calendar_objects":"会议邀请"
+  "calendar_objects":"会议邀请",
+  "accepted":"接受",
+  "tentative":"不确定",
+  "declined":"拒绝",
+  "needs_action":"待反馈"
 }

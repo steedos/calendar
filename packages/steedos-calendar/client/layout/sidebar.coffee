@@ -269,6 +269,10 @@ Template.calendarSidebar.events
 	'click .browse-calendars':()->
 		Modal.show("subcalendar_modal")
 
+	'click .browse-invations':()->
+		if FlowRouter.current().path != "/inbox"
+			FlowRouter.go("/inbox")
+
 	'change input[name="addmembers"]':()->
 		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
 		addmembers.forEach (addmember)->

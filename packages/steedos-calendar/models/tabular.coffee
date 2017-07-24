@@ -33,10 +33,10 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				attendees.forEach (attendee,index) ->
 					if attendee.id == Meteor.userId()
 						switch attendee.partstat
-							when "ACCEPTED" then content = "已接受"
-							when "TENTATIVE" then content = "不确定"
-							when "DECLINED" then content = "拒绝"
-							when "NEEDS-ACTION" then content = "待反馈"
+							when "ACCEPTED" then content = t("accepted")
+							when "TENTATIVE" then content = t("tentative")
+							when "DECLINED" then content = t("declined")
+							when "NEEDS-ACTION" then content = t("needs_action")
 				return content
 							
 						
@@ -74,7 +74,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 		}
 	],
 	order: [[4,"desc"]]
-	extraFields: ["end", "allDay", "alarms", "remintimes", "ownerId","attendees","calendarid"],
+	extraFields: ["end", "allDay", "alarms", "remintimes", "ownerId","attendees","calendarid","parentId","uid","uri"],
 	lengthChange: false
 	pageLength: 10
 	info: false
