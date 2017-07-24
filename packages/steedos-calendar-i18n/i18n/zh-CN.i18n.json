@@ -99,5 +99,6 @@
   "events_allday":"全天",
   "no_calendar_to_choose":"暂无共享给您的日历",
   "more_calendars":"更多...",
-  "subscribe_or_unsubscribe_to_this_calendar":"订阅或取消订阅该日历"
+  "subscribe_or_unsubscribe_to_this_calendar":"订阅或取消订阅该日历",
+  "your_meetings_invitations":"您的会议邀请"
 }
