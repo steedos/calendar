@@ -1,6 +1,10 @@
 TabularTables.event_needs_action_tabular = new Tabular.Table({
 	name: "event_needs_action_tabular",
 	collection: Events,
+	drawCallback:(settings)->
+		box = $(this).closest(".event-pending-body")
+		if !Steedos.isMobile() && !Steedos.isPad()
+			$(box).perfectScrollbar({suppressScrollX:true})
 	columns: [
 		{
 			data: "title", 
@@ -20,6 +24,23 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				return """
 					#{content}<div class="event-title">#{doc.title}</div>
 				"""
+		},
+		{
+			data: "attendees.partstat"
+			render:  (val, type, doc) ->
+				content = ""
+				attendees = doc.attendees
+				attendees.forEach (attendee,index) ->
+					if attendee.id == Meteor.userId()
+						switch attendee.partstat
+							when "ACCEPTED" then content = "已接受"
+							when "TENTATIVE" then content = "不确定"
+							when "DECLINED" then content = "拒绝"
+							when "NEEDS-ACTION" then content = "待反馈"
+				return content
+							
+						
+			orderable: false
 		},
 		{
 			data: "site",
@@ -52,7 +73,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				return moment(doc.end).format("M-DD HH:mm")
 		}
 	],
-	order: [[3,"desc"]]
+	order: [[4,"desc"]]
 	extraFields: ["end", "allDay", "alarms", "remintimes", "ownerId","attendees","calendarid"],
 	lengthChange: false
 	pageLength: 10
