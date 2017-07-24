@@ -98,5 +98,6 @@
   "no_calendar_to_choose":"No calendar to choose",
   "more_calendars":"More calendas...",
   "subscribe_or_unsubscribe_to_this_calendar":"Subscribe or unsubscribe to this calendar",
-  "your_meetings_invitations":"Your meetings' invitations"
+  "your_meetings_invitations":"Your invitations to meetings'",
+  "calendar_objects":"invitations to meetings"
 }

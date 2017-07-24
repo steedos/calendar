@@ -27,4 +27,5 @@ Template.eventPending.events
 		Session.set "userOption","click"
 		dataTable = $(event.target).closest('table').DataTable();
 		rowData = dataTable.row(event.currentTarget).data();
-		Modal.show('event_detail_modal',rowData)
+		if rowData
+			Modal.show('event_detail_modal',rowData)
