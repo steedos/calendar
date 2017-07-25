@@ -27,8 +27,27 @@ Meteor.methods
 			subattendeesid.forEach (attendeeid)->
 				calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
 				event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
-				Events.direct.remove({parentId:obj._id,calendarid:calendarid})
+				if attendeeid != obj.ownerId
+					Events.direct.remove({parentId:obj._id,calendarid:calendarid})
 				Calendar.addChange(calendarid,event[0]?.uri,3);
+
+				payload = 
+					app: 'calendar'
+					id: attendeeid
+				start = moment(obj.start).format("YYYY-MM-DD HH:mm")
+				site = obj.site || ""
+				title = "您的会议邀请已取消"
+				text = "会议时间:#{start}\r会议地点:#{site}"
+				Push.send
+					createdAt: new Date()
+					createdBy: '<SERVER>'
+					from: 'calendar',
+					title: title,
+					text: text,
+					payload: payload
+					badge: 12,
+					query: {userId:attendeeid,appName:"calendar"}
+
 			#新加的attendees需要新建event
 			doc=Calendar.addCalendarObjects(obj.ownerId,obj,operation);	
 			addattendeesid.forEach (attendeeid)->
@@ -64,11 +83,47 @@ Meteor.methods
 						Isdavmodified:false
 						parentId:doc.parentId
 					Calendar.addChange(calendar._id,_id+".ics",1);
+
+				payload = 
+					app: 'calendar'
+					id: attendeeid
+				start = moment(doc.start).format("YYYY-MM-DD HH:mm")
+				site = doc.site || ""
+				title = "您有新的会议邀请"
+				text = "会议时间:#{start}\r会议地点:#{site}"
+				Push.send
+					createdAt: new Date()
+					createdBy: '<SERVER>'
+					from: 'calendar',
+					title: title,
+					text: text,
+					payload: payload
+					badge: 12,
+					query: {userId:attendeeid,appName:"calendar"}
+
 			updateattendeesid.forEach (attendeeid)->
 				if attendeeid==obj.ownerId and obj._id==obj.parentId
 					Events.direct.update {_id:obj._id}, {$set: 
 						calendarid:doc.calendarid}
 					Calendar.addChange(doc.calendarid,doc.uri,2)
+
+				payload = 
+					app: 'calendar'
+					id: attendeeid
+				start = moment(doc.start).format("YYYY-MM-DD HH:mm")
+				site = doc.site || ""
+				title = "您的会议信息有修改"
+				text = "会议时间:#{start}\r会议地点:#{site}"
+				Push.send
+					createdAt: new Date()
+					createdBy: '<SERVER>'
+					from: 'calendar',
+					title: title,
+					text: text,
+					payload: payload
+					badge: 12,
+					query: {userId:attendeeid,appName:"calendar"}
+
 			Events.direct.update {parentId:obj.parentId}, {$set: 
 				title:doc.title,
 				start:doc.start,

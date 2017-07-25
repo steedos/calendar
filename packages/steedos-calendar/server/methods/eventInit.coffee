@@ -16,7 +16,10 @@ Meteor.methods
 		attendeesid=_.pluck(doc.attendees,'id')
 
 		attendeesid.forEach (attendeeid)->
-			start = moment(doc.start).format("YYYY-MM-DD HH-mm")
+			payload = 
+				app: 'calendar'
+				id: attendeeid
+			start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 			site = doc.site || ""
 			title = "您有新的会议邀请"
 			text = "会议时间:#{start}\r会议地点:#{site}"
@@ -25,7 +28,8 @@ Meteor.methods
 				createdBy: '<SERVER>'
 				from: 'calendar',
 				title: title,
-				text: text
+				text: text,
+				payload: payload
 				badge: 12,
 				query: {userId:attendeeid,appName:"calendar"}
 		
