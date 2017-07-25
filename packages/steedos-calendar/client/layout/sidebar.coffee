@@ -78,6 +78,20 @@ Template.calendarSidebar.helpers
 		spaceId = Session.get("spaceId")
 		return Steedos.isSpaceAdmin(spaceId)
 
+	eventNeedOptionCounts :()->
+		calendarid = Session.get("defaultcalendarid")
+		userId = Meteor.userId()
+		selector = 
+			{
+				calendarid: calendarid,
+				"attendees": {
+					$elemMatch: {
+						id: userId,
+						partstat: "NEEDS-ACTION"
+					}
+				}
+			}
+		return Events.find(selector).count()
 
 Template.calendarSidebar.onRendered ->
 	calendarsubscriptions.after.update (userId,doc)->
@@ -133,14 +147,15 @@ Template.calendarSidebar.events
 	'click .my-calendar': (event)->
 		event.stopPropagation()
 		currentCalendarid = Session.get("calendarid")
+		Session.set("calendarIds",[this._id])
+		localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
 		if currentCalendarid != this._id
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
-			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
-		Session.set("calendarIds",[this._id])
-		localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
-		Calendar.reloadEvents()
-	
+		path = FlowRouter.current().path
+		if path == "/inbox"
+			FlowRouter.go("/")
+
 	'click .subscribe-calendar': (event)->
 		event.stopPropagation()
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
@@ -148,10 +163,11 @@ Template.calendarSidebar.events
 		if calendarid != this._id
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
-			$('#calendar').fullCalendar("getCalendar")?.option("eventColor", this.color)
 		Session.set("calendarIds",[this.uri])
 		localStorage.setItem("calendarIds:"+Meteor.userId(),[this.uri])	
-		Calendar.reloadEvents()
+		path = FlowRouter.current().path
+		if path == "/inbox"
+			FlowRouter.go("/")
 
 	'click .dropdown-toggle': (event)->
 		event.stopPropagation()
@@ -246,6 +262,10 @@ Template.calendarSidebar.events
 
 	'click .browse-calendars':()->
 		Modal.show("subcalendar_modal")
+
+	'click .browse-invations':()->
+		if FlowRouter.current().path != "/inbox"
+			FlowRouter.go("/inbox")
 
 	'change input[name="addmembers"]':()->
 		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []

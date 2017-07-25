@@ -70,8 +70,6 @@ Template.event_detail_modal.helpers
 				if attendee.id == Meteor.userId()
 					if attendee?.partstat==state
 						result = "checked"
-					if state=="TENTATIVE"&&attendee?.partstat=="NEEDS-ACTION"
-						result = "checked"
 		return result
 
 	eventObj:()->

@@ -36,6 +36,7 @@
   "calendar_objects_alarms":"提醒",
   "calendar_objects_site":"地点",
   "calendar_objects_participation":"参加人员",
+  "calendar_objects_attendees_partstat":"参加情况",
   "calendars_title":"标题",
   "calendars_members": "成员",
   "calendars_members_readonly":"授权查看",
@@ -98,5 +99,11 @@
   "events_allday":"全天",
   "no_calendar_to_choose":"暂无共享给您的日历",
   "more_calendars":"更多...",
-  "subscribe_or_unsubscribe_to_this_calendar":"订阅或取消订阅该日历"
+  "subscribe_or_unsubscribe_to_this_calendar":"订阅或取消订阅该日历",
+  "your_meetings_invitations":"您的会议邀请",
+  "calendar_objects":"会议邀请",
+  "accepted":"接受",
+  "tentative":"不确定",
+  "declined":"拒绝",
+  "needs_action":"待反馈"
 }

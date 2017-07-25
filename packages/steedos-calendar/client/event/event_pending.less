@@ -1,0 +1,73 @@
+.event-pending-wrapper{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.8);
+	.event-pending-header{
+		text-align: center;
+		height: 43px;
+		.btn-default{
+			float: left;
+			margin-top: 5px;
+			margin-left: 5px;
+		}
+		.header{
+			display: inline-block;
+			height: 43px;
+			position: absolute;
+			left: 70px;
+			right: 70px;
+			h2{
+				line-height: 43px;
+				margin: 0;
+			}
+		}
+	}
+	.event-pending-body{
+		border-top: 1px #c3c3c3 solid;
+		position: absolute;
+		top: 43px;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: #fff;
+		overflow-y: auto;
+		.form-inline{
+			div.row:first-child{
+				background: rgba(238, 238, 238, 0.72);
+			}
+			div.dataTables_filter label{
+				margin-top: 8px;
+    			margin-right: 15px;
+   	 			margin-bottom: 7px;
+   	 			border-bottom: 1px solid #E8E8E8;
+			}
+			div.dataTables_paginate{
+				margin-right: 15px
+			}
+			.datatable-events{
+				thead th:first-child{
+					padding-left: 40px !important;
+				}
+				tr > td {
+					padding: 8px 5px;
+					border-bottom: 1px solid #E8E8E8;
+					border-top: 0px;
+					.need-action{
+						display: inline-block;
+						position: absolute;
+						margin-top: 5px;
+						left: 35px;
+						color: #1f95ec;
+						font-size: 90%;
+					}
+					.event-title{
+						padding-left: 35px;
+					}
+				}
+			}
+		}
+	}
+}

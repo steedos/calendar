@@ -14,6 +14,21 @@ Meteor.methods
 					return
 			)
 		attendeesid=_.pluck(doc.attendees,'id')
+
+		attendeesid.forEach (attendeeid)->
+			start = moment(doc.start).format("YYYY-MM-DD HH-mm")
+			site = doc.site || ""
+			title = "您有新的会议邀请"
+			text = "会议时间:#{start}\r会议地点:#{site}"
+			Push.send
+				createdAt: new Date()
+				createdBy: '<SERVER>'
+				from: 'calendar',
+				title: title,
+				text: text
+				badge: 12,
+				query: {userId:attendeeid,appName:"calendar"}
+		
 		if attendeesid.length == 0 
 			attendeesid.push(userId)
 		attendeesid.forEach (attendeeid)->

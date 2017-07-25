@@ -16,7 +16,11 @@ Meteor.startup ->
 						remindtimes = event.remindtimes
 						attendeesid=_.pluck(event.attendees,'id');
 						dx=attendeesid.indexOf(Meteor.userId())
-						if remindtimes and event.end - currenttime._d>0 and event.attendees[dx]?.partstat=='ACCEPTED'
+						if dx < 0
+							state = false
+						else
+							state = event.attendees[dx]?.partstat=='ACCEPTED'
+						if remindtimes and event.end - currenttime._d>0 and state
 							remindtimes.forEach (remindtime)->
 								if remindtime-currenttime._d<=0 and !Session.get(event._id+":isRemindlater")
 									subdays =event.start.getDate()-currenttime._d.getDate()
@@ -90,3 +94,9 @@ Tracker.autorun (c)->
 		Session.set('calendarIds',calendarIds)	
 		defaultcalendar=Calendars.findOne({ownerId:Meteor.userId()},{isDefault:true}, {fields:{_id: 1,color:1}})
 		Session.set('defaultcalendarid',defaultcalendar?._id)
+
+Tracker.autorun (c)->
+	if calendarsSub.ready()
+		calendarid = Session.get "defaultcalendarid"
+		if calendarid
+			calendarsSub.subscribe "event-need-action",calendarid

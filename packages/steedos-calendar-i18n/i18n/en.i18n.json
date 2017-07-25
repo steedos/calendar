@@ -97,5 +97,11 @@
   "events_allday":"all-day",
   "no_calendar_to_choose":"No calendar to choose",
   "more_calendars":"More calendas...",
-  "subscribe_or_unsubscribe_to_this_calendar":"Subscribe or unsubscribe to this calendar"
+  "subscribe_or_unsubscribe_to_this_calendar":"Subscribe or unsubscribe to this calendar",
+  "your_meetings_invitations":"Your invitations to meetings'",
+  "calendar_objects":"invitations to meetings",
+  "accepted":"accepted",
+  "tentative":"tentative",
+  "declined":"declined",
+  "needs_action":"needs_action"
 }
