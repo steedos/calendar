@@ -96,12 +96,12 @@ Events._simpleSchema = new SimpleSchema
 						label: t(obj.title),
 						value: obj._id
 				calendarids = objs.getProperty("_id")
-				if eventCalendarId
+				calendarObj = Calendars.findOne({_id:eventCalendarId})
+				if eventCalendarId and calendarObj
 					if _.indexOf(calendarids,eventCalendarId) < 0
-						eventObj = Calendars.findOne({_id:eventCalendarId})
 						options.push
-							label: eventObj.title,
-							value: eventObj._id
+							label: calendarObj.title,
+							value: calendarObj._id
 				return options
 
 	site:
