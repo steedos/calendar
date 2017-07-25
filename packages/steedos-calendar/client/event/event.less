@@ -124,3 +124,32 @@ td.fc-event-container a div{
 		vertical-align: top;
 	}
 }
+
+.steedos-calendar{
+	@media print{
+		.content-wrapper{
+			border: none;
+		}
+		.fc-toolbar.fc-header-toolbar{
+			.fc-right{
+				display: none;
+			}
+			.fc-left{
+				display: none;
+			}
+			.fc-center{
+				span.fc-icon.fc-icon-left-single-arrow{
+					display: none;
+				}
+				span.fc-icon.fc-icon-right-single-arrow{
+					display: none;
+				}
+			}
+		}
+		.fc-list-item-title.fc-widget-content{
+			.fc-event-dot{
+				display: none;
+			}
+		}
+	}
+}

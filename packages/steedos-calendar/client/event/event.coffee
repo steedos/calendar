@@ -125,6 +125,7 @@ Calendar.generateCalendar = ()->
 				return copy
 
 			eventRender:(event,element,view) ->
+				Session.set "view",view.name
 				if view.name == "listWeek"
 					start = event.start?.format("H:mm")
 					end = event.end?.format("H:mm")
@@ -160,6 +161,12 @@ Calendar.generateCalendar = ()->
 					$(".fc-list-table > tbody").prepend(thead)
 					$(".fc-widget-header").attr("colspan","5") 
 					headeringArr = $(".fc-list-heading-alt")
+
+					#列表页面添加打印按钮
+					unless $("button.btn-print").length
+						$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-print"><i class="ion ion-printer"></i></button>')
+				else
+					+$("button.btn-print").remove()
 
 			select: (start, end, jsEvent, view, resource)->
 				objs = Calendars.find()
@@ -262,3 +269,7 @@ Template.calendarContainer.events
 			end: end
 		}
 		Modal.show('event_detail_modal',doc)
+
+	'click button.btn-print':() ->
+		$(".toast").hide()
+		window.print()
