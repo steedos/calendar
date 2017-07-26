@@ -128,15 +128,15 @@ if (Meteor.isServer)
 		return
 	#对于一个日历members有几个，就有几个instance
 	Calendars.after.insert (userId, doc) ->
-		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
-		Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
-		for member,i in doc.members 
-			if member != userId
-				steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
-				herf="mailto:" + steedosId;
-				displayname=steedosId;
-				Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);  
-		return      
+		# steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		# Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
+		# for member,i in doc.members 
+		# 	if member != userId
+		# 		steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
+		# 		herf="mailto:" + steedosId;
+		# 		displayname=steedosId;
+		# 		Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);  
+		# return      
 	#更新日历之前，更新instance
 	Calendars.before.update (userId, doc, fieldNames, modifier, options)->
 		modifier.$set = modifier.$set || {};
