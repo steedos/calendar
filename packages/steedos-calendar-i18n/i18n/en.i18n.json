@@ -36,6 +36,7 @@
   "calendar_objects_alarms":"Alarms","calendar_objects_site":"locale",
   "calendar_objects_participation":"participation",
   "calendars_title":"Title",
+  "calendars_admins": "Admins",
   "calendars_members": "Members",
   "calendars_members_readonly":"Authorized to view",
   "calendars_visibility": "Visibility",

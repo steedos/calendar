@@ -7,7 +7,7 @@ calendarsLoading = false
 
 Template.calendarSidebar.helpers
 	calendars: ()->
-		objs = Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()}]}).fetch()
+		objs = Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()},{"admins":Meteor.userId()}]}).fetch()
 		defaultcalendarIndex = 0
 		objs.forEach (obj,index) ->
 			if obj.ownerId == Meteor.userId() and obj.isDefault == true
@@ -20,8 +20,8 @@ Template.calendarSidebar.helpers
 		return objs
 	isCalendarEditable: ()->
 		userId = Meteor.userId()
-		members = this?.members || []
-		if _.indexOf(members,userId) >= 0 || this.isDefault
+		admins = this?.admins || []
+		if _.indexOf(admins,userId) >= 0 || this.ownerId == userId
 			return true
 		else
 			return false
@@ -126,16 +126,21 @@ Template.calendarSidebar.events
 
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
+		Session.set("adminsEditable",true)
 		$('.btn.calendar-add').click();
 
 	'click .edit-calendar': (event)->
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		userId = Meteor.userId()
-		members = this?.members || []
-		unless _.indexOf(members,userId) >= 0 || this.isDefault
+		admins = this?.admins || []
+		unless _.indexOf(admins,userId) >= 0 || this.ownerId == userId
 			swal(t("calendar_no_permission"),t("calnedar_no_permission_delete_calendar"),"warning");
 			return;
 		Session.set("cmDoc", this);
+		if this.ownerId == userId
+			Session.set("adminsEditable",true)
+		else
+			Session.set("adminsEditable",false)
 		$('.btn.calendar-edit').click();
 
 	'click .show-calendar': (event)->

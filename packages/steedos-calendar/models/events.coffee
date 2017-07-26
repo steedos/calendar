@@ -90,7 +90,7 @@ Events._simpleSchema = new SimpleSchema
 			options: ()->
 				options = []
 				eventCalendarId = Session.get("eventCalendarId")
-				objs = Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()}]}).fetch()
+				objs = Calendars.find({$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()},{"admins":Meteor.userId()}]}).fetch()
 				objs.forEach (obj) ->
 					options.push
 						label: t(obj.title),

@@ -12,9 +12,21 @@ Calendars._simpleSchema = new SimpleSchema
 			defaultValue: ->
 				return t("calendar_add_calendar")
 
+	admins:
+		type: [String],
+		optional: true,
+		autoform:
+			disabled: ()->
+				return !Session.get("adminsEditable")
+			type: "selectuser"
+			multiple: true
+			is_within_user_organizations: true
+			defaultValue: ()->
+				return [Meteor.userId()]
+
 	members:  
 		type: [String],
-		optional: false
+		optional: true,
 		autoform:
 			type: "selectuser"
 			multiple: true
@@ -116,14 +128,14 @@ if (Meteor.isServer)
 		return
 	#对于一个日历members有几个，就有几个instance
 	Calendars.after.insert (userId, doc) ->
-		# steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
-		# Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
-		# for member,i in doc.members 
-		#   if member != userId
-		#       steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
-		#       herf="mailto:" + steedosId;
-		#       displayname=steedosId;
-		#       Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);  
+		steedosId = Meteor.users.findOne({_id:userId}).steedos_id;
+		Calendar.addInstance(userId,doc,doc._id,steedosId,1,"","");
+		for member,i in doc.members 
+			if member != userId
+				steedosId = Meteor.users.findOne({_id:member})?.steedos_id;
+				herf="mailto:" + steedosId;
+				displayname=steedosId;
+				Calendar.addInstance(userId,doc,doc._id,steedosId,2,herf,displayname);  
 		return      
 	#更新日历之前，更新instance
 	Calendars.before.update (userId, doc, fieldNames, modifier, options)->
@@ -136,7 +148,7 @@ if (Meteor.isServer)
 		subMembers = _.difference oldMembers,newMembers
 		for member, i in subMembers
 			steedosId = Meteor.users.findOne({_id:member})?.steedos_id
-			calendarinstances.remove({"share_displayname":steedosId},{"calendarid":doc._id});
+			calendarinstances.remove({"share_displayname":steedosId,"calendarid":doc._id});
 		for member ,i in addMembers
 			member = addMembers[i]
 			if member != doc.ownerId
