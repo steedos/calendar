@@ -62,7 +62,32 @@ Calendars._simpleSchema = new SimpleSchema
 				return  CALENDARCOLORS[parseInt(10000*Math.random())%7]
 		autoform:
 			type: "bootstrap-minicolors"
-			
+
+	members_busy:
+		type: [String],
+		optional: true
+		autoform:
+			omit: true
+
+	members_busy_pending:
+		type: [Object],
+		optional: true
+		autoform:
+			omit: true
+
+	"members_busy_pending.$._id":
+		type: String,
+		optional: true
+		autoform:
+			omit: true
+
+	"members_busy_pending.$.name":
+		type: String,
+		optional: true
+		autoform:
+			omit: true
+
+
 	ownerId: 
 		type: String,
 		defaultValue:this.userId
