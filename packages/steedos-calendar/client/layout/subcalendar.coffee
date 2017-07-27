@@ -1,3 +1,6 @@
+Template.subcalendar_modal.onRendered ->
+	$("#subcalendar_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
+
 Template.subcalendar_modal.helpers
 	subCalendars: ()->
 		userId = Meteor.userId()
