@@ -16,10 +16,13 @@ Meteor.methods
 						color:obj.color
 						calendarname:obj.title
 		else
-			# userName = db.users.findOne({_id:this.userId}).name
-			
-			# Calendars.update(
-			# 	{ownerId:subscripter,isDefault:true},
-			# 	{$set:{}}
-			# )
+			userName = db.users.findOne({_id:this.userId}).name
+			membersBusyPending = obj.members_busy_pending || []
+			membersBusyPendingId = membersBusyPending.getProperty("_id")
+			if _.indexOf(membersBusyPendingId,this.userId)
+				membersBusyPending.push(_id:this.userId,name:userName)
+			Calendars.update(
+				{ownerId:subscripter,isDefault:true},
+				{$set:{members_busy_pending:membersBusyPending}}
+			)
 			return
