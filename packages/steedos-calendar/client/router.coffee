@@ -6,7 +6,7 @@ checkUserInbox = () ->
 	userId = Meteor.userId()
 	Tracker.autorun (c) ->
 		calendarid = Session.get("defaultcalendarid")
-		if calendarid
+		if calendarid and calendarsSub.ready()
 			selector = 
 			{
 				calendarid: calendarid,
@@ -19,6 +19,8 @@ checkUserInbox = () ->
 			}
 			if Events.find(selector).count()
 				FlowRouter.go '/inbox'
+				toastr.info t("you_have_invitation_to_feedback_please_fill_in_the_invitation")
+			c.stop()
 
 FlowRouter.route '/',
 	triggersEnter: [ checkUserSigned,checkUserInbox ],

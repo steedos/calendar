@@ -112,7 +112,7 @@ Meteor.methods
 					id: attendeeid
 				start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 				site = doc.site || ""
-				title = "您的会议信息有修改"
+				title = "您的会议信息有改动"
 				text = "会议时间:#{start}\r会议地点:#{site}"
 				Push.send
 					createdAt: new Date()

@@ -104,5 +104,6 @@
   "accepted":"accepted",
   "tentative":"tentative",
   "declined":"declined",
-  "needs_action":"needs_action"
+  "needs_action":"needs_action",
+  "you_have_invitation_to_feedback_please_fill_in_the_invitation":"You have invitation to feedback,please fill in the invitation"
 }

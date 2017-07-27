@@ -106,5 +106,6 @@
   "accepted":"接受",
   "tentative":"不确定",
   "declined":"拒绝",
-  "needs_action":"待反馈"
+  "needs_action":"待反馈",
+  "you_have_invitation_to_feedback_please_fill_in_the_invitation":"您有待反馈的会议邀请，请填写是否参加"
 }

@@ -151,6 +151,7 @@ Template.calendarSidebar.events
 	
 	'click .my-calendar': (event)->
 		event.stopPropagation()
+		event.preventDefault()
 		currentCalendarid = Session.get("calendarid")
 		Session.set("calendarIds",[this._id])
 		localStorage.setItem("calendarIds:"+Meteor.userId(),[this._id])
@@ -163,6 +164,7 @@ Template.calendarSidebar.events
 
 	'click .subscribe-calendar': (event)->
 		event.stopPropagation()
+		event.preventDefault()
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		calendarid = Session.get("calendarid")
 		if calendarid != this._id

@@ -1,4 +1,4 @@
-calendarsSub = new SubsManager();
+@calendarsSub = new SubsManager();
 Meteor.startup ->
 	calendarsSub.subscribe "calendars"
 	calendarsSub.subscribe "subcalendars"
