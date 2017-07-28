@@ -145,7 +145,6 @@ Template.calendarSidebar.events
 		$('input[name="membersbusy"]').click()
 
 	'change input[name="membersbusy"]': (event)->
-		console.log ("change")
 		members = AutoForm.getFieldValue("membersbusy","calendar-members-busy") || []
 		defaultcalendarid = Session.get "defaultcalendarid"
 		Meteor.call("addMembersBusy",members,defaultcalendarid,
