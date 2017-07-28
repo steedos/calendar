@@ -93,6 +93,9 @@ Package.onUse(function(api) {
     api.addFiles('client/layout/subcalendar.html', 'client');
     api.addFiles('client/layout/subcalendar.coffee', 'client');
     api.addFiles('client/layout/subcalendar.less', 'client');
+    api.addFiles('client/layout/members_busy_pending.html', 'client');
+    api.addFiles('client/layout/members_busy_pending.coffee', 'client');
+    api.addFiles('client/layout/members_busy_pending.less', 'client');
 
     api.addFiles('client/core.coffee', 'client');
     api.addFiles('client/router.coffee', 'client');
@@ -122,7 +125,9 @@ Package.onUse(function(api) {
     // api.addFiles('server/methods/checkcrach.coffee','server');
     api.addFiles('server/methods/initscription.coffee','server');
     api.addFiles('server/methods/addCalendarObjects.coffee','server');
+    api.addFiles('server/methods/addMembersBusy.coffee','server');
     api.addFiles('server/methods/updateSubcalendar.coffee','server');
+    api.addFiles('server/methods/updateMembersBusy.coffee','server');
     api.addFiles('server/publications/calendars.coffee','server');
     api.addFiles('server/publications/events.coffee','server');
     api.addFiles('server/publications/subcalendars.coffee','server');

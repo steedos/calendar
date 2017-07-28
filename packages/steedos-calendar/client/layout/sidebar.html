@@ -31,6 +31,11 @@
                                 <span>{{_ "edit_calendar"}}</span>
                               </a>
                             </li>
+                            <li>
+                              <a class="calendar-menu add-members-busy">
+                                <span>授权订阅</span>
+                              </a>
+                            </li>
                           </ul>
                     {{else}}
                           <!-- <i class="fa fa-edit calendar-edit"></i>
@@ -127,8 +132,11 @@
             </span>
           </a>
         </li>
-
-
+        <div style="display: none;">
+          {{#autoForm id='calendar-members-busy' schema=members_busyFields doc=values }}
+            {{> afFormGroup name="membersbusy" label=false}}
+          {{/autoForm}}
+        </div>
 
 
 

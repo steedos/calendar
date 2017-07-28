@@ -60,6 +60,23 @@ Template.calendarSidebar.helpers
 
 		return new SimpleSchema(fields)
 
+	members_busyFields: ()->
+		fields =
+			membersbusy:
+				autoform:
+					type: 'selectuser'
+					multiple: true
+					is_within_user_organizations: true
+					defaultValue: ()->
+						defaultcalendarid = Session.get "defaultcalendarid"
+						defaultcalendarObj = Calendars.findOne({_id:defaultcalendarid})
+						return defaultcalendarObj?.members_busy || []
+				optional: false
+				type: [ String ]
+				label: ''
+
+		return new SimpleSchema(fields)
+
 	values: ()->
 		return {}
 
@@ -123,6 +140,18 @@ Template.calendarSidebar.events
 		localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 		Session.set 'calendarIds',calendarIds
 		Calendar.reloadEvents()
+
+	'click .add-members-busy': (event)->
+		$('input[name="membersbusy"]').click()
+
+	'change input[name="membersbusy"]': (event)->
+		members = AutoForm.getFieldValue("membersbusy","calendar-members-busy") || []
+		defaultcalendarid = Session.get "defaultcalendarid"
+		Meteor.call("addMembersBusy",members,defaultcalendarid,
+			(error,result) ->
+				if error
+					console.log error
+		)
 
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
