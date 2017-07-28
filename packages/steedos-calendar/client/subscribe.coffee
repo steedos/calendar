@@ -136,7 +136,7 @@ Tracker.autorun (c) ->
 		userId = Meteor.userId()
 		calendarid = Session.get("defaultcalendarid")
 		calendarObj = Calendars.findOne({_id:calendarid})
-		membersBusyPending = calendarObj.members_busy_pending
+		membersBusyPending = calendarObj?.members_busy_pending
 		if membersBusyPending?.length > 0
 			Modal.show("members_busy_pending_modal")
 
