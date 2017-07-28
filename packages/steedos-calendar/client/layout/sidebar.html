@@ -132,10 +132,11 @@
             </span>
           </a>
         </li>
-
-        {{#autoForm id='calendar-members-busy' schema=members_busyFields doc=values }}
-          {{> afFormGroup name="membersbusy" label=false}}
-        {{/autoForm}}
+        <div style="display: none;">
+          {{#autoForm id='calendar-members-busy' schema=members_busyFields doc=values }}
+            {{> afFormGroup name="membersbusy" label=false}}
+          {{/autoForm}}
+        </div>
 
 
 
