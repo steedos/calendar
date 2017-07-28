@@ -112,3 +112,22 @@ Tracker.autorun (c)->
 		Session.set 'calendarIds', currentCalendarIds
 		localStorage.setItem("calendarIds:"+Meteor.userId(),currentCalendarIds)
 
+Tracker.autorun (c) ->
+	userId = Meteor.userId()
+	calendarid = Session.get("defaultcalendarid")
+	if calendarid and calendarsSub.ready()
+		selector = 
+		{
+			calendarid: calendarid,
+			"attendees": {
+				$elemMatch: {
+					id: userId,
+					partstat: "NEEDS-ACTION"
+				}
+			}
+		}
+		if Events.find(selector).count()
+			FlowRouter.go '/inbox'
+			toastr.info t("you_have_invitation_to_feedback_please_fill_in_the_invitation")
+		c.stop()
+
