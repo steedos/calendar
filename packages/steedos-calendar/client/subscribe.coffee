@@ -131,3 +131,12 @@ Tracker.autorun (c) ->
 			toastr.info t("you_have_invitation_to_feedback_please_fill_in_the_invitation")
 		c.stop()
 
+Tracker.autorun (c) ->
+	if calendarsSub.ready()
+		userId = Meteor.userId()
+		calendarid = Session.get("defaultcalendarid")
+		calendarObj = Calendars.findOne({_id:calendarid})
+		membersBusyPending = calendarObj.members_busy_pending
+		if membersBusyPending?.length > 0
+			Modal.show("members_busy_pending_modal")
+

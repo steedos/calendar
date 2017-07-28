@@ -1,3 +1,6 @@
+Template.members_busy_pending_modal.onRendered ->
+	$("#busyPending_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
+
 Template.members_busy_pending_modal.helpers
 	members: ()->
 		defaultCalendarId = Session.get "defaultcalendarid"
