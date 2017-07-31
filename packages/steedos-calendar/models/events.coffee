@@ -19,6 +19,22 @@ Events._simpleSchema = new SimpleSchema
 		defaultValue: false
 		optional: true
 
+	afternoon:
+		type: String,
+		optional: true
+		autoform:
+			type: 'button'
+			value: ()->
+				return t("afternoon")
+
+	morning:
+		type: String,
+		optional: true
+		autoform:
+			type: 'button'
+			value: ()->
+				return t("morning")
+
 	start:
 		type: Date
 		autoform: 

@@ -188,7 +188,6 @@ Template.event_detail_modal.events
 		unless AutoForm.getFieldValue("allDay","eventsForm") == undefined
 			#有权限的时候才能修改“全天字段”,AutoForm.getFieldValue("allDay","eventsForm")为空时表示只读
 			obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")
-
 		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		description = $('textarea.description').val()
@@ -253,6 +252,9 @@ Template.event_detail_modal.events
 
 	'change input[name=allDay]': (event, template)->
 		isAllDay = $(event.currentTarget).is(':checked')
+		if isAllDay
+			$("input[name='morning']").attr("checked",false)
+			$("input[name='afternoon']").attr("checked",false)
 		startInput = $("#event_detail_modal .modal-body input[name=start]")
 		EventDetailModal.switchAllDay isAllDay, startInput
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
@@ -273,6 +275,43 @@ Template.event_detail_modal.events
 			endDP = endInput.data("DateTimePicker")
 			if startDP and endDP and startDP.date.toDate() > endDP.date.toDate()
 				endDP.setValue(startDP.date)
+
+	'click input[name=morning]': (event, template)->
+		$("input[name='allDay']").attr("checked",false)
+		startInput = $("#event_detail_modal .modal-body input[name=start]")
+		endInput = $("#event_detail_modal .modal-body input[name=end]")
+		date = moment(startInput.val()).format("YYYY-MM-DD")
+		startVal = moment("#{date} 09:00")
+		endVal = moment("#{date} 12:00")
+		EventDetailModal.switchAllDay false, startInput
+		EventDetailModal.switchAllDay false, endInput
+		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
+			startInput.val(startVal.format("YYYY-MM-DDTHH:mm"))
+			endInput.val(endVal.format("YYYY-MM-DDTHH:mm"))
+		else
+			startDP = startInput.data("DateTimePicker")
+			endDP = endInput.data("DateTimePicker")
+			startDP.setValue(startVal)
+			endDP.setValue(endVal)
+
+	'click input[name=afternoon]': (event, template)->
+		$("input[name='allDay']").attr("checked",false)
+		startInput = $("#event_detail_modal .modal-body input[name=start]")
+		endInput = $("#event_detail_modal .modal-body input[name=end]")
+		date = moment(startInput.val()).format("YYYY-MM-DD")
+		startVal = moment("#{date} 14:00")
+		endVal = moment("#{date} 18:00")
+		EventDetailModal.switchAllDay false, startInput
+		EventDetailModal.switchAllDay false, endInput
+		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
+			startInput.val(startVal.format("YYYY-MM-DDTHH:mm"))
+			endInput.val(endVal.format("YYYY-MM-DDTHH:mm"))
+		else
+			startDP = startInput.data("DateTimePicker")
+			endDP = endInput.data("DateTimePicker")
+			startDP.setValue(startVal)
+			endDP.setValue(endVal)
+
 
 	'shown.bs.modal #event_detail_modal': (event, template)->
 		data = template.data

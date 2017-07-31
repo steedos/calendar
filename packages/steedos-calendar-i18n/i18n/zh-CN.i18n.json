@@ -31,6 +31,8 @@
   "calendar_objects_start": "开始时间",
   "calendar_objects_end":"结束时间",
   "calendar_objects_allDay":"全天",
+  "calendar_objects_morning":"上午",
+  "calendar_objects_afternoon":"下午",
   "calendar_objects_calendarid":"所属日历",
   "calendar_objects_description":"描述",
   "calendar_objects_alarms":"提醒",
@@ -110,5 +112,7 @@
   "you_have_invitation_to_feedback_please_fill_in_the_invitation":"您有待反馈的会议邀请，请填写是否参加",
   "accept":"接受",
   "refuse":"拒绝",
-  "subscription_request":"订阅申请"
+  "subscription_request":"订阅申请",
+  "morning": "上午",
+  "afternoon": "下午"
 }
