@@ -281,7 +281,7 @@ Template.event_detail_modal.events
 		startInput = $("#event_detail_modal .modal-body input[name=start]")
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
 		date = moment(startInput.val()).format("YYYY-MM-DD")
-		startVal = moment("#{date} 09:00")
+		startVal = moment("#{date} 08:30")
 		endVal = moment("#{date} 12:00")
 		EventDetailModal.switchAllDay false, startInput
 		EventDetailModal.switchAllDay false, endInput
