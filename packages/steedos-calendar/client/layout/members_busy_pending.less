@@ -1,19 +1,36 @@
 #busyPending_modal{
 	.modal-body{
+		border: none;
+		margin-bottom: 0;
+		.weui-cell:before{
+			right: 15px;
+		}
 		.weui-cell__bd{
-			p{
-				margin: 0;
+			input[type="checkbox"]{
+				position: relative;
+				top: 2px;
+			}
+			label{
+				margin-left: 6px;
+				font-weight: normal;
 			}
 		}
-		.weui-cell__ft{
-			.weui-btn{
+	}
+	.modal-footer{
+		.check-all{
+			input[type="checkbox"]{
 				position: relative;
-				margin-top: 0px;
-				top: 3px;
+				top: 2px;
 			}
-			.weui-btn.btn-accept{
-				margin-right: 15px;
+			label{
+				margin-left: 6px;
 			}
+		}
+		.refuse{
+			margin-right: 6px;
+		}
+		.accept{
+			margin-right: 10px;
 		}
 	}
 }

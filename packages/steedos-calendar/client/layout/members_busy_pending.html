@@ -5,25 +5,35 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
 							aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="subcalendar_modal_label">{{_ "subscription_request"}}</h4>
+					<h4 class="modal-title" id="subcalendar_modal_label">
+						{{_ "the_following_users_apply_to_subscribe_to_your_calendar"}}
+					</h4>
 				</div>
 
 				<div class="modal-body modal-zoom panel panel-default">
 				{{#each members}}
 					<div class="weui-cell">
 						<div class="weui-cell__bd">
-							<p>{{name}}</p>
-						</div>
-						<div class="weui-cell__ft">
-							<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary btn-accept">{{_ "accept"}}
-							</a>
-							<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default
-							btn-refuse">{{_ "refuse"}}
-							</a>
+							<input type="checkbox" name="member" value="{{_id}}" id="{{_id}}">
+							<label  for="{{_id}}">{{name}}</label>
 						</div>
 					</div>
 				{{/each}}
-					<span class="help-block"></span>
+				</div>
+
+				<div class="modal-footer">
+					<div class="pull-left check-all">
+						<input type="checkbox" name="checkAll" id="checkAll">
+						<label for="checkAll">{{_ "choose_all"}}</label>
+					</div>
+					<div class="pull-right refuse">
+						<button type="button" class="btn btn-default btn-refuse" disabled="{{isButtonDisabled}}">
+						{{_ "refuse"}}</button>
+					</div>
+					<div class="pull-right accept">
+						<button type="submit" class="btn btn-primary btn-accept" disabled="{{isButtonDisabled}}">
+						{{_ "accept"}}</button>
+					</div>
 				</div>
 			</div>
 		</div>
