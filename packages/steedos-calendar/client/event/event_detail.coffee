@@ -23,6 +23,7 @@ EventDetailModal =
 Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
 	this.reactiveRemindtimes = new ReactiveVar()
+	this.isChooseAMPM = false
 
 Template.event_detail_modal.onRendered ->
 	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
@@ -277,6 +278,7 @@ Template.event_detail_modal.events
 				endDP.setValue(startDP.date)
 
 	'click input[name=morning]': (event, template)->
+		template.isChooseAMPM = true
 		$("input[name='allDay']").attr("checked",false)
 		startInput = $("#event_detail_modal .modal-body input[name=start]")
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
@@ -295,6 +297,7 @@ Template.event_detail_modal.events
 			endDP.setValue(endVal)
 
 	'click input[name=afternoon]': (event, template)->
+		template.isChooseAMPM = true
 		$("input[name='allDay']").attr("checked",false)
 		startInput = $("#event_detail_modal .modal-body input[name=start]")
 		endInput = $("#event_detail_modal .modal-body input[name=end]")
@@ -324,18 +327,19 @@ Template.event_detail_modal.events
 			$("input[name='title']").focus().select()
 
 	'change input[name=start]': (event, template)->
-		data = template.data
-		startInput = $("#event_detail_modal .modal-body input[name=start]")
-		endInput = $("#event_detail_modal .modal-body input[name=end]")
-		timespan = moment(startInput.val()).toDate() - data.start
-		if Steedos.isMobile() or Steedos.isAndroidOrIOS()
-			endValue = moment(data.end.getTime() + timespan)
-			if endInput.attr("type") == "date"
-				endInput.val(endValue.format("YYYY-MM-DD"))
+		unless template.isChooseAMPM
+			data = template.data
+			startInput = $("#event_detail_modal .modal-body input[name=start]")
+			endInput = $("#event_detail_modal .modal-body input[name=end]")
+			timespan = moment(startInput.val()).toDate() - data.start
+			if Steedos.isMobile() or Steedos.isAndroidOrIOS()
+				endValue = moment(data.end.getTime() + timespan) 
+				if endInput.attr("type") == "date"
+					endInput.val(endValue.format("YYYY-MM-DD"))
+				else
+					endInput.val(endValue.format("YYYY-MM-DDTHH:mm"))
 			else
-				endInput.val(endValue.format("YYYY-MM-DDTHH:mm"))
-		else
-			endDP = endInput.data("DateTimePicker")
-			if endDP
-				endDP.setValue(moment(data.end.getTime() + timespan))
+				endDP = endInput.data("DateTimePicker")
+				if endDP
+					endDP.setValue(moment(data.end.getTime() + timespan))
 
