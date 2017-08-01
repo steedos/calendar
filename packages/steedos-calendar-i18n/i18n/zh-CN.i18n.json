@@ -44,6 +44,7 @@
   "calendars_members": "成员",
   "calendars_members_readonly":"授权查看",
   "calendars_visibility": "可见性",
+  "calendars_members_busy": "授权订阅",
   "calendars_color": "颜色",
   "calendar_subscriptions_calendarname":"标题",
   "calendar_subscriptions_color":"颜色",

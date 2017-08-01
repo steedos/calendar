@@ -77,6 +77,8 @@ Template.event_detail_modal.helpers
 		obj = Template.instance().data
 		if Template.instance().reactiveAttendees.get()
 			obj.attendees = Template.instance().reactiveAttendees.get()
+			obj.start = moment($("#event_detail_modal .modal-body input[name=start]").val()).toDate()
+			obj.end = moment($("#event_detail_modal .modal-body input[name=end]").val()).toDate()
 		obj.acceptednum=0
 		obj.tentativenum=0	#不确定
 		obj.declinednum=0
