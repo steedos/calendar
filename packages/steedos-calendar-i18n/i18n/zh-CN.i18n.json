@@ -110,7 +110,7 @@
   "tentative":"不确定",
   "declined":"拒绝",
   "needs_action":"待反馈",
-  "you_have_invitation_to_feedback_please_fill_in_the_invitation":"您有待反馈的会议邀请，请填写是否参加",
+  "you_have_invitation_to_feedback":"您有%s条会议邀请待反馈",
   "accept":"接受",
   "refuse":"拒绝",
   "the_following_users_apply_to_subscribe_to_your_calendar":"以下用户请求订阅您的日历",

@@ -126,9 +126,10 @@ Tracker.autorun (c) ->
 				}
 			}
 		}
-		if Events.find(selector).count()
+		counts = Events.find(selector).count()
+		if counts
 			FlowRouter.go '/inbox'
-			toastr.info t("you_have_invitation_to_feedback_please_fill_in_the_invitation")
+			toastr.info t("you_have_invitation_to_feedback",counts)
 		c.stop()
 
 Tracker.autorun (c) ->
