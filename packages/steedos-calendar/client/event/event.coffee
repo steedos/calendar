@@ -45,7 +45,20 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 				$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
 			unless $("button.btn-add-event").length
 				$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-add-event"><i class="ion ion-plus-round"></i></button>')
-			events = Events.find({calendarid:{$in: params.calendar}}).fetch()
+			# query = calendarid: $in: params.calendar
+			query = 
+				calendarid: $in: params.calendar
+				$or: [
+					{ownerId: Meteor.userId()}
+					{ 
+						'attendees': 
+							$elemMatch:
+								id: Meteor.userId()
+								partstat: $ne: 'DECLINED'
+					}
+				]
+
+			events = Events.find(query).fetch()
 			callback(events)				
 			c.stop()
 
@@ -151,12 +164,12 @@ Calendar.generateCalendar = ()->
 				localStorage.setItem("defaultView"+Meteor.userId(),view.name)
 				if view.name == "listWeek"
 					thead = """
-    					<tr class="fc-list-header">
-    						<td class="fc-list-item-time fc-widget-content">时间</td>
-    						<td class="fc-list-item-title fc-widget-content">内容</td>
-    						<td class="fc-list-item-site fc-widget-content">地点</td>
-    						<td class="fc-list-item-participation fc-widget-content">参加人员</td>
-    					</tr>
+						<tr class="fc-list-header">
+							<td class="fc-list-item-time fc-widget-content">时间</td>
+							<td class="fc-list-item-title fc-widget-content">内容</td>
+							<td class="fc-list-item-site fc-widget-content">地点</td>
+							<td class="fc-list-item-participation fc-widget-content">参加人员</td>
+						</tr>
 					"""
 					$(".fc-list-table > tbody").prepend(thead)
 					$(".fc-widget-header").attr("colspan","5") 
