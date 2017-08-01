@@ -103,7 +103,7 @@
   "no_calendar_to_choose":"暂无共享给您的日历",
   "more_calendars":"更多...",
   "subscribe_or_unsubscribe_to_this_calendar":"订阅或取消订阅该日历",
-  "your_meetings_invitations":"我的会议邀请",
+  "your_meetings_invitations":"会议邀请",
   "calendar_objects":"会议邀请",
   "accepted":"接受",
   "tentative":"不确定",
@@ -115,5 +115,6 @@
   "the_following_users_apply_to_subscribe_to_your_calendar":"以下用户请求订阅您的日历",
   "morning": "上午",
   "afternoon": "下午",
-  "choose_all": "全部选中"
+  "choose_all": "全部选中",
+  "invited_me_to_attend_the_meeting": "邀请我参加的会议"
 }

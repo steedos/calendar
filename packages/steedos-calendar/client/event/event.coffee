@@ -166,7 +166,7 @@ Calendar.generateCalendar = ()->
 					unless $("button.btn-print").length
 						$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-print"><i class="ion ion-printer"></i></button>')
 				else
-					+$("button.btn-print").remove()
+					$("button.btn-print").remove()
 
 			select: (start, end, jsEvent, view, resource)->
 				objs = Calendars.find()
