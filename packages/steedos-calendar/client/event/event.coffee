@@ -164,7 +164,7 @@ Calendar.generateCalendar = ()->
 
 					#列表页面添加打印按钮
 					unless $("button.btn-print").length
-						$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-print"><i class="ion ion-printer"></i></button>')
+						$(".fc-button-group").append('<button type="button" class="btn btn-default btn-print"><i class="ion ion-printer"></i></button>')
 				else
 					$("button.btn-print").remove()
 
