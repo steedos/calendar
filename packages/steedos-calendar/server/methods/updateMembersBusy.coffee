@@ -12,7 +12,7 @@ Meteor.methods
 				membersBusyPendingIds.remove(index)
 
 		if action == "accept"
-			membersBusy = membersBusy.concat(memberIds)
+			membersBusy = _.uniq(membersBusy.concat(memberIds))
 			Calendars.update(
 				{_id:defaultCalendarObj._id}
 				{
