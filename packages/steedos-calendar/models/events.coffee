@@ -247,6 +247,15 @@ Events._simpleSchema = new SimpleSchema
 	"attendees.$.description": 
 		type:String
 		optional: true
+	"attendees.$.inviter":
+		type:String
+		optional: true
+	"attendees.$.invitetime":
+		type:Date
+		optional: true
+	"attendees.$.responsetime":
+		type:Date
+		optional: true
 	parentId:
 		type:String
 		optional: true

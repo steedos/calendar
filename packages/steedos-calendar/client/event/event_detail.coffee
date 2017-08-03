@@ -194,11 +194,14 @@ Template.event_detail_modal.events
 		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		description = $('textarea.description').val()
+		if val or description
+			responsetime = new Date()
 		if obj?.attendees
 			obj.attendees.forEach (attendee)->
 				if attendee.id == Meteor.userId()
 					attendee.partstat=val
 					attendee.description=description
+					attendee.responsetime=responsetime
 		if !obj._id
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->

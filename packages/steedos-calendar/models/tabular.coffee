@@ -26,6 +26,17 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				"""
 		},
 		{
+			data: "attendees.inviter",
+			orderable: false,
+			render: (val, type, doc) ->
+				content = ""
+				attendees = doc.attendees
+				attendees.forEach (attendee,index) ->
+					if attendee.id == Meteor.userId()
+						content = attendee.inviter
+				return content
+		},
+		{
 			data: "attendees.partstat"
 			render:  (val, type, doc) ->
 				content = ""
@@ -51,6 +62,16 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 			orderable: false
 		},
 		{
+			data: "attendees.invitetime",
+			render: (val, type, doc) ->
+				content = ""
+				attendees = doc.attendees
+				attendees.forEach (attendee,index) ->
+					if attendee.id == Meteor.userId()
+						content = moment(attendee.invitetime).format("M-DD HH:mm")
+				return content
+		},
+		{
 			data: "start",
 			orderable: true,
 			render:  (val, type, doc) ->
@@ -73,7 +94,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				return moment(doc.end).format("M-DD HH:mm")
 		}
 	],
-	order: [[4,"desc"]]
+	order: [[6,"desc"]]
 	extraFields: ["end", "allDay", "alarms", "remintimes", "ownerId","attendees","calendarid","parentId","uid","uri"],
 	lengthChange: false
 	pageLength: 10

@@ -5,6 +5,7 @@ Meteor.methods
 		else
 			attendeesid = []
 			obj.attendees = []
+		inviter = db.users.findOne({_id:this.userId})?.name
 		addmembers.forEach (addmember)->
 			if _.indexOf(attendeesid, addmember)==-1
 				partstat="NEEDS-ACTION"
@@ -17,6 +18,8 @@ Meteor.methods
 					cn:name,
 					mailto:steedosId,
 					id:addmember,
+					inviter:inviter,
+					invitetime:new Date(),
 					description:null
 				}
 				if addmember == obj.ownerId 
