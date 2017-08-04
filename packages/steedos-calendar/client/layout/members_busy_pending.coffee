@@ -32,7 +32,7 @@ Template.members_busy_pending_modal.events
 				else
 					defaultCalendarId = Session.get "defaultcalendarid"
 					members = Calendars.findOne({_id:defaultCalendarId})?.members_busy_pending
-					if !members or !members.length
+					if !members or members.length==0
 						$('[data-dismiss="modal"]').click()
 		)
 		$('input[name=checkAll]').removeAttr("checked")
@@ -50,7 +50,7 @@ Template.members_busy_pending_modal.events
 				else	
 					defaultCalendarId = Session.get "defaultcalendarid"
 					members = Calendars.findOne({_id:defaultCalendarId})?.members_busy_pending
-					if !members or !members.length
+					if !members or members.length==0
 						$('[data-dismiss="modal"]').click()
 		)
 		$('input[name=checkAll]').removeAttr("checked")

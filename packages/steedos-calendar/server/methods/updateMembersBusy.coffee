@@ -27,6 +27,22 @@ Meteor.methods
 					color:defaultCalendarObj.color
 					calendarname:defaultCalendarObj.title
 
+				payload = 
+					app: 'calendar'
+					id: memberId
+				userName = db.users.findOne({_id:userId}).name
+				title = "您的订阅申请已通过"
+				text = "#{userName}已接受您的订阅申请"
+				Push.send
+					createdAt: new Date(),
+					createdBy: '<SERVER>',
+					from: 'calendar',
+					title: title,
+					text: text,
+					payload: payload,
+					badge: 12,
+					query: {userId:memberId,appName:"calendar"}
+
 		if action == "refuse"
 			Calendars.update(
 				{_id:defaultCalendarObj._id}
@@ -34,3 +50,19 @@ Meteor.methods
 					$set:{members_busy_pending:membersBusyPending}
 				}
 			)
+			memberIds.forEach (memberId) ->
+				payload = 
+					app: 'calendar'
+					id: memberId
+				userName = db.users.findOne({_id:userId}).name
+				title = "您的订阅申请未能通过"
+				text = "#{userName}拒绝了您的订阅申请"
+				Push.send
+					createdAt: new Date(),
+					createdBy: '<SERVER>',
+					from: 'calendar',
+					title: title,
+					text: text,
+					payload: payload,
+					badge: 12,
+					query: {userId:memberId,appName:"calendar"}
