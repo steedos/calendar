@@ -4,10 +4,49 @@
 
       <ul class="sidebar-menu">
         <li class="header">{{_ "my_calendar"}}
-          {{#if showAddCalendar}}
+          <!-- {{#if showAddCalendar}}
           <i class="ion ion-plus-round pull-right calendar-add"></i>
-          {{/if}}
+          {{/if}} -->
+          <span class="pull-right-container operate-container">
+            <div class="operate-box">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="fa fa-ellipsis-h"></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+              {{#if showAddCalendar}}
+                <li>
+                  <a class="calendar-menu calendar-add">
+                    <span>{{_ "calendar_add_calendar"}}</span>
+                  </a>
+                </li>
+              {{/if}}
+              {{#if ShowMoreCalendars}}
+                <li>
+                  <a class="calendar-menu browse-calendars">
+                    <span>{{_ "subscribe_to_calendars"}}</span>
+                  </a>
+                </li>
+              {{/if}}    
+              {{#if showSeparator}}  
+                <li role="separator" class="divider"></li>
+              {{/if}}
+                <li>
+                  <a class="calendar-menu sub-calendar">
+                    <span>{{_ "subscribe_default_calendar"}}</span>
+                  </a>
+                </li>
+              {{#if showViewScription}}
+                <li>
+                  <a class="calendar-menu view-subscriptions">
+                    <span>{{_ "view_subscription_request"}}</span>
+                  </a>
+                </li>
+              {{/if}}
+              </ul>
+            </div>
+          </span>
         </li>
+
         {{#each calendars}}
         <li class="{{calendarActive}}">
           <a href="#" class="calendar-row my-calendar">
@@ -78,7 +117,9 @@
         </li>
         {{/each}}
         
-        <li class="header">{{_ "shared_calendars"}}<i class="ion ion-plus-round pull-right sub-calendar"></i></li>
+        <li class="header">{{_ "shared_calendars"}}
+          <!-- <i class="ion ion-plus-round pull-right sub-calendar"></i> -->
+        </li>
         
         {{#each subscribe}}
         <li class="{{calendarActive}}">
@@ -113,13 +154,13 @@
           </a>
         </li>
         {{/each}}
-        {{#if ShowMoreCalendars}}
+        <!-- {{#if ShowMoreCalendars}}
           <li>
             <a href="#" class="calendar-row browse-calendars">
               <span>{{_ "more_calendars"}}</span>
             </a>
           </li>
-        {{/if}}
+        {{/if}} -->
         <li>
           <a href="#" class="calendar-row browse-invations">
             <span>{{_ "your_meetings_invitations"}}</span>

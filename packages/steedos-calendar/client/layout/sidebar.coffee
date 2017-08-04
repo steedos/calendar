@@ -110,6 +110,23 @@ Template.calendarSidebar.helpers
 			}
 		return Events.find(selector).count()
 
+	showSeparator:()->
+		spaceId = Session.get("spaceId")
+		defaultCalendarId = Session.get "defaultcalendarid"
+		members = Calendars.findOne({_id:defaultCalendarId}).members_busy_pending
+		if members?.length > 0 or Steedos.isSpaceAdmin(spaceId)
+			return true
+		else
+			return false
+
+	showViewScription: ()->
+		defaultCalendarId = Session.get "defaultcalendarid"
+		members = Calendars.findOne({_id:defaultCalendarId}).members_busy_pending
+		if members?.length > 0 
+			return true
+		else
+			return false
+
 Template.calendarSidebar.onRendered ->
 	calendarsubscriptions.after.update (userId,doc)->
 		Calendar.reloadEvents()
@@ -152,6 +169,11 @@ Template.calendarSidebar.events
 				if error
 					console.log error
 		)
+
+	'click .view-subscriptions': (event)->
+		event.stopPropagation()
+		Modal.show("members_busy_pending_modal")
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
 
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
@@ -293,7 +315,7 @@ Template.calendarSidebar.events
 						localStorage.setItem("calendarIds:"+Meteor.userId(),calendarIds)
 		);
 
-	'click i.sub-calendar':()->
+	'click .sub-calendar':()->
 		$("input[name='addmembers']").click()
 
 	'click .browse-calendars':()->

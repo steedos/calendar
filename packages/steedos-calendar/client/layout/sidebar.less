@@ -31,7 +31,7 @@
 				background: azure;
 				font-size: 14px;
 				font-weight: bold;
-				.sub-calendar,.calendar-add{
+				.sub-calendar,.calendar-add,.browse-calendars{
 					display: inline-block;
 					margin-top: 4px;
 					cursor: pointer;
@@ -62,6 +62,37 @@
 			top: 0 !important;
 			bottom: 3px;
 			overflow-y: auto;
+			li.header{
+				.operate-container{
+					margin-right: 16px;
+					.operate-box{
+						visibility:visible;
+						.show-dropdown-menu{
+							display: block;
+							right: -9px;
+							li{
+								a{
+									width: 100%;
+								}
+							}
+						}
+						.dropdown-menu{
+							width: 100px;
+							.calendar-menu{
+								font-size: 13px;
+								span{
+									margin-left: 5px;
+								}
+							}
+						}
+						@media (max-width: 767px){
+							.dropdown-menu{
+								width: 100px;
+							}
+						}
+					}
+				}
+			}
 		}
 		div.sidebar-bottom{
 			padding-top: 10px;
