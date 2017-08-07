@@ -113,7 +113,7 @@ Template.calendarSidebar.helpers
 	showSeparator:()->
 		spaceId = Session.get("spaceId")
 		defaultCalendarId = Session.get "defaultcalendarid"
-		members = Calendars.findOne({_id:defaultCalendarId}).members_busy_pending
+		members = Calendars.findOne({_id:defaultCalendarId})?.members_busy_pending
 		if members?.length > 0 or Steedos.isSpaceAdmin(spaceId)
 			return true
 		else
@@ -121,7 +121,7 @@ Template.calendarSidebar.helpers
 
 	showViewScription: ()->
 		defaultCalendarId = Session.get "defaultcalendarid"
-		members = Calendars.findOne({_id:defaultCalendarId}).members_busy_pending
+		members = Calendars.findOne({_id:defaultCalendarId})?.members_busy_pending
 		if members?.length > 0 
 			return true
 		else
