@@ -64,6 +64,7 @@ steedos:i18n
 steedos:base
 steedos:accounts
 steedos:theme
+steedos:theme-qhd
 steedos:jstree
 rubaxa:sortable
 steedos:datatables-extensions
