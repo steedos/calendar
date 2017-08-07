@@ -45,20 +45,14 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 				$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
 			unless $("button.btn-add-event").length
 				$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-add-event"><i class="ion ion-plus-round"></i></button>')
-			# query = calendarid: $in: params.calendar
-			query = 
-				calendarid: $in: params.calendar
-				$or: [
-					{ownerId: Meteor.userId()}
-					{ 
-						'attendees': 
-							$elemMatch:
-								id: Meteor.userId()
-								partstat: $ne: 'DECLINED'
-					}
-				]
+			query = calendarid: $in: params.calendar
 
 			events = Events.find(query).fetch()
+			events.forEach (event,index) ->
+				if event.ownerId != Meteor.userId()
+					event.attendees?.forEach (attendee)->
+						if attendee.id == Meteor.userId() and attendee.partstat == 'DECLINED'
+							events.remove(index)
 			callback(events)				
 			c.stop()
 
