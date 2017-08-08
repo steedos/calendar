@@ -49,7 +49,7 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 
 			events = Events.find(query).fetch()
 			events.forEach (event,index) ->
-				if event.ownerId != Meteor.userId()
+				if event.ownerId != Meteor.userId() && event.calendarid == Session.get("defaultcalendarid")
 					event.attendees?.forEach (attendee)->
 						if attendee.id == Meteor.userId() and attendee.partstat == 'DECLINED'
 							events.remove(index)
