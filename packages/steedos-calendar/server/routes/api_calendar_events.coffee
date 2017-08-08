@@ -15,14 +15,18 @@ JsonRoutes.add "get", "/api/calendar/events", (req, res, next) ->
 					"success":false
 			return;
 
-	userCalendar = Calendars.find({ownerId:user_id}).map (obj) ->
-		return obj._id
-	userEvent = []
-	userCalendar.forEach (id) ->
-		Events.find({calendarid:id},{fields: {title: 1, start: 1, end: 1, site: 1, participation: 1, allDay: 1},sort:{start:-1},limit:5}).fetch().forEach (obj) ->
-			obj.start = moment(obj.start).format("YYYY-MM-DD HH:mm")
-			obj.end = moment(obj.end).format("YYYY-MM-DD HH:mm")
-			userEvent.push obj
+	start = moment().format("YYYY-MM-DD 00:00")
+	utcOffsetHours = db.users.findOne(user_id).utcOffset
+	start = moment(start).subtract(utcOffsetHours,"hours").toDate()
+	calendarid = Calendars.findOne({ownerId:user_id,isDefault:true})?._id
+	if calendarid
+		userEvent = Events.find({
+			calendarid:calendarid,
+			start: {$gt: start}},{sort:{start:-1}
+		},limit:20).fetch() || []
+	else
+		userEvent = []
+	
 
 
 	JsonRoutes.sendResult res,
