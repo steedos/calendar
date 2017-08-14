@@ -112,25 +112,30 @@ Tracker.autorun (c)->
 		Session.set 'calendarIds', currentCalendarIds
 		localStorage.setItem("calendarIds:"+Meteor.userId(),currentCalendarIds)
 
-# Tracker.autorun (c) ->
-# 	userId = Meteor.userId()
-# 	calendarid = Session.get("defaultcalendarid")
-# 	if calendarid and calendarsSub.ready()
-# 		selector = 
-# 		{
-# 			calendarid: calendarid,
-# 			"attendees": {
-# 				$elemMatch: {
-# 					id: userId,
-# 					partstat: "NEEDS-ACTION"
-# 				}
-# 			}
-# 		}
-# 		counts = Events.find(selector).count()
-# 		if counts
-# 			FlowRouter.go '/inbox'
-# 			toastr.info t("you_have_invitation_to_feedback",counts)
-# 		c.stop()
+Tracker.autorun (c) ->
+	userId = Meteor.userId()
+	calendarid = Session.get("defaultcalendarid")
+	if calendarid and calendarsSub.ready()
+		selector = 
+		{
+			calendarid: calendarid,
+			"attendees": {
+				$elemMatch: {
+					id: userId,
+					partstat: "NEEDS-ACTION"
+				}
+			}
+		}
+		counts = Events.find(selector).count()
+		if counts
+			toastr.info(null,t("you_have_invitation_to_feedback",counts),{
+				closeButton: true,
+				timeOut: 0,
+				extendedTimeOut: 0,
+				onclick: ->
+					FlowRouter.go '/calendar/inbox';
+			})
+		c.stop()
 
 Tracker.autorun (c) ->
 	if calendarsSub.ready()
