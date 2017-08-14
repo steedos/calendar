@@ -1,6 +1,6 @@
 @Events = new Mongo.Collection('calendar_objects');
 moment_timezone = require('moment-timezone');
-icalendar = require('icalendar');
+# icalendar = require('icalendar');
 created = new Date();
 # locale = Session.get 'steedos-locale'
 
