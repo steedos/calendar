@@ -1,6 +1,6 @@
 Package.describe({
     name: 'steedos:calendar',
-    version: '0.0.2_5',
+    version: '0.0.4',
     summary: 'Steedos calendar system',
     git: ''
 });
@@ -65,12 +65,12 @@ Package.onUse(function(api) {
     api.use('steedos:accounts@0.0.12');
     api.use('steedos:theme@0.0.18');
     api.use('steedos:i18n@0.0.5');
-    api.use('steedos:calendar-i18n@0.0.2_4');
+    api.use('steedos:calendar-i18n@0.0.3');
 	api.use('steedos:autoform@0.0.1');
 
     api.use('steedos:autoform-modals@0.3.9_6');
 
-    api.use('raix:push');
+    api.use('raix:push@3.0.2');
 
     api.addFiles('client/event/event.html', 'client');
     api.addFiles('client/event/event.coffee', 'client');
