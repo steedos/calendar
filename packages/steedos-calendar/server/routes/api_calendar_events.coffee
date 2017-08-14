@@ -1,9 +1,9 @@
 JsonRoutes.add "get", "/api/calendar/events", (req, res, next) ->
-	user_id = req.headers['x-user-id']
+	user_id = req.headers['x-user-id'] || req.query?.userId
 
-	auth_token = req.headers['x-auth-token']
+	auth_token = req.headers['x-auth-token'] || req.query?.authToken
 
-	space_id = req.headers['x-space-id']
+	space_id = req.headers['x-space-id'] || req.query?.spaceId
 
 	user = Steedos.getAPILoginUser(req, res)
 
