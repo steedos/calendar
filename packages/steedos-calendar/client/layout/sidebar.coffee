@@ -210,8 +210,8 @@ Template.calendarSidebar.events
 			Session.set("calendarid",this._id)
 			localStorage.setItem("calendarid:"+Meteor.userId(), this._id)
 		path = FlowRouter.current().path
-		if path == "/inbox"
-			FlowRouter.go("/")
+		if path == "/calendar/inbox"
+			FlowRouter.go("/calendar/")
 
 	'click .subscribe-calendar': (event)->
 		event.stopPropagation()
@@ -224,8 +224,8 @@ Template.calendarSidebar.events
 		Session.set("calendarIds",[this.uri])
 		localStorage.setItem("calendarIds:"+Meteor.userId(),[this.uri])	
 		path = FlowRouter.current().path
-		if path == "/inbox"
-			FlowRouter.go("/")
+		if path == "/calendar/inbox"
+			FlowRouter.go("/calendar/")
 
 	'click .dropdown-toggle': (event)->
 		event.stopPropagation()
@@ -322,8 +322,8 @@ Template.calendarSidebar.events
 		Modal.show("subcalendar_modal")
 
 	'click .browse-invations':()->
-		if FlowRouter.current().path != "/inbox"
-			FlowRouter.go("/inbox")
+		if FlowRouter.current().path != "/calendar/inbox"
+			FlowRouter.go("/calendar/inbox")
 
 	'change input[name="addmembers"]':()->
 		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
