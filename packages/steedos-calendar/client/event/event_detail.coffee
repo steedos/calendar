@@ -14,11 +14,11 @@ EventDetailModal =
 			unless dp
 				return
 			if isAllDay
-				dp.format = "YYYY-MM-DD"
-				dp.setValue(dp.date)
+				dp.format "YYYY-MM-DD"
+				dp.date(dp.date())
 			else
-				dp.format = "YYYY-MM-DD HH:mm"
-				dp.setValue(dp.date)
+				dp.format "YYYY-MM-DD HH:mm"
+				dp.date(dp.date())
 
 Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
@@ -279,8 +279,8 @@ Template.event_detail_modal.events
 		else
 			startDP = startInput.data("DateTimePicker")
 			endDP = endInput.data("DateTimePicker")
-			if startDP and endDP and startDP.date.toDate() > endDP.date.toDate()
-				endDP.setValue(startDP.date)
+			if startDP and endDP and startDP.date().toDate() > endDP.date().toDate()
+				endDP.date(startDP.date())
 
 	'click input[name=morning]': (event, template)->
 		template.isChooseAMPM = true
@@ -298,8 +298,8 @@ Template.event_detail_modal.events
 		else
 			startDP = startInput.data("DateTimePicker")
 			endDP = endInput.data("DateTimePicker")
-			startDP.setValue(startVal)
-			endDP.setValue(endVal)
+			startDP.date(startVal)
+			endDP.date(endVal)
 
 	'click input[name=afternoon]': (event, template)->
 		template.isChooseAMPM = true
@@ -317,8 +317,8 @@ Template.event_detail_modal.events
 		else
 			startDP = startInput.data("DateTimePicker")
 			endDP = endInput.data("DateTimePicker")
-			startDP.setValue(startVal)
-			endDP.setValue(endVal)
+			startDP.date(startVal)
+			endDP.date(endVal)
 
 
 	'shown.bs.modal #event_detail_modal': (event, template)->
@@ -346,5 +346,5 @@ Template.event_detail_modal.events
 			else
 				endDP = endInput.data("DateTimePicker")
 				if endDP
-					endDP.setValue(moment(data.end.getTime() + timespan))
+					endDP.date(moment(data.end.getTime() + timespan))
 
