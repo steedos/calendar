@@ -6,6 +6,10 @@
 	bottom: 0;
 	background-color: rgba(255, 255, 255, 0.8);
 	.fc-listWeek-view{
+		.btn-print{
+			float: right;
+			margin-right: 10px;
+		}
 		.fc-list-table{
 			.fc-list-header{
 				font-size: 15px;
@@ -129,6 +133,9 @@ td.fc-event-container a div{
 	@media print{
 		.content-wrapper{
 			border: none;
+			.weui-tabbar{
+				display: none;
+			}
 		}
 		.fc-toolbar.fc-header-toolbar{
 			.fc-right{
@@ -144,6 +151,11 @@ td.fc-event-container a div{
 				span.fc-icon.fc-icon-right-single-arrow{
 					display: none;
 				}
+			}
+		}
+		.fc-listWeek-view{
+			.btn-print{
+				display: none;
 			}
 		}
 		.fc-list-item-title.fc-widget-content{
