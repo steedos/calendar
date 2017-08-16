@@ -48,7 +48,7 @@ Events._simpleSchema = new SimpleSchema
 					return null
 				else
 					return  {
-						# language:'zh-cn'
+						locale: Session.get("TAPi18n::loaded_lang")
 						format:"YYYY-MM-DD HH:mm"
 						sideBySide:true
 					}
@@ -66,7 +66,7 @@ Events._simpleSchema = new SimpleSchema
 					return null
 				else
 					return  {
-						# language:'zh-cn'
+						locale: Session.get("TAPi18n::loaded_lang")
 						format:"YYYY-MM-DD HH:mm"
 						sideBySide:true
 					}
