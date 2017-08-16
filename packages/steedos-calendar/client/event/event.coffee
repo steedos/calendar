@@ -170,8 +170,9 @@ Calendar.generateCalendar = ()->
 					headeringArr = $(".fc-list-heading-alt")
 
 					#列表页面添加打印按钮
-					unless $("button.btn-print").length
-						$(".fc-button-group").append('<button type="button" class="btn btn-default btn-print"><i class="ion ion-printer"></i></button>')
+					unless Steedos.isAndroidOrIOS() or Steedos.isMobile()
+						unless $("button.btn-print").length
+							$(".fc-button-group").append('<button type="button" class="btn btn-default btn-print"><i class="ion ion-printer"></i></button>')
 				else
 					$("button.btn-print").remove()
 
