@@ -3,8 +3,9 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 	collection: Events,
 	drawCallback:(settings)->
 		box = $(this).closest(".event-pending-body")
-		if !Steedos.isMobile() && !Steedos.isPad()
-			$(box).perfectScrollbar({suppressScrollX:true})
+		# if !Steedos.isMobile() && !Steedos.isPad()
+		# 	# $(box).perfectScrollbar({suppressScrollX:true})
+			# $(".event-pending-body>.tabular-container").perfectScrollbar()
 	columns: [
 		{
 			data: "title", 
@@ -24,6 +25,28 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				return """
 					#{content}<div class="event-title">#{doc.title}</div>
 				"""
+		},
+		{
+			data: "start",
+			orderable: true,
+			render:  (val, type, doc) ->
+				return moment(doc.start).format("M-DD HH:mm")
+				# console.log JSON.stringify(doc)
+				# start = moment(doc.start).format("M-DD HH:mm")
+				# end = moment(doc.end).format("M-DD HH:mm")
+				# if doc.allDay
+				# 	return "全天"
+				# else
+				# 	if start != end
+				# 		return "#{start} - #{end}"
+				# 	else
+				# 		return "#{start}"
+		},
+		{
+			data: "end",
+			orderable: true,
+			render:  (val, type, doc) ->
+				return moment(doc.end).format("M-DD HH:mm")
 		},
 		{
 			data: "attendees.inviter",
@@ -70,31 +93,11 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 					if attendee.id == Meteor.userId()
 						content = moment(attendee.invitetime).format("M-DD HH:mm")
 				return content
-		},
-		{
-			data: "start",
-			orderable: true,
-			render:  (val, type, doc) ->
-				return moment(doc.start).format("M-DD HH:mm")
-				# console.log JSON.stringify(doc)
-				# start = moment(doc.start).format("M-DD HH:mm")
-				# end = moment(doc.end).format("M-DD HH:mm")
-				# if doc.allDay
-				# 	return "全天"
-				# else
-				# 	if start != end
-				# 		return "#{start} - #{end}"
-				# 	else
-				# 		return "#{start}"
-		},
-		{
-			data: "end",
-			orderable: true,
-			render:  (val, type, doc) ->
-				return moment(doc.end).format("M-DD HH:mm")
 		}
 	],
-	order: [[6,"desc"]]
+	responsive: 
+		details: false
+	order: [[2,"desc"]]
 	extraFields: ["end", "allDay", "alarms", "remintimes", "ownerId","attendees","calendarid","parentId","uid","uri"],
 	lengthChange: false
 	pageLength: 10
