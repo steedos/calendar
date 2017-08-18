@@ -1,8 +1,5 @@
 JsonRoutes.add "get", "/api/calendar/events", (req, res, next) ->
-	user_id = req.headers['x-user-id'] || req.query?.userId
-
-	auth_token = req.headers['x-auth-token'] || req.query?.authToken
-
+	
 	space_id = req.headers['x-space-id'] || req.query?.spaceId
 
 	user = Steedos.getAPILoginUser(req, res)
@@ -14,6 +11,8 @@ JsonRoutes.add "get", "/api/calendar/events", (req, res, next) ->
 					"error":"Validate Request -- Missing X-Auth-Token,X-User-Id",
 					"success":false
 			return;
+
+	user_id = user._id
 
 	start = moment().format("YYYY-MM-DD 00:00")
 	utcOffsetHours = db.users.findOne(user_id).utcOffset
