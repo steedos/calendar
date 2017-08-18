@@ -1,15 +1,15 @@
 Package.describe({
     name: 'steedos:calendar',
-    version: '0.0.8',
+    version: '0.0.10',
     summary: 'Steedos calendar system',
     git: ''
 });
 
 Npm.depends({
-    'icalendar':'0.7.1',
-    'ical.js':'1.2.2',
-    'MD5':'1.3.0',
-    'moment-timezone':'0.5.13',
+    'icalendar': '0.7.1',
+    'ical.js': '1.2.2',
+    'MD5': '1.3.0',
+    'moment-timezone': '0.5.13',
 });
 
 Package.onUse(function(api) {
@@ -37,7 +37,7 @@ Package.onUse(function(api) {
     api.use('aldeed:tabular@1.6.1');
     api.use('aldeed:autoform@5.8.0');
     api.use('matb33:collection-hooks@0.8.1');
-  
+
     api.use('kadira:blaze-layout@2.3.0');
     api.use('kadira:flow-router@2.10.1');
 
@@ -51,7 +51,7 @@ Package.onUse(function(api) {
     api.use(['webapp@1.3.11'], 'server');
 
     api.use('momentjs:moment@2.14.1', 'client');
-   
+
 
     api.use('es5-shim@4.6.15');
     // api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
@@ -65,8 +65,8 @@ Package.onUse(function(api) {
     api.use('steedos:accounts@0.0.19');
     api.use('steedos:theme@0.0.22');
     api.use('steedos:i18n@0.0.6');
-    api.use('steedos:calendar-i18n@0.0.3');
-	api.use('steedos:autoform@0.0.1');
+    api.use('steedos:calendar-i18n@0.0.4');
+    api.use('steedos:autoform@0.0.1');
 
     api.use('steedos:autoform-modals@0.3.9_6');
 
@@ -111,32 +111,32 @@ Package.onUse(function(api) {
 
     // api.addFiles('lib/attendees.coffee');
 
-    api.addFiles('server/methods/calendarInit.coffee','server');
-    api.addFiles('server/methods/calendarinsert.coffee','server');
-    api.addFiles('server/methods/selectGetUsers.coffee','server');
-    api.addFiles('server/methods/updateEvents.coffee','server');
-    api.addFiles('server/methods/removeEvents.coffee','server');
-    api.addFiles('server/methods/attendeesInit.coffee','server');
-    api.addFiles('server/methods/updateinstances.coffee','server');
-    api.addFiles('server/methods/eventInit.coffee','server');
-    api.addFiles('server/methods/davModifiedEvent.coffee','server');
-    api.addFiles('server/methods/subCalendar.coffee','server');
-    api.addFiles('server/methods/shareCalendar.coffee','server');
-    api.addFiles('server/methods/removeSubCalendars.coffee','server');
+    api.addFiles('server/methods/calendarInit.coffee', 'server');
+    api.addFiles('server/methods/calendarinsert.coffee', 'server');
+    api.addFiles('server/methods/selectGetUsers.coffee', 'server');
+    api.addFiles('server/methods/updateEvents.coffee', 'server');
+    api.addFiles('server/methods/removeEvents.coffee', 'server');
+    api.addFiles('server/methods/attendeesInit.coffee', 'server');
+    api.addFiles('server/methods/updateinstances.coffee', 'server');
+    api.addFiles('server/methods/eventInit.coffee', 'server');
+    api.addFiles('server/methods/davModifiedEvent.coffee', 'server');
+    api.addFiles('server/methods/subCalendar.coffee', 'server');
+    api.addFiles('server/methods/shareCalendar.coffee', 'server');
+    api.addFiles('server/methods/removeSubCalendars.coffee', 'server');
     // api.addFiles('server/methods/checkcrach.coffee','server');
-    api.addFiles('server/methods/initscription.coffee','server');
-    api.addFiles('server/methods/addCalendarObjects.coffee','server');
-    api.addFiles('server/methods/addMembersBusy.coffee','server');
-    api.addFiles('server/methods/updateSubcalendar.coffee','server');
-    api.addFiles('server/methods/updateMembersBusy.coffee','server');
-    api.addFiles('server/publications/calendars.coffee','server');
-    api.addFiles('server/publications/events.coffee','server');
-    api.addFiles('server/publications/subcalendars.coffee','server');
-    api.addFiles('server/publications/calendarinstances.coffee','server');
-    api.addFiles('server/publications/reminders.coffee','server');
-    api.addFiles('server/publications/event_need_action.coffee','server');
-    api.addFiles('server/main.coffee','server');
+    api.addFiles('server/methods/initscription.coffee', 'server');
+    api.addFiles('server/methods/addCalendarObjects.coffee', 'server');
+    api.addFiles('server/methods/addMembersBusy.coffee', 'server');
+    api.addFiles('server/methods/updateSubcalendar.coffee', 'server');
+    api.addFiles('server/methods/updateMembersBusy.coffee', 'server');
+    api.addFiles('server/publications/calendars.coffee', 'server');
+    api.addFiles('server/publications/events.coffee', 'server');
+    api.addFiles('server/publications/subcalendars.coffee', 'server');
+    api.addFiles('server/publications/calendarinstances.coffee', 'server');
+    api.addFiles('server/publications/reminders.coffee', 'server');
+    api.addFiles('server/publications/event_need_action.coffee', 'server');
+    api.addFiles('server/main.coffee', 'server');
 
-    api.addFiles('server/routes/api_calendar_events.coffee','server');
+    api.addFiles('server/routes/api_calendar_events.coffee', 'server');
 
 });

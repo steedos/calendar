@@ -79,12 +79,12 @@ Template.event_detail_modal.helpers
 			obj.attendees = Template.instance().reactiveAttendees.get()
 			obj.start = moment($("#event_detail_modal .modal-body input[name=start]").val()).toDate()
 			obj.end = moment($("#event_detail_modal .modal-body input[name=end]").val()).toDate()
-		obj.acceptednum=0
-		obj.tentativenum=0	#不确定
-		obj.declinednum=0
-		obj.actionnum=0#待回复
-		obj.curstat=""
-		calendar=Calendars.findOne({_id:obj.calendarid}) 
+		obj.acceptednum = 0
+		obj.tentativenum = 0 #不确定
+		obj.declinednum = 0
+		obj.actionnum = 0 #待回复
+		obj.curstat = ""
+		calendar = Calendars.findOne({_id:obj.calendarid}) 
 		if Meteor.userId()==obj.ownerId and calendar
 			obj.isOwner = "true"
 			obj.formOpt = "normal"
@@ -113,12 +113,13 @@ Template.event_detail_modal.helpers
 		return ownerId == userId
 
 	add_membersFields: ()->
+		is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
 		fields =
 			addmembers_event:
 				autoform:
 					type: 'selectuser'
 					multiple: true
-					is_within_user_organizations: true
+					is_within_user_organizations: !!is_with
 				optional: false
 				type: [ String ]
 				label: ''
@@ -168,12 +169,12 @@ Template.event_detail_modal.events
 			return
 		$('body').addClass "loading"
 		obj = Template.instance().data
-		oldcalendarid=obj.calendarid
-		if obj.calendarid!=AutoForm.getFieldValue("calendarid","eventsForm")
-			if Session.get('defaultcalendarid')==AutoForm.getFieldValue("calendarid","eventsForm")
-				relatetodefaultcalendar="Yes"
+		oldcalendarid = obj.calendarid
+		if obj.calendarid != AutoForm.getFieldValue("calendarid","eventsForm")
+			if Session.get('defaultcalendarid') == AutoForm.getFieldValue("calendarid","eventsForm")
+				relatetodefaultcalendar = "Yes"
 			else if Session.get('defaultcalendarid')==obj.calendarid
-					relatetodefaultcalendar="No"
+					relatetodefaultcalendar = "No"
 		else
 			relatetodefaultcalendar = null
 		if AutoForm.getFieldValue("calendarid","eventsForm") == undefined
@@ -202,9 +203,9 @@ Template.event_detail_modal.events
 		if obj?.attendees
 			obj.attendees.forEach (attendee)->
 				if attendee.id == Meteor.userId()
-					attendee.partstat=val
-					attendee.description=description
-					attendee.responsetime=responsetime
+					attendee.partstat = val
+					attendee.description = description
+					attendee.responsetime = responsetime
 		if !obj._id
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->
