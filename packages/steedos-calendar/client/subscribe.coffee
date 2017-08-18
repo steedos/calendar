@@ -1,8 +1,12 @@
 @calendarsSub = new SubsManager();
 Meteor.startup ->
-	calendarsSub.subscribe "calendars"
-	calendarsSub.subscribe "subcalendars"
-	calendarsSub.subscribe "reminders"
+	Tracker.autorun (c)->
+		if Meteor.userId()
+			calendarsSub.subscribe "calendars"
+			calendarsSub.subscribe "subcalendars"
+			calendarsSub.subscribe "reminders"
+
+Meteor.startup ->
 	isRemindlater=false
 	setInterval(
 		()->
@@ -69,7 +73,8 @@ Meteor.startup ->
 											Events.direct.update({_id:event._id},{$set:{remindtimes:remindtimes}})
 											
 										);
-		,10*1000)																
+		,10*1000)
+
 Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")
