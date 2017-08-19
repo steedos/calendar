@@ -39,6 +39,7 @@
   "calendar_objects_description":"描述",
   "calendar_objects_alarms":"提醒",
   "calendar_objects_site":"地点",
+  "calendar_objects_time":"时间",
   "calendar_objects_participation":"参加人员",
   "calendar_objects_attendees_partstat":"参加情况",
   "calendar_objects_attendees_invitetime":"受邀时间",

@@ -39,6 +39,7 @@
   "calendar_objects_description":"Description",
   "calendar_objects_alarms":"Alarms",
   "calendar_objects_site":"Locale",
+  "calendar_objects_time":"time",
   "calendar_objects_participation":"Participation",
   "calendar_objects_attendees_partstat":"Participation state",
   "calendar_objects_attendees_invitetime":"Invited time",

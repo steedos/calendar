@@ -179,10 +179,10 @@ Calendar.generateCalendar = ()->
 				if view.name == "listWeek"
 					thead = """
 						<tr class="fc-list-header">
-							<td class="fc-list-item-time fc-widget-content">时间</td>
-							<td class="fc-list-item-title fc-widget-content">内容</td>
-							<td class="fc-list-item-site fc-widget-content">地点</td>
-							<td class="fc-list-item-participation fc-widget-content">参加人员</td>
+							<td class="fc-list-item-time fc-widget-content">#{t('calendar_objects_time')}</td>
+    						<td class="fc-list-item-title fc-widget-content">#{t('calendar_objects_title')}</td>
+    						<td class="fc-list-item-site fc-widget-content">#{t('calendar_objects_site')}</td>
+    						<td class="fc-list-item-participation fc-widget-content">#{t('calendar_objects_participation')}</td>
 						</tr>
 					"""
 					$(".fc-list-table > tbody").prepend(thead)
