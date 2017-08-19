@@ -4,7 +4,7 @@
 	right: 0;
 	top: 0;
 	bottom: 0;
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: #ecf0f5;
 	.fc-listWeek-view{
 		.btn-print{
 			float: right;
@@ -94,6 +94,23 @@
 		}
 		.btn-add-event{
 			margin-right: 6px;
+		}
+		.fc-button-group{
+			position: relative;/*手机上右上角下拉菜单需要该样式*/
+			.btn-dropdown{
+				display: none;
+			}
+			@media (max-width: 420px){
+				> .fc-button{
+					display: none;
+				}
+				> .btn-add-event{
+					display: none;
+				}
+				.btn-dropdown{
+					display: inline-block;
+				}
+			}
 		}
 	}
 	.fc-view-container{

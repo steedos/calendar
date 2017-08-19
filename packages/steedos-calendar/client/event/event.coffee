@@ -20,6 +20,28 @@ Calendar.reloadEvents = () ->
 	$("#calendar").fullCalendar("refetchEvents")
 
 
+Calendar.generateCustomButtons = ()->
+	unless $(".btn.btn-dropdown.dropdown-toggle").length
+		$(".fc-button-group").prepend("""
+			<button type="button" class="btn btn-default btn-dropdown dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+				<span class="caret"></span>
+				<span class="sr-only">Toggle Dropdown</span>
+			</button>
+			<ul class="dropdown-menu dropdown-menu-right" role="menu">
+				<li><a class="btn-add-event"><i class="ion ion-plus-round"></i>#{t "new_event"}</a></li>
+				<li><a class="btn-view-month"><i class="ion ion-ios-grid-view"></i>#{t "calendar_month"}</a></li>
+				<li><a class="btn-view-day"><i class="ion ion-ios-grid-view"></i>#{t "calendar_day"}</a></li>
+				<li><a class="btn-view-list-week"><i class="ion ion-ios-grid-view"></i>#{t "calendar_list_week_mobile"}</a></li>
+			</ul>
+		""")
+
+	unless $("[data-toggle=offcanvas]").length 
+		$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
+
+	unless $("button.btn-add-event").length
+		$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-add-event"><i class="ion ion-plus-round"></i></button>')
+
+	
 Calendar.getEventsData = ( start, end, timezone, callback )->
 	if !Meteor.userId()
 		callback([])
@@ -41,10 +63,8 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 	eventsSub.subscribe "calendar_objects", params
 	Tracker.autorun (c)->
 		if eventsSub.ready()
-			unless $("[data-toggle=offcanvas]").length 
-				$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
-			unless $("button.btn-add-event").length
-				$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-add-event"><i class="ion ion-plus-round"></i></button>')
+			Calendar.generateCustomButtons()
+
 			query = calendarid: $in: params.calendar
 
 			events = Events.find(query).fetch()
@@ -262,7 +282,7 @@ Calendar.generateCalendar = ()->
 
 
 Template.calendarContainer.events
-	'click button.btn-add-event': ()->
+	'click .btn-add-event': ()->
 		Session.set "userOption","select" 
 		calendarid = Session.get 'calendarid'
 		start = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
@@ -281,3 +301,12 @@ Template.calendarContainer.events
 	'click button.btn-print':() ->
 		$(".toast").hide()
 		window.print()
+
+	'click .btn-view-month':() ->
+		$('#calendar').fullCalendar('changeView', 'month')
+
+	'click .btn-view-day':() ->
+		$('#calendar').fullCalendar('changeView', 'agendaDay')
+
+	'click .btn-view-list-week':() ->
+		$('#calendar').fullCalendar('changeView', 'listWeek')

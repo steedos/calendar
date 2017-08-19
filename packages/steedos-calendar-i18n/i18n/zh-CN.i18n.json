@@ -123,5 +123,8 @@
   "choose_all": "全部选中",
   "invited_me_to_attend_the_meeting": "邀请我参加的会议",
   "authorize_to_view_busy_status": "授权查看忙碌状态",
-  "view_subscription_request": "查看订阅申请"
+  "view_subscription_request": "查看订阅申请",
+  "calendar_month": "月",
+  "calendar_day": "日",
+  "calendar_week": "周"
 }
