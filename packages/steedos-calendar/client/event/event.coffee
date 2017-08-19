@@ -92,12 +92,15 @@ Calendar.generateCalendar = ()->
 			listWeekText = t("calendar_list_week_mobile")
 		else
 			rightHeaderView = 'month,agendaWeek,agendaDay,listWeek'
-			defaultView = localStorage.getItem("defaultView"+Meteor.userId()) || 'listWeek'
+			defaultView = localStorage.getItem("defaultView" + Meteor.userId()) || 'listWeek'
 			dayNamesShortValue = undefined
 			listWeekText = t("calendar_list_week")
 		$('#calendar').fullCalendar
 			height: ()->
-				return $('#calendar').height() - 2
+				if Steedos.isMobile()
+					return $('#calendar').height() - 2
+				else
+					return $('#calendar').height() - 2
 			handleWindowResize: true
 			header: 
 				left: ''
