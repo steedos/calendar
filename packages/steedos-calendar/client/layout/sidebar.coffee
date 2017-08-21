@@ -17,7 +17,10 @@ Template.calendarSidebar.helpers
 		return objs
 	subscribe: ()->
 		objs = calendarsubscriptions.find()
-		return objs
+		if objs.count() > 0
+			return objs
+		else
+			return false
 	isCalendarEditable: ()->
 		userId = Meteor.userId()
 		admins = this?.admins || []
