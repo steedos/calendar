@@ -3,9 +3,8 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 	collection: Events,
 	drawCallback:(settings)->
 		box = $(this).closest(".event-pending-body")
-		# if !Steedos.isMobile() && !Steedos.isPad()
-		# 	# $(box).perfectScrollbar({suppressScrollX:true})
-			# $(".event-pending-body>.tabular-container").perfectScrollbar()
+		if !Steedos.isMobile() && !Steedos.isPad()
+			$(box).perfectScrollbar()
 	columns: [
 		{
 			data: "title", 
