@@ -92,7 +92,7 @@ Calendar.generateCalendar = ()->
 			listWeekText = t("calendar_list_week_mobile")
 		else
 			rightHeaderView = 'month,agendaWeek,agendaDay,listWeek'
-			defaultView = localStorage.getItem("defaultView" + Meteor.userId()) || 'listWeek'
+			defaultView = localStorage.getItem("defaultView:" + Meteor.userId()) || 'listWeek'
 			dayNamesShortValue = undefined
 			listWeekText = t("calendar_list_week")
 		$('#calendar').fullCalendar
@@ -178,7 +178,7 @@ Calendar.generateCalendar = ()->
 					element.html(tdContent)
 
 			eventAfterAllRender:(view) ->
-				localStorage.setItem("defaultView"+Meteor.userId(),view.name)
+				localStorage.setItem("defaultView:"+Meteor.userId(),view.name)
 				if view.name == "listWeek"
 					thead = """
 						<tr class="fc-list-header">
@@ -198,6 +198,10 @@ Calendar.generateCalendar = ()->
 							$(".fc-list-table").after('<button type="button" class="btn btn-default btn-print"><i class="ion ion-printer"></i></button>')
 				else
 					$("button.btn-print").remove()
+
+				# if Steedos.isAndroidOrIOS or Steedos.isMobile()
+				# 	height = $(".fc-widget-content > .fc-scroller").height() - 50
+				# 	$(".fc-widget-content > .fc-scroller").css({"height":"#{height}px"})
 
 			select: (start, end, jsEvent, view, resource)->
 				objs = Calendars.find()
