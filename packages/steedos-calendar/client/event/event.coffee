@@ -95,6 +95,30 @@ Calendar.generateCalendar = ()->
 			defaultView = localStorage.getItem("defaultView:" + Meteor.userId()) || 'listWeek'
 			dayNamesShortValue = undefined
 			listWeekText = t("calendar_list_week")
+
+		viewsOptions = {}
+		if Steedos.isMobile()
+			locale = Steedos.locale()
+			switch locale
+				when "zh-cn"
+					viewsOptions.month =
+						titleFormat: 'YYYY年MM月'
+					viewsOptions.agendaDay =
+						titleFormat: 'YYYY年MM月'
+						columnFormat: 'dddd M月D日'
+					viewsOptions.listWeek =
+						titleFormat: 'YYYY年MM月'
+				else
+					viewsOptions.month =
+						titleFormat: 'MMM YYYY'
+					viewsOptions.agendaDay =
+						titleFormat: 'MMM YYYY'
+						columnFormat: 'dddd M/D'
+					viewsOptions.listWeek =
+						titleFormat: 'MMM YYYY'
+					break
+
+
 		$('#calendar').fullCalendar
 			height: ()->
 				if Steedos.isMobile()
@@ -106,6 +130,7 @@ Calendar.generateCalendar = ()->
 				left: ''
 				center: 'prev title next'
 				right: rightHeaderView
+			views: viewsOptions
 			selectable: true
 			selectHelper: true
 			# weekends:false
@@ -242,6 +267,7 @@ Calendar.generateCalendar = ()->
 						AutoForm.resetForm("eventsForm")
 				else
 					toastr.info t("this_event_is_belong_to_subscription_you_cannot_read_the_detail")
+
 			eventDrop: (event, delta, revertFunc)->
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
