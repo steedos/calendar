@@ -30,20 +30,6 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.generateCustomButtons = ()->
-	unless $(".btn.btn-dropdown.dropdown-toggle").length
-		$(".fc-button-group").prepend("""
-			<button type="button" class="btn btn-default btn-dropdown dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-				<span class="caret"></span>
-				<span class="sr-only">Toggle Dropdown</span>
-			</button>
-			<ul class="dropdown-menu dropdown-menu-right" role="menu">
-				<li><a class="btn-add-event"><i class="ion ion-plus-round"></i>#{t "new_event"}</a></li>
-				<li><a class="btn-view-month"><i class="ion ion-ios-grid-view"></i>#{t "calendar_month"}</a></li>
-				<li><a class="btn-view-day"><i class="ion ion-ios-grid-view"></i>#{t "calendar_day"}</a></li>
-				<li><a class="btn-view-list-week"><i class="ion ion-ios-grid-view"></i>#{t "calendar_list_week_mobile"}</a></li>
-			</ul>
-		""")
-
 	unless $("[data-toggle=offcanvas]").length 
 		$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
 
@@ -111,12 +97,12 @@ Calendar.generateCalendar = ()->
 			switch locale
 				when "zh-cn"
 					viewsOptions.month =
-						titleFormat: 'YYYY年MM月'
+						titleFormat: 'YYYY年M月'
 					viewsOptions.agendaDay =
-						titleFormat: 'YYYY年MM月'
+						titleFormat: 'YYYY年M月'
 						columnFormat: 'dddd M月D日'
 					viewsOptions.listWeek =
-						titleFormat: 'YYYY年MM月'
+						titleFormat: 'YYYY年M月'
 				else
 					viewsOptions.month =
 						titleFormat: 'MMM YYYY'
