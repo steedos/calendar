@@ -126,5 +126,12 @@
   "calendar_view_subscription_request": "View subscription requset",
   "calendar_month": "Month",
   "calendar_day": "Day",
-  "calendar_week": "Week"
+  "calendar_week": "Week",
+  "Monday":"Monday",
+  "Tuesday":"Tuesday",
+  "Wednesday":"Wednesday",
+  "Thursday":"Thursday",
+  "Friday":"Friday",
+  "Saturday":"Saturday",
+  "Sunday":"Sunday"
 }
