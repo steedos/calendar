@@ -6,6 +6,15 @@ import Calendar from '../core'
 @moment = moment
 
 Template.calendarContainer.onRendered ->
+	$("#calendar").on("swiperight", (event, options)->
+		if options.startEvnt.position.x > 40
+			$('.fc-prev-button').trigger("click")
+	)
+	$("#calendar").on("swipeleft", (event, options)->
+		if options.startEvnt.position.x > 40
+			$('.fc-next-button').trigger("click")
+	)
+
 	Tracker.afterFlush ->
 		Calendar.generateCalendar();
 
