@@ -66,10 +66,10 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				attendees.forEach (attendee,index) ->
 					if attendee.id == Meteor.userId()
 						switch attendee.partstat
-							when "ACCEPTED" then content = t("accepted")
-							when "TENTATIVE" then content = t("tentative")
-							when "DECLINED" then content = t("declined")
-							when "NEEDS-ACTION" then content = t("needs_action")
+							when "ACCEPTED" then content = t("calendar_accepted")
+              				when "TENTATIVE" then content = t("calendar_tentative")
+              				when "DECLINED" then content = t("calendar_declined")
+              				when "NEEDS-ACTION" then content = t("calendar_needs_action")
 				return content
 							
 						
