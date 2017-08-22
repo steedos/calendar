@@ -81,7 +81,7 @@ Calendar.hasPermission = ( event )->
 Calendar.generateCalendar = ()->
 	if !$('#calendar').children()?.length
 		if Steedos.isMobile()
-			rightHeaderView = 'month,agendaDay,listWeek'
+			rightHeaderView = 'month,listWeek,agendaDay'
 			defaultView = 'listWeek'
 			dayNamesShortValue = [t('Sun'), t('Mon'), t('Tue'), t('Wed'), t('Thu'), t('Fri'), t('Sat')]
 			listWeekText = t("calendar_list_week_mobile")
