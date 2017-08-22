@@ -2,7 +2,7 @@ Meteor.methods
 	davModifiedEvent: () ->
 		events=Events.find().fetch()
 		events.forEach (obj)->
-			if obj.Isdavmodified
+			if obj.Isdavmodified and obj.componenttype=='VEVENT'
 				jcalData = ICAL.parse(obj.calendardata);
 				vcalendar = new ICAL.Component(jcalData);
 				vevent = vcalendar.getFirstSubcomponent('vevent');
