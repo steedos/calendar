@@ -185,7 +185,7 @@ Calendar.generateCalendar = ()->
 					copy.end = moment(event.end)
 				return copy
 
-			eventRender:(event,element,view) ->
+			eventRender: (event,element,view) ->
 				Session.set "view",view.name
 				if view.name == "listWeek"
 					start = event.start?.format("H:mm")
@@ -208,7 +208,54 @@ Calendar.generateCalendar = ()->
 					"""
 					element.html(tdContent)
 
-			eventAfterAllRender:(view) ->
+			eventAfterAllRender: (view) ->
+				start = view.start?._d?.getTime()	
+				if view.name == "listWeek" and $(".fc-list-empty-wrap2").length
+					$(".fc-list-empty-wrap2").remove()
+					utcOffsetHours = moment().utcOffset()/60
+					start = moment(start).subtract(utcOffsetHours, "hours").toDate()
+					count = 0
+					week = []
+					while count < 7
+						startMoment = moment(start)
+						week.push(startMoment.add(24*count,"hours"))
+						count++
+
+					userLocale = db.users.findOne()?.locale
+					weekContent = week.map (momentDay,index) ->
+						dateToHref = momentDay.format("YYYY-MM-DD")
+						if userLocale == "zh-cn"
+							dayAlt = momentDay.format("YYYY年MM月DD")
+							dayMain = t(momentDay.format("dddd"))
+						else
+							dayAlt = momentDay.format("LL")
+							dayMain = t(momentDay.format("dddd"))
+						dataGoto = JSON.stringify({
+							date : dateToHref,
+							type : "day"
+						}).replace(/\"/g,"&quot;")
+						return """
+							<tr class="fc-list-heading" data-date="#{dateToHref}">
+								<td class="fc-widget-header" colspan="5">
+									<a class="fc-list-heading-main" data-goto="#{dataGoto}">#{dayMain}</a>
+									<a class="fc-list-heading-alt" data-goto="#{dataGoto}">#{dayAlt}</a>
+								</td>
+							</tr>
+							<tr class="fc-list-item">
+								<td class="fc-list-item-time fc-widget-content" colspan="4" style=""></td>
+							</tr>
+						"""
+
+					weekContent = weekContent.join("")
+					tableContent = """
+						<table class="fc-list-table">
+							<tbody>
+								#{weekContent}
+							</tbody>
+						</table>
+					"""
+					$(".fc-scroller").prepend(tableContent);
+
 				localStorage.setItem("defaultView:"+Meteor.userId(),view.name)
 				if view.name == "listWeek"
 					thead = """
