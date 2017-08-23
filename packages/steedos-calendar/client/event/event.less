@@ -63,7 +63,7 @@
 			.fc-month-button{
 				display:none;
 			}
-			.fc-agendaDay-button{
+			.fc-listWeek-button{
 				border-top-left-radius: 4px;
 				border-bottom-left-radius: 4px;
 			}
@@ -80,12 +80,25 @@
 					display: inline-block;
 					padding: 0px;
 				}
+				h2{
+					display: none;
+				}
+				.fix-title{
+					display: inline-block;
+					font-size: 17px;
+					line-height: 30px;
+					vertical-align: middle;
+					font-weight: bold;
+				}
 			}
 		}
 		.fc-prev-button,.fc-next-button{
 			background: transparent;
 			border: none;
 			box-shadow: none;
+			@media (max-width: 420px){
+				display: none!important;
+			}
 		}
 		&.fc-toolbar{
 			> * > *{
@@ -94,23 +107,6 @@
 		}
 		.btn-add-event{
 			margin-right: 6px;
-		}
-		.fc-button-group{
-			position: relative;/*手机上右上角下拉菜单需要该样式*/
-			.btn-dropdown{
-				display: none;
-			}
-			@media (max-width: 420px){
-				> .fc-button{
-					display: none;
-				}
-				> .btn-add-event{
-					display: none;
-				}
-				.btn-dropdown{
-					display: inline-block;
-				}
-			}
 		}
 	}
 	.fc-view-container{

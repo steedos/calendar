@@ -6,6 +6,15 @@ import Calendar from '../core'
 @moment = moment
 
 Template.calendarContainer.onRendered ->
+	$("#calendar").on("swiperight", (event, options)->
+		if options.startEvnt.position.x > 40
+			$('.fc-prev-button').trigger("click")
+	)
+	$("#calendar").on("swipeleft", (event, options)->
+		if options.startEvnt.position.x > 40
+			$('.fc-next-button').trigger("click")
+	)
+
 	Tracker.afterFlush ->
 		Calendar.generateCalendar();
 
@@ -21,19 +30,16 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.generateCustomButtons = ()->
-	unless $(".btn.btn-dropdown.dropdown-toggle").length
-		$(".fc-button-group").prepend("""
-			<button type="button" class="btn btn-default btn-dropdown dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-				<span class="caret"></span>
-				<span class="sr-only">Toggle Dropdown</span>
-			</button>
-			<ul class="dropdown-menu dropdown-menu-right" role="menu">
-				<li><a class="btn-add-event"><i class="ion ion-plus-round"></i>#{t "new_event"}</a></li>
-				<li><a class="btn-view-month"><i class="ion ion-ios-grid-view"></i>#{t "calendar_month"}</a></li>
-				<li><a class="btn-view-day"><i class="ion ion-ios-grid-view"></i>#{t "calendar_day"}</a></li>
-				<li><a class="btn-view-list-week"><i class="ion ion-ios-grid-view"></i>#{t "calendar_list_week_mobile"}</a></li>
-			</ul>
-		""")
+	if Steedos.isMobile()
+		# 手机上去掉"2017年6 – 7月"后面的" – 7"显示为"2017年6月"
+		viewTitle = $(".fc-header-toolbar .fc-center h2").eq(0).text()
+		viewTitle = viewTitle.replace(/ – \d+/,"")
+		console.log "Calendar.generateCustomButtons,viewTitle: #{viewTitle}"
+		$(".fc-header-toolbar .fc-center h2").text(viewTitle)
+		if $(".fc-header-toolbar .fc-center span.fix-title").length
+			$(".fc-header-toolbar .fc-center span.fix-title").text(viewTitle)
+		else
+			$(".fc-header-toolbar .fc-center h2").after("<span class='fix-title'>#{viewTitle}</span>")
 
 	unless $("[data-toggle=offcanvas]").length 
 		$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
@@ -41,7 +47,7 @@ Calendar.generateCustomButtons = ()->
 	unless $("button.btn-add-event").length
 		$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-add-event"><i class="ion ion-plus-round"></i></button>')
 
-	
+
 Calendar.getEventsData = ( start, end, timezone, callback )->
 	if !Meteor.userId()
 		callback([])
@@ -86,7 +92,7 @@ Calendar.hasPermission = ( event )->
 Calendar.generateCalendar = ()->
 	if !$('#calendar').children()?.length
 		if Steedos.isMobile()
-			rightHeaderView = 'month,agendaDay,listWeek'
+			rightHeaderView = 'month,listWeek,agendaDay'
 			defaultView = 'listWeek'
 			dayNamesShortValue = [t('Sun'), t('Mon'), t('Tue'), t('Wed'), t('Thu'), t('Fri'), t('Sat')]
 			listWeekText = t("calendar_list_week_mobile")
@@ -95,6 +101,30 @@ Calendar.generateCalendar = ()->
 			defaultView = localStorage.getItem("defaultView:" + Meteor.userId()) || 'listWeek'
 			dayNamesShortValue = undefined
 			listWeekText = t("calendar_list_week")
+
+		viewsOptions = {}
+		if Steedos.isMobile()
+			locale = Steedos.locale()
+			switch locale
+				when "zh-cn"
+					viewsOptions.month =
+						titleFormat: 'YYYY年M月'
+					viewsOptions.agendaDay =
+						titleFormat: 'YYYY年M月'
+						columnFormat: 'dddd M月D日'
+					viewsOptions.listWeek =
+						titleFormat: 'YYYY年M月'
+				else
+					viewsOptions.month =
+						titleFormat: 'MMM YYYY'
+					viewsOptions.agendaDay =
+						titleFormat: 'MMM YYYY'
+						columnFormat: 'dddd M/D'
+					viewsOptions.listWeek =
+						titleFormat: 'MMM YYYY'
+					break
+
+
 		$('#calendar').fullCalendar
 			height: ()->
 				if Steedos.isMobile()
@@ -106,6 +136,7 @@ Calendar.generateCalendar = ()->
 				left: ''
 				center: 'prev title next'
 				right: rightHeaderView
+			views: viewsOptions
 			selectable: true
 			selectHelper: true
 			# weekends:false
@@ -289,6 +320,7 @@ Calendar.generateCalendar = ()->
 						AutoForm.resetForm("eventsForm")
 				else
 					toastr.info t("this_event_is_belong_to_subscription_you_cannot_read_the_detail")
+
 			eventDrop: (event, delta, revertFunc)->
 				hasPermission = Calendar.hasPermission(event)
 				if !hasPermission
