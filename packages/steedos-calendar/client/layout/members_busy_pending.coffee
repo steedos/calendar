@@ -11,7 +11,6 @@ Template.members_busy_pending_modal.helpers
 		return members
 
 	isButtonDisabled: ()->
-		# debugger
 		count = Template.instance().reactiveCounts.get()
 		if count > 0 
 			return false
