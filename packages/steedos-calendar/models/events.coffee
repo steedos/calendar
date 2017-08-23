@@ -25,7 +25,7 @@ Events._simpleSchema = new SimpleSchema
 		autoform:
 			type: 'button'
 			value: ()->
-				return t("afternoon")
+				return t("calendar_afternoon")
 
 	morning:
 		type: String,
@@ -33,7 +33,7 @@ Events._simpleSchema = new SimpleSchema
 		autoform:
 			type: 'button'
 			value: ()->
-				return t("morning")
+				return t("calendar_morning")
 
 	start:
 		type: Date
