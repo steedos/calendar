@@ -113,7 +113,7 @@
   "calendar_accepted":"Accepted",
   "calendar_tentative":"Tentative",
   "calendar_declined":"Declined",
-  "calendar_needs-action":"Needs-action",
+  "calendar_needs_action":"Needs action",
   "you_have_invitation_to_feedback":"You have meeting invitation to feedback",
   "calendar_invitation_accept":"Accept",
   "calendar_invitation_refuse":"Refuse",

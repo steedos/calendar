@@ -103,9 +103,11 @@ Template.calendarSidebar.helpers
 	eventNeedOptionCounts :()->
 		calendarid = Session.get("defaultcalendarid")
 		userId = Meteor.userId()
+		today = moment(moment().format("YYYY-MM-DD 00:00")).toDate()
 		selector = 
 			{
 				calendarid: calendarid,
+				start: {$gt:today},
 				"attendees": {
 					$elemMatch: {
 						id: userId,

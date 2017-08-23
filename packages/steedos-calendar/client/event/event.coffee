@@ -225,7 +225,7 @@ Calendar.generateCalendar = ()->
 					weekContent = week.map (momentDay,index) ->
 						dateToHref = momentDay.format("YYYY-MM-DD")
 						if userLocale == "zh-cn"
-							dayAlt = momentDay.format("YYYY年MM月DD")
+							dayAlt = momentDay.format("YYYY年MM月DD日")
 							dayMain = t(momentDay.format("dddd"))
 						else
 							dayAlt = momentDay.format("LL")

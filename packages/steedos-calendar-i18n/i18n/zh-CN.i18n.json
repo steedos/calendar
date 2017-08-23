@@ -114,7 +114,7 @@
   "calendar_accepted":"接受",
   "calendar_tentative":"不确定",
   "calendar_declined":"拒绝",
-  "calendar_needs-action":"待反馈",
+  "calendar_needs_action":"待反馈",
   "you_have_invitation_to_feedback":"您有%s条会议邀请待反馈",
   "calendar_invitation_accept":"接受",
   "calendar_invitation_refuse":"拒绝",

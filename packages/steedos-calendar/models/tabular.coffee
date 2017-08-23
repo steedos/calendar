@@ -15,9 +15,11 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 			},
 			render:  (val, type, doc) ->
 				content = ""
+				debugger
 				attendees = doc.attendees
+				today = moment(moment().format("YYYY-MM-DD 00:00")).toDate()
 				attendees.forEach (attendee,index) ->
-					if attendee.id == Meteor.userId() and attendee.partstat == "NEEDS-ACTION"
+					if attendee.id == Meteor.userId() and attendee.partstat == "NEEDS-ACTION" and doc.start > today
 						content = """
 							<div class="ion ion-record need-action"></div>
 						"""
