@@ -124,7 +124,7 @@ steedos:base@0.0.55
 steedos:calendar@0.0.16
 steedos:calendar-i18n@0.0.6
 steedos:datatables-extensions@0.0.1
-steedos:fullcalendar@3.4.0
+steedos:fullcalendar@3.4.0_1
 steedos:i18n@0.0.7
 steedos:ionicons@0.1.7
 steedos:jstree@3.3.2
