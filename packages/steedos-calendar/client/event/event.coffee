@@ -30,13 +30,24 @@ Calendar.reloadEvents = () ->
 
 
 Calendar.generateCustomButtons = ()->
+	if Steedos.isMobile()
+		# 手机上去掉"2017年6 – 7月"后面的" – 7"显示为"2017年6月"
+		viewTitle = $(".fc-header-toolbar .fc-center h2").eq(0).text()
+		viewTitle = viewTitle.replace(/ – \d+/,"")
+		console.log "Calendar.generateCustomButtons,viewTitle: #{viewTitle}"
+		$(".fc-header-toolbar .fc-center h2").text(viewTitle)
+		if $(".fc-header-toolbar .fc-center span.fix-title").length
+			$(".fc-header-toolbar .fc-center span.fix-title").text(viewTitle)
+		else
+			$(".fc-header-toolbar .fc-center h2").after("<span class='fix-title'>#{viewTitle}</span>")
+
 	unless $("[data-toggle=offcanvas]").length 
 		$("#calendar .fc-header-toolbar .fc-left").prepend('<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>')
 
 	unless $("button.btn-add-event").length
 		$(".fc-button-group").prepend('<button type="button" class="btn btn-default btn-add-event"><i class="ion ion-plus-round"></i></button>')
 
-	
+
 Calendar.getEventsData = ( start, end, timezone, callback )->
 	if !Meteor.userId()
 		callback([])
