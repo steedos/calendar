@@ -34,8 +34,7 @@ Calendar.generateCustomButtons = ()->
 		# 手机上去掉"2017年6 – 7月"后面的" – 7"显示为"2017年6月"
 		viewTitle = $(".fc-header-toolbar .fc-center h2").eq(0).text()
 		viewTitle = viewTitle.replace(/ – \d+/,"")
-		console.log "Calendar.generateCustomButtons,viewTitle: #{viewTitle}"
-		$(".fc-header-toolbar .fc-center h2").text(viewTitle)
+		# $(".fc-header-toolbar .fc-center h2").text(viewTitle) #这句话加上会造成横屏手机上跨月份时有标题跳转的动画
 		if $(".fc-header-toolbar .fc-center span.fix-title").length
 			$(".fc-header-toolbar .fc-center span.fix-title").text(viewTitle)
 		else
