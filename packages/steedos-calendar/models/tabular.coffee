@@ -15,7 +15,6 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 			},
 			render:  (val, type, doc) ->
 				content = ""
-				debugger
 				attendees = doc.attendees
 				today = moment(moment().format("YYYY-MM-DD 00:00")).toDate()
 				attendees.forEach (attendee,index) ->
