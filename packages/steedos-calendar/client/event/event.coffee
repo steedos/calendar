@@ -282,12 +282,14 @@ Calendar.generateCalendar = ()->
 				# 	$(".fc-widget-content > .fc-scroller").css({"height":"#{height}px"})
 
 			select: (start, end, jsEvent, view, resource)->
-				objs = Calendars.find()
-				calendarid = Session.get('calendarid')
-				if calendarid==undefined
-					objs.forEach (obj) ->
-						if obj.isDefault
-							calendarid = obj._id
+				objs = Calendars.find().fetch()
+				mycalendarids=_.pluck(objs,'_id')
+				Session.set "userOption","select" 
+				calendarid = Session.get 'calendarid'
+				if calendarid==undefined or mycalendarids.indexOf(calendarid)<0
+						objs.forEach (obj) ->
+							if obj.isDefault
+								calendarid = obj._id
 				calendarIds=Session.get('calendarIds')
 				if calendarIds.indexOf(calendarid)<0
 					calendarIds.push(calendarid)
@@ -369,8 +371,14 @@ Calendar.generateCalendar = ()->
 
 Template.calendarContainer.events
 	'click .btn-add-event': ()->
+		objs = Calendars.find().fetch()
+		mycalendarids=_.pluck(objs,'_id')
 		Session.set "userOption","select" 
 		calendarid = Session.get 'calendarid'
+		if calendarid==undefined or mycalendarids.indexOf(calendarid)<0
+				objs.forEach (obj) ->
+					if obj.isDefault
+						calendarid = obj._id
 		start = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
 		end = moment(moment(new Date()).format("YYYY-MM-DD HH:mm")).toDate()
 		userId = Meteor.userId()
