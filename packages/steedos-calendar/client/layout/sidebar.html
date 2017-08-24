@@ -9,7 +9,7 @@
           {{/if}} -->
           <span class="pull-right-container operate-container">
             <div class="operate-box">
-              <a href class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 <span class="fa fa-ellipsis-h"></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
@@ -48,7 +48,7 @@
         </li>
 
         <li>
-          <a href class="calendar-row browse-invations">
+          <a class="calendar-row browse-invations">
             <i class="ion ion-archive"></i>
             <span>{{_ "meetings_invitations"}}</span>
             <span class="pull-right-container count-container">
@@ -63,7 +63,7 @@
 
         {{#each calendars}}
         <li class="{{calendarActive}}">
-          <a href class="calendar-row my-calendar">
+          <a class="calendar-row my-calendar">
             <div class="check">
               <i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
             </div>
@@ -75,7 +75,7 @@
                 {{#if isCalendarEditable}}
                     {{#if isDefault}}
                           <!-- <i class="fa fa-edit calendar-edit"></i> -->
-                          <a href class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <span class="fa fa-ellipsis-h"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-menu-right">
@@ -94,7 +94,7 @@
                           <!-- <i class="fa fa-edit calendar-edit"></i>
                           &nbsp;&nbsp;
                           <i class="fa fa-trash-o calendar-delete"></i> -->
-                          <a href class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <span class="fa fa-ellipsis-h"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-menu-right">
@@ -114,7 +114,7 @@
                     {{/if}}
                 {{else}}
                   <!-- <i class="fa fa-info-circle calendar-show"></i> -->
-                  <a href class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="fa fa-ellipsis-h"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-right">
@@ -140,7 +140,7 @@
         {{#if subscribe}}
           {{#each subscribe}}
           <li class="{{calendarActive}}">
-            <a href class="calendar-row subscribe-calendar">
+            <a class="calendar-row subscribe-calendar">
               <div class="check">
                 <i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
               </div>
@@ -149,7 +149,7 @@
               </span>
               <span class="pull-right-container">
                 <div class="operate-box">
-                  <a href class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="fa fa-ellipsis-h"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-right">
@@ -174,14 +174,14 @@
         {{/if}}
         <!-- {{#if ShowMoreCalendars}}
           <li>
-            <a href class="calendar-row browse-calendars">
+            <a class="calendar-row browse-calendars">
               <span>{{_ "more_calendars"}}</span>
             </a>
           </li>
         {{/if}} -->
 
         <!-- <li>
-          <a href class="calendar-row browse-invations">
+          <a class="calendar-row browse-invations">
             <span>{{_ "your_meetings_invitations"}}</span>
             <span class="pull-right-container count-container">
               {{#if eventNeedOptionCounts}}
@@ -219,7 +219,7 @@
     </section>
 
     <!-- <div class="sidebar-bottom">
-      <a href class="calendar-add">
+      <a class="calendar-add">
         <i class="fa fa-plus">
           &nbsp;&nbsp;
           <span>{{_ "calendar_add_calendar"}}</span>
