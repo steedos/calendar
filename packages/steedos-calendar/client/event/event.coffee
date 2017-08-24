@@ -399,7 +399,11 @@ Template.calendarContainer.events
 
 	'click button.btn-print':() ->
 		$(".toast").hide()
-		window.print()
+		header = $(".fc-center h2").text()
+		$(".fc-list-table").printThis({
+			loadCSS: "/packages/steedos_calendar/client/layout/print.css",
+			header: "<span class='header'>#{header}</span>"
+		})
 
 	'click .btn-view-month':() ->
 		$('#calendar').fullCalendar('changeView', 'month')
