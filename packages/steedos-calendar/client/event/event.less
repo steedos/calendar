@@ -115,13 +115,51 @@
 		}
 	}
 	.fc-view-container{
-		background: #fff;
+		background: #eee;
+		.fc-view{
+			background: #fff;
+		}
 		border-top: 1px #c3c3c3 solid;
 		.fc-day-grid-event,.fc-time-grid-event{
 			@media (max-width: 767px){
 				.fc-time{
 					display: none;
 				}
+			}
+		}
+	}
+	.swipe-shadow-box{
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		.ion{
+			position: absolute;
+			top: 50%;
+			margin-top: 10px;
+			display: none;
+			color: #a3a3a3;
+			font-size: 30px;
+		}
+		&.swipe-left{
+			.ion{
+				left: 15px;
+			}
+		}
+		&.swipe-right{
+			.ion{
+				right: 15px;
+			}
+		}
+		&.left-icon{
+			.ion.left-icon{
+				display:inline;
+			}
+		}
+		&.right-icon{
+			.ion.right-icon{
+				display:inline;
 			}
 		}
 	}
