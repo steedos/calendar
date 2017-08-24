@@ -6,21 +6,64 @@ import Calendar from '../core'
 @moment = moment
 
 Template.calendarContainer.onRendered ->
-	if Steedos.isMobile()
-		$("#calendar").on("swiperight", (event, options)->
+	if Steedos.isAndroidOrIOS()
+		isSwiping = false
+		loapTime = 0
+		loapX = 0
+		contentWrapperSelector = ".fc-view"
+		startX = 0
+		startOffsetX = 0
+		splitPx = 50
+		$("#calendar").on("touchstart", (event, options)->
 			isSidebarOpen = $("body").hasClass('sidebar-open')
 			if isSidebarOpen
 				return
-			if options.startEvnt.position.x > 40
+			startX = event.originalEvent.touches[0].clientX
+			if startX < 40
+				return
+			event.stopPropagation()
+			isSwiping = true
+			$(contentWrapperSelector).before("<div class='swipe-shadow-box'><i class='left-icon ion ion-android-arrow-back'></i><i class='right-icon ion ion-android-arrow-forward'></i></div>");
+		);
+		$("#calendar").on("touchend", (event, options)->
+			if startX < 40
+				startX = 0
+				return
+			event.stopPropagation()
+			startX = 0
+			unless isSwiping
+				return
+			isSwiping = false
+			if startOffsetX > splitPx
 				$('.fc-prev-button').trigger("click")
-		)
-		$("#calendar").on("swipeleft", (event, options)->
-			isSidebarOpen = $("body").hasClass('sidebar-open')
-			if isSidebarOpen
-				return
-			if options.startEvnt.position.x > 40
+			else if startOffsetX < -splitPx
 				$('.fc-next-button').trigger("click")
-		)
+			$(contentWrapperSelector).css("transform","translate(0, 0)")
+			startOffsetX = 0
+			$(".swipe-shadow-box").remove()
+		);
+		$("#calendar").on("touchmove", (event, options)->
+			if startX < 40
+				return
+			event.stopPropagation()
+			unless isSwiping
+				return
+			startOffsetX = event.originalEvent.touches[0].clientX - startX
+			$(contentWrapperSelector).css("transform","translate(#{startOffsetX}px, 0)")
+			$(".swipe-shadow-box").removeClass("swipe-left").removeClass("swipe-right").removeClass("left-icon").removeClass("right-icon")
+			if startOffsetX > 0
+				$(".swipe-shadow-box").addClass("swipe-left")
+				if startOffsetX > splitPx
+					$(".swipe-shadow-box").addClass("left-icon")
+				else
+					$(".swipe-shadow-box").addClass("right-icon")
+			else
+				$(".swipe-shadow-box").addClass("swipe-right")
+				if startOffsetX < -splitPx
+					$(".swipe-shadow-box").addClass("right-icon")
+				else
+					$(".swipe-shadow-box").addClass("left-icon")
+		);
 
 	Tracker.afterFlush ->
 		Calendar.generateCalendar();
