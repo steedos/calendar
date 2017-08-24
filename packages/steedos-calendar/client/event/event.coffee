@@ -6,20 +6,21 @@ import Calendar from '../core'
 @moment = moment
 
 Template.calendarContainer.onRendered ->
-	$("#calendar").on("swiperight", (event, options)->
-		isSidebarOpen = $("body").hasClass('sidebar-open')
-		if isSidebarOpen
-			return
-		if options.startEvnt.position.x > 40
-			$('.fc-prev-button').trigger("click")
-	)
-	$("#calendar").on("swipeleft", (event, options)->
-		isSidebarOpen = $("body").hasClass('sidebar-open')
-		if isSidebarOpen
-			return
-		if options.startEvnt.position.x > 40
-			$('.fc-next-button').trigger("click")
-	)
+	if Steedos.isMobile()
+		$("#calendar").on("swiperight", (event, options)->
+			isSidebarOpen = $("body").hasClass('sidebar-open')
+			if isSidebarOpen
+				return
+			if options.startEvnt.position.x > 40
+				$('.fc-prev-button').trigger("click")
+		)
+		$("#calendar").on("swipeleft", (event, options)->
+			isSidebarOpen = $("body").hasClass('sidebar-open')
+			if isSidebarOpen
+				return
+			if options.startEvnt.position.x > 40
+				$('.fc-next-button').trigger("click")
+		)
 
 	Tracker.afterFlush ->
 		Calendar.generateCalendar();
