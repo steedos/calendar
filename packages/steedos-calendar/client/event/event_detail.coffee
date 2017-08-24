@@ -190,11 +190,10 @@ Template.event_detail_modal.events
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 			obj.site = AutoForm.getFieldValue("site","eventsForm") || ""
 			obj.participation = AutoForm.getFieldValue("participation","eventsForm") || ""
+			obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")
 		else
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 			
-			#有权限的时候才能修改“全天字段”,AutoForm.getFieldValue("allDay","eventsForm")为空时表示只读
-			obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")
 		members = []
 		val=$('input:radio[name="optionsRadios"]:checked').val()
 		description = $('textarea.description').val()
