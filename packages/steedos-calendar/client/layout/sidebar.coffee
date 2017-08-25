@@ -281,7 +281,12 @@ Template.calendarSidebar.events
 								if error
 									console.log error
 						)
-						swal(t("calendar_delete_success"),t("calendar_delete_succsee_info"),"success")
+						swal {
+							title:t("calendar_delete_success"),
+							text:t("calendar_delete_succsee_info"),
+							type:"success",
+							confirmButtonText:t("OK")
+						}
 						localStorage.setItem("calendarid:"+Meteor.userId(),Session.get('defaultcalendarid'))
 						Session.set("calendarid",Session.get('defaultcalendarid'))
 		)
@@ -313,7 +318,11 @@ Template.calendarSidebar.events
 					if error
 						swal(t("calendar_hide_failed"),error.message,"error");
 					else
-						swal(t("calendar_hide_success"),"","success");
+						swal {
+							title:t("calendar_hide_success"),
+							type:"success",
+							confirmButtonText:t('OK'),
+						}
 						$("body").removeClass "loading"
 						calendarIds = Session.get("calendarIds")
 						# 将删除的订阅日历从calendarIds中移除
