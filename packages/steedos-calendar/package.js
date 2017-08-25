@@ -56,7 +56,7 @@ Package.onUse(function(api) {
     api.use('es5-shim@4.6.15');
     // api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
     api.use('simple:json-routes@2.1.0');
-    api.use('steedos:fullcalendar@3.4.0');
+    api.use('steedos:fullcalendar@3.4.0_1');
     api.use('vazco:universe-selectize@0.1.22');
 
     api.use('steedos:sso@0.0.4')
