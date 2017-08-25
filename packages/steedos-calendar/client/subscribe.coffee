@@ -1,3 +1,4 @@
+import CalendarToastr from "./core.coffee"
 @calendarsSub = new SubsManager();
 Meteor.startup ->
 	Tracker.autorun (c)->
@@ -135,14 +136,15 @@ Tracker.autorun (c) ->
 		}
 		counts = Events.find(selector).count()
 		if counts
-			toastr.info(null,t("you_have_invitation_to_feedback",counts),{
+			if CalendarToastr.info
+				toastr.clear(CalendarToastr.info)
+			CalendarToastr.info = toastr.info(null,t("you_have_invitation_to_feedback",counts),{
 				closeButton: true,
 				timeOut: 0,
 				extendedTimeOut: 0,
 				onclick: ->
 					FlowRouter.go '/calendar/inbox';
 			})
-		c.stop()
 
 Tracker.autorun (c) ->
 	if calendarsSub.ready()
