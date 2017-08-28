@@ -1,3 +1,4 @@
+import moment from 'moment'
 EventDetailModal =
 	switchAllDay: (isAllDay, input)->
 		if Steedos.isMobile() or Steedos.isAndroidOrIOS()

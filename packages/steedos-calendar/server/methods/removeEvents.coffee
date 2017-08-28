@@ -1,3 +1,4 @@
+import { Calendar } from '../main';
 Meteor.methods
 	removeEvents :(obj)->
 		Events.direct.remove({_id:obj._id})

@@ -1,8 +1,6 @@
 import moment from 'moment'
 import Calendar from '../core'
 
-@moment = moment
-
 Template.calendarContainer.onRendered ->
 	# if Steedos.isMobile()
 	# 	$("#calendar").on("swiperight", (event, options)->

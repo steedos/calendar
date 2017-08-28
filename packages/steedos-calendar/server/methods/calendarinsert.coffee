@@ -1,3 +1,4 @@
+import { Calendar } from '../main';
 Meteor.methods
 	calendarinsert: (doc) ->
 		if doc.ownerId==undefined
