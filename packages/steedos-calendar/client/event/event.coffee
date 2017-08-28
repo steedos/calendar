@@ -282,12 +282,13 @@ Calendar.generateCalendar = ()->
 						timeText = "#{start} - #{end}"
 					else
 						timeText = "#{start}"
+					_id = event._id
 					color = event.color 
 					title = event.title
 					site = event.site || ""
 					participation = event.participation || ""
 					tdContent = """
-						<td class="fc-list-item-time fc-widget-content">#{timeText}</td>
+						<td class="fc-list-item-time fc-widget-content" data-eventid = "#{_id}">#{timeText}</td>
 						<td class="fc-list-item-title fc-widget-content"><span class="fc-event-dot" style="background-color:#{color}"></span><a>#{title}</a></td>
 						<td class="fc-list-item-site fc-widget-content">#{site}</td>
 						<td class="fc-list-item-participation fc-widget-content">#{participation}</td>
@@ -295,19 +296,19 @@ Calendar.generateCalendar = ()->
 					element.html(tdContent)
 
 			eventAfterAllRender: (view) ->
-				start = view.start?._d?.getTime()	
+				start = view.start?._d?.getTime()
+				userLocale = db.users.findOne()?.locale
 				if view.name == "listWeek" and $(".fc-list-empty-wrap2").length
 					$(".fc-list-empty-wrap2").remove()
 					utcOffsetHours = moment().utcOffset()/60
 					start = moment(start).subtract(utcOffsetHours, "hours").toDate()
 					count = 0
 					week = []
-					while count < 7
+					while count < 5
 						startMoment = moment(start)
 						week.push(startMoment.add(24*count,"hours"))
 						count++
 
-					userLocale = db.users.findOne()?.locale
 					weekContent = week.map (momentDay,index) ->
 						dateToHref = momentDay.format("YYYY-MM-DD")
 						if userLocale == "zh-cn"
@@ -341,6 +342,61 @@ Calendar.generateCalendar = ()->
 						</table>
 					"""
 					$(".fc-scroller").prepend(tableContent);
+
+				else
+					listHeading = $(".fc-list-table .fc-list-heading")
+					utcOffsetHours = moment().utcOffset()/60
+					start = moment(start).subtract(utcOffsetHours, "hours").toDate()
+					count = 0
+					flag = 0
+					week = []
+					dataDate = []
+					while count < 7
+						startMoment = moment(start)
+						week.push(startMoment.add(24*count,"hours"))
+						count++
+					while flag < listHeading.length
+						date = $(listHeading[flag]).data("date")
+						dataDate.push(date)
+						flag++
+					dateToHref = week.map (momentDay,index) ->
+						return momentDay.format("YYYY-MM-DD")
+					weekContent = dateToHref.map (date,index) ->
+						if _.indexOf(dataDate,date) < 0 and index < 5
+							if userLocale == "zh-cn"
+								dayAlt = moment(date).format("YYYY年MM月DD日")
+								dayMain = t(moment(date).format("dddd"))
+							else
+								dayAlt = moment(date).format("LL")
+								dayMain = t(moment(date).format("dddd"))
+							dataGoto = JSON.stringify({
+								date : date,
+								type : "day"
+							}).replace(/\"/g,"&quot;")
+							return """
+								<tr class="fc-list-heading" data-date="#{date}">
+									<td class="fc-widget-header" colspan="5">
+										<a class="fc-list-heading-main" data-goto="#{dataGoto}">#{dayMain}</a>
+										<a class="fc-list-heading-alt" data-goto="#{dataGoto}">#{dayAlt}</a>
+									</td>
+								</tr>
+								<tr class="fc-list-item">
+									<td class="fc-list-item-time fc-widget-content" colspan="4" style=""></td>
+								</tr>
+							""" 
+						else if _.indexOf(dataDate,date) >= 0
+							headingContent = $(".fc-list-heading[data-date='#{date}']").html()
+							itemContent = $(".fc-list-heading[data-date='#{date}']").next().html()
+							return """
+								<tr class="fc-list-heading" data-date="#{date}">
+									#{headingContent}
+								</tr>
+								<tr class="fc-list-item">
+									#{itemContent}
+								</tr>
+							"""
+					weekContent = weekContent.join("")
+					$(".fc-list-table tbody").html(weekContent)
 
 				localStorage.setItem("defaultView:"+Meteor.userId(),view.name)
 				if view.name == "listWeek"
@@ -494,3 +550,17 @@ Template.calendarContainer.events
 
 	'click .btn-view-list-week':() ->
 		$('#calendar').fullCalendar('changeView', 'listWeek')
+
+	'click .fc-list-table .fc-list-item':(event,template)->
+		eventId = $(event.currentTarget).children(".fc-list-item-time").data("eventid")
+		Session.set "userOption","click"
+		event = Events.findOne
+			_id: eventId
+		calendarids = Calendars.find().fetch()?.getProperty("_id")
+		if _.indexOf(calendarids,event?.calendarid) > -1
+			if event
+				Session.set "eventCalendarId",event.calendarid
+				Modal.show('event_detail_modal', event)
+				AutoForm.resetForm("eventsForm")
+		else
+			toastr.info t("this_event_is_belong_to_subscription_you_cannot_read_the_detail")
