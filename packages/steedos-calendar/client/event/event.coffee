@@ -386,14 +386,21 @@ Calendar.generateCalendar = ()->
 							""" 
 						else if _.indexOf(dataDate,date) >= 0
 							headingContent = $(".fc-list-heading[data-date='#{date}']").html()
-							itemContent = $(".fc-list-heading[data-date='#{date}']").next().html()
+							itemList = $(".fc-list-heading[data-date='#{date}']").nextUntil(".fc-list-heading")
+							trCount = 0
+							itemContent = ""
+							while trCount < itemList.length
+								itemContent += """
+									<tr class="fc-list-item">
+										#{$(itemList[trCount]).html()}
+									</tr>
+								"""
+								trCount++
 							return """
 								<tr class="fc-list-heading" data-date="#{date}">
 									#{headingContent}
 								</tr>
-								<tr class="fc-list-item">
-									#{itemContent}
-								</tr>
+								#{itemContent}
 							"""
 					weekContent = weekContent.join("")
 					$(".fc-list-table tbody").html(weekContent)
