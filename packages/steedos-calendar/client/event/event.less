@@ -120,6 +120,9 @@
 	}
 	.fc-view-container{
 		background: #eee;
+		@media (min-width: 767px){
+			border-top: 1px #c3c3c3 solid;
+		}
 		.fc-view{
 			background: #fff;
 			&.transform-fix{
@@ -137,7 +140,6 @@
 				user-select:none;
 			}
 		}
-		border-top: 1px #c3c3c3 solid;
 		.fc-day-grid-event,.fc-time-grid-event{
 			@media (max-width: 767px){
 				.fc-time{
@@ -179,6 +181,18 @@
 			.ion.right-icon{
 				display:inline;
 			}
+		}
+	}
+	.btn-prev-time-up,.btn-next-time-down{
+		height: 30px;
+		line-height: 30px;
+		border-radius: 0;
+		border-top: 1px rgb(221,221,221) solid;
+		border-bottom: 1px rgb(221,221,221) solid;
+		margin: 2px 0px;
+		color: #666;
+		.ion{
+			margin-right: 6px;
 		}
 	}
 }

@@ -134,5 +134,7 @@
   "Thursday":"星期四",
   "Friday":"星期五",
   "Saturday":"星期六",
-  "Sunday":"星期日"
+  "Sunday":"星期日",
+  "calendar_btn_prev_time_title": "更早时间",
+  "calendar_btn_next_time_title": "更晚时间"
 }

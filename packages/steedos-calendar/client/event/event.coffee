@@ -213,10 +213,7 @@ Calendar.generateCalendar = ()->
 
 		$('#calendar').fullCalendar
 			height: ()->
-				if Steedos.isMobile()
-					return $('#calendar').height() - 2
-				else
-					return $('#calendar').height() - 2
+				return $('#calendar').height() - 2
 			handleWindowResize: true
 			header: 
 				left: ''
@@ -429,6 +426,20 @@ Calendar.generateCalendar = ()->
 				# if Steedos.isAndroidOrIOS or Steedos.isMobile()
 				# 	height = $(".fc-widget-content > .fc-scroller").height() - 50
 				# 	$(".fc-widget-content > .fc-scroller").css({"height":"#{height}px"})
+				
+				
+				if Steedos.isMobile()
+					$("button.btn-more-time").remove();
+					$(".fc-scroller").prepend("""
+						<button type="button" class="btn btn-default btn-block btn-prev-time-up btn-more-time">
+							<i class="ion ion-ios-arrow-up"></i>#{t 'calendar_btn_prev_time_title'}
+						</button>
+					""")
+					$(".fc-scroller").append("""
+						<button type="button" class="btn btn-default btn-block btn-next-time-down btn-more-time">
+							<i class="ion ion-ios-arrow-down"></i>#{t 'calendar_btn_next_time_title'}
+						</button>
+					""")
 
 			select: (start, end, jsEvent, view, resource)->
 				objs = Calendars.find().fetch()
@@ -571,3 +582,9 @@ Template.calendarContainer.events
 				AutoForm.resetForm("eventsForm")
 		else
 			toastr.info t("this_event_is_belong_to_subscription_you_cannot_read_the_detail")
+
+	'click .btn-prev-time-up': ()->
+		$('.fc-prev-button').trigger("click")
+
+	'click .btn-next-time-down': ()->
+		$('.fc-next-button').trigger("click")
