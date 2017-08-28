@@ -3,7 +3,7 @@ Meteor.publish "calendar_objects", (params)->
 		calendarid:{$in: params.calendar},
 		start:{ $exists: true },
 		$or:[
-			start: {$lt: params.end},
-			end: {$gt: params.start}
+			start: {$lte: params.end},
+			end: {$gte: params.start}
 		]
 	return Events.find(selector)
