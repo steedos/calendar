@@ -1,5 +1,5 @@
 @Calendars = new Mongo.Collection('calendars');
-@moment_timezone = require('moment-timezone');
+moment_timezone = require('moment-timezone');
 @Defaulttimezone = 'Asia/Shanghai';
 @CALENDARCOLORS = new Array("#ff2d55","#ff9500","#ffcc00",
 					"#65db39","#34aadc","#cc73e1",

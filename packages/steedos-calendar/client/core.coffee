@@ -1,4 +1,4 @@
-@moment_timezone = require('moment-timezone');
+moment_timezone = require('moment-timezone');
 
 Meteor.startup ->
 	if Meteor.isClient

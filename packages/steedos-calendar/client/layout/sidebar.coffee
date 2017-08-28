@@ -1,4 +1,5 @@
 import Calendar from '../core'
+import moment from 'moment'
 
 calendarsDep = new Tracker.Dependency;
 calendarsRange = null

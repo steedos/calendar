@@ -1,3 +1,4 @@
+import { Calendar } from '../main';
 Meteor.methods
 	initscription: (subscripter) ->
 		obj=Calendars.findOne({ownerId:subscripter},{isDefault:true})
