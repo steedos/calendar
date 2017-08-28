@@ -1,5 +1,7 @@
 import CalendarToastr from "./core.coffee"
-@calendarsSub = new SubsManager();
+import moment from 'moment'
+Steedos.subs["Calendars"] = new SubsManager()
+calendarsSub = Steedos.subs["Calendars"]
 Meteor.startup ->
 	Tracker.autorun (c)->
 		if Meteor.userId()

@@ -1,3 +1,4 @@
+import { Calendar } from '../main';
 Meteor.methods
 	updateMembersBusy:(memberIds,action) ->
 		userId = this.userId

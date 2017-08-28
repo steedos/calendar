@@ -1,11 +1,12 @@
 import { Meteor } from 'meteor/meteor';
+import moment from 'moment'
 icalendar = require('icalendar');
 MD5 = require('MD5');
 ICAL = require('ical.js');
-@moment_timezone = require('moment-timezone');
+moment_timezone = require('moment-timezone');
 Meteor.startup ->
 	
-@Calendar = 
+Calendar = 
 	#更新日历，新建事件，更新事件，删除事件会触发此函数。operation:1新建，2更新，3删除
 	addChange : (calendarId, objectUri, operation)->
 		oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
@@ -188,3 +189,5 @@ Meteor.startup ->
 				buf[i + ii] = rnds[ii]
 				++ii
 		return buf || Calendar.bytesToUuid(rnds);
+
+export { Calendar }

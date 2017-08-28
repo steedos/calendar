@@ -1,3 +1,5 @@
+import { Calendar } from '../main';
+import moment from 'moment'
 Meteor.methods
 	updateEvents :(obj,operation,relatetodefaultcalendar,oldcalendarid)->
 		if operation==1

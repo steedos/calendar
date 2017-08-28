@@ -1,3 +1,4 @@
+import { Calendar } from '../main';
 Meteor.methods
 	subCalendar: (calendarObj,option)->
 		subCalendar = calendarsubscriptions.find({uri:calendarObj._id,principaluri:this.userId})?.fetch()

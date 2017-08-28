@@ -1,3 +1,5 @@
+import { Calendar } from '../main';
+import moment from 'moment'
 Meteor.methods
 	eventInit: (userId,doc) ->
 		doc.componenttype = "VEVENT"

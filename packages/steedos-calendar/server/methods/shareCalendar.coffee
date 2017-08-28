@@ -1,3 +1,4 @@
+import { Calendar } from '../main';
 Meteor.methods
 	shareCalendar: (calendarObj,option)->
 		shareMembersIds = calendarObj?.members_readonly

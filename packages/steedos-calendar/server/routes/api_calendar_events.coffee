@@ -1,3 +1,4 @@
+import moment from 'moment'
 JsonRoutes.add "get", "/api/calendar/events", (req, res, next) ->
 	
 	space_id = req.headers['x-space-id'] || req.query?.spaceId

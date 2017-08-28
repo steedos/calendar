@@ -1,3 +1,4 @@
+import moment from 'moment'
 TabularTables.event_needs_action_tabular = new Tabular.Table({
 	name: "event_needs_action_tabular",
 	collection: Events,
