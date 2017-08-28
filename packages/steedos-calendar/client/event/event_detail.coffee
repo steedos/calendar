@@ -209,21 +209,20 @@ Template.event_detail_modal.events
 		if !obj._id
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->
+					$('body').removeClass "loading"
 					if !error
 						$('[data-dismiss="modal"]').click()
-						$('body').removeClass "loading"
 					else
 						toastr.error t(error.reason)
 			)
 		else
 			Meteor.call('updateEvents',obj,2,relatetodefaultcalendar,oldcalendarid,
 				(error,result) ->
+					$('body').removeClass "loading"
 					if !error
 						$('[data-dismiss="modal"]').click()
-						$('body').removeClass "loading"
 					else
 						toastr.error t(error.reason)
-						$('body').removeClass "loading"
 				)
 		calendarIds=Session.get("calendarIds")
 		if calendarIds.indexOf(AutoForm.getFieldValue("calendarid","eventsForm"))<0
