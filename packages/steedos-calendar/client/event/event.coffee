@@ -11,6 +11,11 @@ eventsSub = new SubsManager()
 eventsRange = null
 eventsLoading = false 
 
+Calendar.recomputeHeight = ()->
+	$('#calendar').fullCalendar('option', 'height', -> 
+		return $('#calendar').height() - 2
+	)
+
 Calendar.reloadEvents = () ->
 	eventsDep.depend()
 	$("#calendar").fullCalendar("refetchEvents")
@@ -18,9 +23,9 @@ Calendar.reloadEvents = () ->
 
 Calendar.generateCustomButtons = ()->
 	if Steedos.isMobile()
-		# 手机上去掉"2017年6 – 7月"后面的" – 7"显示为"2017年6月"
+		# 手机上去掉"2017年6 – 7月"或"Aug – Sep 2017"后面的" – 7"或" – Sep"显示为"2017年6月"或"Aug 2017"
 		viewTitle = $(".fc-header-toolbar .fc-center h2").eq(0).text()
-		viewTitle = viewTitle.replace(/ – \d+/,"")
+		viewTitle = viewTitle.replace(/ – [\da-zA-Z]+/,"")
 		# $(".fc-header-toolbar .fc-center h2").text(viewTitle) #这句话加上会造成横屏手机上跨月份时有标题跳转的动画
 		if $(".fc-header-toolbar .fc-center span.fix-title").length
 			$(".fc-header-toolbar .fc-center span.fix-title").text(viewTitle)
@@ -334,12 +339,12 @@ Calendar.generateCalendar = ()->
 						<button type="button" class="btn btn-default btn-block btn-prev-time-up btn-more-time">
 							<i class="ion ion-ios-arrow-up"></i>#{t 'calendar_btn_prev_time_title'}
 						</button>
-					""")
-					$(".fc-scroller").append("""
+					""").append("""
 						<button type="button" class="btn btn-default btn-block btn-next-time-down btn-more-time">
 							<i class="ion ion-ios-arrow-down"></i>#{t 'calendar_btn_next_time_title'}
 						</button>
 					""")
+				Calendar.recomputeHeight()
 
 			select: (start, end, jsEvent, view, resource)->
 				objs = Calendars.find().fetch()
