@@ -59,6 +59,8 @@ steedos:useraccounts-core
 steedos:useraccounts-bootstrap
 steedos:useraccounts-flow-routing
 
+steedos:ui
+
 steedos:adminlte@2.3.12_2
 steedos:i18n
 steedos:base
