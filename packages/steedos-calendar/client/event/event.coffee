@@ -476,6 +476,8 @@ Template.calendarContainer.events
 
 	'click .fc-list-table .fc-list-item':(event,template)->
 		eventId = $(event.currentTarget).children(".fc-list-item-time").data("eventid")
+		unless eventId
+			return
 		Session.set "userOption","click"
 		event = Events.findOne
 			_id: eventId
