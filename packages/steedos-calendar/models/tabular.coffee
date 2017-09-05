@@ -19,7 +19,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				attendees = doc.attendees
 				today = moment(moment().format("YYYY-MM-DD 00:00")).toDate()
 				attendees.forEach (attendee,index) ->
-					if attendee.id == Meteor.userId() and attendee.partstat == "NEEDS-ACTION" and doc.start > today
+					if attendee.id == Meteor.userId() and attendee.partstat == "NEEDS-ACTION" and doc.start >= today
 						content = """
 							<div class="ion ion-record need-action"></div>
 						"""
@@ -31,7 +31,10 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 			data: "start",
 			orderable: true,
 			render:  (val, type, doc) ->
-				return moment(doc.start).format("M-DD HH:mm")
+				if doc.allDay
+					return moment(doc.start).format("M-DD")
+				else
+					return moment(doc.start).format("M-DD HH:mm")
 				# console.log JSON.stringify(doc)
 				# start = moment(doc.start).format("M-DD HH:mm")
 				# end = moment(doc.end).format("M-DD HH:mm")
@@ -47,7 +50,10 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 			data: "end",
 			orderable: true,
 			render:  (val, type, doc) ->
-				return moment(doc.end).format("M-DD HH:mm")
+				if doc.allDay
+					return moment(doc.end).format("M-DD")
+				else
+					return moment(doc.end).format("M-DD HH:mm")
 		},
 		{
 			data: "attendees.inviter",

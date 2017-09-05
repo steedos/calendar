@@ -128,7 +128,7 @@ Tracker.autorun (c) ->
 		selector = 
 		{
 			calendarid: calendarid,
-			start: {$gt:today},
+			start: {$gte:today},
 			"attendees": {
 				$elemMatch: {
 					id: userId,
