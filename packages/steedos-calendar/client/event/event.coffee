@@ -214,7 +214,7 @@ Calendar.generateCalendar = ()->
 					weekContent = week.map (momentDay,index) ->
 						dateToHref = momentDay.format("YYYY-MM-DD")
 						if userLocale == "zh-cn"
-							dayAlt = momentDay.format("YYYY年MM月DD日")
+							dayAlt = momentDay.format("YYYY年M月D日")
 							dayMain = t(momentDay.format("dddd"))
 						else
 							dayAlt = momentDay.format("LL")
@@ -266,7 +266,7 @@ Calendar.generateCalendar = ()->
 					weekContent = dateToHref.map (date,index) ->
 						if _.indexOf(dataDate,date) < 0 and index < 5
 							if userLocale == "zh-cn"
-								dayAlt = moment(date).format("YYYY年MM月DD日")
+								dayAlt = moment(date).format("YYYY年M月D日")
 								dayMain = t(moment(date).format("dddd"))
 							else
 								dayAlt = moment(date).format("LL")
