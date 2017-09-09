@@ -9,6 +9,8 @@ Meteor.methods
 				obj.title = vevent.getFirstPropertyValue('summary').toString();
 			else
 				obj.title = "Event Title"
+			if vevent.getFirstPropertyValue('location')!=null
+				obj.site=vevent.getFirstPropertyValue('location')
 			if vevent.getFirstPropertyValue('description')!=null
 				obj.description = vevent.getFirstPropertyValue('description').toString();
 			start =vevent.getFirstPropertyValue('dtstart').toString()

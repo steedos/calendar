@@ -85,7 +85,7 @@ Calendar =
 		vevent.addProperty("LAST-MODIFIED",new Date());
 		vevent.setSummary(doc.title);
 		vevent.addProperty("ORGANIZER;RSVP=TRUE;PARTSTAT=ACCEPTED;ROLE=CHAIR:mailto",Meteor.users.findOne({_id:userId}).steedos_id);
-		vevent.setLocation("Shanghai"); 
+		vevent.setLocation(doc?.site); 
 		doc?.attendees?.forEach (attendee)->
 			attendee_string="ATTENDEE;"+"CUTYPE="+attendee.cutype+";ROLE="+attendee.role+";CN="+attendee.cn+";PARTSTAT="+attendee.partstat+":mailto"
 			vevent.addProperty(attendee_string, attendee.mailto)
