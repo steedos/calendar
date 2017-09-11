@@ -6,7 +6,6 @@ Meteor.methods
 		ownerId = doc.ownerId
 		doc._id=Calendars.direct.insert(doc)
 		steedosId = Meteor.users.findOne({_id:ownerId},{field:{steedos_id:1}})?.steedos_id;
-		console.log steedosId
 		Calendar.addInstance(ownerId,doc,doc._id,steedosId,1,"","");
 		for member,i in doc.members 
 			if member != ownerId
