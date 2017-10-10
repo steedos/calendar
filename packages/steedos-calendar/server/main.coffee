@@ -91,8 +91,8 @@ Calendar =
 			attendee_string="ATTENDEE;"+"CUTYPE="+attendee.cutype+";ROLE="+attendee.role+";CN="+attendee.cn+";PARTSTAT="+attendee.partstat+":mailto"
 			vevent.addProperty(attendee_string, attendee.mailto)
 		if doc?.allDay==true
-			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
-			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
+			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).tz(zone_name).format("YYYYMMDD"));
+			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).tz(zone_name).format("YYYYMMDD"));
 		else
 			vevent.addProperty("DTSTART;TZID=#{zone_name}",moment(new Date(doc.start)).tz(zone_name).format("YYYYMMDDTHHmmss"));#TZID得改
 			vevent.addProperty("DTEND;TZID=#{zone_name}",moment(new Date(doc.end)).tz(zone_name).format("YYYYMMDDTHHmmss"));
