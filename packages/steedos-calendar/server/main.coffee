@@ -57,9 +57,10 @@ Calendar =
 		vevent = new icalendar.VEvent(doc.uid);
 		timezone=Calendars.findOne({_id:doc.calendarid}).timezone;
 		zones=moment_timezone.tz.zone(timezone);
+		zone_name = zones.name
 		vtimezone=ical.addComponent('VTIMEZONE');
 		ical.addComponent(vevent);
-		vtimezone.addProperty("TZID",zones.name);
+		vtimezone.addProperty("TZID",zone_name);
 		standard = vtimezone.addComponent("STANDARD");
 		standard.addProperty("TZOFFSETFROM","0"+(-zones.offsets[1])/60+"00");
 		standard.addProperty("RRULE","FREQ=YEARLY;UNTIL=19910914T150000Z;BYMONTH=9;BYDAY=3SU")
@@ -93,8 +94,8 @@ Calendar =
 			vevent.addProperty("DTSTART;VALUE=DATE",moment(new Date(doc.start)).format("YYYYMMDD"));
 			vevent.addProperty("DTEND;VALUE=DATE",moment(new Date(doc.end)).format("YYYYMMDD"));
 		else
-			vevent.addProperty("DTSTART;TZID=Asia/Shanghai",moment(new Date(doc.start)).format("YYYYMMDDTHHmmss"));#TZID得改
-			vevent.addProperty("DTEND;TZID=Asia/Shanghai",moment(new Date(doc.end)).format("YYYYMMDDTHHmmss"));
+			vevent.addProperty("DTSTART;TZID=#{zone_name}",moment(new Date(doc.start)).tz(zone_name).format("YYYYMMDDTHHmmss"));#TZID得改
+			vevent.addProperty("DTEND;TZID=#{zone_name}",moment(new Date(doc.end)).tz(zone_name).format("YYYYMMDDTHHmmss"));
 		vevent?.addProperty("SEQUENCE",0);#得改
 		calendardata = ical.toString();
 		return calendardata
