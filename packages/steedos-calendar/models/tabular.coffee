@@ -10,6 +10,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 		{
 			data: "title", 
 			orderable: false,
+			width: "30%",
 			search: {
 				isNumber: true,
 				exact: true,
@@ -28,8 +29,20 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				"""
 		},
 		{
+			data: "attendees.invitetime",
+			width: "8%",
+			render: (val, type, doc) ->
+				content = ""
+				attendees = doc.attendees
+				attendees.forEach (attendee,index) ->
+					if attendee.id == Meteor.userId()
+						content = moment(attendee.invitetime).format("M-DD HH:mm")
+				return content
+		},
+		{
 			data: "start",
 			orderable: true,
+			width: "8%",
 			render:  (val, type, doc) ->
 				if doc.allDay
 					return moment(doc.start).format("M-DD")
@@ -49,6 +62,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 		{
 			data: "end",
 			orderable: true,
+			width: "8%",
 			render:  (val, type, doc) ->
 				if doc.allDay
 					return moment(doc.end).format("M-DD")
@@ -58,6 +72,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 		{
 			data: "attendees.inviter",
 			orderable: false,
+			width: "7%",
 			render: (val, type, doc) ->
 				content = ""
 				attendees = doc.attendees
@@ -67,7 +82,8 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 				return content
 		},
 		{
-			data: "attendees.partstat"
+			data: "attendees.partstat",
+			width: "5%",
 			render:  (val, type, doc) ->
 				content = ""
 				attendees = doc.attendees
@@ -85,21 +101,13 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 		},
 		{
 			data: "site",
+			width: "12%",
 			orderable: false
 		},
 		{
 			data: "participation",
+			width: "20%",
 			orderable: false
-		},
-		{
-			data: "attendees.invitetime",
-			render: (val, type, doc) ->
-				content = ""
-				attendees = doc.attendees
-				attendees.forEach (attendee,index) ->
-					if attendee.id == Meteor.userId()
-						content = moment(attendee.invitetime).format("M-DD HH:mm")
-				return content
 		}
 	],
 	responsive: 
@@ -111,8 +119,6 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 	info: false
 	searching: true
 	autoWidth: false
-	# responsive: 
-	# 	details: false
 	changeSelector: (selector, userId) ->
 		unless userId
 			return {_id: -1}

@@ -27,16 +27,11 @@
 				height: 44px;
 			}
 		}
-		@media (max-width:767px){
-			.header{
-				right: auto;
-			}
-		}
 	}
 	.event-pending-body{
 		border-top: 1px #c3c3c3 solid;
 		position: absolute;
-		top: 43px;
+		top: 51px;
 		bottom: 0;
 		left: 0;
 		right: 0;
@@ -86,13 +81,18 @@
 					}
 				}
 				.datatable-events{
+					thead th {
+						padding-bottom: 10px;
+					}
 					thead th:first-child{
 						padding-left: 40px;
+						min-width: 150px;
 					}
 					tr > td {
 						padding: 8px 5px;
 						border-bottom: 1px solid #E8E8E8;
 						border-top: 0px;
+						white-space: normal;
 						.need-action{
 							display: inline-block;
 							position: absolute;

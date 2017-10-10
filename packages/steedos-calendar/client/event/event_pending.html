@@ -1,11 +1,11 @@
 <template name="eventPending">
 	{{#if calendarSubsReady}}
 		<div class="event-pending-wrapper">
-			<div class="event-pending-header">
+			<div class="navigation-bar">
 				<button type="button" class="btn btn-default" data-toggle="offcanvas"><i class="fa fa-bars"></i></button>
-				<div class="header">
-					<h2 class="text-overflow">{{_ "calendar_invited_me_to_attend_the_meeting"}}</h2>
-				</div>
+				<span class="navigation-title">
+					<span>{{_ "calendar_invited_me_to_attend_the_meeting"}}</span>
+				</span>
 			</div>	
 			<div class="event-pending-body">
 				<div class="tabular-container">
