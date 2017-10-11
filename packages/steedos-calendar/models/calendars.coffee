@@ -20,7 +20,9 @@ Calendars._simpleSchema = new SimpleSchema
 				return !Session.get("adminsEditable")
 			type: "selectuser"
 			multiple: true
-			is_within_user_organizations: true
+			is_within_user_organizations: ->
+				is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
+				return !!is_with
 			defaultValue: ()->
 				return [Meteor.userId()]
 
@@ -30,7 +32,9 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			type: "selectuser"
 			multiple: true
-			is_within_user_organizations: true
+			is_within_user_organizations: ->
+				is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
+				return !!is_with
 			defaultValue: ()->
 				return [Meteor.userId()]
 
@@ -40,7 +44,9 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			type: "selectuser"
 			multiple: true
-			is_within_user_organizations: true
+			is_within_user_organizations: ->
+				is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
+				return !!is_with
 			defaultValue: ()->
 				return []
 
