@@ -2,11 +2,27 @@ import { Calendar } from '../main';
 Meteor.methods
 	removeEvents :(obj)->
 		Events.direct.remove({_id:obj._id})
+		Calendar.addChange(obj.calendarid,obj.uri,3);
 		if obj.attendees
-			Calendar.addChange(obj.calendarid,obj.uri,3);
 			if obj.ownerId==Meteor.userId()
 				attendeesid=_.pluck(obj.attendees,'id');
 				attendeesid.forEach (attendeeid)->
+					payload = 
+						app: 'calendar'
+						id: attendeeid
+					start = moment(obj.start).format("YYYY-MM-DD HH:mm")
+					site = obj.site || ""
+					title = "您的会议邀请已取消"
+					text = "会议时间:#{start}\r会议地点:#{site}"
+					Push.send
+						createdAt: new Date()
+						createdBy: '<SERVER>'
+						from: 'calendar',
+						title: title,
+						text: text,
+						payload: payload
+						badge: 12,
+						query: {userId:attendeeid,appName:"calendar"}
 					calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
 					event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
 					if event.length!=0

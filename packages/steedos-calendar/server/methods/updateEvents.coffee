@@ -84,7 +84,7 @@ Meteor.methods
 						size:doc.size
 						Isdavmodified:false
 						parentId:doc.parentId
-					Calendar.addChange(calendar._id,_id+".ics",1);
+					Calendar.addChange(calendar._id,_id+".ics",2);
 
 				payload = 
 					app: 'calendar'

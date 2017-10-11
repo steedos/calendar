@@ -56,6 +56,9 @@ Template.event_detail_modal.helpers
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
+		isDefaultCalendar=Calendars.findOne({_id:obj.calendarid}).isDefault 
+		if isDefaultCalendar and attendeesIds.length==1
+			return "none"
 		if attendeesIds.indexOf(Meteor.userId())<0
 			return "none"
 		else

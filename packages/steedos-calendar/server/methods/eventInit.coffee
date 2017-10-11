@@ -8,6 +8,11 @@ Meteor.methods
 		doc.uri = doc._id + ".ics"
 		doc.Isdavmodified = false
 		doc = Calendar.addCalendarObjects(userId,doc,1)
+		isDefaultCalendar=Calendars.findOne({_id:doc.calendarid}).isDefault
+		if isDefaultCalendar
+			addMembers=[]
+			addMembers.push userId
+			doc = Meteor.call('attendeesInit',doc,addMembers)
 		Events.insert(doc,(error,result)->
 				if !error
 					return result
@@ -16,15 +21,21 @@ Meteor.methods
 					return
 			)
 		attendeesid=_.pluck(doc.attendees,'id')
-
+		dx=attendeesid.indexOf(userId)
+		# isDefaultCalendar=Calendars.findOne({ownerId:userId},{_id:doc.calendarid}).isDefault
+		if !isDefaultCalendar and dx<0
+		 	attendeesid.push(userId)
 		attendeesid.forEach (attendeeid)->
 			payload = 
 				app: 'calendar'
 				id: attendeeid
 			start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 			site = doc.site || ""
-			title = "您有新的会议邀请"
-			text = "会议时间:#{start}\r会议地点:#{site}"
+			title = "您有新的会议邀请"+doc.title
+			if site
+				text = "会议时间:#{start}\r会议地点:#{site}"
+			else
+				text = "会议时间:#{start}"
 			Push.send
 				createdAt: new Date()
 				createdBy: '<SERVER>'
@@ -34,9 +45,6 @@ Meteor.methods
 				payload: payload
 				badge: 12,
 				query: {userId:attendeeid,appName:"calendar"}
-		
-		if attendeesid.length == 0 
-			attendeesid.push(userId)
 		attendeesid.forEach (attendeeid)->
 				calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})				
 				if calendar==undefined
