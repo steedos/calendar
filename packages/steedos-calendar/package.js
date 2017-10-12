@@ -1,6 +1,6 @@
 Package.describe({
     name: 'steedos:calendar',
-    version: '0.0.32',
+    version: '0.0.33',
     summary: 'Steedos calendar system',
     git: ''
 });
