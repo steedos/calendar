@@ -56,8 +56,8 @@ Template.event_detail_modal.helpers
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
-		isDefaultCalendar=Calendars.findOne({_id:obj.calendarid}).isDefault 
-		if isDefaultCalendar and attendeesIds.length==1
+		calendarObj=Calendars.findOne({_id:obj.calendarid})
+		if calendarObj.isDefault and attendeesIds.length==1 and Meteor.userId() == obj.ownerId
 			return "none"
 		if attendeesIds.indexOf(Meteor.userId())<0
 			return "none"
