@@ -29,8 +29,7 @@ Meteor.methods
 			subattendeesid.forEach (attendeeid)->
 				calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
 				event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
-				if attendeeid != obj.ownerId
-					Events.direct.remove({parentId:obj._id,calendarid:calendarid})
+				Events.direct.remove({parentId:obj._id,calendarid:calendarid})
 				Calendar.addChange(calendarid,event[0]?.uri,3);
 
 				payload = 
