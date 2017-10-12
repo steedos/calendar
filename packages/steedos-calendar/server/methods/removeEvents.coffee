@@ -12,8 +12,12 @@ Meteor.methods
 						id: attendeeid
 					start = moment(obj.start).format("YYYY-MM-DD HH:mm")
 					site = obj.site || ""
-					title = "您的会议邀请已取消"
-					text = "会议时间:#{start}\r会议地点:#{site}"
+					title = "您的会议邀请#{obj.title}已取消"
+					if site
+						text = "会议时间:#{start}\r会议地点:#{site}"
+					else
+						text = "会议时间:#{start}"
+					#text = "会议时间:#{start}\r会议地点:#{site}"
 					Push.send
 						createdAt: new Date()
 						createdBy: '<SERVER>'

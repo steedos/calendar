@@ -89,7 +89,7 @@ Template.event_detail_modal.helpers
 		obj.actionnum = 0 #待回复
 		obj.curstat = ""
 		calendar = Calendars.findOne({_id:obj.calendarid}) 
-		if Meteor.userId()==obj.ownerId and calendar
+		if obj._id==obj.parentId and calendar
 			obj.isOwner = "true"
 			obj.formOpt = "normal"
 		else
@@ -185,7 +185,7 @@ Template.event_detail_modal.events
 			relatetodefaultcalendar = null
 
 		# 用户是事件的接收者，表单处于只读状态，AutoForm.getFieldValue获取不到数据，需要赋值为obj原来的值
-		if obj.ownerId == Meteor.userId()
+		if obj._id==obj.parentId
 			obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm")
 			obj.title = AutoForm.getFieldValue("title","eventsForm") 
 			obj.start = AutoForm.getFieldValue("start","eventsForm")

@@ -23,15 +23,15 @@ Meteor.methods
 		attendeesid=_.pluck(doc.attendees,'id')
 		dx=attendeesid.indexOf(userId)
 		# isDefaultCalendar=Calendars.findOne({ownerId:userId},{_id:doc.calendarid}).isDefault
-		if !isDefaultCalendar and dx<0
-		 	attendeesid.push(userId)
+		# if !isDefaultCalendar and dx<0 and attendeesid.length==0
+		#  	attendeesid.push(userId)
 		attendeesid.forEach (attendeeid)->
 			payload = 
 				app: 'calendar'
 				id: attendeeid
 			start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 			site = doc.site || ""
-			title = "您有新的会议邀请"+doc.title
+			title = "您有新的会议邀请#{doc.title}"
 			if site
 				text = "会议时间:#{start}\r会议地点:#{site}"
 			else

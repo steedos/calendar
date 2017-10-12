@@ -7,7 +7,7 @@ Meteor.methods
 		else
 			events=Events.find({_id:obj._id}).fetch()
 			attendees=events[0].attendees	
-		if obj.ownerId==Meteor.userId() || obj.Isdavmodified
+		if obj._id==obj.parentId || obj.Isdavmodified
 			newattendeesid=_.pluck(obj?.attendees,'id');
 			if attendees
 				oldattendeesid=_.pluck(attendees,'id');
@@ -38,8 +38,12 @@ Meteor.methods
 					id: attendeeid
 				start = moment(obj.start).format("YYYY-MM-DD HH:mm")
 				site = obj.site || ""
-				title = "您的会议邀请已取消"
-				text = "会议时间:#{start}\r会议地点:#{site}"
+				title = "您的会议邀请#{obj.title}已取消"
+				if site
+					text = "会议时间:#{start}\r会议地点:#{site}"
+				else
+					text = "会议时间:#{start}"
+				#text = "会议时间:#{start}\r会议地点:#{site}"
 				Push.send
 					createdAt: new Date()
 					createdBy: '<SERVER>'
@@ -91,8 +95,12 @@ Meteor.methods
 					id: attendeeid
 				start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 				site = doc.site || ""
-				title = "您有新的会议邀请"
-				text = "会议时间:#{start}\r会议地点:#{site}"
+				title = "您有新的会议邀请#{doc.title}"
+				if site
+					text = "会议时间:#{start}\r会议地点:#{site}"
+				else
+					text = "会议时间:#{start}"
+				#text = "会议时间:#{start}\r会议地点:#{site}"
 				Push.send
 					createdAt: new Date()
 					createdBy: '<SERVER>'
@@ -107,15 +115,19 @@ Meteor.methods
 				if attendeeid==obj.ownerId and obj._id==obj.parentId
 					Events.direct.update {_id:obj._id}, {$set: 
 						calendarid:doc.calendarid}
-					Calendar.addChange(doc.calendarid,doc.uri,2)
+					#Calendar.addChange(doc.calendarid,doc.uri,2)
 
 				payload = 
 					app: 'calendar'
 					id: attendeeid
 				start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 				site = doc.site || ""
-				title = "您的会议信息有改动"
-				text = "会议时间:#{start}\r会议地点:#{site}"
+				title = "您的会议邀请#{doc.title}有改动"
+				if site
+					text = "会议时间:#{start}\r会议地点:#{site}"
+				else
+					text = "会议时间:#{start}"
+				#text = "会议时间:#{start}\r会议地点:#{site}"
 				Push.send
 					createdAt: new Date()
 					createdBy: '<SERVER>'
@@ -148,16 +160,18 @@ Meteor.methods
 				calendardata: doc.calendardata,
 				parentId:doc.parentId
 				},{ multi: true }
-			events=Events.find({parentId:obj._id}).fetch()
+			events=Events.find({parentId:obj.parentId}).fetch()
 			events.forEach (event)->
-				Calendar.addChange(event.calendarid,event.uri,2)
+				isDefaultCalendar=Calendars.findOne({_id:event.calendarid}).isDefault
+				if isDefaultCalendar
+					Calendar.addChange(event.calendarid,event.uri,2)
 		else
-			Calendar.addCalendarObjects(obj.ownerId,obj,operation);
-			Events.direct.update {parentId:obj.parentId}, {$set:
-				attendees:obj?.attendees},{ multi: true }
+			# Calendar.addCalendarObjects(obj.ownerId,obj,operation);
+			# Events.direct.update {parentId:obj.parentId}, {$set:
+			# 	attendees:obj?.attendees},{ multi: true }
 			Events.direct.update {_id:obj._id}, {$set:
 				alarms:obj.alarms
 				remindtimes:obj.remindtimes}	
-			events=Events.find({parentId:obj.parentId}).fetch()
-			events.forEach (event)->
-				Calendar.addChange(event.calendarid,event.uri,2)
+			#events=Events.find({parentId:obj.parentId}).fetch()
+			#events.forEach (event)->
+			Calendar.addChange(obj.calendarid,obj.uri,2)
