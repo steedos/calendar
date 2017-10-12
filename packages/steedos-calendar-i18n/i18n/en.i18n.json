@@ -135,5 +135,7 @@
   "Saturday":"Saturday",
   "Sunday":"Sunday",
   "calendar_btn_prev_time_title": "Earlier Time",
-  "calendar_btn_next_time_title": "Later Time"
+  "calendar_btn_next_time_title": "Later Time",
+
+  "calendar_invite_members": "Invite members"
 }

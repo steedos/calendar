@@ -109,7 +109,7 @@
   "no_calendar_to_choose":"暂无共享给您的日历",
   "more_calendars":"更多...",
   "subscribe_or_unsubscribe_to_this_calendar":"订阅或取消订阅该日历",
-  "meetings_invitations":"会议邀请",
+  "meetings_invitations":"我的会议邀请",
   "calendar_objects":"会议邀请",
   "calendar_accepted":"接受",
   "calendar_tentative":"不确定",
@@ -122,7 +122,7 @@
   "calendar_morning": "上午",
   "calendar_afternoon": "下午",
   "calendar_choose_all": "全部选中",
-  "calendar_invited_me_to_attend_the_meeting": "会议邀请",
+  "calendar_invited_me_to_attend_the_meeting": "我的会议邀请",
   "authorize_to_view_busy_status": "授权查看忙碌状态",
   "calendar_view_subscription_request": "查看订阅申请",
   "calendar_month": "月",
@@ -136,5 +136,7 @@
   "Saturday":"星期六",
   "Sunday":"星期日",
   "calendar_btn_prev_time_title": "更早时间",
-  "calendar_btn_next_time_title": "更晚时间"
+  "calendar_btn_next_time_title": "更晚时间",
+
+  "calendar_invite_members": "邀请成员"
 }

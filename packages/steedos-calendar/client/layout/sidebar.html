@@ -13,52 +13,38 @@
                 <span class="fa fa-ellipsis-h"></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
-              {{#if showAddCalendar}}
-                <li>
-                  <a class="calendar-menu calendar-add">
-                    <span>{{_ "calendar_add_calendar"}}</span>
-                  </a>
-                </li>
-              {{/if}}
-              {{#if ShowMoreCalendars}}
-                <li>
-                  <a class="calendar-menu browse-calendars">
-                    <span>{{_ "subscribe_to_calendars"}}</span>
-                  </a>
-                </li>
-              {{/if}}    
-              {{#if showSeparator}}  
-                <li role="separator" class="divider"></li>
-              {{/if}}
-                <li>
-                  <a class="calendar-menu sub-calendar">
-                    <span>{{_ "subscribe_default_calendar"}}</span>
-                  </a>
-                </li>
-              {{#if showViewScription}}
-                <li>
-                  <a class="calendar-menu view-subscriptions">
-                    <span>{{_ "calendar_view_subscription_request"}}</span>
-                  </a>
-                </li>
-              {{/if}}
+                {{#if showAddCalendar}}
+                  <li>
+                    <a class="calendar-menu calendar-add">
+                      <span>{{_ "calendar_add_calendar"}}</span>
+                    </a>
+                  </li>
+                {{/if}}
+                {{#if ShowMoreCalendars}}
+                  <li>
+                    <a class="calendar-menu browse-calendars">
+                      <span>{{_ "subscribe_to_calendars"}}</span>
+                    </a>
+                  </li>
+                {{/if}}    
+                {{#if showSeparator}}  
+                  <li role="separator" class="divider"></li>
+                {{/if}}
+                  <li>
+                    <a class="calendar-menu sub-calendar">
+                      <span>{{_ "subscribe_default_calendar"}}</span>
+                    </a>
+                  </li>
+                {{#if showViewScription}}
+                  <li>
+                    <a class="calendar-menu view-subscriptions">
+                      <span>{{_ "calendar_view_subscription_request"}}</span>
+                    </a>
+                  </li>
+                {{/if}}
               </ul>
             </div>
           </span>
-        </li>
-
-        <li>
-          <a class="calendar-row browse-invations">
-            <i class="ion ion-archive"></i>
-            <span>{{_ "meetings_invitations"}}</span>
-            <span class="pull-right-container count-container">
-              {{#if eventNeedOptionCounts}}
-                <span class="label pull-right bg-red">
-                  {{eventNeedOptionCounts}}
-                </span>
-              {{/if}}
-            </span>
-          </a>
         </li>
 
         {{#each calendars}}
@@ -69,6 +55,13 @@
             </div>
             <span>
               <span class="text-overflow calendar-name">{{title}}</span>
+              {{#if isDefault}}
+                {{#if eventNeedOptionCounts}}
+                  <span class="label pull-right bg-red invating-counts">
+                    {{eventNeedOptionCounts}}
+                  </span>
+                {{/if}}
+              {{/if}}
             </span>
             <span class="pull-right-container operate-container">
               <div class="operate-box">
@@ -79,6 +72,12 @@
                             <span class="fa fa-ellipsis-h"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                              <a class="calendar-menu browse-invations">
+                                <span>{{_ "meetings_invitations"}}</span>
+                              </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
                             <li>
                               <a class="calendar-menu edit-calendar">
                                 <span>{{_ "edit_calendar"}}</span>

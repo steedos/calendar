@@ -236,7 +236,7 @@ Template.event_detail_modal.events
 		Session.set("calendarid",AutoForm.getFieldValue("calendarid","eventsForm"));
 		return
 
-	'click i.add-members': (event, template)->
+	'click .add-members': (event, template)->
 		alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 		template.reactiveRemindtimes.set(alarms)
 		$("input[name='addmembers_event']").click()

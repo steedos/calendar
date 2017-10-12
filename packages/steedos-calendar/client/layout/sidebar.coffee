@@ -338,7 +338,9 @@ Template.calendarSidebar.events
 	'click .browse-calendars':()->
 		Modal.show("subcalendar_modal")
 
-	'click .browse-invations':()->
+	'click .browse-invations,.invating-counts':(event)->
+		event.stopPropagation()
+		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		if FlowRouter.current().path != "/calendar/inbox"
 			FlowRouter.go("/calendar/inbox")
 
