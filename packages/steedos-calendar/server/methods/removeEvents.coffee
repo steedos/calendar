@@ -25,6 +25,7 @@ Meteor.methods
 						title: title,
 						text: text,
 						payload: payload
+						badge: 12
 						query: {userId:attendeeid,appName:"calendar"}
 					calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
 					event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()

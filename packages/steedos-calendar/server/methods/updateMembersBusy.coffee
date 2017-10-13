@@ -41,6 +41,7 @@ Meteor.methods
 					title: title,
 					text: text,
 					payload: payload,
+					badge: 12
 					query: {userId:memberId,appName:"calendar"}
 
 		if action == "refuse"
@@ -64,4 +65,5 @@ Meteor.methods
 					title: title,
 					text: text,
 					payload: payload,
+					badge: 12
 					query: {userId:memberId,appName:"calendar"}

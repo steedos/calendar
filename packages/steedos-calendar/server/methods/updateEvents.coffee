@@ -50,6 +50,7 @@ Meteor.methods
 					title: title,
 					text: text,
 					payload: payload
+					badge: 12
 					query: {userId:attendeeid,appName:"calendar"}
 
 			#新加的attendees需要新建event
@@ -106,6 +107,7 @@ Meteor.methods
 					title: title,
 					text: text,
 					payload: payload
+					badge: 12
 					query: {userId:attendeeid,appName:"calendar"}
 
 			updateattendeesid.forEach (attendeeid)->
@@ -132,6 +134,7 @@ Meteor.methods
 					title: title,
 					text: text,
 					payload: payload
+					badge: 12
 					query: {userId:attendeeid,appName:"calendar"}
 
 			Events.direct.update {parentId:obj.parentId}, {$set: 
