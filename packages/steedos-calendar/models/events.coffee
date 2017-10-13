@@ -8,6 +8,7 @@ Events._simpleSchema = new SimpleSchema
 	title:
 		type: String
 		max: 50
+		optional: true
 		autoform:
 			type:"text"
 			defaultValue:()->

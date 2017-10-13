@@ -75,7 +75,15 @@ Meteor.methods
 			obj.alarms=[]
 			if newalarms
 				newalarms.forEach (newalarm)->
-					if newalarm[0]=='-' or newalarms[0]=='P'
+					if newalarm[0]=='-' 
+						obj.alarms.push  newalarm
+					if newalarm[0]=='P'
+						if newalarm[2]=='6'
+							newalarm="-PT1H"
+						else if newalarm[3]=='2'
+								newalarm="-PT2H"
+							else 
+								newalarm='-'+newalarm
 						obj.alarms.push  newalarm
 			oldcalendarid=Events.findOne({uid:obj.uid}).calendarid
 			defaultcalendarid = Calendars.findOne({ownerId:obj.ownerId},{isDefault:true})._id
