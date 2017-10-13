@@ -1,6 +1,7 @@
 Meteor.methods
 	davModifiedEvent: () ->
 		events=Events.find({Isdavmodified:true,componenttype:"VEVENT"})		
+		ICAL = require('ical.js');
 		events?.forEach (obj)->
 			jcalData = ICAL?.parse(obj.calendardata);
 			vcalendar = new ICAL.Component(jcalData);
@@ -74,7 +75,7 @@ Meteor.methods
 			obj.alarms=[]
 			if newalarms
 				newalarms.forEach (newalarm)->
-					if newalarm[0]=='-'
+					if newalarm[0]=='-' or newalarms[0]=='P'
 						obj.alarms.push  newalarm
 			oldcalendarid=Events.findOne({uid:obj.uid}).calendarid
 			defaultcalendarid = Calendars.findOne({ownerId:obj.ownerId},{isDefault:true})._id
@@ -91,8 +92,12 @@ Meteor.methods
 
 Meteor.startup ->
 	if Meteor.settings.cron?.calendar_dav_interval
-		Meteor.setInterval(
-			()->
+		Calendar.davTimeout = (time)->
+			Meteor.setTimeout(()->
 				Meteor.call('davModifiedEvent')
-			,Meteor.settings.cron.calendar_dav_interval)
+				Calendar.davTimeout(time)
+			,time)
+
+		Calendar.davTimeout Meteor.settings.cron.calendar_dav_interval
+
 	 
