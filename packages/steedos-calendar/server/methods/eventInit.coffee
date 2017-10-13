@@ -43,7 +43,6 @@ Meteor.methods
 				title: title,
 				text: text,
 				payload: payload
-				badge: 12,
 				query: {userId:attendeeid,appName:"calendar"}
 		attendeesid.forEach (attendeeid)->
 				calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})				
