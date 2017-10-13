@@ -1,8 +1,8 @@
 Meteor.methods
 	davModifiedEvent: () ->
-		events=Events.find({Isdavmodified:true,componenttype:"VEVENT"})
+		events=Events.find({Isdavmodified:true,componenttype:"VEVENT"})		
 		events?.forEach (obj)->
-			jcalData = ICAL.parse(obj.calendardata);
+			jcalData = ICAL?.parse(obj.calendardata);
 			vcalendar = new ICAL.Component(jcalData);
 			vevent = vcalendar.getFirstSubcomponent('vevent');
 			if vevent.getFirstPropertyValue('summary')!=null
@@ -74,8 +74,7 @@ Meteor.methods
 			obj.alarms=[]
 			if newalarms
 				newalarms.forEach (newalarm)->
-					if newalarm[0]!='-'
-						newalarm='-'+newalarm
+					if newalarm[0]=='-'
 						obj.alarms.push  newalarm
 			oldcalendarid=Events.findOne({uid:obj.uid}).calendarid
 			defaultcalendarid = Calendars.findOne({ownerId:obj.ownerId},{isDefault:true})._id
@@ -91,7 +90,9 @@ Meteor.methods
 		return
 
 Meteor.startup ->
-	Meteor.setInterval(
-		()->
-			Meteor.call('davModifiedEvent')
-		,10*1000)
+	if Meteor.settings.cron?.calendar_dav_interval
+		Meteor.setInterval(
+			()->
+				Meteor.call('davModifiedEvent')
+			,Meteor.settings.cron.calendar_dav_interval)
+	 
