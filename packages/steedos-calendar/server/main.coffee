@@ -8,14 +8,32 @@ Meteor.startup ->
 	
 Calendar = 
 	#更新日历，新建事件，更新事件，删除事件会触发此函数。operation:1新建，2更新，3删除
+	isLegalVersion : (spaceId,app_version)->
+		if !spaceId
+			return false
+		check = false
+		modules = db.spaces.findOne(spaceId)?.modules
+		if modules and modules.includes(app_version)
+			check = true
+		return check
 	addChange : (calendarId, objectUri, operation)->
-		oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
-		calendarchanges.direct.insert
-			uri:objectUri,
-			synctoken: oldsynctoken,
-			calendarid: calendarId,
-			operation: operation
-		Calendars.direct.update({_id:calendarId},{$set:{synctoken:oldsynctoken+1}});
+		userSpaces = db.space_users.find({user: Meteor.userId()},{field:{space:1}}).fetch()
+		userSpacesId =_.pluck(userSpaces,'space')
+		i=0
+		console.log userSpacesId.length
+		while i<userSpacesId.length
+			if Calendar.isLegalVersion(userSpacesId[i],"calendar.professional")
+				console.log "11111===="
+				oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
+				calendarchanges.direct.insert
+					uri:objectUri,
+					synctoken: oldsynctoken,
+					calendarid: calendarId,
+					operation: operation
+				Calendars.direct.update({_id:calendarId},{$set:{synctoken:oldsynctoken+1}});
+				break
+			console.log Calendar.isLegalVersion(userSpacesId[i],"calendar.professional")
+			i++
 	#被分享的成员比创建者多share_herf,share_displayname. 
 	#access对应 1 = owner, 2 = readonly, 3 = readwrite
 	addInstance : (memberid,doc,calendarid,steedosId,access,herf,displayname)->
