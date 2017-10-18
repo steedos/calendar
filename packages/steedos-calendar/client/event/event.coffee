@@ -13,7 +13,7 @@ eventsLoading = false
 
 Calendar.recomputeHeight = ()->
 	$('#calendar').fullCalendar('option', 'height', -> 
-		return $('#calendar').height() - 2
+		return $('#calendar').height()
 	)
 
 Calendar.reloadEvents = () ->
@@ -118,7 +118,7 @@ Calendar.generateCalendar = ()->
 
 		$('#calendar').fullCalendar
 			height: ()->
-				return $('#calendar').height() - 2
+				return $('#calendar').height()
 			handleWindowResize: true
 			header: 
 				left: ''
