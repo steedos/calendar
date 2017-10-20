@@ -169,36 +169,16 @@
           </li>
           {{/each}}
         {{/if}}
-        <!-- {{#if ShowMoreCalendars}}
-          <li>
-            <a class="calendar-row browse-calendars">
-              <span>{{_ "more_calendars"}}</span>
-            </a>
-          </li>
-        {{/if}} -->
-
-        <!-- <li>
-          <a class="calendar-row browse-invations">
-            <span>{{_ "your_meetings_invitations"}}</span>
-            <span class="pull-right-container count-container">
-              {{#if eventNeedOptionCounts}}
-                <span class="label pull-right bg-red">
-                  {{eventNeedOptionCounts}}
-                </span>
-              {{/if}}
-            </span>
-          </a>
-        </li> -->
+      
 
         <div style="display: none;">
           {{#autoForm id='calendar-members-busy' schema=members_busyFields doc=values }}
             {{> afFormGroup name="membersbusy" label=false}}
           {{/autoForm}}
         </div>
-
-
-
       </ul>
+
+
       <div class="box box-solid invite-box div-resources" style="display: none;">
         <div class="box-body no-padding">
           <span class="pull-left span-resources">
@@ -223,6 +203,9 @@
         </i>
       </a>
     </div> -->
+    <div class="mobile-sync">
+      <i class="ion ion-android-sync"></i>手机同步
+    </div>
 
   </aside>
   {{> contentWrapperShadow}}

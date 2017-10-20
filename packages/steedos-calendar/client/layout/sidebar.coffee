@@ -351,6 +351,9 @@ Template.calendarSidebar.events
 				Meteor.call('initscription',addmember)
 		AutoForm.resetForm("calendar-submembers")
 
+	'click .mobile-sync': ()->
+		Steedos.openWindow("https://www.steedos.com/cn/help/meeting/#手机同步（专业版）")
+
 
 AutoForm.hooks calendarForm:
 	onSuccess: (formType,result) ->
