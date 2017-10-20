@@ -27,7 +27,6 @@ Template.event_detail_modal.onCreated ->
 	this.isChooseAMPM = false
 
 Template.event_detail_modal.onRendered ->
-	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
 
 Template.event_detail_modal.helpers
 	formTitle:()->
