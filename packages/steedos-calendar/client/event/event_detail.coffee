@@ -20,12 +20,12 @@ EventDetailModal =
 			else
 				dp.format "YYYY-MM-DD HH:mm"
 				dp.date(dp.date())
-
+		Session.set "isAllDay",isAllDay	
 Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
 	this.reactiveRemindtimes = new ReactiveVar()
 	this.isChooseAMPM = false
-
+	Session.set("isAllDay", false)
 Template.event_detail_modal.onRendered ->
 
 Template.event_detail_modal.helpers
@@ -108,6 +108,19 @@ Template.event_detail_modal.helpers
 					when "TENTATIVE" then obj.tentativenum++
 					when "DECLINED" then obj.declinednum++
 					when "NEEDS-ACTION" then obj.actionnum++
+		try
+			alarms_value_options = Events._simpleSchema._schema.alarms.autoform.options().getProperty("value")
+			remove_v = []
+
+			obj.alarms?.forEach (v)->
+				if alarms_value_options.indexOf(v) < 0
+					remove_v.push(v)
+
+			remove_v.forEach (v)->
+					console.log("obj.alarms.remove", v)
+					obj.alarms.remove(obj.alarms.indexOf(v))
+		catch e
+			console.log e
 		return obj
 
 	isShowAddMembers: ()->
