@@ -17,11 +17,21 @@ Template.calendarSidebar.helpers
 		objs = defaultcalendar.concat(objs)
 		return objs
 	subscribe: ()->
-		objs = calendarsubscriptions.find()
-		if objs.count() > 0
-			return objs
-		else
-			return false
+		objs = calendarsubscriptions.find().fetch()
+		subscriptions = 
+			shares: []
+			defaults: []
+		objs.forEach (obj, index) ->
+			selector = 
+				_id: obj.uri
+				members_readonly: Meteor.userId()
+			if Calendars.findOne(selector)
+				subscriptions.shares.push obj
+			else
+				subscriptions.defaults.push obj
+			
+		return subscriptions
+
 	isCalendarEditable: ()->
 		userId = Meteor.userId()
 		admins = this?.admins || []

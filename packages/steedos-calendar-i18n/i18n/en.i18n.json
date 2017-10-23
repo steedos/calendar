@@ -142,5 +142,8 @@
   "calendar_btn_prev_time_title": "Earlier Time",
   "calendar_btn_next_time_title": "Later Time",
 
-  "calendar_invite_members": "Invite members"
+  "calendar_invite_members": "Invite members",
+
+  "calendar_mobile_sync": "Mobile synchronization",
+  "calendar_others_default_calendar": "Others calendars"
 }
