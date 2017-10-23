@@ -197,18 +197,32 @@ Template.event_detail_modal.events
 			relatetodefaultcalendar = null
 
 		# 用户是事件的接收者，表单处于只读状态，AutoForm.getFieldValue获取不到数据，需要赋值为obj原来的值
-		if obj._id == obj.parentId
+		if obj._id==obj.parentId
 			obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm")
 			obj.title = AutoForm.getFieldValue("title","eventsForm") 
-			obj.start = AutoForm.getFieldValue("start","eventsForm")
-			obj.end = AutoForm.getFieldValue("end","eventsForm")
 			obj.description = AutoForm.getFieldValue("description","eventsForm") || ""
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 			obj.site = AutoForm.getFieldValue("site","eventsForm") || ""
 			obj.participation = AutoForm.getFieldValue("participation","eventsForm") || ""
 			obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")
+			if obj.allDay
+				stHours = AutoForm.getFieldValue("start","eventsForm").getHours()
+				stMinutes = AutoForm.getFieldValue("start","eventsForm").getMinutes()
+				stSeconds = AutoForm.getFieldValue("start","eventsForm").getSeconds() 
+				obj.start = new Date(AutoForm.getFieldValue("start","eventsForm").getTime()-stHours*60*60*1000-stMinutes*60*1000-stSeconds*1000) 
+				endHours = AutoForm.getFieldValue("end","eventsForm").getHours()
+				endMinutes = AutoForm.getFieldValue("end","eventsForm").getMinutes()
+				endSeconds = AutoForm.getFieldValue("end","eventsForm").getSeconds() 
+				if AutoForm.getFieldValue("start","eventsForm").getDate() == AutoForm.getFieldValue("end","eventsForm").getDate()
+					obj.end = new Date(AutoForm.getFieldValue("end","eventsForm").getTime()-endHours*60*60*1000-endMinutes*60*1000-endSeconds*1000 + 24*60*60*1000)
+				else
+					obj.end = new Date(AutoForm.getFieldValue("end","eventsForm").getTime()-endHours*60*60*1000-endMinutes*60*1000-endSeconds*1000)
+			else
+				obj.start = AutoForm.getFieldValue("start","eventsForm")
+				obj.end = AutoForm.getFieldValue("start","eventsForm")
 		else
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
+
 			
 		members = []
 		val = $('input:radio[name="optionsRadios"]:checked').val() || "NEEDS-ACTION"

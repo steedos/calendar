@@ -20,10 +20,8 @@ Calendar =
 		userSpaces = db.space_users.find({user: Meteor.userId()},{field:{space:1}}).fetch()
 		userSpacesId =_.pluck(userSpaces,'space')
 		i=0
-		console.log userSpacesId.length
 		while i<userSpacesId.length
 			if Calendar.isLegalVersion(userSpacesId[i],"calendar.professional")
-				console.log "11111===="
 				oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
 				calendarchanges.direct.insert
 					uri:objectUri,
@@ -32,7 +30,6 @@ Calendar =
 					operation: operation
 				Calendars.direct.update({_id:calendarId},{$set:{synctoken:oldsynctoken+1}});
 				break
-			console.log Calendar.isLegalVersion(userSpacesId[i],"calendar.professional")
 			i++
 	#被分享的成员比创建者多share_herf,share_displayname. 
 	#access对应 1 = owner, 2 = readonly, 3 = readwrite
@@ -151,9 +148,8 @@ Calendar =
 							mimutes=mimutes+alarm[i]*(Math.pow(10,alarm.length-2-i))
 							i++
 						miliseconds=mimutes*60*1000
-						remindtime=moment(start).utc().valueOf()-miliseconds
 					else if alarm[alarm.length-1]=='S'
-							remindtime=moment(start).utc().valueOf()
+							miliseconds = 0
 						else 
 							i=3 
 							hours=0
@@ -161,15 +157,19 @@ Calendar =
 								hours=hours+alarm[i]*(Math.pow(10,alarm.length-2-i))
 								i++
 							miliseconds=hours*60*60*1000
-							remindtime=moment(start).utc().valueOf()-miliseconds
-				else
-					i=2
-					days=0
-					while i<alarm.length-1
-						days=days+alarm[i]*(Math.pow(10,alarm.length-2-i))
-						i++
-					miliseconds=days*24*60*60*1000
-					remindtime=moment(start).utc().valueOf()-miliseconds
+				else 
+					if alarm[alarm.length-1]=='D'
+						i=2
+						days=0
+						while i<alarm.length-1
+							days=days+alarm[i]*(Math.pow(10,alarm.length-2-i))
+							i++
+						miliseconds=days*24*60*60*1000
+					else if alarm[3] == 'D'
+							miliseconds = alarm[2]*24*60*60*1000+15*60*60*1000
+						else
+							miliseconds = 15*60*60*1000
+				remindtime=moment(start).utc().valueOf()-miliseconds
 				remindtimes.push remindtime
 		return remindtimes
 	bytesToUuid:(buf, offset)->
