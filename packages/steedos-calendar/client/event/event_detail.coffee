@@ -25,7 +25,8 @@ Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
 	this.reactiveRemindtimes = new ReactiveVar()
 	this.isChooseAMPM = false
-	Session.set("isAllDay", false)
+	Session.set("isAllDay", this.data?.allDay)
+
 Template.event_detail_modal.onRendered ->
 
 Template.event_detail_modal.helpers
