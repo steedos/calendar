@@ -189,7 +189,7 @@ Template.event_detail_modal.events
 		if obj.calendarid != AutoForm.getFieldValue("calendarid","eventsForm")
 			if Session.get('defaultcalendarid') == AutoForm.getFieldValue("calendarid","eventsForm")
 				relatetodefaultcalendar = "Yes"
-			else if Session.get('defaultcalendarid')==obj.calendarid
+			else if Session.get('defaultcalendarid') == obj.calendarid
 					relatetodefaultcalendar = "No"
 		else
 			relatetodefaultcalendar = null
@@ -197,7 +197,7 @@ Template.event_detail_modal.events
 			relatetodefaultcalendar = null
 
 		# 用户是事件的接收者，表单处于只读状态，AutoForm.getFieldValue获取不到数据，需要赋值为obj原来的值
-		if obj._id==obj.parentId
+		if obj._id == obj.parentId
 			obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm")
 			obj.title = AutoForm.getFieldValue("title","eventsForm") 
 			obj.start = AutoForm.getFieldValue("start","eventsForm")
@@ -211,7 +211,7 @@ Template.event_detail_modal.events
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 			
 		members = []
-		val=$('input:radio[name="optionsRadios"]:checked').val()
+		val = $('input:radio[name="optionsRadios"]:checked').val() || "NEEDS-ACTION"
 		description = $('textarea.description').val()
 		if val or description
 			responsetime = new Date()

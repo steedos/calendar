@@ -139,9 +139,9 @@ Tracker.autorun (c) ->
 			}
 		}
 		counts = Events.find(selector).count()
-		if counts
-			if CalendarToastr.info
+		if CalendarToastr.info
 				toastr.clear(CalendarToastr.info)
+		if counts
 			CalendarToastr.info = toastr.info(null,t("you_have_invitation_to_feedback",counts),{
 				closeButton: true,
 				timeOut: 0,
