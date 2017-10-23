@@ -138,5 +138,8 @@
   "calendar_btn_prev_time_title": "更早时间",
   "calendar_btn_next_time_title": "更晚时间",
 
-  "calendar_invite_members": "邀请成员"
+  "calendar_invite_members": "邀请成员",
+
+  "calendar_mobile_sync": "手机同步",
+  "calendar_others_default_calendar": "他人日历"
 }
