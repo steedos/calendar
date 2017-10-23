@@ -85,7 +85,7 @@ Events._simpleSchema = new SimpleSchema
 			options: () ->
 				if Session?.get("isAllDay")
 					options=[
-						{label: t("events_alarms_label_1_day_before"), value: "-P15H"},
+						{label: t("events_alarms_label_1_day_before"), value: "-PT15H"},
 						{label: t("events_alarms_label_2_days_before"), value: "-P1DT15H"},
 						{label: t("events_alarms_label_1_week_before"), value: "-P6DT15H"}
 					]

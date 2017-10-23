@@ -48,13 +48,16 @@ Meteor.startup ->
 												else
 													remindText=t("call_at_tomorrow_am",moment(event.start).format("hh:mm"))
 										else if subdays==2
-											if event.start.getHours()>=12
-												remindText=t("call_at_the_day_after_tomorrow_pm",moment(event.start).format("hh:mm"))
+												if event.start.getHours()>=12
+													remindText=t("call_at_the_day_after_tomorrow_pm",moment(event.start).format("hh:mm"))
+												else 
+													if event.allDay
+														remindText = t("call_at_the_day_after_tomorrow")
+													else
+														remindText = t("call_at_the_day_after_tomorrow_am",moment(event.start).format("hh:mm"))
 											else
-												if event.allDay
-													remindText = t("call_at_the_day_after_tomorrow")
-												else
-													remindText = t("call_at_the_day_after_tomorrow_am",moment(event.start).format("hh:mm"))
+												remindText = t("call_at_after_week")
+
 									swal({
 										  title: event.title+remindText,
 										  #text: '',

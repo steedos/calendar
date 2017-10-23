@@ -74,6 +74,7 @@
   "call_at_am":"Call at %s am",
   "call_at_tomorrow":"Call at tomorrow",
   "call_at_the_day_after_tomorrow":"Call at the day after tomorrow",
+  "call_at_after_week":"call at after a week",
   "call_at_tomorrow_pm":"Call at tomorrow %s pm",
   "call_at_tomorrow_am":"Call at tomorrow %s am",
   "call_at_the_day_after_tomorrow_pm":"Call at the day after tomorrow %s pm",
