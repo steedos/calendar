@@ -81,7 +81,6 @@ Events._simpleSchema = new SimpleSchema
 		autoform: 
 			type: "universe-select"
 			multiple: true
-			create: false
 			options: () ->
 				if Session?.get("isAllDay")
 					options=[

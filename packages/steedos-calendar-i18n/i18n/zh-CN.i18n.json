@@ -80,6 +80,7 @@
   "call_at_tomorrow_am":"定于明天上午 %s",
   "call_at_the_day_after_tomorrow_pm":"定于后天下午 %s",
   "call_at_the_day_after_tomorrow_am":"定于后天上午 %s",
+  "events_alarms_label_immediately":"立刻(短信通知)",
   "events_alarms_label_when_events_occur":"事件发生时",
   "events_alarms_label_5_minutes_before":"5 分钟前",
   "events_alarms_label_10_minutes_before":"10 分钟前",

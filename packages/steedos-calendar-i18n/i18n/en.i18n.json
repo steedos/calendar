@@ -77,6 +77,7 @@
   "call_at_after_week":"call at after a week",
   "call_at_tomorrow_pm":"Call at tomorrow %s pm",
   "call_at_tomorrow_am":"Call at tomorrow %s am",
+  "events_alarms_label_immediately":"Now(SMS Notification)",
   "call_at_the_day_after_tomorrow_pm":"Call at the day after tomorrow %s pm",
   "call_at_the_day_after_tomorrow_am":"Call at the day after tomorrow %s am",
   "events_alarms_label_when_events_occur":"When event occur",

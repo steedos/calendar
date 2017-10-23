@@ -220,7 +220,7 @@ Template.event_detail_modal.events
 					obj.end = new Date(AutoForm.getFieldValue("end","eventsForm").getTime()-endHours*60*60*1000-endMinutes*60*1000-endSeconds*1000)
 			else
 				obj.start = AutoForm.getFieldValue("start","eventsForm")
-				obj.end = AutoForm.getFieldValue("start","eventsForm")
+				obj.end = AutoForm.getFieldValue("end","eventsForm")
 		else
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 
