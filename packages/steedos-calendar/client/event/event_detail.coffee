@@ -87,9 +87,8 @@ Template.event_detail_modal.helpers
 		obj.tentativenum = 0 #不确定
 		obj.declinednum = 0
 		obj.actionnum = 0 #待回复
-		obj.curstat = ""
-		calendar = Calendars.findOne({_id:obj.calendarid}) 
-		if obj._id==obj.parentId and calendar
+		obj.curstat = "" 
+		if obj._id==obj.parentId and obj.ownerId==Meteor.userId()
 			obj.isOwner = "true"
 			obj.formOpt = "normal"
 		else

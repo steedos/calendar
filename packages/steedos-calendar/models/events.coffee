@@ -84,12 +84,14 @@ Events._simpleSchema = new SimpleSchema
 			options: () ->
 				if Session?.get("isAllDay")
 					options=[
+						{label: t("events_alarms_label_immediately"),value:"Now"},
 						{label: t("events_alarms_label_1_day_before"), value: "-PT15H"},
 						{label: t("events_alarms_label_2_days_before"), value: "-P1DT15H"},
 						{label: t("events_alarms_label_1_week_before"), value: "-P6DT15H"}
 					]
 				else
 					options=[
+						{label: t("events_alarms_label_immediately"),value:"Now"},
 						{label: t("events_alarms_label_when_events_occur"), value: "-PT0S"},
 						{label: t("events_alarms_label_5_minutes_before"), value: "-PT5M"},
 						{label: t("events_alarms_label_10_minutes_before"), value: "-PT10M"},
