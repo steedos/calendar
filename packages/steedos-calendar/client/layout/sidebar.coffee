@@ -355,6 +355,9 @@ Template.calendarSidebar.events
 		Modal.show("subcalendar_modal")
 
 	'click .browse-invations,.invating-counts':(event)->
+		if Steedos.isMobile()
+			# 手机上可能菜单展开了，需要额外收起来
+			$("body").removeClass("sidebar-open")
 		event.stopPropagation()
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
 		if FlowRouter.current().path != "/calendar/inbox"
