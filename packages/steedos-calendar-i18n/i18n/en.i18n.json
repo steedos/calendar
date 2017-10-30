@@ -20,7 +20,7 @@
   "calendar_please_input": "Please Input",
   "calendar_no_permission": "No Permission",
   "calnedar_no_permission_delete_calendar": "This account has no permission to delete",
-  "calnedar_no_permission_modify_event": "This account has no permission to modify",
+  "calnedar_no_permission_modify_event": "This account has no permission to modify ",
   "calendar_delete_confirm_calendar": "Do you want to delete this calendar?",
   "calendar_delete_calendar": "Delete Calendar",
   "calendar_delete_success": "Delete Success",
@@ -72,12 +72,16 @@
   "start_time_must_be_less_than_end_time": "Start time must not be larger than end time",
   "call_at_pm":"Call at %s pm",
   "call_at_am":"Call at %s am",
+  "call_at_tomorrow":"Call at tomorrow",
+  "call_at_the_day_after_tomorrow":"Call at the day after tomorrow",
+  "call_at_after_week":"call at after a week",
   "call_at_tomorrow_pm":"Call at tomorrow %s pm",
   "call_at_tomorrow_am":"Call at tomorrow %s am",
+  "events_alarms_label_immediately":"Now(SMS Notification)",
   "call_at_the_day_after_tomorrow_pm":"Call at the day after tomorrow %s pm",
   "call_at_the_day_after_tomorrow_am":"Call at the day after tomorrow %s am",
   "events_alarms_label_when_events_occur":"When event occur",
-  "events_alarms_label_5_minutes_before":"5 minutes before",
+  "events_alarms_label_5_minutes_before":"5 minutesv before",
   "events_alarms_label_10_minutes_before":"10 minutes before",
   "events_alarms_label_15_minutes_before":"15 minutes before",
   "events_alarms_label_30_minutes_before":"30 minutes before",
@@ -85,6 +89,9 @@
   "events_alarms_label_2_hours_before":"2 hour before",
   "events_alarms_label_24_hours_before":"24 hour before",
   "events_alarms_label_48_hours_before":"48 hour before",
+  "events_alarms_label_1_day_before":"1 day before(09:00)",
+  "events_alarms_label_2_days_before":"2 day before(09:00)",
+  "events_alarms_label_1_weeks_before":"1 week before",
   "remind_me_later":"Remind me later",
   "close":"Close",
   "my_calendar":"My Calendars",
@@ -137,5 +144,8 @@
   "calendar_btn_prev_time_title": "Earlier Time",
   "calendar_btn_next_time_title": "Later Time",
 
-  "calendar_invite_members": "Invite members"
+  "calendar_invite_members": "Invite members",
+
+  "calendar_mobile_sync": "Mobile synchronization",
+  "calendar_others_default_calendar": "Others calendars"
 }

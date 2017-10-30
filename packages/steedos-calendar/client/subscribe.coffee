@@ -40,14 +40,24 @@ Meteor.startup ->
 											remindText=t("call_at_am",moment(event.start).format("hh:mm"))
 									else if subdays==1
 											if event.start.getHours()>=12
-												remindText=t("call_at_tomorrow_pm",moment(event.start).format("hh:mm"))
+												
+												remindText = t("call_at_tomorrow_pm",moment(event.start).format("hh:mm"))
 											else
-												remindText=t("call_at_tomorrow_am",moment(event.start).format("hh:mm"))
+												if event.allDay
+													remindText = t("call_at_tomorrow")
+												else
+													remindText=t("call_at_tomorrow_am",moment(event.start).format("hh:mm"))
 										else if subdays==2
-											if event.start.getHours()>=12
-												remindText=t("call_at_the_day_after_tomorrow_pm",moment(event.start).format("hh:mm"))
+												if event.start.getHours()>=12
+													remindText=t("call_at_the_day_after_tomorrow_pm",moment(event.start).format("hh:mm"))
+												else 
+													if event.allDay
+														remindText = t("call_at_the_day_after_tomorrow")
+													else
+														remindText = t("call_at_the_day_after_tomorrow_am",moment(event.start).format("hh:mm"))
 											else
-												remindText=t("call_at_the_day_after_tomorrow_am",moment(event.start).format("hh:mm"))
+												remindText = t("call_at_after_week")
+
 									swal({
 										  title: event.title+remindText,
 										  #text: '',
@@ -139,9 +149,9 @@ Tracker.autorun (c) ->
 			}
 		}
 		counts = Events.find(selector).count()
-		if counts
-			if CalendarToastr.info
+		if CalendarToastr.info
 				toastr.clear(CalendarToastr.info)
+		if counts
 			CalendarToastr.info = toastr.info(null,t("you_have_invitation_to_feedback",counts),{
 				closeButton: true,
 				timeOut: 0,

@@ -1,248 +1,238 @@
 <template name="calendarSidebar">
-  <aside class="main-sidebar">
-    <section class="sidebar">
-      {{> sidebarUserPanel}}
-      <ul class="sidebar-menu">
-        <li class="header">{{_ "my_calendar"}}
-          <!-- {{#if showAddCalendar}}
-          <i class="ion ion-plus-round pull-right calendar-add"></i>
-          {{/if}} -->
-          <span class="pull-right-container operate-container">
-            <div class="operate-box">
-              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <span class="fa fa-ellipsis-h"></span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-right">
-                {{#if showAddCalendar}}
-                  <li>
-                    <a class="calendar-menu calendar-add">
-                      <span>{{_ "calendar_add_calendar"}}</span>
-                    </a>
-                  </li>
-                {{/if}}
-                <li>
-                  <a class="calendar-menu browse-calendars">
-                    <span>{{_ "subscribe_to_calendars"}}</span>
-                  </a>
-                </li> 
-                {{#if showSeparator}}  
-                  <li role="separator" class="divider"></li>
-                {{/if}}
-                  <li>
-                    <a class="calendar-menu sub-calendar">
-                      <span>{{_ "subscribe_default_calendar"}}</span>
-                    </a>
-                  </li>
-                {{#if showViewScription}}
-                  <li>
-                    <a class="calendar-menu view-subscriptions">
-                      <span>{{_ "calendar_view_subscription_request"}}</span>
-                    </a>
-                  </li>
-                {{/if}}
-              </ul>
-            </div>
-          </span>
-        </li>
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			{{> sidebarUserPanel}}
+			<ul class="sidebar-menu">
+				<li class="header">{{_ "my_calendar"}}
+					<span class="pull-right-container operate-container">
+						<div class="operate-box">
+							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								<span class="fa fa-ellipsis-h"></span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-right">
+								{{#if showAddCalendar}}
+									<li>
+										<a class="calendar-menu calendar-add">
+											<span>{{_ "calendar_add_calendar"}}</span>
+										</a>
+									</li>
+								{{/if}}
+								<li>
+									<a class="calendar-menu browse-calendars">
+										<span>{{_ "subscribe_to_calendars"}}</span>
+									</a>
+								</li> 
+								{{#if showSeparator}}  
+									<li role="separator" class="divider"></li>
+								{{/if}}
+									<li>
+										<a class="calendar-menu sub-calendar">
+											<span>{{_ "subscribe_default_calendar"}}</span>
+										</a>
+									</li>
+								{{#if showViewScription}}
+									<li>
+										<a class="calendar-menu view-subscriptions">
+											<span>{{_ "calendar_view_subscription_request"}}</span>
+										</a>
+									</li>
+								{{/if}}
+							</ul>
+						</div>
+					</span>
+				</li>
 
-        {{#each calendars}}
-        <li class="{{calendarActive}}">
-          <a class="calendar-row my-calendar">
-            <div class="check">
-              <i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
-            </div>
-            <span>
-              <span class="text-overflow calendar-name">{{title}}</span>
-              {{#if isDefault}}
-                {{#if eventNeedOptionCounts}}
-                  <span class="label pull-right bg-red invating-counts">
-                    {{eventNeedOptionCounts}}
-                  </span>
-                {{/if}}
-              {{/if}}
-            </span>
-            <span class="pull-right-container operate-container">
-              <div class="operate-box">
-                {{#if isCalendarEditable}}
-                    {{#if isDefault}}
-                          <!-- <i class="fa fa-edit calendar-edit"></i> -->
-                          <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <span class="fa fa-ellipsis-h"></span>
-                          </a>
-                          <ul class="dropdown-menu dropdown-menu-right">
-                            <li>
-                              <a class="calendar-menu browse-invations">
-                                <span>{{_ "meetings_invitations"}}</span>
-                              </a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                              <a class="calendar-menu edit-calendar">
-                                <span>{{_ "edit_calendar"}}</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a class="calendar-menu add-members-busy">
-                                <span>{{_ "authorize_to_view_busy_status"}}</span>
-                              </a>
-                            </li>
-                          </ul>
-                    {{else}}
-                          <!-- <i class="fa fa-edit calendar-edit"></i>
-                          &nbsp;&nbsp;
-                          <i class="fa fa-trash-o calendar-delete"></i> -->
-                          <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <span class="fa fa-ellipsis-h"></span>
-                          </a>
-                          <ul class="dropdown-menu dropdown-menu-right">
-                            <li>
-                              <a class="calendar-menu edit-calendar">
-                                <span>{{_ "edit_calendar"}}</span>
-                              </a>
-                            </li>
-                            {{#if isCalendarOwner}}
-                              <li>
-                                <a class="calendar-menu calendar-delete">
-                                  <span>{{_ "delete_calendar"}}</span>
-                                </a>
-                              </li>
-                            {{/if}}
-                          </ul>
-                    {{/if}}
-                {{else}}
-                  <!-- <i class="fa fa-info-circle calendar-show"></i> -->
-                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="fa fa-ellipsis-h"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-right">
-                    <li>
-                      <a class="calendar-menu show-calendar">
-                        <span>{{_ "view_details"}}</span>
-                      </a>
-                    </li>
-                  </ul>
-                {{/if}}
-              </div>
-            </span>
-          </a>
-        </li>
-        {{/each}}
-        
-        {{#if subscribe}}
-          <li class="header">{{_ "shared_calendars"}}
-            <!-- <i class="ion ion-plus-round pull-right sub-calendar"></i> -->
-          </li>
-        {{/if}}
-        
-        {{#if subscribe}}
-          {{#each subscribe}}
-          <li class="{{calendarActive}}">
-            <a class="calendar-row subscribe-calendar">
-              <div class="check">
-                <i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
-              </div>
-              <span>
-                <span class="text-overflow calendar-name">{{calendarname}}</span>
-              </span>
-              <span class="pull-right-container">
-                <div class="operate-box">
-                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="fa fa-ellipsis-h"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-right">
-                    <li>
-                      <a class="calendar-menu show-subscribe">
-                        <span>{{_ "view_details"}}</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="calendar-menu hide-subscribe"> 
-                        <span>{{_ "cancel_subscribtion"}}</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <!-- <i class="fa fa-info-circle subscribe-show"></i>
-                  &nbsp;&nbsp;<i class="fa fa-eye-slash subscribe-hide"></i> -->
-                </div>
-              </span>
-            </a>
-          </li>
-          {{/each}}
-        {{/if}}
-        <!-- {{#if ShowMoreCalendars}}
-          <li>
-            <a class="calendar-row browse-calendars">
-              <span>{{_ "more_calendars"}}</span>
-            </a>
-          </li>
-        {{/if}} -->
+				{{#each calendars}}
+				<li class="{{calendarActive}}">
+					<a class="calendar-row my-calendar">
+						<div class="check">
+							<i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
+						</div>
+						<span>
+							<span class="text-overflow calendar-name">{{title}}</span>
+							{{#if isDefault}}
+								{{#if eventNeedOptionCounts}}
+									<span class="label pull-right bg-red invating-counts">
+										{{eventNeedOptionCounts}}
+									</span>
+								{{/if}}
+							{{/if}}
+						</span>
+						<span class="pull-right-container operate-container">
+							<div class="operate-box">
+								{{#if isCalendarEditable}}
+									{{#if isDefault}}
+										<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+											<span class="fa fa-ellipsis-h"></span>
+										</a>
+										<ul class="dropdown-menu dropdown-menu-right">
+											<li>
+												<a class="calendar-menu browse-invations">
+													<span>{{_ "meetings_invitations"}}</span>
+												</a>
+											</li>
+											<li role="separator" class="divider"></li>
+											<li>
+												<a class="calendar-menu edit-calendar">
+													<span>{{_ "edit_calendar"}}</span>
+												</a>
+											</li>
+											<li>
+												<a class="calendar-menu add-members-busy">
+													<span>{{_ "authorize_to_view_busy_status"}}</span>
+												</a>
+											</li>
+										</ul>
+									{{else}}
+										<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+											<span class="fa fa-ellipsis-h"></span>
+										</a>
+										<ul class="dropdown-menu dropdown-menu-right">
+											<li>
+												<a class="calendar-menu edit-calendar">
+													<span>{{_ "edit_calendar"}}</span>
+												</a>
+											</li>
+											{{#if isCalendarOwner}}
+												<li>
+													<a class="calendar-menu calendar-delete">
+														<span>{{_ "delete_calendar"}}</span>
+													</a>
+												</li>
+											{{/if}}
+										</ul>
+									{{/if}}
+								{{else}}
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="fa fa-ellipsis-h"></span>
+									</a>
+									<ul class="dropdown-menu dropdown-menu-right">
+										<li>
+											<a class="calendar-menu show-calendar">
+												<span>{{_ "view_details"}}</span>
+											</a>
+										</li>
+									</ul>
+								{{/if}}
+							</div>
+						</span>
+					</a>
+				</li>
+				{{/each}}
+				
+				{{#if subscribe.shares.length}}
+					<li class="header">{{_ "shared_calendars"}}</li>
+					{{#each subscribe.shares}}
+					<li class="{{calendarActive}}">
+						<a class="calendar-row subscribe-calendar">
+							<div class="check">
+								<i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
+							</div>
+							<span>
+								<span class="text-overflow calendar-name">{{calendarname}}</span>
+							</span>
+							<span class="pull-right-container">
+								<div class="operate-box">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="fa fa-ellipsis-h"></span>
+									</a>
+									<ul class="dropdown-menu dropdown-menu-right">
+										<li>
+											<a class="calendar-menu show-subscribe">
+												<span>{{_ "view_details"}}</span>
+											</a>
+										</li>
+										<li>
+											<a class="calendar-menu hide-subscribe"> 
+												<span>{{_ "cancel_subscribtion"}}</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</span>
+						</a>
+					</li>
+					{{/each}}
+				{{/if}}
 
-        <!-- <li>
-          <a class="calendar-row browse-invations">
-            <span>{{_ "your_meetings_invitations"}}</span>
-            <span class="pull-right-container count-container">
-              {{#if eventNeedOptionCounts}}
-                <span class="label pull-right bg-red">
-                  {{eventNeedOptionCounts}}
-                </span>
-              {{/if}}
-            </span>
-          </a>
-        </li> -->
+				{{#if subscribe.defaults.length}}
+					<li class="header">{{_ "calendar_others_default_calendar"}}</li>
+					{{#each subscribe.defaults}}
+					<li class="{{calendarActive}}">
+						<a class="calendar-row subscribe-calendar">
+							<div class="check">
+								<i class="ion {{#if isChecked}}ion-android-checkbox{{else}}ion-android-checkbox-outline-blank{{/if}}" style="color:{{color}};"></i>
+							</div>
+							<span>
+								<span class="text-overflow calendar-name">{{calendarname}}</span>
+							</span>
+							<span class="pull-right-container">
+								<div class="operate-box">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="fa fa-ellipsis-h"></span>
+									</a>
+									<ul class="dropdown-menu dropdown-menu-right">
+										<li>
+											<a class="calendar-menu show-subscribe">
+												<span>{{_ "view_details"}}</span>
+											</a>
+										</li>
+										<li>
+											<a class="calendar-menu hide-subscribe"> 
+												<span>{{_ "cancel_subscribtion"}}</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</span>
+						</a>
+					</li>
+					{{/each}}
+				{{/if}}
+			
+				<div style="display: none;">
+					{{#autoForm id='calendar-members-busy' schema=members_busyFields doc=values }}
+						{{> afFormGroup name="membersbusy" label=false}}
+					{{/autoForm}}
+				</div>
+			</ul>
 
-        <div style="display: none;">
-          {{#autoForm id='calendar-members-busy' schema=members_busyFields doc=values }}
-            {{> afFormGroup name="membersbusy" label=false}}
-          {{/autoForm}}
-        </div>
+			<div class="box box-solid invite-box div-resources" style="display: none;">
+				<div class="box-body no-padding">
+					<span class="pull-left span-resources">
+						{{#autoForm id='calendar-submembers' schema=add_membersFields doc=values }}
+							{{> afFormGroup name="addmembers" label=false}}
+						{{/autoForm}}
+					</span>
+					<span class="pull-right">
+						<label class="control-label text-light-blue resources-lbl"></label>
+					</span>
+				</div>
+			</div>
+		</section>
 
+		<div class="mobile-sync">
+			<i class="ion ion-android-sync"></i>{{_ "calendar_mobile_sync"}}
+		</div>
 
+	</aside>
+	{{> contentWrapperShadow}}
+	{{#afModal formId="calendarForm" class="btn btn-primary calendar-add hidden" collection="Calendars" operation="insert" buttonContent=afModalInsert meteormethod="calendarinsert" dialogClass="modal-lg modal-body-zoom"
+		template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+		{{_ "calendar_add_calendar"}}
+	{{/afModal}}
 
-      </ul>
-      <div class="box box-solid invite-box div-resources" style="display: none;">
-        <div class="box-body no-padding">
-          <span class="pull-left span-resources">
-            {{#autoForm id='calendar-submembers' schema=add_membersFields doc=values }}
-              {{> afFormGroup name="addmembers" label=false}}
-            {{/autoForm}}
-          </span>
-          <span class="pull-right">
-            <label class="control-label text-light-blue resources-lbl">
-              订阅
-            </label>
-          </span>
-        </div>
-      </div>
-    </section>
+	{{#afModal formId="editCalendarForm" class="btn btn-primary calendar-edit hidden" collection="Calendars" operation="update" buttonContent=afModalUpdate  dialogClass="modal-lg modal-body-zoom"
+		template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+		{{_ "calendar_edit_calendar"}}
+	{{/afModal}}
 
-    <!-- <div class="sidebar-bottom">
-      <a class="calendar-add">
-        <i class="fa fa-plus">
-          &nbsp;&nbsp;
-          <span>{{_ "calendar_add_calendar"}}</span>
-        </i>
-      </a>
-    </div> -->
+	{{#afModal class="btn btn-primary calendar-show hidden" collection="Calendars" operation="disabled" dialogClass="modal-lg modal-body-zoom" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+		{{_ "calendar_info_calendar"}}
+	{{/afModal}}
 
-  </aside>
-  {{> contentWrapperShadow}}
-  {{#afModal formId="calendarForm" class="btn btn-primary calendar-add hidden" collection="Calendars" operation="insert" buttonContent=afModalInsert meteormethod="calendarinsert" dialogClass="modal-lg modal-body-zoom"
-    template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
-    {{_ "calendar_add_calendar"}}
-  {{/afModal}}
-
-  {{#afModal formId="editCalendarForm" class="btn btn-primary calendar-edit hidden" collection="Calendars" operation="update" buttonContent=afModalUpdate  dialogClass="modal-lg modal-body-zoom"
-    template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
-    {{_ "calendar_edit_calendar"}}
-  {{/afModal}}
-
-  {{#afModal class="btn btn-primary calendar-show hidden" collection="Calendars" operation="disabled" dialogClass="modal-lg modal-body-zoom" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
-    {{_ "calendar_info_calendar"}}
-  {{/afModal}}
-
-  {{#afModal class="btn btn-primary subscribe-show hidden" collection="calendarsubscriptions" operation="update"  buttonContent=afModalUpdate  dialogClass="modal-body-zoom"
-    template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
-    {{_ "calendar_info_calendar"}}
-  {{/afModal}}
-
+	{{#afModal class="btn btn-primary subscribe-show hidden" collection="calendarsubscriptions" operation="update"  buttonContent=afModalUpdate  dialogClass="modal-body-zoom"
+		template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"}}
+		{{_ "calendar_info_calendar"}}
+	{{/afModal}}
 </template>

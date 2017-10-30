@@ -17,23 +17,20 @@ Calendar =
 			check = true
 		return check
 	addChange : (calendarId, objectUri, operation)->
-		userSpaces = db.space_users.find({user: Meteor.userId()},{field:{space:1}}).fetch()
-		userSpacesId =_.pluck(userSpaces,'space')
-		i=0
-		console.log userSpacesId.length
-		while i<userSpacesId.length
-			if Calendar.isLegalVersion(userSpacesId[i],"calendar.professional")
-				console.log "11111===="
-				oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
-				calendarchanges.direct.insert
-					uri:objectUri,
-					synctoken: oldsynctoken,
-					calendarid: calendarId,
-					operation: operation
-				Calendars.direct.update({_id:calendarId},{$set:{synctoken:oldsynctoken+1}});
-				break
-			console.log Calendar.isLegalVersion(userSpacesId[i],"calendar.professional")
-			i++
+		# userSpaces = db.space_users.find({user: Meteor.userId()},{field:{space:1}}).fetch()
+		# userSpacesId =_.pluck(userSpaces,'space')
+		# i=0
+		# while i<userSpacesId.length
+			# if Calendar.isLegalVersion(userSpacesId[i],"calendar.professional")
+		oldsynctoken = Calendars.findOne({_id:calendarId}).synctoken;
+		calendarchanges.direct.insert
+			uri:objectUri,
+			synctoken: oldsynctoken,
+			calendarid: calendarId,
+			operation: operation
+		Calendars.direct.update({_id:calendarId},{$set:{synctoken:oldsynctoken+1}});
+				# break
+			# i++
 	#被分享的成员比创建者多share_herf,share_displayname. 
 	#access对应 1 = owner, 2 = readonly, 3 = readwrite
 	addInstance : (memberid,doc,calendarid,steedosId,access,herf,displayname)->
@@ -94,10 +91,11 @@ Calendar =
 		daylight.addProperty("RDATE",new Date("1991-04-14T08:00:00"));
 		if doc.alarms !=undefined
 			doc.alarms.forEach (alarm)->
-				Alarm = vevent.addComponent('VALARM');
-				Alarm.addProperty("ACTION", 'DISPLAY');
-				Alarm.addProperty("TRIGGER;VALUE=DURATION", alarm);
-				Alarm.addProperty("DESCRIPTION","Default Mozilla Description"); 
+				if alarm!="Now"
+					Alarm = vevent.addComponent('VALARM');
+					Alarm.addProperty("ACTION", 'DISPLAY');
+					Alarm.addProperty("TRIGGER;VALUE=DURATION", alarm);
+					Alarm.addProperty("DESCRIPTION","Default Mozilla Description"); 
 		vevent.setDescription(doc.description);
 		vevent.addProperty("TRANSP","OPAQUE");#得改
 		vevent.addProperty("CREATED",new Date());
@@ -142,35 +140,39 @@ Calendar =
 		remindtimes=[]
 		if alarms
 			alarms.forEach (alarm)->
-				miliseconds=0
-				if alarm[2]=='T'
-					if alarm[alarm.length-1]=='M'
-						i=3 
-						mimutes=0
-						while i<alarm.length-1
-							mimutes=mimutes+alarm[i]*(Math.pow(10,alarm.length-2-i))
-							i++
-						miliseconds=mimutes*60*1000
-						remindtime=moment(start).utc().valueOf()-miliseconds
-					else if alarm[alarm.length-1]=='S'
-							remindtime=moment(start).utc().valueOf()
-						else 
+				if alarm!="Now"
+					miliseconds=0
+					if alarm[2]=='T'
+						if alarm[alarm.length-1]=='M'
 							i=3 
-							hours=0
+							mimutes=0
 							while i<alarm.length-1
-								hours=hours+alarm[i]*(Math.pow(10,alarm.length-2-i))
+								mimutes=mimutes+alarm[i]*(Math.pow(10,alarm.length-2-i))
 								i++
-							miliseconds=hours*60*60*1000
-							remindtime=moment(start).utc().valueOf()-miliseconds
-				else
-					i=2
-					days=0
-					while i<alarm.length-1
-						days=days+alarm[i]*(Math.pow(10,alarm.length-2-i))
-						i++
-					miliseconds=days*24*60*60*1000
+							miliseconds=mimutes*60*1000
+						else if alarm[alarm.length-1]=='S'
+								miliseconds = 0
+							else 
+								i=3 
+								hours=0
+								while i<alarm.length-1
+									hours=hours+alarm[i]*(Math.pow(10,alarm.length-2-i))
+									i++
+								miliseconds=hours*60*60*1000
+					else 
+						if alarm[alarm.length-1]=='D'
+							i=2
+							days=0
+							while i<alarm.length-1
+								days=days+alarm[i]*(Math.pow(10,alarm.length-2-i))
+								i++
+							miliseconds=days*24*60*60*1000
+						else if alarm[3] == 'D'
+								miliseconds = alarm[2]*24*60*60*1000+15*60*60*1000
+							else
+								miliseconds = 15*60*60*1000
 					remindtime=moment(start).utc().valueOf()-miliseconds
-				remindtimes.push remindtime
+					remindtimes.push remindtime
 		return remindtimes
 	bytesToUuid:(buf, offset)->
 		byteToHex = [];

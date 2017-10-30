@@ -20,14 +20,14 @@ EventDetailModal =
 			else
 				dp.format "YYYY-MM-DD HH:mm"
 				dp.date(dp.date())
-
+		Session.set "isAllDay",isAllDay	
 Template.event_detail_modal.onCreated ->
 	this.reactiveAttendees = new ReactiveVar()
 	this.reactiveRemindtimes = new ReactiveVar()
 	this.isChooseAMPM = false
+	Session.set("isAllDay", this.data?.allDay)
 
 Template.event_detail_modal.onRendered ->
-	$("#event_detail_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
 
 Template.event_detail_modal.helpers
 	formTitle:()->
@@ -87,9 +87,8 @@ Template.event_detail_modal.helpers
 		obj.tentativenum = 0 #不确定
 		obj.declinednum = 0
 		obj.actionnum = 0 #待回复
-		obj.curstat = ""
-		calendar = Calendars.findOne({_id:obj.calendarid}) 
-		if obj._id==obj.parentId and calendar
+		obj.curstat = "" 
+		if obj._id==obj.parentId and obj.ownerId==Meteor.userId()
 			obj.isOwner = "true"
 			obj.formOpt = "normal"
 		else
@@ -109,6 +108,19 @@ Template.event_detail_modal.helpers
 					when "TENTATIVE" then obj.tentativenum++
 					when "DECLINED" then obj.declinednum++
 					when "NEEDS-ACTION" then obj.actionnum++
+		try
+			alarms_value_options = Events._simpleSchema._schema.alarms.autoform.options().getProperty("value")
+			remove_v = []
+
+			obj.alarms?.forEach (v)->
+				if alarms_value_options.indexOf(v) < 0
+					remove_v.push(v)
+
+			remove_v.forEach (v)->
+					console.log("obj.alarms.remove", v)
+					obj.alarms.remove(obj.alarms.indexOf(v))
+		catch e
+			console.log e
 		return obj
 
 	isShowAddMembers: ()->
@@ -177,7 +189,7 @@ Template.event_detail_modal.events
 		if obj.calendarid != AutoForm.getFieldValue("calendarid","eventsForm")
 			if Session.get('defaultcalendarid') == AutoForm.getFieldValue("calendarid","eventsForm")
 				relatetodefaultcalendar = "Yes"
-			else if Session.get('defaultcalendarid')==obj.calendarid
+			else if Session.get('defaultcalendarid') == obj.calendarid
 					relatetodefaultcalendar = "No"
 		else
 			relatetodefaultcalendar = null
@@ -188,18 +200,32 @@ Template.event_detail_modal.events
 		if obj._id==obj.parentId
 			obj.calendarid = AutoForm.getFieldValue("calendarid","eventsForm")
 			obj.title = AutoForm.getFieldValue("title","eventsForm") 
-			obj.start = AutoForm.getFieldValue("start","eventsForm")
-			obj.end = AutoForm.getFieldValue("end","eventsForm")
 			obj.description = AutoForm.getFieldValue("description","eventsForm") || ""
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
 			obj.site = AutoForm.getFieldValue("site","eventsForm") || ""
 			obj.participation = AutoForm.getFieldValue("participation","eventsForm") || ""
 			obj.allDay = AutoForm.getFieldValue("allDay","eventsForm")
+			if obj.allDay
+				stHours = AutoForm.getFieldValue("start","eventsForm").getHours()
+				stMinutes = AutoForm.getFieldValue("start","eventsForm").getMinutes()
+				stSeconds = AutoForm.getFieldValue("start","eventsForm").getSeconds() 
+				obj.start = new Date(AutoForm.getFieldValue("start","eventsForm").getTime()-stHours*60*60*1000-stMinutes*60*1000-stSeconds*1000) 
+				endHours = AutoForm.getFieldValue("end","eventsForm").getHours()
+				endMinutes = AutoForm.getFieldValue("end","eventsForm").getMinutes()
+				endSeconds = AutoForm.getFieldValue("end","eventsForm").getSeconds() 
+				if AutoForm.getFieldValue("start","eventsForm").getDate() == AutoForm.getFieldValue("end","eventsForm").getDate()
+					obj.end = new Date(AutoForm.getFieldValue("end","eventsForm").getTime()-endHours*60*60*1000-endMinutes*60*1000-endSeconds*1000 + 24*60*60*1000)
+				else
+					obj.end = new Date(AutoForm.getFieldValue("end","eventsForm").getTime()-endHours*60*60*1000-endMinutes*60*1000-endSeconds*1000)
+			else
+				obj.start = AutoForm.getFieldValue("start","eventsForm")
+				obj.end = AutoForm.getFieldValue("end","eventsForm")
 		else
 			obj.alarms = AutoForm.getFieldValue("alarms","eventsForm") || []
+
 			
 		members = []
-		val=$('input:radio[name="optionsRadios"]:checked').val()
+		val = $('input:radio[name="optionsRadios"]:checked').val() || "NEEDS-ACTION"
 		description = $('textarea.description').val()
 		if val or description
 			responsetime = new Date()
