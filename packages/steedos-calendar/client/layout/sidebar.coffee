@@ -209,6 +209,9 @@ Template.calendarSidebar.events
 		$('.btn.calendar-show').click();
 	
 	'click .my-calendar': (event)->
+		if Steedos.isMobile()
+			# 手机上可能菜单展开了，需要额外收起来
+			$("body").removeClass("sidebar-open")
 		event.stopPropagation()
 		event.preventDefault()
 		currentCalendarid = Session.get("calendarid")
@@ -222,6 +225,9 @@ Template.calendarSidebar.events
 			FlowRouter.go("/calendar/")
 
 	'click .subscribe-calendar': (event)->
+		if Steedos.isMobile()
+			# 手机上可能菜单展开了，需要额外收起来
+			$("body").removeClass("sidebar-open")
 		event.stopPropagation()
 		event.preventDefault()
 		$(".dropdown-menu").removeClass("show-dropdown-menu")
