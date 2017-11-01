@@ -93,9 +93,10 @@ Template.event_detail_modal.helpers
 		admins = calendarobj.admins 
 		if admins.indexOf(calendarobj.ownerId)<0
 			admins.push calendarobj.ownerId
-		if obj._id==obj.parentId and calendarobj.admins.indexOf(Meteor.userId())>=0
-			obj.isOwner = "true"
-			obj.formOpt = "normal"
+		if obj._id==obj.parentId
+			if calendarobj.admins.indexOf(Meteor.userId())>=0 || obj.ownerId==Meteor.userId()
+				obj.isOwner = "true"
+				obj.formOpt = "normal"
 		else
 			obj.isOwner = "false"
 			obj.formOpt = "disabled"
