@@ -90,7 +90,7 @@ Template.event_detail_modal.helpers
 		obj.actionnum = 0 #待回复
 		obj.curstat = "" 		
 		calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1,ownerId:1}})
-		admins = calendarobj.admins 
+		admins = calendarobj.admins || []		
 		if admins.indexOf(calendarobj.ownerId)<0
 			admins.push calendarobj.ownerId
 		if obj._id==obj.parentId
