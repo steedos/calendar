@@ -43,7 +43,8 @@ Template.event_detail_modal.helpers
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
-		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0  
+		calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1}})
+		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0 || calendarobj.admins.indexOf(Meteor.userId())>=0 
 			if calendarIds.indexOf(obj.calendarid)>=0
 				return true
 			else
@@ -87,8 +88,12 @@ Template.event_detail_modal.helpers
 		obj.tentativenum = 0 #不确定
 		obj.declinednum = 0
 		obj.actionnum = 0 #待回复
-		obj.curstat = "" 
-		if obj._id==obj.parentId and obj.ownerId==Meteor.userId()
+		obj.curstat = "" 		
+		calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1,ownerId:1}})
+		admins = calendarobj.admins 
+		if admins.indexOf(calendarobj.ownerId)<0
+			admins.push calendarobj.ownerId
+		if obj._id==obj.parentId and calendarobj.admins.indexOf(Meteor.userId())>=0
 			obj.isOwner = "true"
 			obj.formOpt = "normal"
 		else
