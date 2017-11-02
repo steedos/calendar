@@ -196,6 +196,7 @@ Template.calendarSidebar.events
 	'click .main-sidebar .calendar-add': (event)->
 		Session.set("cmDoc",{})
 		Session.set("adminsEditable",true)
+		Session.set("titleEditable",true)
 		$('.btn.calendar-add').click();
 
 	'click .edit-calendar': (event)->
@@ -210,6 +211,10 @@ Template.calendarSidebar.events
 			Session.set("adminsEditable",true)
 		else
 			Session.set("adminsEditable",false)
+		if this.isDefault
+			Session.set("titleEditable",true)
+		else
+			Session.set("titleEditable",false)
 		$('.btn.calendar-edit').click();
 
 	'click .show-calendar': (event)->
