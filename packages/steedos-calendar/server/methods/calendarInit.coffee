@@ -1,12 +1,14 @@
 Meteor.methods
 	calendarInit: (userId,timezone) ->
-		if Calendars.find({"ownerId":userId},{"isDefault":true}).count()==0
+		
+		if Calendars.find({"ownerId":userId,"isDefault":true}).count()==0
 			name=Meteor.users.findOne({_id:userId},{field:{name:1}})?.name
 			if !name
 				name="未命名"
 			doc =
 				title:name,
 				members:[userId],
+				admins:[userId],
 				visibility:"private",
 				color:CALENDARCOLORS[parseInt(10000*Math.random())%7],
 				ownerId:userId,
