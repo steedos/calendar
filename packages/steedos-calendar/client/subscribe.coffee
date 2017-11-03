@@ -136,11 +136,13 @@ Tracker.autorun (c) ->
 	userId = Meteor.userId()
 	calendarid = Session.get("defaultcalendarid")
 	today = moment(moment().format("YYYY-MM-DD 00:00")).toDate()
+	endLine = moment().toDate()
 	if calendarid and calendarsSub.ready()
 		selector = 
 		{
 			calendarid: calendarid,
 			start: {$gte:today},
+			end: {$gte: endLine},
 			"attendees": {
 				$elemMatch: {
 					id: userId,

@@ -6,10 +6,12 @@ Template.eventPending.helpers
 	EventListSelector :()->
 		calendarid = Session.get "defaultcalendarid"
 		userId = Meteor.userId();
+		endLine = moment().toDate()
 		if calendarid
 			query = 
 				{
 					calendarid: calendarid,
+					end: {$gte: endLine},
 					"attendees": {
 						$elemMatch: {
 							id: userId,
