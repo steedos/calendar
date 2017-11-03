@@ -91,7 +91,7 @@ Events._simpleSchema = new SimpleSchema
 					]
 				else
 					options=[
-						{label: t("events_alarms_label_immediately"),value:"Now"},
+						#label: t("events_alarms_label_immediately"),value:"Now"},
 						{label: t("events_alarms_label_when_events_occur"), value: "-PT0S"},
 						{label: t("events_alarms_label_5_minutes_before"), value: "-PT5M"},
 						{label: t("events_alarms_label_10_minutes_before"), value: "-PT10M"},
