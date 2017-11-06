@@ -52,7 +52,21 @@ Meteor.methods
 					payload: payload
 					badge: 12
 					query: {userId:attendeeid,appName:"calendar"}
-
+				user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
+				lang = 'en'
+				if user.locale is 'zh-cn'
+					lang = 'zh-CN'
+				# 发送手机短信
+				if doc.alarms.indexOf("Now")>=0
+					SMSQueue.send
+						Format: 'JSON',
+						Action: 'SingleSendSms',
+						ParamString: '',
+						RecNum: user.mobile,
+						SignName: '华炎办公',
+						TemplateCode: 'SMS_67200967',
+						#msg: TAPi18n.__('sms.remind.template', {instance_name: obj.title, deadline: obj.time, open_app_url: obj.site}, lang)
+						msg: TAPi18n.__('sms.calendar_event', {event_action: "会议取消",event_title:obj.title, event_time: obj.start, event_location: obj.site}, lang)
 			#新加的attendees需要新建event
 			doc=Calendar.addCalendarObjects(obj.ownerId,obj,operation);	
 			addattendeesid.forEach (attendeeid)->
@@ -109,7 +123,21 @@ Meteor.methods
 					payload: payload
 					badge: 12
 					query: {userId:attendeeid,appName:"calendar"}
-
+				user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
+				lang = 'en'
+				if user.locale is 'zh-cn'
+					lang = 'zh-CN'
+				# 发送手机短信
+				if doc.alarms.indexOf("Now")>=0
+					SMSQueue.send
+						Format: 'JSON',
+						Action: 'SingleSendSms',
+						ParamString: '',
+						RecNum: user.mobile,
+						SignName: '华炎办公',
+						TemplateCode: 'SMS_67200967',
+						#msg: TAPi18n.__('sms.remind.template', {instance_name: doc.title, deadline: doc.time, open_app_url: doc.site}, lang)
+						msg: TAPi18n.__('sms.calendar_event', {event_action: "会议邀请",event_title:doc.title, event_time: doc.start, event_location: doc.site}, lang)
 			updateattendeesid.forEach (attendeeid)->
 				if attendeeid==obj.ownerId and obj._id==obj.parentId
 					Events.direct.update {_id:obj._id}, {$set: 
@@ -136,7 +164,21 @@ Meteor.methods
 					payload: payload
 					badge: 12
 					query: {userId:attendeeid,appName:"calendar"}
-
+				user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
+				lang = 'en'
+				if user.locale is 'zh-cn'
+					lang = 'zh-CN'
+				# 发送手机短信
+				if doc.alarms.indexOf("Now")>=0
+					SMSQueue.send
+						Format: 'JSON',
+						Action: 'SingleSendSms',
+						ParamString: '',
+						RecNum: user.mobile,
+						SignName: '华炎办公',
+						TemplateCode: 'SMS_67200967',
+						#msg: TAPi18n.__('sms.remind.template', {instance_name: doc.title, deadline: doc.time, open_app_url: doc.site}, lang)
+						msg: TAPi18n.__('sms.calendar_event', {event_action: "会议变更",event_title:doc.title, event_time: doc.start, event_location: doc.site}, lang)
 			Events.direct.update {parentId:obj.parentId}, {$set: 
 				title:doc.title,
 				start:doc.start,
