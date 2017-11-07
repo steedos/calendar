@@ -32,7 +32,7 @@ Meteor.methods
 					if user.locale is 'zh-cn'
 						lang = 'zh-CN'
 					# 发送手机短信
-					if doc.alarms.indexOf("Now")>=0
+					if obj.alarms.indexOf("Now")>=0
 						SMSQueue.send
 							Format: 'JSON',
 							Action: 'SingleSendSms',
@@ -41,7 +41,7 @@ Meteor.methods
 							SignName: '华炎办公',
 							TemplateCode: 'SMS_67200967',
 							#msg: TAPi18n.__('sms.remind.template', {instance_name: obj.title, deadline: obj.start, open_app_url: obj.site}, lang)
-							msg: TAPi18n.__('sms.calendar_event', {event_action: "会议取消",event_title:doc.title, event_time: doc.start, event_location: doc.site}, lang)
+							msg: TAPi18n.__('sms.calendar_event', {event_action: "会议取消",event_title:obj.title, event_time: obj.start, event_location: obj.site}, lang)
 					calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
 					event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
 					if event.length!=0
