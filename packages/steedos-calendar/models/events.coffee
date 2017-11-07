@@ -102,7 +102,10 @@ Events._simpleSchema = new SimpleSchema
 						{label: t("events_alarms_label_24_hours_before"), value: "-P1D"},
 						{label: t("events_alarms_label_48_hours_before"), value: "-P2D"}
 					]
-				return options
+				return options			
+			defaultValue:()->
+				if !Session?.get("isAllDay")
+					return "-PT15M"
 			sortMethod:"x"
 	calendarid:
 		type: String,
