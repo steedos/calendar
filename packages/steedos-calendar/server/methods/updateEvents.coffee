@@ -33,7 +33,7 @@ Meteor.methods
 				Calendar.addChange(calendarid,event[0]?.uri,3);
 
 				payload = 
-					app: 'calendar'
+					app: 'workflow'
 					id: attendeeid
 				start = moment(obj.start).format("YYYY-MM-DD HH:mm")
 				site = obj.site || ""
@@ -46,12 +46,12 @@ Meteor.methods
 				Push.send
 					createdAt: new Date()
 					createdBy: '<SERVER>'
-					from: 'calendar',
+					from: 'workflow',
 					title: title,
 					text: text,
 					payload: payload
 					badge: 12
-					query: {userId:attendeeid,appName:"calendar"}
+					query: {userId:attendeeid,appName:"workflow"}
 				user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
 				lang = 'en'
 				if user.locale is 'zh-cn'
@@ -104,7 +104,7 @@ Meteor.methods
 					Calendar.addChange(calendar._id,_id+".ics",2);
 
 				payload = 
-					app: 'calendar'
+					app: 'workflow'
 					id: attendeeid
 				start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 				site = doc.site || ""
@@ -117,12 +117,12 @@ Meteor.methods
 				Push.send
 					createdAt: new Date()
 					createdBy: '<SERVER>'
-					from: 'calendar',
+					from: 'workflow',
 					title: title,
 					text: text,
 					payload: payload
 					badge: 12
-					query: {userId:attendeeid,appName:"calendar"}
+					query: {userId:attendeeid,appName:"workflow"}
 				user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
 				lang = 'en'
 				if user.locale is 'zh-cn'
@@ -145,7 +145,7 @@ Meteor.methods
 					#Calendar.addChange(doc.calendarid,doc.uri,2)
 
 				payload = 
-					app: 'calendar'
+					app: 'workflow'
 					id: attendeeid
 				start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 				site = doc.site || ""
@@ -158,12 +158,12 @@ Meteor.methods
 				Push.send
 					createdAt: new Date()
 					createdBy: '<SERVER>'
-					from: 'calendar',
+					from: 'workflow',
 					title: title,
 					text: text,
 					payload: payload
 					badge: 12
-					query: {userId:attendeeid,appName:"calendar"}
+					query: {userId:attendeeid,appName:"workflow"}
 				user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
 				lang = 'en'
 				if user.locale is 'zh-cn'

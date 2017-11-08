@@ -8,7 +8,7 @@ Meteor.methods
 				attendeesid=_.pluck(obj.attendees,'id');
 				attendeesid.forEach (attendeeid)->
 					payload = 
-						app: 'calendar'
+						app: 'workflow'
 						id: attendeeid
 					start = moment(obj.start).format("YYYY-MM-DD HH:mm")
 					site = obj.site || ""
@@ -21,12 +21,12 @@ Meteor.methods
 					Push.send
 						createdAt: new Date()
 						createdBy: '<SERVER>'
-						from: 'calendar',
+						from: 'workflow',
 						title: title,
 						text: text,
 						payload: payload
 						badge: 12
-						query: {userId:attendeeid,appName:"calendar"}
+						query: {userId:attendeeid,appName:"workflow"}
 					user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
 					lang = 'en'
 					if user.locale is 'zh-cn'

@@ -67,7 +67,6 @@ Package.onUse(function(api) {
     api.use('steedos:i18n@0.0.11');
     api.use('steedos:calendar-i18n@0.0.13');
     api.use('steedos:autoform@0.0.1');
-
     api.use('steedos:autoform-modals@0.3.9_6');
 
     api.use('raix:push@3.0.2');
@@ -121,6 +120,7 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/updateinstances.coffee', 'server');
     api.addFiles('server/methods/eventInit.coffee', 'server');
     api.addFiles('server/methods/davModifiedEvent.coffee', 'server');
+    api.addFiles('server/methods/alarmPush.coffee', 'server');
     api.addFiles('server/methods/subCalendar.coffee', 'server');
     api.addFiles('server/methods/shareCalendar.coffee', 'server');
     api.addFiles('server/methods/removeSubCalendars.coffee', 'server');

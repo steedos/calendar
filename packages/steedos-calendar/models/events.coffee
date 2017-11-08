@@ -158,7 +158,7 @@ Events._simpleSchema = new SimpleSchema
 				return Session.get('userId')	
 	
 	remindtimes:
-		type: [String],
+		type: [Number],
 		optional: true
 		autoform:
 			omit:true
