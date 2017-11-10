@@ -107,6 +107,31 @@ Events._simpleSchema = new SimpleSchema
 				if !Session?.get("isAllDay")
 					return "-PT15M"
 			sortMethod:"x"
+	
+	site:
+		type: String,
+		optional: true
+
+	participation:
+		type: String,
+		optional: true
+				
+	
+	description:
+		type: String,
+		# label:t("calendar_event_description")
+		optional: true,
+		autoform:
+			rows:2
+
+	ownerId:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true,
+			defaultValue:->
+				return Session.get('userId')	
+	
 	calendarid:
 		type: String,
 		# label:t("calendar_event_calendar")
@@ -133,30 +158,6 @@ Events._simpleSchema = new SimpleSchema
 							value: calendarObj._id
 				return options
 
-	site:
-		type: String,
-		optional: true
-
-	participation:
-		type: String,
-		optional: true
-				
-	
-	description:
-		type: String,
-		# label:t("calendar_event_description")
-		optional: true,
-		autoform:
-			rows:2
-
-	ownerId:
-		type: String,
-		optional: true
-		autoform: 
-			omit: true,
-			defaultValue:->
-				return Session.get('userId')	
-	
 	remindtimes:
 		type: [Number],
 		optional: true
