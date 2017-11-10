@@ -214,9 +214,25 @@ if (Meteor.isServer)
 		calendarinstances.remove({"calendarid" : doc._id}); 
 		return
 
-	Calendars.after.remove (userId, doc)->
-		
+	Calendars.after.remove (userId, doc)->		
 		return
+	if Meteor.isServer
+		Calendars._ensureIndex({
+			"_id": 1
+		})
+		Calendars._ensureIndex({
+			"ownerId": 1,
+			"isDefault":1
+		},{background: true})
+		Calendars._ensureIndex({
+			"_id":1,
+			"ownerId": 1
+		},{background: true})
+		Calendars._ensureIndex({
+			"ownerId": 1,
+			"members":1
+		},{background: true})
+		
 
 
 

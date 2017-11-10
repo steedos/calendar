@@ -45,4 +45,17 @@ if (Meteor.isServer)
 
 		remove: (userId, doc) ->
 			return true
-
+if Meteor.isServer
+	calendarsubscriptions._ensureIndex({
+			"uri":1,
+			"principaluri": 1
+		},{background: true})
+	calendarsubscriptions._ensureIndex({
+			"uri":1
+		},{background: true})
+	calendarsubscriptions._ensureIndex({
+			"_id":1
+		})
+	calendarsubscriptions._ensureIndex({
+			"principaluri":1
+		},{background: true})

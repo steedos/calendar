@@ -311,3 +311,29 @@ if (Meteor.isServer)
 	#删除后的操作，同时删除关联的event事件  after delet
 	Events.before.remove (userId, doc)->
 		return
+if Meteor.isServer
+	Events._ensureIndex({
+			"end": 1,
+			"remindtimes":1
+		},{background: true})
+	Events._ensureIndex({
+			"_id": 1,
+		})
+	Events._ensureIndex({
+			"Isdavmodified": 1,
+			"componenttype":1
+		},{background: true})
+	Events._ensureIndex({
+			"uid": 1
+		},{background: true})
+	Events._ensureIndex({
+			"parentId": 1,
+			"calendarid":1
+		},{background: true})
+	Events._ensureIndex({
+			"parentId": 1
+		},{background: true})
+	Events._ensureIndex({
+			"calendarid": 1,
+			"start":1
+		},{background: true})

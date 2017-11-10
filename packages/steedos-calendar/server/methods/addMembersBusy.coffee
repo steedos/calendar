@@ -6,7 +6,7 @@ Meteor.methods
 		subMembersBusy = _.difference(oldMembersBusy,newMembersBusy)
 		if subMembersBusy.length > 0
 			subMembersBusy.forEach (submember,index) ->
-				calendarsubscriptions.remove({principaluri:submember,uri:defaultcalendarid})
+				calendarsubscriptions.remove({uri:defaultcalendarid,principaluri:submember})
 		Calendars.update(
 			{_id: defaultcalendarid},
 			{
