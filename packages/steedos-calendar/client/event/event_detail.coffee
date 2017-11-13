@@ -65,7 +65,7 @@ Template.event_detail_modal.helpers
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
 		calendarObj=Calendars.findOne({_id:obj.calendarid})
-		if calendarObj.isDefault and attendeesIds.length==1 and Meteor.userId() == obj.ownerId and obj.attendees[0].partstat=='ACCEPTED'
+		if calendarObj.isDefault and attendeesIds.length==1 and Meteor.userId() == obj.ownerId and obj.attendees[0].partstat=='ACCEPTED' and obj._id == obj.parentId
 			return "none"
 		if attendeesIds.indexOf(Meteor.userId())<0
 			return "none"
