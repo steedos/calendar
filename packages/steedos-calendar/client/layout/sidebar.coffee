@@ -214,9 +214,9 @@ Template.calendarSidebar.events
 		else
 			Session.set("adminsEditable",false)
 		if this.isDefault
-			Session.set("titleEditable",true)
-		else
 			Session.set("titleEditable",false)
+		else
+			Session.set("titleEditable",true)
 		$('.btn.calendar-edit').click();
 
 	'click .show-calendar': (event)->

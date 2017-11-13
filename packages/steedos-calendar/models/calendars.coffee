@@ -10,7 +10,7 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			type:"text"
 			disabled: ()->
-				return Session.get("titleEditable")
+				return !Session.get("titleEditable")
 			defaultValue: ->
 				return t("calendar_add_calendar")
 
@@ -19,8 +19,8 @@ Calendars._simpleSchema = new SimpleSchema
 		optional: true,
 		autoform:
 			disabled: ()->
-				if Session.get("titleEditable")
-					return Session.get("titleEditable")
+				if !Session.get("titleEditable")
+					return !Session.get("titleEditable")
 				else
 					return !Session.get("adminsEditable")
 			type: "selectuser"
@@ -37,7 +37,7 @@ Calendars._simpleSchema = new SimpleSchema
 		autoform:
 			type: "selectuser"
 			disabled: ()->
-				return Session.get("titleEditable")
+				return !Session.get("titleEditable")
 			multiple: true
 			is_within_user_organizations: ->
 				is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
