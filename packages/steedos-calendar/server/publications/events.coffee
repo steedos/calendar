@@ -19,4 +19,6 @@ Meteor.publish "calendar_objects", (params)->
 				allDay:1,
 				alarms:1,
 				parentId:1,
-				remindtimes:1
+				remindtimes:1,
+				participation:1,
+				description:1
