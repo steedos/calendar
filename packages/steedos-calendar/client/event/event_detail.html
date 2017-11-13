@@ -11,38 +11,17 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-
-					<div class="col-md-8 col-sm-12 event-left-content">
-						<div class="feadback well" style="display: {{showActionBox}}">
-							<table role="form" aria-label='{{_ "calendar_event_feadback"}}'>
-								<tbody>
-									<tr>
-										<td valign="top" class="col-md-3 col-sm-4 col-xs-4">
-											<span class="feadback-title">{{_ "calendar_event_answer"}}</span>
-										</td>
-										<td valign="top" class="col-md-3 col-sm-8 col-xs-8" role="menu">
-											<div class="feadback-options text-light-blue">
-												<label>
-													<input type="radio" name="optionsRadios" id="optionsRadios1" value="ACCEPTED" {{accendeeState "ACCEPTED"}}>
-													<span>{{_ "calendar_event_accepted"}}</span>
-												</label>
-												<label>
-													<input type="radio" name="optionsRadios" id="optionsRadios2" value="TENTATIVE" {{accendeeState "TENTATIVE"}}>
-													<span>{{_ "calendar_event_tentative"}}</span>
-												</label>
-												<label>
-													<input type="radio" name="optionsRadios" id="optionsRadios3" value="DECLINED" {{accendeeState "DECLINED"}}>
-													<span>{{_ "calendar_event_declined"}}</span>
-												</label>
-											</div>
-										</td>
-										<td class="col-md-6 col-sm-12 col-xs-12">
-											<textarea rows="3" placeholder='{{_ "calendar_event_note"}}' class="description form-control">{{eventObj.reason}}</textarea>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+					<div class="feadback well col-sm-12" style="display: {{showActionBox}}">
+						<div class="col-md-8 feadback-container">
+							<label class="col-sm-3 control-label feadback-title">{{_ "calendar_event_answer"}}</label>
+							<div class="col-sm-9">
+								<button type="button" class="btn btn-sm part-option {{#if partState 'ACCEPTED'}}un-select{{/if}}" value="ACCEPTED">{{_ "calendar_event_accepted"}}</button>
+								<button type="button" class="btn btn-sm part-option {{#if partState 'TENTATIVE'}}un-select{{/if}}" value="TENTATIVE">{{_ "calendar_event_tentative"}}</button>
+								<button type="button" class="btn btn-sm part-option {{#if partState 'DECLINED'}}un-select{{/if}}" value="DECLINED">{{_ "calendar_event_declined"}}</button>
+							</div>
 						</div>
+					</div>
+					<div class="col-md-8 col-sm-12 event-left-content">
 						<div class="event-content-form">
 							{{#autoForm id="eventsForm" collection="Events" doc=eventObj type=eventObj.formOpt omitFields="members"  disabled=isAlarmDisabled}}
 								{{> afQuickFields template="bootstrap3-horizontal" label-class="col-sm-3" input-col-class="col-sm-9"}}

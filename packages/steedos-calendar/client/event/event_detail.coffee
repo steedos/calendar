@@ -26,6 +26,13 @@ Template.event_detail_modal.onCreated ->
 	this.reactiveRemindtimes = new ReactiveVar()
 	this.isChooseAMPM = false
 	Session.set("isAllDay", this.data?.allDay)
+	eventObj = Template.instance().data
+	state = "NEEDS-ACTION"
+	if eventObj?.attendees
+		eventObj.attendees.forEach (attendee)->
+			if attendee.id == Meteor.userId()
+				state = attendee.partstat
+	this.partState = new ReactiveVar(state)
 
 Template.event_detail_modal.onRendered ->
 
@@ -176,7 +183,18 @@ Template.event_detail_modal.helpers
 		else if option == "click"
 			return true
 
+	partState: (state)->
+		if state == Template.instance().partState.get()
+			return false
+		else
+			return true
+
 Template.event_detail_modal.events
+	'click .part-option': (event, template) ->
+		$(event.currentTarget).removeClass("un-select")
+		option = event.currentTarget.value
+		template.partState.set(option)
+
 	'click button.delete_events': (event, template)->
 		obj = template.data
 		Meteor.call('removeEvents',obj,
@@ -231,7 +249,7 @@ Template.event_detail_modal.events
 
 			
 		members = []
-		val = $('input:radio[name="optionsRadios"]:checked').val() || "NEEDS-ACTION"
+		val = template.partState.get()
 		description = $('textarea.description').val()
 		if val or description
 			responsetime = new Date()
