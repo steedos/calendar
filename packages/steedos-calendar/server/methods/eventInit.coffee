@@ -62,10 +62,10 @@ Meteor.methods
 					#msg: TAPi18n.__('sms.remind.template', {instance_name: doc.title, deadline: doc.start, open_app_url: doc.site}, lang)
 					msg: TAPi18n.__('sms.calendar_event', {event_action: "会议邀请",event_title:doc.title, event_time: doc.start, event_location: doc.site}, lang)
 		attendeesid.forEach (attendeeid)->
-				calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})				
+				calendar=Calendars.findOne({ownerId:attendeeid,isDefault:true}, {fields:{_id: 1,color:1}})				
 				if calendar==undefined
 					Meteor.call('calendarInit',attendeeid,Defaulttimezone);
-					calendar=Calendars.findOne({ownerId:attendeeid},{isDefault:true}, {fields:{_id: 1,color:1}})			
+					calendar=Calendars.findOne({ownerId:attendeeid,isDefault:true}, {fields:{_id: 1,color:1}})			
 				if  doc.calendarid!=calendar?._id
 					_id = Calendar.uuid()
 		#calendar=Calendars.findOne({ownerId:userId},{isDefault:true}, {fields:{_id: 1,color:1}})

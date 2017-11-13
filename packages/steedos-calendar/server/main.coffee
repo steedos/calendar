@@ -70,7 +70,8 @@ Calendar =
 	addEvent :(userId, doc)->
 		ical = new icalendar.iCalendar();
 		vevent = new icalendar.VEvent(doc.uid);
-		timezone=Calendars.findOne({_id:doc.calendarid}).timezone;
+		#timezone=Calendars.findOne({_id:doc.calendarid}).timezone;
+		timezone = moment_timezone.tz.guess()
 		zones=moment_timezone.tz.zone(timezone);
 		zone_name = zones.name
 		vtimezone=ical.addComponent('VTIMEZONE');
