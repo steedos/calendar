@@ -8,7 +8,7 @@ Meteor.methods
 				attendeesid=_.pluck(obj.attendees,'id');
 				currenttime = new Date()
 				attendeesid.forEach (attendeeid)->
-					if obj.attendees[attendeesid.indexOf(attendeeid)].partstat == 'ACCEPTED' and obj.end - currenttime>0
+					if obj.attendees[attendeesid.indexOf(attendeeid)].partstat == 'ACCEPTED' and obj.end - currenttime>0						
 						payload = 
 							app: 'workflow'
 							id: attendeeid
@@ -31,7 +31,7 @@ Meteor.methods
 							query: {userId:attendeeid,appName:"workflow"}
 						#userPush = db._raix_push_app_tokens.find({userId:attendeeid,appName:"workflow"})
 						userPush = []
-						userPush = Push.appCollection.find({userId:attendeeid,appName:"workflow"})
+						userPush = Push.appCollection.find({userId:attendeeid,appName:"workflow"}).fetch()
 						if userPush.length==0
 							user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
 							lang = 'en'
@@ -46,9 +46,8 @@ Meteor.methods
 									RecNum: user.mobile,
 									SignName: '华炎办公',
 									TemplateCode: 'SMS_67200967',
-									#msg: TAPi18n.__('sms.remind.template', {instance_name: obj.title, deadline: obj.start, open_app_url: obj.site}, lang)
-									msg: TAPi18n.__('sms.calendar_event.template', {event_action: "会议取消",event_title:obj.title, event_time: obj.start, event_location: obj.site}, lang)
-					calendarid=Calendars.findOne({ownerId:attendeeid},{isDefault:true})._id
+									msg: TAPi18n.__('sms.calendar_event.template', {event_action: "会议取消",event_title:obj.title, event_time:start, event_location: obj.site}, lang)
+					calendarid=Calendars.findOne({ownerId:attendeeid,isDefault:true})._id
 					event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
 					if event.length!=0
 						Events.direct.remove({parentId:obj._id,calendarid:calendarid})
