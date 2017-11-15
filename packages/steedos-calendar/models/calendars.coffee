@@ -185,12 +185,12 @@ if (Meteor.isServer)
 		addMembers = _.difference newMembers,oldMembers
 		subMembers = _.difference oldMembers,newMembers
 		for member, i in subMembers
-			steedosId = Meteor.users.findOne({_id:member})?.steedos_id
+			steedosId = Meteor.users.findOne({_id:member})?.email
 			calendarinstances.remove({"share_displayname":steedosId,"calendarid":doc._id});
 		for member ,i in addMembers
 			member = addMembers[i]
 			if member != doc.ownerId
-				steedosId = Meteor.users.findOne({_id:member})?.steedos_id
+				steedosId = Meteor.users.findOne({_id:member})?.email
 				herf="mailto:" + steedosId;
 				displayname=steedosId;
 				Calendar.addInstance(member,modifier.$set,doc._id,steedosId,2,herf,displayname);

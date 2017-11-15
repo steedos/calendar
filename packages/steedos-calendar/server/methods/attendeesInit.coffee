@@ -9,7 +9,7 @@ Meteor.methods
 		addmembers.forEach (addmember)->
 			if _.indexOf(attendeesid, addmember)==-1
 				partstat="NEEDS-ACTION"
-				steedosId=Meteor.users.findOne({_id:addmember},{field:{steedos_id:1}})?.steedos_id
+				steedosId=Meteor.users.findOne({_id:addmember},{field:{steedos_id:1}})?.email
 				name=Meteor.users.findOne({_id:addmember}).name
 				attendee = {
 					role:"REQ-PARTICIPANT",
