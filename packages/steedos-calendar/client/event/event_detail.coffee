@@ -50,18 +50,21 @@ Template.event_detail_modal.helpers
 		calendars=Calendars.find().fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
-		calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1}})
-		if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0 || calendarobj.admins.indexOf(Meteor.userId())>=0 
-			if calendarIds.indexOf(obj.calendarid)>=0
-				return true
-			else
-				return false
+		calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1,ownerId:1}})
+		admins = calendarobj.admins || []
+		if admins.indexOf(calendarobj.ownerId)<0
+			admins.push calendarobj.ownerId
+		#if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0
+		if calendarIds.indexOf(obj.calendarid)>=0 and admins.indexOf(Meteor.userId())>=0 
+			return true
 		else
 			return false
+		# else
+		# 	return false
 
 	showActionBox:()->
 		obj = Template.instance().data
-		calendars=Calendars.find().fetch()
+		calendars=Calendars.find({isDefault:true}).fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
 		calendarObj=Calendars.findOne({_id:obj.calendarid})
@@ -97,13 +100,16 @@ Template.event_detail_modal.helpers
 		obj.actionnum = 0 #待回复
 		obj.curstat = "" 		
 		calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1,ownerId:1}})
-		admins = calendarobj.admins || []		
+		admins = calendarobj.admins || []
 		if admins.indexOf(calendarobj.ownerId)<0
 			admins.push calendarobj.ownerId
 		if obj._id==obj.parentId
 			if admins.indexOf(Meteor.userId())>=0 || obj.ownerId==Meteor.userId()
 				obj.isOwner = "true"
 				obj.formOpt = "normal"
+			else
+				obj.isOwner = "false"
+				obj.formOpt = "disabled"
 		else
 			obj.isOwner = "false"
 			obj.formOpt = "disabled"
@@ -160,8 +166,11 @@ Template.event_detail_modal.helpers
 
 	isAlarmDisabled: ()->
 		obj = Template.instance().data
-		calendar = Calendars.findOne({_id:obj.calendarid})
-		if calendar
+		calendar = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1,ownerId:1}})
+		admins = calendar?.admins || []
+		if admins.indexOf(calendar.ownerId)<0
+			admins.push calendar.ownerId
+		if admins.indexOf(Meteor.userId())>=0 
 			return false
 		else
 			return true
