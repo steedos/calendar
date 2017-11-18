@@ -9,14 +9,14 @@ Npm.depends({
     'icalendar': '0.7.1',
     'ical.js': '1.2.2',
     'MD5': '1.3.0',
-    'moment-timezone': '0.5.13',
+    'moment-timezone': '0.5.13'
 });
 
 Package.onUse(function(api) {
     api.versionsFrom('1.0');
 
     api.use('ecmascript@0.6.3');
-
+    api.use('steedos:smsqueue@0.0.1');
     api.use('reactive-var@1.0.10');
     api.use('reactive-dict@1.1.8');
     api.use('coffeescript@1.11.1_4');
@@ -68,7 +68,6 @@ Package.onUse(function(api) {
     api.use('steedos:calendar-i18n@0.0.14');
     api.use('steedos:autoform@0.0.1');
     api.use('steedos:autoform-modals@0.3.9_6');
-
     api.use('raix:push@3.0.2');
 
     api.addFiles('client/event/event.html', 'client');
@@ -130,6 +129,7 @@ Package.onUse(function(api) {
     api.addFiles('server/methods/addMembersBusy.coffee', 'server');
     api.addFiles('server/methods/updateSubcalendar.coffee', 'server');
     api.addFiles('server/methods/updateMembersBusy.coffee', 'server');
+    api.addFiles('server/methods/eventNotification.coffee', 'server');
     api.addFiles('server/publications/calendars.coffee', 'server');
     api.addFiles('server/publications/events.coffee', 'server');
     api.addFiles('server/publications/subcalendars.coffee', 'server');

@@ -9,44 +9,7 @@ Meteor.methods
 				currenttime = new Date()
 				attendeesid.forEach (attendeeid)->
 					if obj.attendees[attendeesid.indexOf(attendeeid)].partstat == 'ACCEPTED' and obj.end - currenttime>0						
-						payload = 
-							app: 'workflow'
-							id: attendeeid
-						start = moment(obj.start).format("YYYY-MM-DD HH:mm")
-						site = obj.site || ""
-						title = "您的会议邀请#{obj.title}已取消"
-						if site
-							text = "会议时间:#{start}\r会议地点:#{site}"
-						else
-							text = "会议时间:#{start}"
-						#text = "会议时间:#{start}\r会议地点:#{site}"
-						Push.send
-							createdAt: new Date()
-							createdBy: '<SERVER>'
-							from: 'workflow',
-							title: title,
-							text: text,
-							payload: payload
-							badge: 12
-							query: {userId:attendeeid,appName:"workflow"}
-						#userPush = db._raix_push_app_tokens.find({userId:attendeeid,appName:"workflow"})
-						userPush = []
-						userPush = Push.appCollection.find({userId:attendeeid,appName:"workflow"}).fetch()
-						if userPush.length==0
-							user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
-							lang = 'en'
-							if user.locale is 'zh-cn'
-								lang = 'zh-CN'
-							# 发送手机短信
-							if obj.alarms.indexOf("Now")>=0 
-								SMSQueue.send
-									Format: 'JSON',
-									Action: 'SingleSendSms',
-									ParamString: '',
-									RecNum: user.mobile,
-									SignName: '华炎办公',
-									TemplateCode: 'SMS_67200967',
-									msg: TAPi18n.__('sms.calendar_event.template', {event_action: "会议取消",event_title:obj.title, event_time:start, event_location: obj.site}, lang)
+						Meteor.call('eventNotification',obj,attendeeid,3)
 					calendarid=Calendars.findOne({ownerId:attendeeid,isDefault:true})._id
 					event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
 					if event.length!=0

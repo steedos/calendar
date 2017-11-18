@@ -67,42 +67,5 @@ Meteor.methods
 					Calendar.addChange(doc.calendarid,doc.uri,1);
 				currenttime = new Date()
 				if currenttime- doc.end<0
-					payload = 
-						app: 'workflow'
-						id: attendeeid
-					start = moment(doc.start).format("YYYY-MM-DD HH:mm")
-					site = doc.site || ""
-					title = "您有新的会议邀请#{doc.title}"
-					if site
-						text = "会议时间:#{start}\r会议地点:#{site}"
-					else
-						text = "会议时间:#{start}"
-					Push.send
-						createdAt: new Date()
-						createdBy: '<SERVER>'
-						from: 'workflow',
-						title: title,
-						text: text, 
-						payload: payload
-						badge: 12
-						query: {userId:attendeeid,appName:"workflow"}
-					userPush = []
-					userPush = Push.appCollection.find({userId:attendeeid,appName:"workflow"}).fetch()
-					if userPush.length==0
-						user = db.users.findOne({_id:attendeeid}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
-						lang = 'en'
-						start = moment(doc.start).format("YYYY-MM-DD HH:mm")
-						if user.locale is 'zh-cn'
-							lang = 'zh-CN'
-						# 发送手机短信
-						if doc.alarms.indexOf("Now")>=0
-							SMSQueue.send
-								Format: 'JSON',
-								Action: 'SingleSendSms',
-								ParamString: '',
-								RecNum: user.mobile,
-								SignName: '华炎办公',
-								TemplateCode: 'SMS_67200967',
-								msg: TAPi18n.__('sms.calendar_event.template', {event_action: "会议邀请",event_title:doc.title, event_time:start, event_location: doc.site}, lang)
-				
+					Meteor.call('eventNotification',doc,attendeeid,1)
 		return doc
