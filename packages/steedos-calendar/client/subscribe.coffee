@@ -110,7 +110,7 @@ Tracker.autorun (c)->
 		calendarIdsString=localStorage.getItem("calendarIds:"+Meteor.userId())
 		calendarIds=calendarIdsString.split(",")
 		Session.set('calendarIds',calendarIds)	
-		defaultcalendar=Calendars.findOne({ownerId:Meteor.userId()},{isDefault:true}, {fields:{_id: 1,color:1}})
+		defaultcalendar=Calendars.findOne({ownerId:Meteor.userId(),isDefault:true}, {fields:{_id: 1,color:1}})
 		Session.set('defaultcalendarid',defaultcalendar?._id)
 
 Tracker.autorun (c)->
