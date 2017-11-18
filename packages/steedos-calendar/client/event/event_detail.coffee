@@ -54,6 +54,8 @@ Template.event_detail_modal.helpers
 		admins = calendarobj.admins || []
 		if admins.indexOf(calendarobj.ownerId)<0
 			admins.push calendarobj.ownerId
+		if admins.indexOf(obj.ownerId)<0
+			admins.push obj.ownerId
 		#if Meteor.userId()==obj.ownerId || attendeesIds.indexOf(Meteor.userId())>=0
 		if calendarIds.indexOf(obj.calendarid)>=0 and admins.indexOf(Meteor.userId())>=0 
 			return true
@@ -143,9 +145,21 @@ Template.event_detail_modal.helpers
 		return obj
 
 	isShowAddMembers: ()->
-		ownerId = Template.instance().data.ownerId
-		userId = Meteor.userId()
-		return ownerId == userId
+		obj = Template.instance().data
+		if obj._id == obj.parentId
+			userId = Meteor.userId()
+			calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1,ownerId:1}})
+			admins = calendarobj.admins || []
+			if admins.indexOf(calendarobj.ownerId)<0
+				admins.push calendarobj.ownerId
+			if admins.indexOf(obj.ownerId)<0
+				admins.push obj.ownerId
+			if admins.indexOf(Meteor.userId())>-1
+				return true
+			else
+				return false
+		else
+			return false
 
 	add_membersFields: ()->
 		is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
@@ -170,6 +184,8 @@ Template.event_detail_modal.helpers
 		admins = calendar?.admins || []
 		if admins.indexOf(calendar.ownerId)<0
 			admins.push calendar.ownerId
+		if admins.indexOf(obj.ownerId)<0
+			admins.push obj.ownerId 
 		if admins.indexOf(Meteor.userId())>=0 
 			return false
 		else
