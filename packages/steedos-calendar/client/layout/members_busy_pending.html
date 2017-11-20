@@ -14,7 +14,7 @@
 				{{#each members}}
 					<div class="weui-cell">
 						<div class="weui-cell__bd">
-							<input type="checkbox" name="member" value="{{_id}}" id="{{_id}}">
+							<input type="checkbox" name="member" value="{{_id}}" id="{{_id}}" checked=true>
 							<label  for="{{_id}}">{{name}}</label>
 						</div>
 					</div>
@@ -23,7 +23,7 @@
 
 				<div class="modal-footer">
 					<div class="pull-left check-all">
-						<input type="checkbox" name="checkAll" id="checkAll">
+						<input type="checkbox" name="checkAll" id="checkAll" checked=true>
 						<label for="checkAll">{{_ "calendar_choose_all"}}</label>
 					</div>
 					<div class="pull-right refuse">

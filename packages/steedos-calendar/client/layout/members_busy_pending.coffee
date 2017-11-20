@@ -1,6 +1,6 @@
 Template.members_busy_pending_modal.onCreated ->
 	this.reactiveCounts = new ReactiveVar(0)
-
+	Session.set("reactiveCounts",true)
 Template.members_busy_pending_modal.onRendered ->
 	$("#busyPending_modal .modal-body").css("max-height",Steedos.getModalMaxHeight())
 
@@ -11,8 +11,8 @@ Template.members_busy_pending_modal.helpers
 		return members
 
 	isButtonDisabled: ()->
-		count = Template.instance().reactiveCounts.get()
-		if count > 0 
+		
+		if Session.get("reactiveCounts") 
 			return false
 		else
 			return true
@@ -55,11 +55,13 @@ Template.members_busy_pending_modal.events
 		$('input[name=checkAll]').removeAttr("checked")
 
 	'change input[name=checkAll]':(event,template) ->
-		if $('input[name=checkAll]').is(":checked")
+		if $('input[name=checkAll]').is(":checked") 
 			$('input[name=member]').prop("checked",true)
 		else
 			$('input[name=member]').removeAttr("checked")
 		template.reactiveCounts.set($("input[name='member']:checked").length)
+		Session.set("reactiveCounts",Template.instance().reactiveCounts.get()) 
 
 	'change input[name=member]':(event,template) ->
 		template.reactiveCounts.set($("input[name='member']:checked").length)
+		Session.set("reactiveCounts",Template.instance().reactiveCounts.get()) 
