@@ -1,10 +1,10 @@
 import { Calendar } from '../main';
 Meteor.methods
 	initscription: (subscripter) ->
-		obj=Calendars.findOne({ownerId:subscripter},{isDefault:true})
+		obj=Calendars.findOne({ownerId:subscripter,isDefault:true})
 		if !obj
 			Meteor.call('calendarInit',subscripter,Defaulttimezone)
-			obj=Calendars.findOne({ownerId:subscripter},{isDefault:true})
+			obj=Calendars.findOne({ownerId:subscripter,isDefault:true})
 
 		membersBusy = obj.members_busy
 

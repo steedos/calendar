@@ -15,7 +15,7 @@ Meteor.startup ->
 		()->
 			defaultcalendarid=Session.get('defaultcalendarid')
 			if defaultcalendarid
-				events=Events.find({calendarid:defaultcalendarid},{"remindtimes.0":{$exists: 1}})
+				events=Events.find({calendarid:defaultcalendarid,"remindtimes.0":{$exists: 1}})
 				currenttime=moment()
 				if events
 					events.forEach (event)->

@@ -86,7 +86,7 @@ Meteor.methods
 								newalarm='-'+newalarm
 						obj.alarms.push  newalarm
 			oldcalendarid=Events.findOne({uid:obj.uid}).calendarid
-			defaultcalendarid = Calendars.findOne({ownerId:obj.ownerId},{isDefault:true})._id
+			defaultcalendarid = Calendars.findOne({ownerId:obj.ownerId,isDefault:true})._id
 			if oldcalendarid
 				if obj.calendarid!=oldcalendarid
 					if defaultcalendarid==obj.calendarid
