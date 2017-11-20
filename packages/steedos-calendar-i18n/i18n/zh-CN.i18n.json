@@ -8,6 +8,7 @@
   "subscribe_to_calendars": "订阅共享日历",
   "calendar_add_calendar": "新建共享日历",
   "subscribe_default_calendar":"订阅他人日历",
+  "subscribe_calendar_notification":"订阅申请已发送，请等待对方同意",
   "calendar_app_title": "Steedos 日历",
   "calendar_edit_calendar": "编辑日历",
   "calendar_add_event": "添加事件",

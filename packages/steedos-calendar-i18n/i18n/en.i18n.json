@@ -8,6 +8,7 @@
   "subscribe_to_calendars": "Subscribe to calendars",
   "calendar_add_calendar": "Add a new calendar",
   "subscribe_default_calendar":"Subscribe Calendar",
+  "subscribe_calendar_notification":"Subscription request has been sent, please wait for each other to agree",
   "calendar_app_title": "Steedos Calendar",
   "calendar_edit_calendar": "Edit Calendar",
   "calendar_add_event": "Add a new event",
