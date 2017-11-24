@@ -370,7 +370,9 @@ Template.calendarSidebar.events
 		addmembers = AutoForm.getFieldValue("addmembers","calendar-submembers") || []
 		addmembers.forEach (addmember)->
 			if addmember != Meteor.userId()
-				Meteor.call('initscription',addmember)
+				Meteor.call('initscription',addmember,
+					(error,result) ->
+						toastr.info t("subscribe_calendar_notification"))
 		AutoForm.resetForm("calendar-submembers")
 
 	'click .mobile-sync': ()->
