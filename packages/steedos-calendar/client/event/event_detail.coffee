@@ -162,13 +162,11 @@ Template.event_detail_modal.helpers
 			return false
 
 	add_membersFields: ()->
-		is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
 		fields =
 			addmembers_event:
 				autoform:
 					type: 'selectuser'
 					multiple: true
-					is_within_user_organizations: !!is_with
 				optional: false
 				type: [ String ]
 				label: ''

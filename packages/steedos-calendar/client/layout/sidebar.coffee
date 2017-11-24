@@ -62,13 +62,11 @@ Template.calendarSidebar.helpers
 			return ""
 
 	add_membersFields: ()->
-		is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
 		fields =
 			addmembers:
 				autoform:
 					type: 'selectuser'
 					multiple: true
-					is_within_user_organizations: !!is_with
 				optional: false
 				type: [ String ]
 				label: ''
@@ -76,13 +74,11 @@ Template.calendarSidebar.helpers
 		return new SimpleSchema(fields)
 
 	members_busyFields: ()->
-		is_with = Meteor.settings?.public?.calendar?.user_selection_within_user_organizations
 		fields =
 			membersbusy:
 				autoform:
 					type: 'selectuser'
 					multiple: true
-					is_within_user_organizations: !!is_with
 					defaultValue: ()->
 						defaultcalendarid = Session.get "defaultcalendarid"
 						defaultcalendarObj = Calendars.findOne({_id:defaultcalendarid})
