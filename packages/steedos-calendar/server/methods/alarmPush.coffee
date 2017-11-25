@@ -26,13 +26,15 @@ Meteor.methods
 								payload: payload
 								badge: 12
 								query: {userId:attendee.id,appName:"workflow"}
+
 Meteor.startup ->
-	Calendar.davTimeout = (time)->
+	Calendar.SendMessageTimeout = (time)->
 			currenttime=moment()._d.getTime()
 			Meteor.setTimeout(()->
+				
 				Meteor.call('alarmPush',currenttime)
 				currenttime = currenttime+60*1000
-				Calendar.davTimeout(time)
+				Calendar.SendMessageTimeout(time)
 			,time)
 
-		Calendar.davTimeout 60*1000
+	Calendar.SendMessageTimeout 60*1000

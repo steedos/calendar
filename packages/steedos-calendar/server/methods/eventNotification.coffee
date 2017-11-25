@@ -1,10 +1,10 @@
 Meteor.methods
 	eventNotification: (doc,userId,action) ->
 		payload = 
-		app: 'workflow'
-		id: userId
+			app: 'workflow'
+			id: userId
 		start = moment(doc.start).format("YYYY-MM-DD HH:mm")
-		site = doc.site || ""
+		site = doc.site || "未指定"
 		if action == 1
 			title = "您有新的会议邀请#{doc.title}"
 			event_action = "会议邀请"
@@ -45,4 +45,4 @@ Meteor.methods
 					RecNum: user.mobile,
 					SignName: '华炎办公',
 					TemplateCode: 'SMS_67200967',
-					msg: TAPi18n.__('sms.calendar_event.template', {event_action: event_action,event_title:doc.title, event_time:start, event_location: doc.site}, lang)
+					msg: TAPi18n.__('sms.calendar_event.template', {event_title:doc.title, event_time:start, event_location: site}, lang)
