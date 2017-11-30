@@ -21,4 +21,5 @@ Meteor.publish "calendar_objects", (params)->
 				parentId:1,
 				remindtimes:1,
 				participation:1,
-				description:1
+				description:1,
+				uid:1

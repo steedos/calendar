@@ -53,7 +53,7 @@ Meteor.methods
 						description:doc.description
 						alarms:doc.alarms
 						remindtimes: doc.remindtimes
-						componenttype:doc.componenttype
+						componenttype:"VEVENT"
 						uid:_id
 						uri:_id+".ics"
 						ownerId:doc.ownerId
@@ -66,16 +66,9 @@ Meteor.methods
 						size:doc.size
 						Isdavmodified:false
 						parentId:doc.parentId
-					Calendar.addChange(calendar._id,_id+".ics",2);
+					Calendar.addChange(calendar._id,_id+".ics",1);
 				if currenttime- doc.end<0
 					Meteor.call('eventNotification',doc,attendeeid,1)
-			updateattendeesid.forEach (attendeeid)->
-				if obj._id==obj.parentId
-					Events.direct.update {_id:obj._id}, {$set: 
-						calendarid:doc.calendarid}
-					Calendar.addChange(doc.calendarid,doc.uri,2)
-				if currenttime- doc.end<0
-					Meteor.call('eventNotification',doc,attendeeid,2)
 			Events.direct.update {parentId:obj.parentId}, {$set: 
 				title:doc.title,
 				start:doc.start,
@@ -88,21 +81,32 @@ Meteor.methods
 				remindtimes: doc.remindtimes,
 				attendees: doc.attendees,
 				ownerId:doc.ownerId
-				componenttype: doc.componenttype,
+				componenttype:"VEVENT",
 				lastmodified: doc.lastmodified,
 				Isdavmodified:false,
 				firstoccurence:doc.firstoccurence,
 				lastoccurence: doc.lastoccurence,
 				etag: doc.etag,
 				size: doc.size,
-				calendardata: doc.calendardata,
+				calendardata:doc.calendardata,
 				parentId:doc.parentId
 				},{ multi: true }
-			events=Events.find({parentId:obj.parentId}).fetch()
-			events.forEach (event)->
-				isDefaultCalendar=Calendars.findOne({_id:event.calendarid}).isDefault
-				if isDefaultCalendar
-					Calendar.addChange(event.calendarid,event.uri,2)
+			Calendar.addChange(doc.calendarid,doc.uid+".ics",2)
+			updateattendeesid.forEach (attendeeid)->
+				if obj._id==obj.parentId
+					Events.direct.update {_id:obj._id}, {$set: 
+						calendarid:doc.calendarid}
+					Calendar.addChange(doc.calendarid,doc.uid+".ics",2)
+				calendar=Calendars.findOne({ownerId:attendeeid,isDefault:true}, {fields:{_id: 1,color:1}})
+				event = Events.findOne({calendarid:calendar._id,parentId:doc.parentId})
+				Calendar.addChange(event.calendarid,event.uri+".ics",2);
+				if currenttime- doc.end<0
+					Meteor.call('eventNotification',doc,attendeeid,2)
+			# events=Events.find({parentId:obj.parentId}).fetch()
+			# events.forEach (event)->
+			# 	isDefaultCalendar=Calendars.findOne({_id:event.calendarid}).isDefault
+			# 	if isDefaultCalendar
+			# 		Calendar.addChange(event.calendarid,event.uri,2)
 		else
 			Calendar.addCalendarObjects(obj.ownerId,obj,operation);
 			Events.direct.update {parentId:obj.parentId}, {$set:

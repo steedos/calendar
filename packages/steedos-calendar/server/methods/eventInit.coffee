@@ -68,4 +68,5 @@ Meteor.methods
 				currenttime = new Date()
 				if currenttime- doc.end<0
 					Meteor.call('eventNotification',doc,attendeeid,1)
+		Calendar.addChange(doc.calendarid,doc.uri,1);
 		return doc
