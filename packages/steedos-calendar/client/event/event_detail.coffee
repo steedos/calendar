@@ -47,7 +47,7 @@ Template.event_detail_modal.helpers
 	showEventOptBox:()->
 		# 事件是本人创建的/事件成员包含本人，都显示“保存”/“删除”操作
 		obj = Template.instance().data
-		calendars=Calendars.find().fetch()
+		calendars=Calendars.find($or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()},{"admins":Meteor.userId()}]).fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
 		calendarobj = Calendars.findOne({_id:obj.calendarid},{fields:{admins:1,ownerId:1}})
@@ -66,7 +66,7 @@ Template.event_detail_modal.helpers
 
 	showActionBox:()->
 		obj = Template.instance().data
-		calendars=Calendars.find({isDefault:true}).fetch()
+		calendars=Calendars.find({isDefault:true,$or:[{"ownerId":Meteor.userId()},{"members":Meteor.userId()},{"admins":Meteor.userId()}]}).fetch()
 		calendarIds=_.pluck(calendars,'_id')
 		attendeesIds=_.pluck(obj?.attendees,'id')
 		calendarObj=Calendars.findOne({_id:obj.calendarid})
