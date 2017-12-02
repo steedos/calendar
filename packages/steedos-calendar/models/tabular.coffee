@@ -113,7 +113,7 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 	responsive: 
 		details: false
 	order: [[2,"desc"]]
-	extraFields: ["end", "allDay", "alarms", "remintimes", "ownerId","attendees","calendarid","parentId","uid","uri"],
+	extraFields: ["end", "allDay", "alarms", "remintimes", "ownerId","attendees","calendarid","parentId","uid","uri","description"],
 	lengthChange: false
 	pageLength: 10
 	info: false
