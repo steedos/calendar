@@ -3,8 +3,11 @@ Meteor.methods
 		payload = 
 			app: 'workflow'
 			id: userId
+			url:"/calendar"
+			#host:'http://steedos.ticp.net:8821'
+			host:Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
 		start = moment(doc.start).format("YYYY-MM-DD HH:mm")
-		site = doc.site || "未指定"
+		site = doc.site
 		if action == 1
 			title = "您有新的会议邀请#{doc.title}"
 			event_action = "会议邀请"
@@ -18,7 +21,8 @@ Meteor.methods
 			text = "会议时间:#{start}\r会议地点:#{site}"
 		else
 			text = "会议时间:#{start}"
-		#text = "会议时间:#{start}\r会议地点:#{site}"
+			site ="未指定"
+		#text = "会议时间:#{start}\r会议地点:#{site}
 		Push.send
 			createdAt: new Date()
 			createdBy: '<SERVER>'
