@@ -7,6 +7,7 @@ FlowRouter.route '/',
 
 Meteor.startup ->
 	if Meteor.isClient
+		Session.set("apps",["calendar"])
 		db.apps.INTERNAL_APPS = []
 		Tracker.autorun ()->
 			Steedos.Helpers.setAppTitle(t "Steedos Calendar");
