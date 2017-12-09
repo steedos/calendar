@@ -49,4 +49,4 @@ Meteor.methods
 					RecNum: user.mobile,
 					SignName: '华炎办公',
 					TemplateCode: 'SMS_67200967',
-					msg: TAPi18n.__('sms.calendar_event.template', {event_title:doc.title, event_time:start, event_location: site}, lang)
+					msg: TAPi18n.__('sms.calendar_event.template', {event_action:'您的会议邀请',event_title:doc.title, event_time:start, event_location: site}, lang)
