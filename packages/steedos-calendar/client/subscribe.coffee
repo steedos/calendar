@@ -92,13 +92,14 @@ Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")
 		if localStorage.getItem("calendarid:"+Meteor.userId())
+			console.log localStorage.getItem("calendarid:"+Meteor.userId())
 			selectCalendar=Calendars.findOne({_id:localStorage.getItem("calendarid:"+Meteor.userId())})
 			if !selectCalendar
-				defaultcalendar=Calendars.find({isDefault:true}).fetch()
-				localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar[0]?._id)
+				defaultcalendar=Calendars.findOne({isDefault:true,ownerId:Meteor.userId()})
+				localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar?._id)
 		else
-			defaultcalendar=Calendars.find({isDefault:true}).fetch()
-			localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar[0]?._id)
+			defaultcalendar=Calendars.findOne({isDefault:true,ownerId:Meteor.userId()})
+			localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar?._id)
 		Session.set("calendarid",localStorage.getItem("calendarid:"+Meteor.userId()))
 		calendarIds = []
 		if !localStorage.getItem("calendarIds:"+Meteor.userId())
