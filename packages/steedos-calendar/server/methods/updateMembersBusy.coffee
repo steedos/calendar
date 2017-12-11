@@ -29,20 +29,22 @@ Meteor.methods
 					calendarname:defaultCalendarObj.title
 
 				payload = 
-					app: 'calendar'
+					app: 'workflow'
 					id: memberId
+					url:"/calendar"
+					host:Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
 				userName = db.users.findOne({_id:userId}).name
 				title = "您的订阅申请已通过"
 				text = "#{userName}已接受您的订阅申请"
 				Push.send
 					createdAt: new Date(),
 					createdBy: '<SERVER>',
-					from: 'calendar',
+					from: 'workflow',
 					title: title,
 					text: text,
 					payload: payload,
 					badge: 12
-					query: {userId:memberId,appName:"calendar"}
+					query: {userId:memberId,appName:"workflow"}
 
 		if action == "refuse"
 			Calendars.update(
@@ -53,17 +55,19 @@ Meteor.methods
 			)
 			memberIds.forEach (memberId) ->
 				payload = 
-					app: 'calendar'
+					app: 'workflow'
 					id: memberId
+					url:"/calendar"
+					host:Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
 				userName = db.users.findOne({_id:userId}).name
 				title = "您的订阅申请未能通过"
 				text = "#{userName}拒绝了您的订阅申请"
 				Push.send
 					createdAt: new Date(),
 					createdBy: '<SERVER>',
-					from: 'calendar',
+					from: 'workflow',
 					title: title,
 					text: text,
 					payload: payload,
 					badge: 12
-					query: {userId:memberId,appName:"calendar"}
+					query: {userId:memberId,appName:"workflow"}

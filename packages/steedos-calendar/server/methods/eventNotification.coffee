@@ -4,7 +4,6 @@ Meteor.methods
 			app: 'workflow'
 			id: userId
 			url:"/calendar"
-			#host:'http://steedos.ticp.net:8821'
 			host:Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
 		start = moment(doc.start).format("YYYY-MM-DD HH:mm")
 		site = doc.site
@@ -14,15 +13,17 @@ Meteor.methods
 		else if action == 2
 				title = "您的会议邀请#{doc.title}有改动"
 				event_action = "会议变更"
-			else
-				title = "您的会议邀请#{doc.title}已取消"
-				event_action = "会议取消"
+			else if action == 3
+					title = "您的会议邀请#{doc.title}已取消"
+					event_action = "会议取消"
+				else
+					title = "您的会议邀请#{doc.title}"
+					event_action = "会议提醒"
 		if site
 			text = "会议时间:#{start}\r会议地点:#{site}"
 		else
 			text = "会议时间:#{start}"
 			site ="未指定"
-		#text = "会议时间:#{start}\r会议地点:#{site}
 		Push.send
 			createdAt: new Date()
 			createdBy: '<SERVER>'
