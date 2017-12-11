@@ -92,7 +92,6 @@ Tracker.autorun (c)->
 	if calendarsSub.ready()
 		$("body").removeClass("loading")
 		if localStorage.getItem("calendarid:"+Meteor.userId())
-			console.log localStorage.getItem("calendarid:"+Meteor.userId())
 			selectCalendar=Calendars.findOne({_id:localStorage.getItem("calendarid:"+Meteor.userId())})
 			if !selectCalendar
 				defaultcalendar=Calendars.findOne({isDefault:true,ownerId:Meteor.userId()})
