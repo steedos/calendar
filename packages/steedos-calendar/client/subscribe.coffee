@@ -26,7 +26,7 @@ Meteor.startup ->
 						if dx < 0
 							state = false
 						else
-							state = event.attendees[dx]?.partstat=='ACCEPTED'
+							state = event.attendees[dx]?.partstat!='DECLINED'
 						if remindtimes and event.end - currenttime._d>0 and state
 							remindtimes.forEach (remindtime)->
 								if remindtime-currenttime._d<=0 and !Session.get(event._id+":isRemindlater")

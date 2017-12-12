@@ -2,9 +2,10 @@ Meteor.methods
 	alarmPush: (syntime) ->
 		events = Events.find({end:{$gte:new Date()},remindtimes:{$elemMatch:{$gte:syntime, $lt:syntime+60*1000}}}).fetch()		
 		events.forEach (event)->
-			event.attendees?.forEach (attendee)->
-					if attendee.partstat!='DECLINED'
-						Meteor.call('eventNotification',event,attendee.id,4)
+				if event.parentId == event._id
+					event.attendees?.forEach (attendee)->
+							if attendee.partstat!='DECLINED' 
+								Meteor.call('eventNotification',event,attendee.id,4)
 
 Meteor.startup ->
 	if Meteor.settings.cron.calendar_remind

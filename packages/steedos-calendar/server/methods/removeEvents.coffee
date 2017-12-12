@@ -8,7 +8,7 @@ Meteor.methods
 				attendeesid=_.pluck(obj.attendees,'id');
 				currenttime = new Date()
 				attendeesid.forEach (attendeeid)->
-					if obj.attendees[attendeesid.indexOf(attendeeid)].partstat == 'ACCEPTED' and obj.end - currenttime>0						
+					if obj.attendees[attendeesid.indexOf(attendeeid)].partstat != 'DECLINED' and obj.end - currenttime>0						
 						Meteor.call('eventNotification',obj,attendeeid,3)
 					calendarid=Calendars.findOne({ownerId:attendeeid,isDefault:true})._id
 					event=Events.find({parentId:obj._id,calendarid:calendarid},{fields:{uri:1}}).fetch()
