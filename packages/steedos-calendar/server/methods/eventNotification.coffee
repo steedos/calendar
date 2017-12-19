@@ -5,7 +5,10 @@ Meteor.methods
 			id: userId
 			url:"/calendar"
 			host:Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
-		start = moment(doc.start).format("YYYY-MM-DD HH:mm")
+		utcOffset = db.users.findOne(userId)?.utcOffset
+		unless utcOffset
+			utcOffset = 8
+		start = moment(doc.start).utcOffset(utcOffset, false).format("YYYY-MM-DD HH:mm")
 		site = doc.site
 		if action == 1
 			title = "您有新的会议邀请#{doc.title}"
