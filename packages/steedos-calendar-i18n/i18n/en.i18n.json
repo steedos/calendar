@@ -148,5 +148,16 @@
   "calendar_invite_members": "Invite members",
 
   "calendar_mobile_sync": "Mobile synchronization",
-  "calendar_others_default_calendar": "Others calendars"
+  "calendar_others_default_calendar": "Others calendars",
+  "event_invitation_alarm":"Your meeting invitation__event_title__",
+  "event_invitation_new":"You have a new meeting invitation:__event_title__",
+  "event_invitation_update":"Your meeting invitation __event_title__ has changed",
+  "event_invitation_cancle":"Your meeting invitation __event_title__ has cancled",
+  "event_action_new":"Meeting invitation",
+  "event_action_update":"Meeting Change",
+  "event_action_cancle":"Meeting Cancel",
+  "event_action_alarm":"Meeting Alarms",
+  "event_push_text":"Meeting time:__event_time__\rMetting site:__event_site__",
+  "event_undefined":"Not specified"
+
 }

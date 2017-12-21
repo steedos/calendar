@@ -11,22 +11,23 @@ Meteor.methods
 		start = moment(doc.start).utcOffset(utcOffset, false).format("YYYY-MM-DD HH:mm")
 		site = doc.site
 		if action == 1
-			title = "您有新的会议邀请#{doc.title}"
-			event_action = "会议邀请"
+			title = TAPi18n.__("event_invitation_new",doc.title)
+			event_action = TAPi18n.__("event_action_new")
 		else if action == 2
-				title = "您的会议邀请#{doc.title}有改动"
-				event_action = "会议变更"
+				title = TAPi18n.__("event_invitation_update",doc.title)
+				#title = "您的会议邀请#{doc.title}有改动"
+				event_action = TAPi18n.__("event_action_update")
 			else if action == 3
-					title = "您的会议邀请#{doc.title}已取消"
-					event_action = "会议取消"
+					title = TAPi18n.__("event_invitation_cancle",doc.title)
+					#title = "您的会议邀请#{doc.title}已取消"
+					event_action = TAPi18n.__("event_action_cancle")
 				else
-					title = "您的会议邀请#{doc.title}"
-					event_action = "会议提醒"
-		if site
-			text = "会议时间:#{start}\r会议地点:#{site}"
-		else
-			text = "会议时间:#{start}"
-			site ="未指定"
+					title = TAPi18n.__("event_invitation_alarm",doc.title)
+					event_action =TAPi18n.__("event_action_alarm")
+		if !site
+			site =TAPi18n.__("event_undefined")
+		text = TAPi18n.__("event_push_text",start,site)
+		#text = "会议时间:#{start}\r会议地点:#{site}"			
 		Push.send
 			createdAt: new Date()
 			createdBy: '<SERVER>'
