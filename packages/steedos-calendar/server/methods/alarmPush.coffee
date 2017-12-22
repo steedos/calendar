@@ -8,7 +8,6 @@ Meteor.methods
 								Meteor.call('eventNotification',event,attendee.id,4)
 
 Meteor.startup ->
-	if Meteor.settings.cron.calendar_remind
 		Calendar.SendMessageTimeout = (time)->
 				currenttime=moment()._d.getTime()
 				Meteor.setTimeout(()->
