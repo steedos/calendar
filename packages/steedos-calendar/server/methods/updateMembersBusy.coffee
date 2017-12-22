@@ -27,15 +27,18 @@ Meteor.methods
 					principaluri:memberId
 					color:defaultCalendarObj.color
 					calendarname:defaultCalendarObj.title
-
+				member = db.users.findOne({_id:memberId}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
+				lang = 'en'
+				if member.locale is 'zh-cn'
+					lang = 'zh-CN'
 				payload = 
 					app: 'workflow'
 					id: memberId
 					url:"/calendar"
 					host:Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
 				userName = db.users.findOne({_id:userId}).name
-				title = "您的订阅申请已通过"
-				text = "#{userName}已接受您的订阅申请"
+				title = TAPi18n.__("calendar_subscript_success", {}, lang)
+				text = TAPi18n.__("calendar_subscript_success_text", {username:userName}, lang)
 				Push.send
 					createdAt: new Date(),
 					createdBy: '<SERVER>',
@@ -54,14 +57,18 @@ Meteor.methods
 				}
 			)
 			memberIds.forEach (memberId) ->
+				member = db.users.findOne({_id:memberId}, {fields: {mobile: 1, utcOffset: 1, locale: 1, name: 1}})
+				lang = 'en'
+				if member.locale is 'zh-cn'
+					lang = 'zh-CN'
 				payload = 
 					app: 'workflow'
 					id: memberId
 					url:"/calendar"
 					host:Meteor.absoluteUrl().substr(0, Meteor.absoluteUrl().length-1)
 				userName = db.users.findOne({_id:userId}).name
-				title = "您的订阅申请未能通过"
-				text = "#{userName}拒绝了您的订阅申请"
+				title = TAPi18n.__("calendar_subscript_fail", {}, lang)
+				text = TAPi18n.__("calendar_subscript_fail_text", {username:userName}, lang)
 				Push.send
 					createdAt: new Date(),
 					createdBy: '<SERVER>',

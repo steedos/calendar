@@ -159,5 +159,10 @@
   "event_action_cancle":"会议取消",
   "event_action_alarm":"会议提醒",
   "event_push_text":"会议时间:__event_time__\r会议地点:__event_site__",
-  "event_undefined":"未指定"
+  "event_undefined":"未指定",
+  "calendar_subscript_fail":"您的订阅申请未能通过",
+  "calendar_subscript_fail_text":"__username__拒绝了您的订阅申请",
+  "calendar_subscript_success":"您的订阅申请已通过",
+  "calendar_subscript_success_text":"__username__已接受您的订阅申请"
+
 }
