@@ -65,7 +65,7 @@ Package.onUse(function(api) {
     api.use('steedos:accounts@0.0.24');
     api.use('steedos:theme@0.0.29');
     api.use('steedos:i18n@0.0.11');
-    api.use('steedos:calendar-i18n@0.0.14');
+    api.use('steedos:calendar-i18n@0.0.16');
     api.use('steedos:autoform@0.0.7');
     api.use('steedos:autoform-modals@0.3.9_6');
     api.use('raix:push@3.0.2');
