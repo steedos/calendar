@@ -95,7 +95,8 @@ Tracker.autorun (c)->
 			selectCalendar=Calendars.findOne({_id:localStorage.getItem("calendarid:"+Meteor.userId())})
 			if !selectCalendar
 				defaultcalendar=Calendars.findOne({isDefault:true,ownerId:Meteor.userId()})
-				localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar?._id)
+				if defaultcalendar
+					localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar?._id)
 		else
 			defaultcalendar=Calendars.findOne({isDefault:true,ownerId:Meteor.userId()})
 			localStorage.setItem("calendarid:"+Meteor.userId(),defaultcalendar?._id)
