@@ -115,20 +115,22 @@ Tracker.autorun (c)->
 
 Tracker.autorun (c)->
 	
-	if calendarsSub.ready()	
+	if calendarsSub.ready()
 		calendarid = Session.get "defaultcalendarid"	
 		if calendarid	
 			calendarsSub.subscribe "event-need-action",calendarid
-
-		currentCalendarIds = Session.get "calendarIds"
-		currentCalendarIds.forEach (currentCalendarId,index) ->
-			if !Calendars.findOne({_id: currentCalendarId}) and !calendarsubscriptions.findOne({uri:currentCalendarId})
-				currentCalendarIds.remove(index)
-				Session.set "calendarid", calendarid
-				localStorage.setItem("calendarid:"+Meteor.userId(),calendarid)
-
-		Session.set 'calendarIds', currentCalendarIds
-		localStorage.setItem("calendarIds:"+Meteor.userId(),currentCalendarIds)
+		# debugger;
+		# currentCalendarIds = Session.get "calendarIds"
+		# console.log currentCalendarIds
+		# a = ["KuAbMNLM7erWsXR8m", "swG8eevwYBdoYrFjo"]
+		# currentCalendarIds.forEach (currentCalendarId,index) ->
+		# 	if !Calendars.findOne({_id: currentCalendarId}) and !calendarsubscriptions.findOne({uri:currentCalendarId}) and Meteor.userId()
+		# 		currentCalendarIds.remove(index)
+		# 		console.log "2222"
+		# 		Session.set "calendarid", calendarid
+		# 		localStorage.setItem("calendarid:"+Meteor.userId(),"calendarid")
+		# Session.set 'calendarIds', currentCalendarIds
+		# localStorage.setItem("calendarIds:"+Meteor.userId(),a)
 
 Tracker.autorun (c) ->
 	userId = Meteor.userId()

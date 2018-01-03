@@ -344,6 +344,8 @@ Template.calendarSidebar.events
 							confirmButtonText:t('OK'),
 						}
 						$("body").removeClass "loading"
+						localStorage.setItem("calendarid:"+Meteor.userId(),Session.get('defaultcalendarid'))
+						Session.set("calendarid",Session.get('defaultcalendarid'))
 						calendarIds = Session.get("calendarIds")
 						# 将删除的订阅日历从calendarIds中移除
 						calendarIds = _.without(calendarIds,calendar_uri) 

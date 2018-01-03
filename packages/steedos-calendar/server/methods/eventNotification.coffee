@@ -42,16 +42,17 @@ Meteor.methods
 			badge: 12
 			query: {userId:userId,appName:"workflow"}
 		#userPush = db._raix_push_app_tokens.find({userId:attendeeid,appName:"workflow"})
-		userPush = []
-		userPush = Push.appCollection.find({'userId':userId,'appName':'workflow',$or:[{'token.gcm':{$in:[/.*huawei:.*/,/.*mi:.*/]}},{'token.apn':{$exists:1}}]}).fetch()
-		if userPush.length==0
-			# 发送手机短信
-			if doc.alarms.indexOf("Now")>=0 
-				SMSQueue.send
-					Format: 'JSON',
-					Action: 'SingleSendSms',
-					ParamString: '',
-					RecNum: user.mobile,
-					SignName: '华炎办公',
-					TemplateCode: 'SMS_67200967',
-					msg: TAPi18n.__('sms.calendar_event.template', {event_action:'您的会议邀请',event_title:doc.title, event_time:start, event_location: site}, lang)
+		if Steedos.isLegalVersion(Steedos.spaceId(),"workflow.professional")
+			userPush = []
+			userPush = Push.appCollection.find({'userId':userId,'appName':'workflow',$or:[{'token.gcm':{$in:[/.*huawei:.*/,/.*mi:.*/]}},{'token.apn':{$exists:1}}]}).fetch()
+			if userPush.length==0
+				# 发送手机短信
+				if doc.alarms.indexOf("Now")>=0 
+					SMSQueue.send
+						Format: 'JSON',
+						Action: 'SingleSendSms',
+						ParamString: '',
+						RecNum: user.mobile,
+						SignName: '华炎办公',
+						TemplateCode: 'SMS_67200967',
+						msg: TAPi18n.__('sms.calendar_event.template', {event_action:'您的会议邀请',event_title:doc.title, event_time:start, event_location: site}, lang)
