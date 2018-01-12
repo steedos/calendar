@@ -12,7 +12,10 @@ Meteor.methods
 		utcOffset = db.users.findOne(userId)?.utcOffset
 		unless utcOffset
 			utcOffset = 8
-		start = moment(doc.start).utcOffset(utcOffset, false).format("YYYY-MM-DD HH:mm")
+		if doc.allDay
+			start = moment(doc.start).utcOffset(utcOffset, false).format("YYYY-MM-DD")
+		else
+			start = moment(doc.start).utcOffset(utcOffset, false).format("YYYY-MM-DD HH:mm")
 		site = doc.site
 		if action == 1
 			title = TAPi18n.__("event_invitation_new",{event_title:doc.title},lang)
@@ -42,17 +45,14 @@ Meteor.methods
 			badge: 12
 			query: {userId:userId,appName:"workflow"}
 		#userPush = db._raix_push_app_tokens.find({userId:attendeeid,appName:"workflow"})
-		if Steedos.isLegalVersion(Steedos.spaceId(),"workflow.professional")
-			userPush = []
-			userPush = Push.appCollection.find({'userId':userId,'appName':'workflow',$or:[{'token.gcm':{$in:[/.*huawei:.*/,/.*mi:.*/]}},{'token.apn':{$exists:1}}]}).fetch()
-			if userPush.length==0
-				# 发送手机短信
-				if doc.alarms.indexOf("Now")>=0 
-					SMSQueue.send
-						Format: 'JSON',
-						Action: 'SingleSendSms',
-						ParamString: '',
-						RecNum: user.mobile,
-						SignName: '华炎办公',
-						TemplateCode: 'SMS_67200967',
-						msg: TAPi18n.__('sms.calendar_event.template', {event_action:'您的会议邀请',event_title:doc.title, event_time:start, event_location: site}, lang)
+		userPush = []
+		userPush = Push.appCollection.find({'userId':userId,'appName':'workflow',$or:[{'token.gcm':{$in:[/.*huawei:.*/,/.*mi:.*/]}},{'token.apn':{$exists:1}}]}).fetch()
+		if userPush.length==0 and doc.alarms.indexOf("Now")>=0 
+			SMSQueue.send
+				Format: 'JSON',
+				Action: 'SingleSendSms',
+				ParamString: '',
+				RecNum: user.mobile,
+				SignName: '华炎办公',
+				TemplateCode: 'SMS_67200967',
+				msg: TAPi18n.__('sms.calendar_event.template', {event_action:event_action,event_title:doc.title, event_time:start, event_location: site}, lang)

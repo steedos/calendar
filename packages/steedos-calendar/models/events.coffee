@@ -82,26 +82,24 @@ Events._simpleSchema = new SimpleSchema
 			type: "universe-select"
 			multiple: true
 			options: () ->
+				options = []
+				if Steedos.isLegalVersion(Steedos.spaceId(),"workflow.professional")
+					options.push ({label: t("events_alarms_label_immediately"),value:"Now"})
 				if Session?.get("isAllDay")
-					options=[
-						{label: t("events_alarms_label_immediately"),value:"Now"},
-						{label: t("events_alarms_label_1_day_before"), value: "-PT15H"},
-						{label: t("events_alarms_label_2_days_before"), value: "-P1DT15H"},
-						{label: t("events_alarms_label_1_week_before"), value: "-P6DT15H"}
-					]
-				else
-					options=[
-						{label: t("events_alarms_label_immediately"),value:"Now"},
-						{label: t("events_alarms_label_when_events_occur"), value: "-PT0S"},
-						{label: t("events_alarms_label_5_minutes_before"), value: "-PT5M"},
-						{label: t("events_alarms_label_10_minutes_before"), value: "-PT10M"},
-						{label: t("events_alarms_label_15_minutes_before"), value: "-PT15M"},
-						{label: t("events_alarms_label_30_minutes_before"), value: "-PT30M"},
-						{label: t("events_alarms_label_1_hour_before"), value: "-PT1H"},
-						{label: t("events_alarms_label_2_hours_before"), value: "-PT2H"},
-						{label: t("events_alarms_label_24_hours_before"), value: "-P1D"},
-						{label: t("events_alarms_label_48_hours_before"), value: "-P2D"}
-					]
+					options.push ({label: t("events_alarms_label_1_day_before"),value:"-PT15H"})
+					options.push ({label: t("events_alarms_label_2_days_before"),value:"-P1DT15H"})
+					options.push ({label: t("events_alarms_label_1_week_before"),value:"-P6DT15H"})	
+				else 
+					options.push ({label: t("events_alarms_label_when_events_occur"), value:"-PT0S"})
+					options.push ({label: t("events_alarms_label_5_minutes_before"),value:"-PT5M"})
+					options.push ({label: t("events_alarms_label_10_minutes_before"),value:"-PT10M"})
+					options.push ({label: t("events_alarms_label_15_minutes_before"),value:"-PT15M"})
+					options.push ({label: t("events_alarms_label_30_minutes_before"),value:"-PT30M"})
+					options.push ({label: t("events_alarms_label_1_hour_before"),value:"-PT1H"})
+					options.push ({label: t("events_alarms_label_2_hours_before"),value:"-PT2H"})
+					options.push ({label: t("events_alarms_label_24_hours_before"),value:"-P1D"})
+					options.push ({label: t("events_alarms_label_48_hours_before"),value:"-P2D"})
+						# {label: t("events_alarms_label_immediately"),value:"Now"},			
 				return options			
 			defaultValue:()->
 				if !Session?.get("isAllDay")
