@@ -50,13 +50,13 @@ Package.onUse(function(api) {
 
     api.use(['webapp@1.3.11'], 'server');
 
-    api.use('momentjs:moment@2.14.1', 'client');
+    api.use('steedos:momentjs-moment@2.14.1', 'client');
 
 
     api.use('es5-shim@4.6.15');
     // api.use('tsega:bootstrap3-datetimepicker@=3.1.3_3');
     api.use('simple:json-routes@2.1.0');
-    api.use('steedos:fullcalendar@3.4.0_1');
+    api.use('steedos:fullcalendar@3.4.0_2');
     api.use('vazco:universe-selectize@0.1.22');
 
     api.use('steedos:sso@0.0.4')
