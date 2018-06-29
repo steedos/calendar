@@ -7,7 +7,7 @@ Meteor.methods
 		else
 			events=Events.find({_id:obj._id}).fetch()
 			attendees=events[0].attendees	
-		if obj._id==obj.parentId || obj.Isdavmodified
+		if obj._id==obj.parentId || obj.Isdavmodified			
 			currenttime = new Date()
 			newattendeesid=_.pluck(obj?.attendees,'id');
 			if attendees
@@ -91,6 +91,8 @@ Meteor.methods
 				calendardata:doc.calendardata,
 				parentId:doc.parentId
 				},{ multi: true }
+			Events.direct.update {_id:obj._id}, {$set: 
+						calendarid:doc.calendarid}
 			Calendar.addChange(doc.calendarid,doc.uid+".ics",2)
 			updateattendeesid.forEach (attendeeid)->
 				if obj._id==obj.parentId
