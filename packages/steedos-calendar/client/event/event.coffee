@@ -65,12 +65,26 @@ Calendar.getEventsData = ( start, end, timezone, callback )->
 			query = calendarid: $in: params.calendar
 
 			events = Events.find(query).fetch()
+
+			if timezone
+				utcOffset = moment().tz(timezone).utcOffset() / 60
+				if timezone?.toLocaleUpperCase() == 'UTC'
+					offset = utcOffset
+				else
+					localOffset = (new Date()).getTimezoneOffset() / 60
+					offset = utcOffset + localOffset
+
 			events.forEach (event,index) ->
+				if timezone
+					event.start = event.start.setHours(event.start.getHours() + offset)
+					event.end = event.end.setHours(event.end.getHours() + offset)
+					event.start = moment.tz(event.start, timezone).format();
+					event.end = moment.tz(event.end, timezone).format();
 				if event.ownerId != Meteor.userId() && event.calendarid == Session.get("defaultcalendarid")
 					event.attendees?.forEach (attendee)->
 						if attendee.id == Meteor.userId() and attendee.partstat == 'DECLINED'
 							events.remove(index)
-			callback(events)				
+			callback(events)
 			c.stop()
 
 Calendar.hasPermission = ( event )->
@@ -136,7 +150,7 @@ Calendar.generateCalendar = ()->
 			defaultView:defaultView
 			events: Calendar.getEventsData
 			timeFormat: 'H:mm'
-			timezone: 'local'
+			timezone: Meteor.settings.public.calendar?.timezoneId
 			locale: Session.get('steedos-locale')
 			noEventsMessage:t("no_events_message")
 			dayNamesShort:dayNamesShortValue

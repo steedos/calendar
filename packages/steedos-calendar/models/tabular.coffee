@@ -45,9 +45,9 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 			width: "8%",
 			render:  (val, type, doc) ->
 				if doc.allDay
-					return moment(doc.start).format("M-DD")
+					return moment(doc.start, Meteor.settings.public.calendar?.timezoneId).format("M-DD")
 				else
-					return moment(doc.start).format("M-DD HH:mm")
+					return moment(doc.start, Meteor.settings.public.calendar?.timezoneId).format("M-DD HH:mm")
 				# console.log JSON.stringify(doc)
 				# start = moment(doc.start).format("M-DD HH:mm")
 				# end = moment(doc.end).format("M-DD HH:mm")
@@ -65,9 +65,9 @@ TabularTables.event_needs_action_tabular = new Tabular.Table({
 			width: "8%",
 			render:  (val, type, doc) ->
 				if doc.allDay
-					return moment(doc.end).format("M-DD")
+					return moment(doc.end, Meteor.settings.public.calendar?.timezoneId).format("M-DD")
 				else
-					return moment(doc.end).format("M-DD HH:mm")
+					return moment(doc.end, Meteor.settings.public.calendar?.timezoneId).format("M-DD HH:mm")
 		},
 		{
 			data: "attendees.inviter",

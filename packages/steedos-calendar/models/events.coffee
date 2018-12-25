@@ -53,6 +53,7 @@ Events._simpleSchema = new SimpleSchema
 						format:"YYYY-MM-DD HH:mm"
 						sideBySide:true
 					}
+			timezoneId: Meteor.settings.public.calendar?.timezoneId
 
 	end:
 		type: Date
@@ -71,6 +72,7 @@ Events._simpleSchema = new SimpleSchema
 						format:"YYYY-MM-DD HH:mm"
 						sideBySide:true
 					}
+			timezoneId: Meteor.settings.public.calendar?.timezoneId
 			defaultValue:()->
 				return Session.get "endTime"
 
