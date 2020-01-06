@@ -26,9 +26,9 @@
       "from": "icalendar@0.7.1"
     },
     "moment": {
-      "version": "2.18.1",
-      "resolved": "https://registry.npmjs.org/moment/-/moment-2.18.1.tgz",
-      "from": "moment@>=2.9.0"
+      "version": "2.24.0",
+      "resolved": "https://registry.npmjs.org/moment/-/moment-2.24.0.tgz",
+      "from": "moment@>= 2.9.0"
     },
     "moment-timezone": {
       "version": "0.5.13",
