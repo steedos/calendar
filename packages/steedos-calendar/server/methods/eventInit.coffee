@@ -60,6 +60,7 @@ Meteor.methods
 						size:doc.size
 						eventcolor:calendar.color
 						parentId:doc.parentId
+						space:doc.space
 					}
 					Events.direct.insert obj
 					Calendar.addChange(calendar._id,_id+".ics",1);

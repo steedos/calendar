@@ -283,6 +283,7 @@ Template.event_detail_modal.events
 					attendee.description = description
 					attendee.responsetime = responsetime
 		if !obj._id
+			obj.space = Steedos.spaceId()
 			Meteor.call('eventInit',Meteor.userId(),obj,
 				(error,result) ->
 					$('body').removeClass "loading"

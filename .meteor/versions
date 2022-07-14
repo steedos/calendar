@@ -142,7 +142,7 @@ steedos:autoform-bs-minicolors@1.0.0
 steedos:autoform-modals@0.3.9_6
 steedos:base@0.0.67
 steedos:calendar@0.1.27
-steedos:calendar-i18n@0.0.16
+steedos:calendar-i18n@0.0.17
 steedos:datatables-extensions@0.0.1
 steedos:fullcalendar@3.4.0_3
 steedos:i18n@0.0.11
@@ -167,6 +167,7 @@ twbs:bootstrap@3.3.6
 ui@1.0.13
 underscore@1.0.10
 underscorestring:underscore.string@3.3.4
+universe:i18n@1.13.0
 url@1.1.0
 vazco:universe-autoform-select@0.3.10
 vazco:universe-selectize@0.1.22

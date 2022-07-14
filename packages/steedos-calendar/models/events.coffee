@@ -280,6 +280,11 @@ Events._simpleSchema = new SimpleSchema
 		optional:true
 		autoform:
 			omit:true
+	space:
+		type: String,
+		optional: true
+		autoform: 
+			omit: true
 Events.attachSchema Events._simpleSchema
 
 if Meteor.isClient
